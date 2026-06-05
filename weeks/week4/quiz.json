@@ -1,0 +1,24 @@
+[
+    {
+        "question": "Was bewirkt die JAX-Transformation `vmap`?",
+        "options": [
+            "Sie optimiert den Code für spezifische CPUs",
+            "Sie führt automatische Vorwärts-Differentiation durch",
+            "Sie vektorisiert eine Funktion über eine Batch-Dimension, ohne manuelle Python-Schleifen zu schreiben",
+            "Sie kompiliert den Code mittels XLA direkt in Maschinencode"
+        ],
+        "answerIndex": 2,
+        "explanation": "`vmap` steht für 'vectorized map' und ermöglicht die vollautomatische parallele Ausführung einer mathematischen Funktion über Arrays."
+    },
+    {
+        "question": "Warum ist die erste Ausführung einer mit `@jax.jit` dekorierten Funktion langsamer als nachfolgende Aufrufe?",
+        "options": [
+            "Weil JAX die Daten im Speicher kopieren muss",
+            "Aufgrund des Kompilierungs- und Tracing-Vorgangs des XLA-Compilers beim ersten Durchlauf",
+            "Weil der Garbage Collector den Speicher bereinigt",
+            "Das ist ein bekanntes Performance-Problem in JAX"
+        ],
+        "answerIndex": 1,
+        "explanation": "Beim ersten Aufruf analysiert JAX die Dimensionen und Typen (Tracing) und generiert den optimierten XLA-Code. Nachfolgende Aufrufe nutzen den vorkompilierten Maschinen-Code."
+    }
+]

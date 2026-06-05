@@ -1,0 +1,79 @@
+[
+    {
+        "question": "Was ist die Hauptkomponente eines TPU v2-Kerns für Matrixmultiplikationen?",
+        "options": [
+            "Vector Processing Unit (VPU)",
+            "Matrix Multiply Unit (MXU)",
+            "Tensor Core",
+            "CUDA Core"
+        ],
+        "answerIndex": 1,
+        "explanation": "Die MXU ist das Herzstück der TPU, optimiert für extrem schnelle Matrixmultiplikationen."
+    },
+    {
+        "question": "Welches Framework erlaubt es Keras 3, nahtlos zwischen JAX, TensorFlow und PyTorch zu wechseln?",
+        "options": [
+            "Multi-Backend-Ansatz",
+            "Nur TensorFlow",
+            "Nur PyTorch",
+            "Keras 2 API"
+        ],
+        "answerIndex": 0,
+        "explanation": "Keras 3 ist backend-agnostisch konzipiert, sodass Modelle ohne Codeänderung in JAX, TF oder PyTorch laufen."
+    },
+    {
+        "question": "Welches Format verwendet die MXU auf TPUs für Matrixmultiplikationen?",
+        "options": [
+            "float64",
+            "int8",
+            "Mixed Precision (bfloat16 Eingänge, float32 Ausgänge)",
+            "Nur float16"
+        ],
+        "answerIndex": 2,
+        "explanation": "Mixed Precision kombiniert die Geschwindigkeit von bfloat16 mit der Genauigkeit von float32-Akkumulatoren."
+    },
+    {
+        "question": "Wie nennt man die Architektur der MXU, bei der Daten durch ein Array von Recheneinheiten fließen?",
+        "options": [
+            "Von-Neumann-Architektur",
+            "Systolisches Array",
+            "Harvard-Architektur",
+            "RISC-Architektur"
+        ],
+        "answerIndex": 1,
+        "explanation": "In einem systolischen Array werden Daten taktweise von einer Recheneinheit zur nächsten weitergereicht."
+    },
+    {
+        "question": "Welcher Compiler transformiert TensorFlow-Graphen in TPU-Maschinencode?",
+        "options": [
+            "GCC",
+            "LLVM",
+            "XLA (Accelerated Linear Algebra)",
+            "NVCC"
+        ],
+        "answerIndex": 2,
+        "explanation": "XLA optimiert Berechnungen durch Fusion von Operationen, was Speicherbandbreite spart und die TPU-Auslastung maximiert."
+    },
+    {
+        "question": "Was ist der Hauptvorteil von Separable Convolutions gegenüber regulären Convolutions?",
+        "options": [
+            "Sie sind teurer",
+            "Sie verwenden mehr Gewichte",
+            "Sie sind recheneffizienter und haben weniger Gewichte",
+            "Sie funktionieren nur auf CPUs"
+        ],
+        "answerIndex": 2,
+        "explanation": "Durch die Trennung in Depthwise- und Pointwise-Convolutions wird die Anzahl der Parameter drastisch reduziert."
+    },
+    {
+        "question": "Welche Keras-Methode wird zum Trainieren eines Modells verwendet?",
+        "options": [
+            "model.predict()",
+            "model.fit()",
+            "model.evaluate()",
+            "model.compile()"
+        ],
+        "answerIndex": 1,
+        "explanation": "model.fit() startet die Trainingsschleife, in der Gewichte über Epochen hinweg optimiert werden."
+    }
+]

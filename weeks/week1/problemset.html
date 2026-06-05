@@ -1,0 +1,92 @@
+<div class="space-y-8">
+    <!-- Header Block -->
+    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-slate-900 pb-6">
+        <div>
+            <span class="px-2.5 py-0.5 rounded-full bg-slate-800 text-slate-400 text-xs font-mono font-bold uppercase tracking-wider border border-slate-750">Programming Assignment</span>
+            <h3 class="text-2xl font-black text-white mt-2">Problem Set 1: Project Genesis – The Agentic Awakening</h3>
+            <p class="text-sm text-slate-455 mt-1">Deadline: TBA | Weight: 20% of Module 1 grade (4 Points) | Quiz: 1 Point</p>
+        </div>
+        <a href="weeks/week1/problemset.ipynb" download class="px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-800 hover:border-cyan-500/50 hover:bg-cyan-500/5 text-xs font-mono font-bold text-cyan-400 flex items-center gap-2 transition-all duration-200 hover:scale-105 active:scale-95 shadow-lg shadow-cyan-500/5">
+            <span>📥</span> Download Jupyter Notebook
+        </a>
+    </div>
+<div class="p-6 glass-card rounded-2xl border-l-4 border-cyan-500 bg-cyan-950/5 space-y-3 my-6">
+    <h4 class="text-cyan-400 font-bold text-lg flex items-center gap-2">
+        ð The Story: Journey Beyond the Circuit Realm
+    </h4>
+<p class="text-sm text-slate-300 leading-relaxed">In the old world, deep within the mystical land of *Electronica*, engineers embarked on manual quests. They were the "Sorcerers of Simulink," painstakingly dragging and dropping rigid block diagrams, and casting manual “dsolve” spells within the walled gardens of the MATLAB Citadel. Their models were mathematically exact but cognitively blind; they required constant human supervision to map the flow of energy through pendulums, radioactive isotopes, and ancient RLC circuits.</p>
+<p class="text-sm text-slate-300 leading-relaxed">But the Legacy Era has passed. The physical systems of our modern world - from climate models to autonomous drone swarms - have grown too vast, chaotic, and high-dimensional for manual interfaces. Welcome to the <strong class="text-white">Neo-Simulacrum</strong>.</p>
+<p class="text-sm text-slate-300 leading-relaxed">You have been recruited to the Vanguard of <strong class="text-white">Agentic Engineers</strong>. Your mission is to bootstrap a next-generation simulation stack. We no longer just simulate reality; we build *cognitive entities* that understand physical laws and simulate the world for us. By converging classical system theory with the infinite potential of Generative AI, you will orchestrate autonomous Multi-Agent Systems that write code, automate environments, and solve complex differential equations alongside you.</p>
+<p class="text-sm text-slate-300 leading-relaxed">Your mind is the blueprint. Your terminal is your canvas. The Foundation Models are your oracle. Let the awakening begin\! *Let's build\!*</p>
+</div>
+<h4 class="text-lg font-bold text-white border-b border-slate-850 pb-2 mt-8 mb-4 flex items-center gap-2">
+    <span class="text-cyan-400">⚡</span> Exercise 1: Forging the Digital Sanctum (Environment & Terminal Automation)
+</h4>
+<p class="text-sm text-slate-300 leading-relaxed">*Learning Objective: Setup of the Python/AI environment and automation of terminal workflows using the Gemini CLI.*</p>
+<p class="text-sm text-slate-300 leading-relaxed">Before an Architect can command agents, they must prepare their workspace. Instead of clicking through operating system menus, you will use AI to orchestrate your system via natural language.</p>
+<ol class="list-decimal pl-6 text-sm text-slate-300 space-y-3">
+    <li class="leading-relaxed"><strong class="text-white">The Python Uplink:</strong> Create an isolated Python 3.10+ virtual environment named nexus_env and activate it. Install the core simulation artifacts: numpy, scipy, and matplotlib.</li>
+    <li class="leading-relaxed"><strong class="text-white">Summoning the Oracle:</strong> Install the [gemini-cli](https://geminicli.com/) and authenticate it with your API key. Test your connection by asking it directly from the terminal:</li>
+<p class="text-sm text-slate-300 leading-relaxed">Ask gemini-cli "In one sentence, what is the paradigm shift from classical block-diagram simulation to Agentic Engineering?"</p>
+    <li class="leading-relaxed"><strong class="text-white">Agentic Bash Automation:</strong> A true Architect automates the mundane. Do not create your project directories by hand\! Prompt the Gemini CLI to generate a bash script (init_nexus.sh) that builds your workspace.</li>
+</ol>
+<p class="text-sm text-slate-300 leading-relaxed"><!-- end list --></p>
+<ul class="list-disc pl-6 text-sm text-slate-350 space-y-2">
+    <li class="leading-relaxed"><strong class="text-white">Prompt Example:</strong> *"Write a bash script that creates a modern Python project structure with directories src/, data/, agents/, and docs/. Inside src/, create an empty main.py. Output only the executable bash code."*</li>
+</ul>
+<p class="text-sm text-slate-300 leading-relaxed"><!-- end list --></p>
+<ol class="list-decimal pl-6 text-sm text-slate-300 space-y-3">
+    <li class="leading-relaxed"><strong class="text-white">Deliverables:</strong> Execute the script. Provide a screenshot of your terminal showing your Gemini prompt, the execution of the bash script, and the resulting directory tree (using the tree command).</li>
+</ol>
+<h4 class="text-lg font-bold text-white border-b border-slate-850 pb-2 mt-8 mb-4 flex items-center gap-2">
+    <span class="text-cyan-400">⚡</span> Exercise 2: Echoes of Electronica (Continuous Systems & Dimensionless Variables)
+</h4>
+<p class="text-sm text-slate-300 leading-relaxed">*Learning Objective: Translating continuous systems into Python; understanding dimensionless variables.*</p>
+<p class="text-sm text-slate-300 leading-relaxed">Deep in the archives, you uncover the ancient differential equations once solved by the Sorcerers of Electronica:</p>
+<ul class="list-disc pl-6 text-sm text-slate-350 space-y-2">
+    <li class="leading-relaxed"><strong class="text-white">Harmoniously swinging pendulum:</strong>  \(\ddot{x} + \omega^2x = 0\) , with  \(x(0)=0, \dot{x}(0)=1, \omega>0\)</li>
+    <li class="leading-relaxed"><strong class="text-white">Radioactive decay:</strong>  \(\dot{x} = -\alpha x\) , with  \(x(0)=1, \alpha>0\)</li>
+</ul>
+<p class="text-sm text-slate-300 leading-relaxed">Today, we define physics in pure code.</p>
+<ol class="list-decimal pl-6 text-sm text-slate-300 space-y-3">
+    <li class="leading-relaxed"><strong class="text-white">Dimensionless Awakening (Theory):</strong> In the lecture, we discussed the power of dimensionless variables. Transform the pendulum equation into a dimensionless form on paper using a new time variable  \(\tau = \omega t\) .</li>
+</ol>
+<p class="text-sm text-slate-300 leading-relaxed"><!-- end list --></p>
+<ul class="list-disc pl-6 text-sm text-slate-350 space-y-2">
+    <li class="leading-relaxed"><strong class="text-white">Question:</strong> Why is transforming physical states into dimensionless variables a critical superpower when training Neural Networks and scaling up models on JAX/Flax later in the course?</li>
+</ul>
+<p class="text-sm text-slate-300 leading-relaxed"><!-- end list --></p>
+<ol class="list-decimal pl-6 text-sm text-slate-300 space-y-3">
+    <li class="leading-relaxed"><strong class="text-white">Pair-Programming with the AI:</strong> Instead of searching for MATLAB's dsolve, you will pair-program. Prompt the Gemini CLI to write a highly documented Python script (src/ancients.py). Instruct the AI to solve *both* continuous differential equations using scipy.integrate.solve_ivp (use  \(\omega=2\) ,  \(\alpha=0.5\) ) and plot the results side-by-side using matplotlib for  \(t \in [0, 10]\) .</li>
+    <li class="leading-relaxed"><strong class="text-white">Deliverables:</strong> Submit your manual dimensionless derivation, the answer to the ML question, the exact prompt you used, and the final plotted image.</li>
+</ol>
+<h4 class="text-lg font-bold text-white border-b border-slate-850 pb-2 mt-8 mb-4 flex items-center gap-2">
+    <span class="text-cyan-400">⚡</span> Exercise 3: The Pulse of Time (Discrete vs. Continuous)
+</h4>
+<p class="text-sm text-slate-300 leading-relaxed">*Learning Objective: Diskrete vs. kontinuierliche Systeme; understanding Simulation Chains.*</p>
+<p class="text-sm text-slate-300 leading-relaxed">The machines of the Neo-Simulacrum operate in discrete computational steps, but the physical universe flows continuously. Let us test the boundaries of simulation using a magical conduit from the "Journey Through the Circuit Realm."</p>
+<ul class="list-disc pl-6 text-sm text-slate-350 space-y-2">
+    <li class="leading-relaxed"><strong class="text-white">The RL Circuit:</strong> Governed by  \(I'(t) = V(t) - 0.2 I(t)\) , where the voltage is  \(V(t) = 5\sin(t)\)  and  \(I(0)=0\) .</li>
+</ul>
+<p class="text-sm text-slate-300 leading-relaxed"><!-- end list --></p>
+<ol class="list-decimal pl-6 text-sm text-slate-300 space-y-3">
+    <li class="leading-relaxed"><strong class="text-white">Two Paths:</strong> Ask your Gemini assistant to modify your Python script to simulate this RL circuit <strong class="text-white">continuously</strong> (using solve_ivp) AND <strong class="text-white">discretely</strong> (using an explicit Euler step method  \(I_{k+1} = I_k + (V_k - 0.2 I_k) \Delta t\) ).</li>
+    <li class="leading-relaxed"><strong class="text-white">Break the Matrix:</strong> Plot both lines on the same graph. Run the code with a precise step size of  \(\Delta t = 0.1\) . Now, deliberately sabotage the simulation by changing the discrete time step to a very large value (e.g.,  \(\Delta t = 11\) ).</li>
+    <li class="leading-relaxed"><strong class="text-white">Deliverables:</strong> Capture the distorted plot. Write a short paragraph explaining *why* the discrete model fails catastrophically at large step sizes while the continuous solver remains stable. Relate this briefly to the concept of "Simulationsketten" (Simulation chains) from the lecture.</li>
+</ol>
+<h4 class="text-lg font-bold text-white border-b border-slate-850 pb-2 mt-8 mb-4 flex items-center gap-2">
+    <span class="text-cyan-400">⚡</span> Exercise 4: Igniting the Spark of Autonomy (Enter ADE Antigravity)
+</h4>
+<p class="text-sm text-slate-300 leading-relaxed">*Learning Objective: Agentenbasierte Modellierung; Einsatz von ADK und ADE (Antigravity).*</p>
+<p class="text-sm text-slate-300 leading-relaxed">Scripts that execute mathematically perfect simulations are powerful, but they are static. They run, output a graph, and terminate. In the age of Agentic Engineering, we demand systems that can *observe* and *react*. You will now initialize your very first autonomous AI actor to interact with your environment.</p>
+<ol class="list-decimal pl-6 text-sm text-slate-300 space-y-3">
+    <li class="leading-relaxed"><strong class="text-white">Booting the Chamber:</strong> Launch the <strong class="text-white">Antigravity Agent Development Environment (ADE)</strong> in your workspace.</li>
+    <li class="leading-relaxed"><strong class="text-white">Birth of the Observer:</strong> Create a new Agent profile named Observer-Prime. Endow it with the following persona (System Prompt):*"You are an elite System Simulation Agent. Your purpose is to autonomously execute Python simulation scripts in the terminal, analyze the output files, and write technical documentation."*</li>
+    <li class="leading-relaxed"><strong class="text-white">The Autonomous Task:</strong> Give Observer-Prime the basic terminal execution tool and read/write access to your workspace. Issue the following natural language command via the ADE interface:*"Observer-Prime, please run the src/ancients.py script. Check if the plot image was successfully created in the data folder. If it exists, write a markdown file named docs/Agent_Report.md summarizing what physical systems the script simulated and confirming the successful execution."*</li>
+    <li class="leading-relaxed"><strong class="text-white">Deliverables:</strong> Watch the agent's "Chain of Thought" as it independently decides to open the terminal, run the code, verify the files, and author your report. Submit the Agent_Report.md file it generated, along with a 3-sentence reflection on how it felt to orchestrate an AI agent to execute your simulation pipeline compared to running it manually block-by-block.</li>
+</ol>
+<h4 class="text-lg font-bold text-white border-b border-slate-850 pb-2 mt-8 mb-4 flex items-center gap-2">
+    **
+</h4>
+<p class="text-sm text-slate-300 leading-relaxed">**</p>
+</div>

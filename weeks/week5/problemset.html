@@ -1,0 +1,105 @@
+<div class="space-y-8">
+    <!-- Header Block -->
+    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-slate-900 pb-6">
+        <div>
+            <span class="px-2.5 py-0.5 rounded-full bg-slate-800 text-slate-400 text-xs font-mono font-bold uppercase tracking-wider border border-slate-750">Programming Assignment</span>
+            <h3 class="text-2xl font-black text-white mt-2">Problem Set 5: Project Genesis – The Fabric of Reality</h3>
+            <p class="text-sm text-slate-455 mt-1">Deadline: TBA | Weight: 40% of Module 2 grade (4 Points) | Quiz: 1 Point</p>
+        </div>
+        <a href="weeks/week5/problemset.ipynb" download class="px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-800 hover:border-cyan-500/50 hover:bg-cyan-500/5 text-xs font-mono font-bold text-cyan-400 flex items-center gap-2 transition-all duration-200 hover:scale-105 active:scale-95 shadow-lg shadow-cyan-500/5">
+            <span>📥</span> Download Jupyter Notebook
+        </a>
+    </div>
+<p class="text-sm text-slate-300 leading-relaxed">**</p>
+<div class="p-6 glass-card rounded-2xl border-l-4 border-cyan-500 bg-cyan-950/5 space-y-3 my-6">
+    <h4 class="text-cyan-400 font-bold text-lg flex items-center gap-2">
+        ð The Story: Bending Space and Time
+    </h4>
+<p class="text-sm text-slate-300 leading-relaxed">Architects of the *Neo-Simulacrum*, your progress is undeniable. In Week 4, you shattered the sequential limits of classical computing. Through the *Silicon Ascension* of JAX, you accelerated your systems to the speed of light. But pure computational power without physical comprehension is dangerous. An AI that only interpolates data is blind to the underlying laws of the universe.</p>
+<p class="text-sm text-slate-300 leading-relaxed">In the old world, the "Sorcerers of Simulink" solved Partial Differential Equations (PDEs) - the fundamental source code of reality - by slicing space and time into rigid, fragile grids (Finite Difference Methods). If a single parameter or boundary changed, their entire simulation had to be painstakingly restarted.</p>
+<p class="text-sm text-slate-300 leading-relaxed">Today, we abandon the grid. We will teach your AI Agent, *Observer-Prime*, to internalize the laws of thermodynamics directly into its neural pathways. Welcome to the era of <strong class="text-white">Physics-Informed Neural Networks (PINNs)</strong>. You will not simulate the 1D Heat Equation iteratively; you will transform the PDE residual into a mathematical penalty, using jax.grad as a scalpel to differentiate the neural network with respect to space and time.</p>
+<p class="text-sm text-slate-300 leading-relaxed">Finally, looking to the horizon of our digital twin endgame, you will explore how Fourier Neural Operators (FNOs) map infinite-dimensional spaces, preparing your models to predict the future in a fraction of a millisecond.</p>
+<p class="text-sm text-slate-300 leading-relaxed">*The code becomes physics. The physics becomes code. Let's build\!*</p>
+</div>
+<h4 class="text-lg font-bold text-white border-b border-slate-850 pb-2 mt-8 mb-4 flex items-center gap-2">
+    <span class="text-cyan-400">⚡</span> Exercise 1: Shattering the Grid & Anchoring Reality (ICs and BCs)
+</h4>
+<p class="text-sm text-slate-300 leading-relaxed">*Learning Objective: Understanding continuous domain formulation and the conceptual necessity of Initial and Boundary Conditions. Replacing rigid FDM meshes with random collocation points in JAX.*</p>
+<p class="text-sm text-slate-300 leading-relaxed">A mathematical PDE like the Heat Equation is merely a rule of evolution. It tells us how heat diffuses, but mathematically, it has an infinite number of possible valid solutions. To collapse these infinite possibilities into our specific physical reality, we must anchor the mathematical fabric using two fundamental constraints:</p>
+<ul class="list-disc pl-6 text-sm text-slate-350 space-y-2">
+    <li class="leading-relaxed"><strong class="text-white">The Initial Condition (IC) –</strong> <strong class="text-white">*The Genesis State</strong><strong class="text-white">*:</strong> This is the exact snapshot of the system at time  \(t=0\) . It is the seed from which the timeline grows. Without an IC, the network knows the rules of physics, but doesn't know *how* our specific simulation started.</li>
+    <li class="leading-relaxed"><strong class="text-white">The Boundary Conditions (BC) –</strong> <strong class="text-white">*The Edges of the Sandbox</strong><strong class="text-white">*:</strong> These are the physical limits of our simulated world. In this case, we are simulating a 1D metal rod. The BCs dictate what happens at the extreme left and right ends of the rod across all of time (e.g., are they attached to a block of ice? Are they perfectly insulated?).</li>
+</ul>
+<p class="text-sm text-slate-300 leading-relaxed">A PINN does not need a finite grid to learn this; it learns a continuous, differentiable function  \(u(x, t)\) . To train it, we simply scatter random "sensor" points across the spacetime cylinder and enforce the physics at those exact coordinates.</p>
+<ol class="list-decimal pl-6 text-sm text-slate-300 space-y-3">
+    <li class="leading-relaxed"><strong class="text-white">The Domain:</strong> In your local genesis-oracle Vault, create src/pinn_data.py. We are simulating a 1D metal rod over time. Your spatial domain is  \(x \in [-1, 1]\)  and temporal domain is  \(t \in [0, 1]\) .</li>
+    <li class="leading-relaxed"><strong class="text-white">Mesh-Free Sampling:</strong> Use jax.random.uniform to generate three distinct datasets (tensors):</li>
+</ol>
+<p class="text-sm text-slate-300 leading-relaxed"><!-- end list --></p>
+<ul class="list-disc pl-6 text-sm text-slate-350 space-y-2">
+    <li class="leading-relaxed"><strong class="text-white">Collocation Points (PDE):</strong> 5,000 random points  \((x, t)\)  inside the domain. We don't know the temperature here, but the laws of physics must apply\!</li>
+    <li class="leading-relaxed"><strong class="text-white">Initial Condition (IC):</strong> 500 points at  \(t=0\) . Set the starting temperature to a negative sine wave:  \(u_{true}(x, 0) = -\sin(\pi x)\) .</li>
+    <li class="leading-relaxed"><strong class="text-white">Boundary Conditions (BC):</strong> 500 points at the edges  \(x = -1\)  and  \(x = 1\) . The ends of the rod are kept on ice (Dirichlet boundary condition):  \(u_{true}(-1, t) = 0\)  and  \(u_{true}(1, t) = 0\) .</li>
+</ul>
+<p class="text-sm text-slate-300 leading-relaxed"><!-- end list --></p>
+<ol class="list-decimal pl-6 text-sm text-slate-300 space-y-3">
+    <li class="leading-relaxed"><strong class="text-white">Deliverables:</strong> Push your data generation script to your GitHub Vault. Ensure your JAX PRNGKeys are explicitly managed to maintain deterministic chaos.</li>
+</ol>
+<h4 class="text-lg font-bold text-white border-b border-slate-850 pb-2 mt-8 mb-4 flex items-center gap-2">
+    <span class="text-cyan-400">⚡</span> Exercise 2: Agentic Weaving (The Neural Surrogate in Flax)
+</h4>
+<p class="text-sm text-slate-300 leading-relaxed">*Learning Objective: Delegating complex JAX/Flax architecture creation to a Multi-Agent system.*</p>
+<p class="text-sm text-slate-300 leading-relaxed">You are the Architect. You design the system; the Agent writes the code. A standard network outputs discrete labels, but we need a continuous field.</p>
+<ul class="list-disc pl-6 text-sm text-slate-350 space-y-2">
+    <li class="leading-relaxed"><strong class="text-white">Summon Observer-Prime:</strong> Launch your <strong class="text-white">ADE Antigravity</strong> interface or open the <strong class="text-white">Gemini CLI</strong> in Plan Mode. Load your agent profile, *Observer-Prime*.</li>
+    <li class="leading-relaxed"><strong class="text-white">The Prompt (Architecture):</strong> Feed your Agent the following prompt (you may adjust it slightly, but the core instructions must remain):*"Observer-Prime, we are transcending classical grid-based solvers to build a PINN. Please write a pure JAX/Flax script using flax.linen that defines a Multi-Layer Perceptron named HeatSurrogate. It must take continuous 2D inputs (space x and time t) and predict a 1D scalar (temperature u). Use 4 hidden layers with 32 neurons each and tanh activation functions (since we need smooth, non-zero second derivatives for our physics constraints). Include an execution block demonstrating how to initialize the model's weights explicitly using jax.random.PRNGKey."*</li>
+    <li class="leading-relaxed"><strong class="text-white">Deliverables:</strong> Save the generated code as src/fabric_pinn.py. Run it locally via uv run to ensure the stateless architecture initializes without errors. Push to GitHub.</li>
+</ul>
+<h4 class="text-lg font-bold text-white border-b border-slate-850 pb-2 mt-8 mb-4 flex items-center gap-2">
+    <span class="text-cyan-400">⚡</span> Exercise 3: The Differentiable Fabric (jax.grad & The Physics Loss)
+</h4>
+<p class="text-sm text-slate-300 leading-relaxed">*Learning Objective: Utilizing Automatic Differentiation to embed the 1D Heat Equation directly into the neural network's loss landscape.*</p>
+<p class="text-sm text-slate-300 leading-relaxed">The 1D Heat Equation is defined as:</p>
+<p class="text-sm text-slate-300 leading-relaxed">\(\frac{\partial u}{\partial t} - \alpha \frac{\partial^2 u}{\partial x^2} = 0\)</p>
+<p class="text-sm text-slate-300 leading-relaxed">Instead of estimating finite differences, we will use JAX's exact analytical derivatives.</p>
+<ol class="list-decimal pl-6 text-sm text-slate-300 space-y-3">
+    <li class="leading-relaxed"><strong class="text-white">The Math Engine:</strong> Inside your script, define the thermal diffusivity parameter  \(\alpha = 0.05\) .</li>
+    <li class="leading-relaxed"><strong class="text-white">Agentic Pair-Programming (The Residual):</strong> Calculating the second derivative of a neural network output with respect to its inputs in pure JAX requires nesting jax.grad. This can be syntactically tricky. Ask Observer-Prime:*"Observer-Prime, I have a pure forward function predict_u(params, x, t) that returns a scalar temperature. How do I use jax.grad (or jax.hessian/jax.jacrev) to calculate the exact analytical first derivative with respect to t (* \(u_t\) *), and the second derivative with respect to x (* \(u_{xx}\) *)? Please write a physics_loss function that computes the Mean Squared Error of the PDE residual:*  \((u_t - \alpha u_{xx})^2\) *. Ensure it is vectorized using jax.vmap so it can evaluate all 5,000 collocation points in parallel."*</li>
+    <li class="leading-relaxed"><strong class="text-white">The Unified Gradient:</strong> Combine this with the data constraints. Your final loss function must sum all components:</li>
+<p class="text-sm text-slate-300 leading-relaxed">Total_Loss = Physics_Loss + IC_Loss + BC_Loss.</p>
+    <li class="leading-relaxed"><strong class="text-white">Deliverables:</strong> Consolidate the loss functions and a basic Optax training loop setup into your script. Commit and push the blueprint to your Vault.</li>
+</ol>
+<h4 class="text-lg font-bold text-white border-b border-slate-850 pb-2 mt-8 mb-4 flex items-center gap-2">
+    <span class="text-cyan-400">⚡</span> Exercise 4: Silicon Ignition & The Interactive 3D Projection
+</h4>
+<p class="text-sm text-slate-300 leading-relaxed">*Learning Objective: Compiling the PINN on hardware accelerators and visualizing the continuous spacetime physics tensor as an interactive 3D surface.*</p>
+<ol class="list-decimal pl-6 text-sm text-slate-300 space-y-3">
+    <li class="leading-relaxed"><strong class="text-white">Cloud Ignition:</strong> Open Google Colab (using a GPU/TPU runtime). Pull your repository and use uv pip install to instantly resolve dependencies. Initialize an optax.adam optimizer. Wrap your training step in @jax.jit and train your PINN for 5,000 to 10,000 epochs. Watch the loss drop as the XLA compiler fuses the autodiff graphs and forces the weights to align with the laws of thermodynamics\!</li>
+    <li class="leading-relaxed"><strong class="text-white">Visualizing the Fabric in 3D:</strong> Because your network is a continuous mathematical function, you can query it anywhere without a mesh. Generate a high-resolution 2D meshgrid of  \((x, t)\)  points and pass them through the trained model to get the predicted temperature  \(u\) .</li>
+    <li class="leading-relaxed"><strong class="text-white">Interactive Rendering (plotly):</strong> Standard static 2D heatmaps are obsolete for this. Use the <strong class="text-white">plotly</strong> library (import plotly.graph_objects as go) to create a stunning, fully rotatable 3D Surface Plot. Plotly natively renders interactive JavaScript-based graphics directly inside Colab notebooks.</li>
+</ol>
+<p class="text-sm text-slate-300 leading-relaxed"><!-- end list --></p>
+<ul class="list-disc pl-6 text-sm text-slate-350 space-y-2">
+    <li class="leading-relaxed">*Agent Prompt Idea:* Ask your agent to write the Plotly code to map Space ( \(x\) ) and Time ( \(t\) ) to the ground plane, and Temperature ( \(u\) ) to the Z-axis, utilizing go.Surface(x=X, y=T, z=U) with a beautiful colorscale (like 'inferno').</li>
+    <li class="leading-relaxed">*Observe the Manifold:* Run the cell, then click and drag the plot with your mouse. You should clearly see the sharp initial sine wave at  \(t=0\)  smoothly diffusing towards a flat  \(0\) -degree plane as time progresses, constrained by the frozen edges.</li>
+    <li class="leading-relaxed">Save this interactive plot as a standalone HTML file using fig.write_html ("data/pinn_3d_fabric.html").</li>
+</ul>
+<h4 class="text-lg font-bold text-white border-b border-slate-850 pb-2 mt-8 mb-4 flex items-center gap-2">
+    <span class="text-cyan-400">⚡</span> Exercise 5: The Operator Horizon (Fourier Neural Operators)
+</h4>
+<p class="text-sm text-slate-300 leading-relaxed">*Learning Objective: Conceptualizing the leap from single-instance PINNs to family-solving Neural Operators.*</p>
+<ol class="list-decimal pl-6 text-sm text-slate-300 space-y-3">
+    <li class="leading-relaxed"><strong class="text-white">The FNO Endgame:</strong> Your trained PINN is a masterpiece, but it has a critical flaw: it only knows how to solve the heat equation for the exact initial condition  \(u_{true}(x, 0) = -\sin(\pi x)\) . If the factory changes the starting temperature to a square wave, you must retrain the network from scratch. Return to your ADE and prompt Observer-Prime:*"Observer-Prime, our PINN is beautiful but limited to a single initial condition. Explain to me - in 3 concise bullet points - how a Fourier Neural Operator (FNO) solves this scalability problem. How does an FNO map functional spaces compared to a PINN, and why does doing convolutions in the frequency domain allow it to achieve 'Zero-Shot' predictions for entirely new initial conditions?"*</li>
+    <li class="leading-relaxed"><strong class="text-white">Final Deployment:</strong> Create a docs/Fabric_Report.md.</li>
+</ol>
+<p class="text-sm text-slate-300 leading-relaxed"><!-- end list --></p>
+<ul class="list-disc pl-6 text-sm text-slate-350 space-y-2">
+    <li class="leading-relaxed">Take a striking, angled screenshot of your 3D plot and embed it.</li>
+    <li class="leading-relaxed">Crucially, <strong class="text-white">upload the pinn_3d_fabric.html file to your GitHub Repository</strong> and provide a hyperlink in your Markdown file so the class can download and rotate your physical simulation in their own browsers.</li>
+    <li class="leading-relaxed">Below the link, copy and paste Observer-Prime's explanation of FNOs.</li>
+    <li class="leading-relaxed">Ask your Agent to update your GitHub Pages index.md with this week's progress. Push to the main branch.</li>
+</ul>
+<p class="text-sm text-slate-300 leading-relaxed">*Your Oracle now understands thermodynamics. The fabric of reality is yours to mold.*</p>
+<p class="text-sm text-slate-300 leading-relaxed">**</p>
+<p class="text-sm text-slate-300 leading-relaxed">**</p>
+</div>

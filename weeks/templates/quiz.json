@@ -1,0 +1,24 @@
+[
+    {
+        "question": "Hier steht die Frage der ersten Quizfrage (in Deutsch)?",
+        "options": [
+            "Option A (Falsch)",
+            "Option B (Richtig - index 1)",
+            "Option C (Falsch)",
+            "Option D (Falsch)"
+        ],
+        "answerIndex": 1,
+        "explanation": "Hier steht die ausführliche Erklärung, warum Option B korrekt ist, welche nach der Beantwortung angezeigt wird."
+    },
+    {
+        "question": "Hier steht die zweite Frage?",
+        "options": [
+            "Option A (Richtig - index 0)",
+            "Option B (Falsch)",
+            "Option C (Falsch)",
+            "Option D (Falsch)"
+        ],
+        "answerIndex": 0,
+        "explanation": "Hier steht die ausführliche Erklärung für die zweite Frage."
+    }
+]

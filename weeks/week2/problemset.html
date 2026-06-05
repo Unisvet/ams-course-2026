@@ -1,0 +1,99 @@
+<div class="space-y-8">
+    <!-- Header Block -->
+    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-slate-900 pb-6">
+        <div>
+            <span class="px-2.5 py-0.5 rounded-full bg-slate-800 text-slate-400 text-xs font-mono font-bold uppercase tracking-wider border border-slate-750">Programming Assignment</span>
+            <h3 class="text-2xl font-black text-white mt-2">Problem Set 2: Project Genesis – The Blueprint & The Vault</h3>
+            <p class="text-sm text-slate-455 mt-1">Deadline: TBA | Weight: 40% of Module 1 grade (4 Points) | Quiz: 1 Point</p>
+        </div>
+        <a href="weeks/week2/problemset.ipynb" download class="px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-800 hover:border-cyan-500/50 hover:bg-cyan-500/5 text-xs font-mono font-bold text-cyan-400 flex items-center gap-2 transition-all duration-200 hover:scale-105 active:scale-95 shadow-lg shadow-cyan-500/5">
+            <span>📥</span> Download Jupyter Notebook
+        </a>
+    </div>
+<p class="text-sm text-slate-300 leading-relaxed">**</p>
+<div class="p-6 glass-card rounded-2xl border-l-4 border-cyan-500 bg-cyan-950/5 space-y-3 my-6">
+    <h4 class="text-cyan-400 font-bold text-lg flex items-center gap-2">
+        ð The Story
+    </h4>
+<p class="text-sm text-slate-300 leading-relaxed">In Week 1, you laid the deterministic foundations of your local *Neo-Simulacrum*. But an Architect cannot build the future on scattered local files. To train a Neural Oracle, you must ensure your blueprints load instantly and survive securely. In the modern era, dependencies are managed at lightspeed by uv, and code is versioned via the "Git Nexus" (GitHub).</p>
+<p class="text-sm text-slate-300 leading-relaxed">This week, following the lecture slides, you will establish your professional Git workflow and configure your environment for Keras 3. Then, delving into the old texts of the *Circuit Realm*, you will mathematically generate the massive, noisy physical data of an RC-filter. You are building the raw material - the datastream. Next week, we will move to the Cloud to give it a mind. *Let's build\!*</p>
+</div>
+<div class="p-6 glass-card rounded-2xl border-l-4 border-cyan-500 bg-cyan-950/5 space-y-3 my-6">
+    <h4 class="text-cyan-400 font-bold text-lg flex items-center gap-2">
+        ð¥️ System Requirements & Compute Strategy
+    </h4>
+<p class="text-sm text-slate-300 leading-relaxed">To successfully navigate the Keras 3 and JAX paradigm, you must understand *where* and *how* your code will run. We will use a hybrid approach:</p>
+<p class="text-sm text-slate-300 leading-relaxed"><strong class="text-white">1. Local Environment (Week 2: Prototyping & CI/CD)</strong></p>
+<ul class="list-disc pl-6 text-sm text-slate-350 space-y-2">
+    <li class="leading-relaxed"><strong class="text-white">Use Case:</strong> Setting up high-speed repositories, interacting with AI agents, writing Python scripts, and generating mathematical datasets.</li>
+    <li class="leading-relaxed"><strong class="text-white">Hardware:</strong> Standard laptop (Windows/macOS/Linux), min. 8GB RAM. A standard CPU is perfectly fine for these tasks.</li>
+    <li class="leading-relaxed"><strong class="text-white">The Modern Stack (</strong><strong class="text-white">uv</strong><strong class="text-white">):</strong> Legacy engineers wait minutes for pip to resolve dependencies. We will use <strong class="text-white">uv</strong> (by Astral), the ultra-fast Python package installer and resolver. It natively handles virtual environments and deterministic lockfiles.</li>
+    <li class="leading-relaxed"><strong class="text-white">Setup:</strong> Code Editor (VS Code or Cursor), Git installed locally, and uv installed globally:</li>
+</ul>
+<ul class="list-disc pl-6 text-sm text-slate-350 space-y-2">
+    <li class="leading-relaxed">*macOS/Linux:* curl -LsSf https://astral.sh/uv/install.sh | sh</li>
+    <li class="leading-relaxed">*Windows:* powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"</li>
+    <li class="leading-relaxed">You can also ask your coding Agent\!</li>
+</ul>
+<p class="text-sm text-slate-300 leading-relaxed"><strong class="text-white">2. Google Colab (Week 3: Massive Compute & XLA Compilation)</strong></p>
+<ul class="list-disc pl-6 text-sm text-slate-350 space-y-2">
+    <li class="leading-relaxed"><strong class="text-white">Use Case:</strong> Training the Deep Autoencoder and compiling JAX arrays.</li>
+    <li class="leading-relaxed"><strong class="text-white">Hardware:</strong> Cloud-based NVIDIA T4 GPUs or Google TPUs (v2-8).</li>
+    <li class="leading-relaxed"><strong class="text-white">Why Colab?</strong> Installing GPU/TPU drivers locally is notoriously frustrating. Colab provides free, instant access to hardware accelerators. You will pull your GitHub repository into Colab and use uv pip in the cloud for blistering-fast dependency installation.</li>
+</ul>
+</div>
+<h4 class="text-lg font-bold text-white border-b border-slate-850 pb-2 mt-8 mb-4 flex items-center gap-2">
+    <span class="text-cyan-400">⚡</span> Exercise 1: The Vault of Version Control & Blazing Init (uv & Git)
+</h4>
+<p class="text-sm text-slate-300 leading-relaxed">*Learning Objective: Initializing projects with* *uv<strong class="text-white">, managing* *.gitignore</strong>, and deploying to GitHub using Agentic workflows.*</p>
+<ol class="list-decimal pl-6 text-sm text-slate-300 space-y-3">
+    <li class="leading-relaxed"><strong class="text-white">Phase 1 (Create the Remote Vault):</strong> Go to github.com and create a new repository named genesis-oracle (or give your own name\!) Set visibility to <strong class="text-white">Public</strong> (visibility: public). Do *not* initialize it with a README or .gitignore.</li>
+</ol>
+<p class="text-sm text-slate-300 leading-relaxed">Phase 2 (The Local Ignition): Open your terminal. Instead of manually creating folders and virtual environments, let uv scaffold your project instantly:</p>
+<p class="text-sm text-slate-300 leading-relaxed">uv init genesis-oracle</p>
+<p class="text-sm text-slate-300 leading-relaxed">cd genesis-oracle</p>
+<p class="text-sm text-slate-300 leading-relaxed">*Notice how* *uv init* *automatically creates a* *pyproject.toml<strong class="text-white">, a* *.venv</strong>, and an initial* *hello.py* *script\!*</p>
+<ol class="list-decimal pl-6 text-sm text-slate-300 space-y-3">
+    <li class="leading-relaxed"><strong class="text-white">Phase 3 (The Mighty Bouncer):</strong> Open the .gitignore file that uv created. It already ignores .venv/. Manually add your data directory to the bottom: data/ and __pycache__/ (we never upload heavy, raw datasets to GitHub). Create a data/ and src/ folder.</li>
+    <li class="leading-relaxed"><strong class="text-white">Phase 4 (The Agentic Push):</strong> A modern engineer delegates boilerplate commands. Open your Gemini CLI (or Antigravity ADE) and prompt your agent (as always you can use your own prompts\!):</li>
+<p class="text-sm text-slate-300 leading-relaxed">*"My remote URL is \[YOUR_GITHUB_URL\]. Please write the terminal commands to initialize git, stage all files respecting the* *.gitignore**, create a commit with the message 'Initial Genesis Vault setup', and push it to the main branch."*</p>
+    <li class="leading-relaxed"><strong class="text-white">Phase 5 (Go Live):</strong> Convert your Agent_Report.md from Week 1 into an index.md file and push it. Go to your GitHub Repository <strong class="text-white">Settings \> Pages</strong>. Under "Build and deployment", select the main branch as the source and click <strong class="text-white">Save</strong>. Submit your live GitHub Pages link. [more info](https://docs.google.com/document/d/1h6EYGbLNJkjUP_15Ucx4uXOInTDhuKjYo-UZsFday4A/edit?usp=sharing)</li>
+</ol>
+<h4 class="text-lg font-bold text-white border-b border-slate-850 pb-2 mt-8 mb-4 flex items-center gap-2">
+    <span class="text-cyan-400">⚡</span> Exercise 2: Aligning the Triad (Keras 3 + JAX via uv add)
+</h4>
+<p class="text-sm text-slate-300 leading-relaxed">*Learning Objective:Modern dependency resolution and Keras 3 backend configuration.*</p>
+<ol class="list-decimal pl-6 text-sm text-slate-300 space-y-3">
+    <li class="leading-relaxed"><strong class="text-white">The Installation:</strong> Standard pip is obsolete here. Use uv to instantly lock and install your ML stack into your pyproject.toml:</li>
+</ol>
+<p class="text-sm text-slate-300 leading-relaxed">uv add "keras\>=3.0.7" jax jaxlib numpy scipy matplotlib</p>
+<p class="text-sm text-slate-300 leading-relaxed">*Watch how* *uv* *resolves and installs gigabytes of ML libraries in a fraction of the time, automatically locking exact dependencies in your* *uv.lock* *file.*</p>
+<ol class="list-decimal pl-6 text-sm text-slate-300 space-y-3">
+    <li class="leading-relaxed"><strong class="text-white">Environment Configuration:</strong> Create a new Python script src/oracle_setup.py. <strong class="text-white">Before</strong> importing Keras, use Python's os module to set the environment variable "KERAS_BACKEND" to "jax".</li>
+    <li class="leading-relaxed"><strong class="text-white">Verification:</strong> Verify the backend is active by writing code to create a basic Keras random tensor and printing its type. Run it safely inside the environment using:</li>
+<p class="text-sm text-slate-300 leading-relaxed">Bash</p>
+</ol>
+<p class="text-sm text-slate-300 leading-relaxed">uv run python src/oracle_setup.py</p>
+<ol class="list-decimal pl-6 text-sm text-slate-300 space-y-3">
+    <li class="leading-relaxed"><strong class="text-white">Deliverables:</strong> Use Git to commit and push pyproject.toml, uv.lock, and oracle_setup.py to GitHub.</li>
+</ol>
+<h4 class="text-lg font-bold text-white border-b border-slate-850 pb-2 mt-8 mb-4 flex items-center gap-2">
+    <span class="text-cyan-400">⚡</span> Exercise 3: Synthesis of the Aether (Fourier Series & RC Filters)
+</h4>
+<p class="text-sm text-slate-300 leading-relaxed">*Learning Objective: Data-driven modeling and synthetic time-series generation.*</p>
+<ol class="list-decimal pl-6 text-sm text-slate-300 space-y-3">
+    <li class="leading-relaxed"><strong class="text-white">The Fourier Datastream:</strong> Let  \(T\)  be the last two digits of your student ID, and  \(\omega_0 = 2\pi/T\) . Write a Python script (src/data_generator.py) to generate the continuous Fourier series of a square wave over 100 periods using the first 9 odd harmonics.</li>
+    <li class="leading-relaxed"><strong class="text-white">The Numerical RC Filter:</strong> Calculate the analytical effect of an RC low-pass filter on your signal:</li>
+</ol>
+<p class="text-sm text-slate-300 leading-relaxed">\(R = 0.5 \text{ k}\Omega\) ,</p>
+<p class="text-sm text-slate-300 leading-relaxed">\(C = 1000 + \text{last 3 ID digits } \mu\text{F}\) .</p>
+<p class="text-sm text-slate-300 leading-relaxed">Calculate the amplitude and phase shift for each harmonic using</p>
+<p class="text-sm text-slate-300 leading-relaxed">\(H(\omega) = \frac{1}{1 + j\omega RC}\) .</p>
+<p class="text-sm text-slate-300 leading-relaxed">Generate your filtered baseline signal.</p>
+<ol class="list-decimal pl-6 text-sm text-slate-300 space-y-3">
+    <li class="leading-relaxed"><strong class="text-white">Noise & Sabotage (Anomaly Injection):</strong> Add random Gaussian noise to your signal. Then, artificially corrupt the signal: between period 70 and 75, inject a massive high-frequency voltage spike. Save this 1D continuous array locally inside your /data folder.</li>
+    <li class="leading-relaxed"><strong class="text-white">Deliverables:</strong> Run your code (uv run python src/data_generator.py). Plot a window of your normal noisy signal next to the anomaly spike. Save the plot as data_feed.png and push your generator code and the plot to GitHub.</li>
+</ol>
+<p class="text-sm text-slate-300 leading-relaxed">**</p>
+<p class="text-sm text-slate-300 leading-relaxed">**</p>
+</div>

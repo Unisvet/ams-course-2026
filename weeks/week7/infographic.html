@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Woche 7: Das kognitive Orakel - Systemsimulation & Frontier AI</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+theme: {
+extend: {
+colors: {
+vibrant: {
+bg: '#0f172a',
+surface: '#1e293b',
+surfaceLight: '#334155',
+cyan: '#06b6d4',
+pink: '#ec4899',
+yellow: '#eab308',
+purple: '#8b5cf6',
+text: '#f8fafc',
+textMuted: '#94a3b8'
+}
+},
+fontFamily: {
+sans: ['Inter', 'system-ui', 'sans-serif'],
+mono: ['JetBrains Mono', 'monospace']
+}
+}
+}
+}
+</script>
+<style>
+body {
+background-color: #0f172a;
+color: #f8fafc;
+font-family: 'Inter', system-ui, sans-serif;
+line-height: 1.6;
+}
+.chart-container {
+position: relative;
+width: 100%;
+max-width: 800px;
+margin-left: auto;
+margin-right: auto;
+height: 400px;
+max-height: 450px;
+}
+@media (max-width: 768px) {
+.chart-container {
+height: 300px;
+}
+}
+.glass-card {
+background: rgba(30, 41, 59, 0.7);
+backdrop-filter: blur(10px);
+border: 1px solid rgba(255, 255, 255, 0.1);
+}
+.timeline-item::before {
+content: '◆';
+position: absolute;
+left: -29px;
+top: 0;
+color: #ec4899;
+font-size: 24px;
+line-height: 1;
+background: #0f172a;
+}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="antialiased min-h-screen">
+<nav class="sticky top-0 z-50 glass-card border-b border-vibrant-surfaceLight">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex items-center justify-between h-16">
+<div class="flex items-center gap-2">
+<span class="text-vibrant-cyan font-mono text-xl font-bold">Woche_7</span>
+<span class="text-vibrant-text font-semibold">Das kognitive Orakel</span>
+</div>
+<div class="hidden md:block">
+<div class="ml-10 flex items-baseline space-x-4">
+<a href="#intro" class="hover:text-vibrant-cyan px-3 py-2 rounded-md text-sm font-medium transition-colors">Einführung</a>
+<a href="#benchmark" class="hover:text-vibrant-pink px-3 py-2 rounded-md text-sm font-medium transition-colors">GPQA Diamond</a>
+<a href="#architektur" class="hover:text-vibrant-yellow px-3 py-2 rounded-md text-sm font-medium transition-colors">Modell-Architektur</a>
+<a href="#api" class="hover:text-vibrant-purple px-3 py-2 rounded-md text-sm font-medium transition-colors">Gemini 3.5 API</a>
+</div>
+</div>
+</div>
+</div>
+</nav>
+<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+<header class="text-center mb-20" id="intro">
+<div class="inline-block px-4 py-1 rounded-full border border-vibrant-cyan text-vibrant-cyan text-sm font-mono mb-6">
+Modul 3: Agentic Engineering & Large Language Models
+</div>
+<h1 class="text-4xl md:text-6xl font-extrabold tracking-tight mb-6">
+Von der stochastischen Simulation zur <span class="text-transparent bg-clip-text bg-gradient-to-r from-vibrant-cyan via-vibrant-purple to-vibrant-pink">semantischen Intelligenz</span>
+</h1>
+<p class="mt-4 max-w-3xl mx-auto text-xl text-vibrant-textMuted">
+Willkommen auf der kognitiven Ebene des Neo-Simulacrums. Bisher haben wir gelernt, wie man Zufallsprozesse mit JAX-Engines algorithmisch bändigt. Doch reine numerische Beschleunigung ist blind. In dieser Woche statten wir unsere Systemsimulationen mit Verstand aus.
+</p>
+</header>
+<section class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-24">
+<div class="space-y-6">
+<h2 class="text-3xl font-bold text-vibrant-cyan border-l-4 border-vibrant-cyan pl-4">Zahlen vs. Bedeutung</h2>
+<p class="text-lg text-vibrant-textMuted">
+Eine High-Performance-Simulation, die Terabytes an rohen Datenpunkten ausspuckt, benötigt ein Gehirn, um Anomalien zu interpretieren, physikalische Gesetze zu validieren und Parameter strategisch anzupassen. 
+</p>
+<p class="text-lg text-vibrant-textMuted">
+Wir schlagen nun die Brücke von reiner Mathematik zur <strong>Frontier AI</strong>. Mithilfe der <span class="text-vibrant-pink font-semibold">Google Gemini 3.5 API</span> statten wir autonome Akteure (Agenten) mit der Fähigkeit aus, Simulationsgraphen zu analysieren und Logdateien semantisch zu verstehen.
+</p>
+<div class="p-6 glass-card rounded-xl border-l-4 border-vibrant-purple">
+<h4 class="text-xl font-bold text-white mb-2">Die Kernidee</h4>
+<p class="text-vibrant-textMuted">Der JAX-Code generiert die Daten – aber das Foundation Model (LLM) versteht die physikalische oder ökonomische Realität dahinter und steuert Optimierungsschleifen völlig eigenständig.</p>
+</div>
+</div>
+<div class="glass-card rounded-2xl p-8 flex flex-col items-center justify-center min-h-[400px]">
+<div class="text-center mb-8">
+<h3 class="text-2xl font-mono text-vibrant-yellow font-bold">Der Paradigmenwechsel</h3>
+</div>
+<div class="flex w-full items-center justify-between px-4">
+<div class="flex flex-col items-center">
+<div class="w-24 h-24 rounded-full bg-vibrant-surfaceLight flex items-center justify-center border-2 border-vibrant-cyan mb-4">
+<span class="text-4xl">∑</span>
+</div>
+<span class="font-mono text-sm text-vibrant-cyan">Stochastik (JAX)</span>
+</div>
+<div class="flex-1 flex items-center justify-center">
+<div class="h-1 w-full bg-gradient-to-r from-vibrant-cyan to-vibrant-pink relative">
+<div class="absolute -top-3 left-1/2 transform -translate-x-1/2 text-2xl text-white">→</div>
+</div>
+</div>
+<div class="flex flex-col items-center">
+<div class="w-24 h-24 rounded-full bg-vibrant-surfaceLight flex items-center justify-center border-2 border-vibrant-pink mb-4">
+<span class="text-4xl">Ω</span>
+</div>
+<span class="font-mono text-sm text-vibrant-pink">Semantik (Gemini 3.5)</span>
+</div>
+</div>
+</div>
+</section>
+<section id="benchmark" class="mb-24">
+<div class="text-center mb-12">
+<h2 class="text-3xl md:text-4xl font-bold mb-4">Die GPQA Diamond Revolution (2026)</h2>
+<p class="text-xl text-vibrant-textMuted max-w-4xl mx-auto">
+Um zu verstehen, warum wir LLMs für komplexe Simulationen nutzen können, müssen wir ihre aktuelle Leistungsfähigkeit (Stand Mitte 2026) betrachten. Der <strong>GPQA (Graduate-Level Google-Proof Q&A) Diamond</strong> Benchmark testet Modelle an hochkomplexen Fragen aus Physik, Biologie und Chemie, die selbst für Experten mit Internetzugang schwer lösbar sind.
+</p>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<div class="lg:col-span-2 glass-card rounded-2xl p-6">
+<h3 class="text-xl font-semibold mb-6 text-center">Modell-Leistung bei komplexen Domänen-Problemen (GPQA)</h3>
+<div class="chart-container">
+<canvas id="gpqaChart"></canvas>
+</div>
+</div>
+<div class="space-y-6 flex flex-col justify-center">
+<div class="glass-card rounded-xl p-6 border-t-4 border-vibrant-pink">
+<div class="text-4xl font-black text-vibrant-pink mb-2">85.5%</div>
+<h4 class="text-lg font-bold text-white mb-2">Gemini 3.5 Pro</h4>
+<p class="text-sm text-vibrant-textMuted">Übertrifft die menschliche PhD-Baseline deutlich und beweist herausragende Fähigkeiten im physikalisch-mathematischen Reasoning. Perfekt als "Analyst" in unserer Simulation.</p>
+</div>
+<div class="glass-card rounded-xl p-6 border-t-4 border-vibrant-yellow">
+<div class="text-4xl font-black text-vibrant-yellow mb-2">81.2%</div>
+<h4 class="text-lg font-bold text-white mb-2">Menschlicher Experte (PhD)</h4>
+<p class="text-sm text-vibrant-textMuted">Hochqualifizierte Akademiker erreichen in ihrem eigenen Fachgebiet (ohne Zeitlimit) im Durchschnitt diese Marke. Frontier AI der Generation 2026 hat diesen Schwellenwert durchbrochen.</p>
+</div>
+<div class="glass-card rounded-xl p-6 border-t-4 border-vibrant-cyan">
+<div class="text-4xl font-black text-vibrant-cyan mb-2">Open-Weights</div>
+<h4 class="text-lg font-bold text-white mb-2">Grok-3 & Llama-4</h4>
+<p class="text-sm text-vibrant-textMuted">Auch offene oder halboffene Modelle (wie Metas Llama-4 oder xAIs Grok-3) erreichen in 2026 Expertenniveau, was lokale Multi-Agenten-Systeme (MAS) extrem mächtig macht.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="architektur" class="mb-24">
+<h2 class="text-3xl md:text-4xl font-bold mb-12 text-center">Warum sind die Modelle so effizient?</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+<div class="glass-card rounded-2xl p-8">
+<h3 class="text-2xl font-bold text-vibrant-yellow mb-4">Mixture of Experts (MoE)</h3>
+<p class="text-vibrant-textMuted mb-8">
+Klassische neuronale Netze (Dense Models) aktivieren bei jedem Wort das gesamte Netzwerk. MoE-Modelle (wie Gemini, Grok oder Mixtral) sind intelligenter: Sie bestehen aus vielen kleinen "Experten-Netzwerken". Ein <strong>Router</strong> entscheidet für jeden Input-Token (Wortfetzen), welche 2 oder 3 Experten am besten geeignet sind. Das spart massiv Rechenleistung.
+</p>
+<div class="bg-vibrant-bg p-6 rounded-xl border border-vibrant-surfaceLight">
+<div class="flex flex-col items-center space-y-6">
+<div class="px-6 py-2 bg-vibrant-surface border border-vibrant-text rounded text-center">
+Input Token: "Berechne Differential"
+</div>
+<div class="text-2xl text-vibrant-yellow">↓</div>
+<div class="px-8 py-3 bg-vibrant-yellow text-black font-bold rounded-full shadow-[0_0_15px_rgba(234,179,8,0.5)]">
+Routing-Netzwerk
+</div>
+<div class="flex justify-between w-full relative pt-6 border-t-2 border-vibrant-yellow mt-2 border-dashed">
+<div class="absolute -top-3 left-1/4 text-vibrant-yellow">↙</div>
+<div class="absolute -top-3 right-1/4 text-vibrant-yellow">↘</div>
+<div class="flex flex-col space-y-2 w-1/4">
+<div class="py-2 bg-vibrant-surface border border-vibrant-surfaceLight rounded text-center text-sm opacity-50">Sprach-Experte</div>
+</div>
+<div class="flex flex-col space-y-2 w-1/4">
+<div class="py-2 bg-vibrant-surface border-2 border-vibrant-pink rounded text-center text-sm text-vibrant-pink font-bold shadow-[0_0_10px_rgba(236,72,153,0.3)]">Mathe-Experte (Aktiv)</div>
+</div>
+<div class="flex flex-col space-y-2 w-1/4">
+<div class="py-2 bg-vibrant-surface border-2 border-vibrant-cyan rounded text-center text-sm text-vibrant-cyan font-bold shadow-[0_0_10px_rgba(6,182,212,0.3)]">Code-Experte (Aktiv)</div>
+</div>
+<div class="flex flex-col space-y-2 w-1/4">
+<div class="py-2 bg-vibrant-surface border border-vibrant-surfaceLight rounded text-center text-sm opacity-50">Fakten-Experte</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="glass-card rounded-2xl p-8">
+<h3 class="text-2xl font-bold text-vibrant-purple mb-4">Multi-Head Latent Attention (MLA)</h3>
+<p class="text-vibrant-textMuted mb-6">
+Pionierarbeit von Systemen wie DeepSeek, die von modernen Modellen übernommen wurde. MLA löst den Speicher-Flaschenhals bei der Textgenerierung (KV-Cache). Anstatt alle Schlüssel und Werte für jedes Wort zeitaufwändig zu speichern, werden sie in einen extrem kompakten, komprimierten Vektor (Latent Space) projiziert.
+</p>
+<ul class="space-y-4">
+<li class="flex items-start">
+<span class="text-vibrant-purple mr-3 mt-1 text-xl">■</span>
+<div>
+<strong class="text-white">Geringerer Speicherverbrauch:</strong> Erlaubt Kontext-Fenster von 2 Millionen+ Token (genug für unsere gesamten Simulations-Logfiles!).
+</div>
+</li>
+<li class="flex items-start">
+<span class="text-vibrant-purple mr-3 mt-1 text-xl">■</span>
+<div>
+<strong class="text-white">Höhere Inferenz-Geschwindigkeit:</strong> Modelle wie Grok und Llama können blitzschnell auf Systemzustände in unserer Antigravity ADE (Agent Development Environment) reagieren.
+</div>
+</li>
+</ul>
+<div class="mt-8 p-4 bg-vibrant-surfaceLight rounded-lg text-sm font-mono text-vibrant-cyan border-l-4 border-vibrant-purple">
+<span class="text-vibrant-pink">Ergebnis:</span> Ökonomische Intelligenz. Wir können hunderte "kognitive Aufrufe" pro Sekunde in unserer Simulationsschleife durchführen, ohne das System zu überlasten.
+</div>
+</div>
+</div>
+</section>
+<section class="mb-24">
+<h2 class="text-3xl md:text-4xl font-bold mb-12 text-center">Kurze Historie: Auf den Schultern von Giganten</h2>
+<div class="max-w-4xl mx-auto pl-10 border-l-2 border-vibrant-surfaceLight relative">
+<div class="mb-10 relative timeline-item">
+<div class="text-vibrant-pink font-bold text-xl mb-1">2017 - Der Grundstein</div>
+<h3 class="text-2xl font-bold text-white mb-2">Attention Is All You Need</h3>
+<p class="text-vibrant-textMuted">Google veröffentlicht das Transformer-Papier. Das Konzept der "Self-Attention" löst RNNs ab und ermöglicht die parallele Verarbeitung von Sequenzen. Die Basis aller modernen LLMs.</p>
+</div>
+<div class="mb-10 relative timeline-item">
+<div class="text-vibrant-cyan font-bold text-xl mb-1">2020 - Skalierungsgesetze</div>
+<h3 class="text-2xl font-bold text-white mb-2">GPT-3 & Scaling Laws</h3>
+<p class="text-vibrant-textMuted">OpenAI beweist: Je größer das Modell und je mehr Daten, desto besser die Vorhersage. Das Zeitalter der massiven Rechenzentren und des "Few-Shot Prompts" beginnt.</p>
+</div>
+<div class="mb-10 relative timeline-item">
+<div class="text-vibrant-yellow font-bold text-xl mb-1">2023 - Die Open-Weights Ära</div>
+<h3 class="text-2xl font-bold text-white mb-2">Llama & Der lokale Boom</h3>
+<p class="text-vibrant-textMuted">Meta veröffentlicht die Llama-Familie. Die Forschung demokratisiert sich. Plötzlich können kraftvolle Modelle lokal auf Consumer-GPUs (oder durch Quantisierung sogar auf Laptops) laufen.</p>
+</div>
+<div class="mb-10 relative timeline-item">
+<div class="text-vibrant-purple font-bold text-xl mb-1">2024/2025 - Effizienz & Modalität</div>
+<h3 class="text-2xl font-bold text-white mb-2">MoE, DeepSeek & Gemini Multimodal</h3>
+<p class="text-vibrant-textMuted">Der Fokus verschiebt sich von reiner Größe auf smarte Architekturen (MoE, MLA). Grok und DeepSeek zeigen massive Effizienzsteigerungen. Gemini etabliert echtes natives multimodales Verstehen (Code, Bild, Ton gleichzeitig).</p>
+</div>
+<div class="relative timeline-item">
+<div class="text-vibrant-pink font-bold text-xl mb-1">2026 - Das Orakel erwacht</div>
+<h3 class="text-2xl font-bold text-white mb-2">Agentic Era & Gemini 3.5 API</h3>
+<p class="text-vibrant-textMuted">LLMs sind nicht mehr nur Chatbots. Sie fungieren als autonome Controller in Systemsimulationen (Antigravity). Sie analysieren Graphen in Echtzeit, steuern JAX-Routinen und kommunizieren in Multi-Agenten-Systemen.</p>
+</div>
+</div>
+</section>
+<section id="api" class="mb-12">
+<div class="text-center mb-12">
+<h2 class="text-3xl md:text-4xl font-bold mb-4">Gemini 3.5 API im Tooling-Stack</h2>
+<p class="text-xl text-vibrant-textMuted max-w-4xl mx-auto">
+In der kommenden Übung werden wir die Gemini API anbinden. Wichtig für die Systemsimulation ist der Trade-off zwischen Kognition (Intelligenz) und Inferenz-Latenz (Geschwindigkeit).
+</p>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+<div class="glass-card rounded-2xl p-6">
+<h3 class="text-xl font-semibold mb-6 text-center">Fähigkeit (GPQA) vs. Latenz (ms pro Token)</h3>
+<div class="chart-container">
+<canvas id="scatterChart"></canvas>
+</div>
+<p class="text-sm text-center text-vibrant-textMuted mt-4 font-mono">Simulierte Metriken für API-Aufrufe (Stand 2026)</p>
+</div>
+<div class="space-y-6">
+<h3 class="text-2xl font-bold text-white">Agenten-Klassen in unserer ADE</h3>
+<div class="p-5 border border-vibrant-surfaceLight rounded-xl bg-vibrant-surface">
+<h4 class="text-lg font-bold text-vibrant-cyan mb-1 flex items-center"><span class="mr-2 text-2xl">⚡</span> Der Echtzeit-Controller</h4>
+<p class="text-sm text-vibrant-textMuted mb-2">Nutzt Modelle wie <strong>Gemini 3.5 Flash</strong> oder <strong>Llama-4-8B</strong>.</p>
+<p class="text-sm">Zuständig für Parameter-Tuning pro Frame. Extreme Latenz-Anforderungen (unter 10ms/Token). Trifft schnelle, heuristische Entscheidungen basierend auf JAX-Sensordaten.</p>
+</div>
+<div class="p-5 border border-vibrant-surfaceLight rounded-xl bg-vibrant-surface">
+<h4 class="text-lg font-bold text-vibrant-pink mb-1 flex items-center"><span class="mr-2 text-2xl">🧠</span> Der Strategische Analyst</h4>
+<p class="text-sm text-vibrant-textMuted mb-2">Nutzt Modelle wie <strong>Gemini 3.5 Pro</strong> oder <strong>Claude 3.5 Opus</strong>.</p>
+<p class="text-sm">Analysiert das Makro-Verhalten der Simulation. Wird nur alle paar hundert Iterationen aufgerufen. Bekommt ganze Graphen und Log-Historien übermittelt. Überprüft, ob das System den thermodynamischen oder ökonomischen Gleichgewichten folgt.</p>
+</div>
+</div>
+</div>
+</section>
+</main>
+<footer class="glass-card py-8 border-t border-vibrant-surfaceLight mt-12 text-center text-vibrant-textMuted text-sm font-mono">
+<p>Angewandte Modellierung und Systemsimulation | Woche 7 | Generiert für Lehrzwecke (2026)</p>
+</footer>
+<script>
+function wrapLabel(text, maxChars) {
+const words = text.split(' ');
+const lines = [];
+let currentLine = '';
+for (let i = 0; i < words.length; i++) {
+const word = words[i];
+if ((currentLine + word).length > maxChars) {
+if (currentLine.trim() !== '') {
+lines.push(currentLine.trim());
+}
+currentLine = word + ' ';
+} else {
+currentLine += word + ' ';
+}
+}
+if (currentLine.trim() !== '') {
+lines.push(currentLine.trim());
+}
+return lines.length === 1 ? lines[0] : lines;
+}
+const commonTooltipConfig = {
+title: function(tooltipItems) {
+const item = tooltipItems[0];
+let label = item.chart.data.labels[item.dataIndex];
+if (Array.isArray(label)) {
+return label.join(' ');
+} else {
+return label;
+}
+}
+};
+const gpqaLabelsRaw = [
+"Menschlicher Experte (PhD)",
+"Llama-4 (Meta) - 70B",
+"GPT-4o (OpenAI)",
+"Grok-3 (xAI)",
+"Claude 3.5 Opus (Anthropic)",
+"Gemini 3.5 Pro (Google)"
+];
+const gpqaLabels = gpqaLabelsRaw.map(label => wrapLabel(label, 16));
+const ctxBar = document.getElementById('gpqaChart').getContext('2d');
+new Chart(ctxBar, {
+type: 'bar',
+data: {
+labels: gpqaLabels,
+datasets: [{
+label: 'GPQA Diamond Score (%)',
+data: [81.2, 81.9, 83.5, 83.8, 84.1, 85.5],
+backgroundColor: [
+'rgba(234, 179, 8, 0.7)',
+'rgba(6, 182, 212, 0.7)',
+'rgba(148, 163, 184, 0.7)',
+'rgba(248, 113, 113, 0.7)',
+'rgba(167, 139, 250, 0.7)',
+'rgba(236, 72, 153, 0.9)'
+],
+borderColor: [
+'rgba(234, 179, 8, 1)',
+'rgba(6, 182, 212, 1)',
+'rgba(148, 163, 184, 1)',
+'rgba(248, 113, 113, 1)',
+'rgba(167, 139, 250, 1)',
+'rgba(236, 72, 153, 1)'
+],
+borderWidth: 1,
+borderRadius: 4
+}]
+},
+options: {
+indexAxis: 'y',
+responsive: true,
+maintainAspectRatio: false,
+plugins: {
+legend: { display: false },
+tooltip: {
+callbacks: commonTooltipConfig,
+backgroundColor: 'rgba(15, 23, 42, 0.9)',
+titleColor: '#fff',
+bodyColor: '#f8fafc',
+borderColor: 'rgba(255,255,255,0.1)',
+borderWidth: 1
+}
+},
+scales: {
+x: {
+min: 75,
+max: 90,
+grid: { color: 'rgba(255,255,255,0.1)' },
+ticks: { color: '#94a3b8' },
+title: { display: true, text: 'GPQA Diamond Genauigkeit (%)', color: '#94a3b8' }
+},
+y: {
+grid: { display: false },
+ticks: { color: '#f8fafc', font: { family: 'Inter', size: 12 } }
+}
+}
+}
+});
+const ctxScatter = document.getElementById('scatterChart').getContext('2d');
+new Chart(ctxScatter, {
+type: 'scatter',
+data: {
+datasets: [
+{
+label: 'Gemini 3.5 Pro',
+data: [{x: 45, y: 85.5}],
+backgroundColor: '#ec4899',
+pointRadius: 8,
+pointHoverRadius: 10
+},
+{
+label: 'Claude 3.5 Opus',
+data: [{x: 52, y: 84.1}],
+backgroundColor: '#a78bfa',
+pointRadius: 8,
+pointHoverRadius: 10
+},
+{
+label: 'Grok-3',
+data: [{x: 38, y: 83.8}],
+backgroundColor: '#f87171',
+pointRadius: 8,
+pointHoverRadius: 10
+},
+{
+label: 'Llama-4 70B',
+data: [{x: 25, y: 81.9}],
+backgroundColor: '#06b6d4',
+pointRadius: 8,
+pointHoverRadius: 10
+},
+{
+label: 'Gemini 3.5 Flash',
+data: [{x: 8, y: 76.5}],
+backgroundColor: '#f43f5e',
+pointStyle: 'triangle',
+pointRadius: 8,
+pointHoverRadius: 10
+},
+{
+label: 'Llama-4 8B (Lokal)',
+data: [{x: 5, y: 72.0}],
+backgroundColor: '#0ea5e9',
+pointStyle: 'triangle',
+pointRadius: 8,
+pointHoverRadius: 10
+}
+]
+},
+options: {
+responsive: true,
+maintainAspectRatio: false,
+plugins: {
+legend: {
+labels: { color: '#f8fafc', usePointStyle: true },
+position: 'bottom'
+},
+tooltip: {
+backgroundColor: 'rgba(15, 23, 42, 0.9)',
+titleColor: '#fff',
+bodyColor: '#f8fafc',
+borderColor: 'rgba(255,255,255,0.1)',
+borderWidth: 1,
+callbacks: {
+label: function(context) {
+return context.dataset.label + ': ' + context.parsed.y + '% GPQA @ ' + context.parsed.x + 'ms/token';
+}
+}
+}
+},
+scales: {
+x: {
+grid: { color: 'rgba(255,255,255,0.1)' },
+ticks: { color: '#94a3b8' },
+title: { display: true, text: 'Latenz (Millisekunden pro Token) - Logarithmisch', color: '#94a3b8' },
+type: 'logarithmic'
+},
+y: {
+grid: { color: 'rgba(255,255,255,0.1)' },
+ticks: { color: '#94a3b8' },
+title: { display: true, text: 'Kognitive Fähigkeit (GPQA %)', color: '#94a3b8' }
+}
+}
+}
+});
+</script>
+</body>
+</html>

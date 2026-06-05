@@ -1,0 +1,66 @@
+<div class="space-y-8">
+    <!-- Header Block -->
+    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-slate-900 pb-6">
+        <div>
+            <span class="px-2.5 py-0.5 rounded-full bg-slate-800 text-slate-400 text-xs font-mono font-bold uppercase tracking-wider border border-slate-750">Programming Assignment</span>
+            <h3 class="text-2xl font-black text-white mt-2">Problem Set 3: Project Genesis – The Oracle Awakens</h3>
+            <p class="text-sm text-slate-455 mt-1">Deadline: TBA | Weight: 40% of Module 1 grade (4 Points) | Quiz: 1 Point</p>
+        </div>
+        <a href="weeks/week3/problemset.ipynb" download class="px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-800 hover:border-cyan-500/50 hover:bg-cyan-500/5 text-xs font-mono font-bold text-cyan-400 flex items-center gap-2 transition-all duration-200 hover:scale-105 active:scale-95 shadow-lg shadow-cyan-500/5">
+            <span>📥</span> Download Jupyter Notebook
+        </a>
+    </div>
+<p class="text-sm text-slate-300 leading-relaxed">**</p>
+<div class="p-6 glass-card rounded-2xl border-l-4 border-cyan-500 bg-cyan-950/5 space-y-3 my-6">
+    <h4 class="text-cyan-400 font-bold text-lg flex items-center gap-2">
+        ð The Story
+    </h4>
+<p class="text-sm text-slate-300 leading-relaxed">Your local architecture is secure in the Vault. The uv.lock has mapped your exact dependencies. The physical data is synthesized. But an untrained neural network is just an empty vessel. This week, you will pull your repository into the High-Performance Computing (HPC) cloud of Google Colab.</p>
+<p class="text-sm text-slate-300 leading-relaxed">First, you will design the object-oriented architecture of your Deep Autoencoder locally. By activating hardware accelerators (TPUs) in Colab and compiling your Keras 3 model via JAX, you will breathe life into the Oracle. You will train it to understand the "normal" physics of the RC filter, allowing it to detect the catastrophic anomalies you injected last week. Finally, looking toward the horizon of modern AI, you will call upon your Agent to refactor your code into Convolutional Layers.</p>
+</div>
+<h4 class="text-lg font-bold text-white border-b border-slate-850 pb-2 mt-8 mb-4 flex items-center gap-2">
+    <span class="text-cyan-400">⚡</span> Exercise 1: Architecting the Oracle (Subclassed Models)
+</h4>
+<p class="text-sm text-slate-300 leading-relaxed">*Learning Objective: Translating mathematical theory into actionable code using Keras Subclassing APIs.*</p>
+<p class="text-sm text-slate-300 leading-relaxed">We will not use basic, off-the-shelf Sequential models. You must build a custom bottleneck network locally before deploying to the cloud.</p>
+<ol class="list-decimal pl-6 text-sm text-slate-300 space-y-3">
+    <li class="leading-relaxed"><strong class="text-white">Sequence Windowing:</strong> In a new script (src/architecture.py), write a function to slice your 1D signal into overlapping 2D matrices (window_size = 50 timesteps). Split the data: use the normal data (before period 60) for your training set, and the rest for testing.</li>
+    <li class="leading-relaxed"><strong class="text-white">The Subclassed Layer:</strong> Using the keras.layers.Layer API, build a custom SignalCompression layer. Use a dense matrix inside the build() method to reduce the 50-timestep window down to a latent dimension of just 8. Implement the forward pass in call() using a relu activation.</li>
+    <li class="leading-relaxed"><strong class="text-white">The Subclassed Model:</strong> Using the keras.Model API, build PhysicsAutoencoder, chaining your SignalCompression encoder to a SignalExpansion decoder (reconstructing 8 dimensions back to 50).</li>
+    <li class="leading-relaxed"><strong class="text-white">Deliverables:</strong> Push your architecture to GitHub. *(Do not train the model locally\!)*</li>
+</ol>
+<h4 class="text-lg font-bold text-white border-b border-slate-850 pb-2 mt-8 mb-4 flex items-center gap-2">
+    <span class="text-cyan-400">⚡</span> Exercise 2: The Cloud Compute Awakening (Google Colab & Training)
+</h4>
+<p class="text-sm text-slate-300 leading-relaxed">*Learning Objective: Cloud environments, hardware acceleration, and utilizing MAE reconstruction loss for anomaly detection.*</p>
+<ol class="list-decimal pl-6 text-sm text-slate-300 space-y-3">
+    <li class="leading-relaxed"><strong class="text-white">Pulling from the Vault:</strong> Open Google Colab. Change the runtime to <strong class="text-white">T4 GPU</strong> or <strong class="text-white">TPU</strong>. In the first cell, pull your codebase into the cloud:</li>
+<p class="text-sm text-slate-300 leading-relaxed">Bash</p>
+</ol>
+<p class="text-sm text-slate-300 leading-relaxed">\!git clone \[YOUR_REPO_URL\]</p>
+<p class="text-sm text-slate-300 leading-relaxed">%cd genesis-oracle</p>
+<ol class="list-decimal pl-6 text-sm text-slate-300 space-y-3">
+    <li class="leading-relaxed"><strong class="text-white">Injecting</strong> <strong class="text-white">uv</strong> <strong class="text-white">into the Cloud:</strong> Colab's default package manager is slow. In the next cell, install uv via pip, then use it to instantly read your pyproject.toml and install your exact dependencies directly into the Colab system environment:</li>
+<p class="text-sm text-slate-300 leading-relaxed">Bash</p>
+</ol>
+<p class="text-sm text-slate-300 leading-relaxed">\!pip install uv</p>
+<p class="text-sm text-slate-300 leading-relaxed">\!uv pip install --system -r pyproject.toml</p>
+<ol class="list-decimal pl-6 text-sm text-slate-300 space-y-3">
+    <li class="leading-relaxed"><strong class="text-white">Training the Oracle:</strong> Inside Colab, load the data you generated. Compile your PhysicsAutoencoder with the adam optimizer and Mean Squared Error (mse) loss. Train it on your normal data for 30 epochs. Notice the speed of the JAX XLA compiler\!</li>
+    <li class="leading-relaxed"><strong class="text-white">The Detection Run & Anomaly Trigger:</strong> Pass your *entire* dataset (including the anomaly) through the trained Autoencoder. Calculate the Mean Absolute Error (MAE) between the raw input sequences and the model's reconstructed predictions at each time step.</li>
+    <li class="leading-relaxed"><strong class="text-white">Deliverables:</strong> Plot the Reconstruction Loss over time. You should see a flat, stable line for the normal physics, and a <strong class="text-white">massive, undeniable spike</strong> exactly where the anomaly was injected. Draw a red dashed horizontal line representing your automated "Anomaly Threshold." Download and save this plot.</li>
+</ol>
+<h4 class="text-lg font-bold text-white border-b border-slate-850 pb-2 mt-8 mb-4 flex items-center gap-2">
+    <span class="text-cyan-400">⚡</span> Exercise 3: Agentic Code Refactoring (The Convolutional Horizon)
+</h4>
+<p class="text-sm text-slate-300 leading-relaxed">*Learning Objective: Automating architectural improvements using Foundation Models (Agentic Engineering).*</p>
+<p class="text-sm text-slate-300 leading-relaxed">The literature notes that advanced physical signal flows (like EEG classifications) are better handled by Convolutional or Transformer models rather than simple Dense matrices.</p>
+<ol class="list-decimal pl-6 text-sm text-slate-300 space-y-3">
+    <li class="leading-relaxed"><strong class="text-white">The Architecture Review:</strong> Feed your subclassed PhysicsAutoencoder code to the Gemini Web Interface or your CLI Agent. Prompt the agent:</li>
+<p class="text-sm text-slate-300 leading-relaxed">*"I have built this dense Autoencoder for time-series anomaly detection in Keras 3. To better capture the non-stationary, temporal nature of this physical signal, please rewrite my Encoder and Decoder classes to utilize 1D Convolutional Layers (<strong class="text-white">Conv1D* *and* *Conv1DTranspose</strong>). Explain how the tensor shapes change during the forward pass."*</p>
+    <li class="leading-relaxed"><strong class="text-white">Deliverables:</strong> Submit the AI-generated code snippet for the upgraded Conv1D Autoencoder. In your own words (2-3 sentences), summarize the agent's explanation of *why* Conv1D layers are mathematically better suited for finding local patterns in time-series data.</li>
+    <li class="leading-relaxed"><strong class="text-white">Final Deployment:</strong> Ask your Agent to update your GitHub Pages index.md file with the anomaly plot and a short summary of the experiment. Push the final project to your main branch so the class can view your live Oracle\!</li>
+</ol>
+<p class="text-sm text-slate-300 leading-relaxed">**</p>
+<p class="text-sm text-slate-300 leading-relaxed">**</p>
+</div>

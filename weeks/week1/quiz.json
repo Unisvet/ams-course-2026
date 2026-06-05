@@ -1,0 +1,111 @@
+[
+    {
+        "question": "What is the fundamental shift from classical systems engineering to the modern \"Neo-Simulacrum\" paradigm introduced in the course?",
+        "options": [
+            "A transition from AI-driven modeling to manual block diagram construction.",
+            "A move toward Agentic Engineering, converging classical system theory with GenAI to orchestrate autonomous MASs.",
+            "The exclusive use of MATLAB Citadel for writing cognitive entities.",
+            "A rejection of physical laws in favor of pure unstructured data generation."
+        ],
+        "answerIndex": 1,
+        "explanation": "The correct answer is a move toward Agentic Engineering, converging classical system theory with GenAI to orchestrate autonomous MASs."
+    },
+    {
+        "question": "During your initial environment setup, which specific tool are you expected to use to autonomously generate a bash script (init_nexus.sh)?",
+        "options": [
+            "ExtendingSim",
+            "FlexSim",
+            "Gemini CLI",
+            "JAX-PI"
+        ],
+        "answerIndex": 2,
+        "explanation": "The Gemini CLI is the tool used to autonomously generate the bash script."
+    },
+    {
+        "question": "When bootstrapping your digital workspace, what is the name for your Python virtual environment, and which simulation libraries must be installed?",
+        "options": [
+            "Environment: sim_env; Libraries: pytorch, pandas, sklearn",
+            "Environment: electronica_env; Libraries: tensorflow, keras, flax",
+            "Environment: agent_env; Libraries: simpy, numpy, matplotlib",
+            "Environment: nexus_env; Libraries: numpy, scipy, matplotlib."
+        ],
+        "answerIndex": 3,
+        "explanation": "The environment is nexus_env, and the required libraries are numpy, scipy, and matplotlib."
+    },
+    {
+        "question": "According to the course reading, why is transforming physical states into dimensionless variables considered a critical \"superpower\" in modern system simulation? (Select all that apply)",
+        "options": [
+            "It allows physical laws to be expressed more compactly with fewer variables, fundamentally reducing the dimensionality of the parameter space.",
+            "It helps neural networks navigate loss landscapes more effectively, improving both convergence rates and generalizability.",
+            "It entirely eliminates the need for computing Jacobians in physics-informed neural networks.",
+            "It deliberately increases the parameter space so the model can capture high-dimensional noise."
+        ],
+        "answerIndex": [
+            0,
+            1
+        ],
+        "explanation": "It allows compact expression of physical laws and helps neural networks navigate loss landscapes effectively."
+    },
+    {
+        "question": "To solve the continuous differential equations of the swinging pendulum and radioactive decay, which specific Python function from the scipy library must you instruct the AI to use?",
+        "options": [
+            "jax.lax.scan",
+            "scipy.integrate.solve_discrete",
+            "scipy.integrate.solve_ivp.",
+            "numpy.integrate.euler"
+        ],
+        "answerIndex": 2,
+        "explanation": "The scipy.integrate.solve_ivp function is required to solve the continuous differential equations."
+    },
+    {
+        "question": "In Exercise 3 (\"The Pulse of Time\"), what happens to the discrete model of the RL circuit when you deliberately change the discrete time step ($\\Delta t$) to a large value like $\\Delta t = 11$?",
+        "options": [
+            "The discrete model speeds up and accurately matches the continuous solver.",
+            "The discrete model fails catastrophically and becomes unstable.",
+            "The continuous solver automatically adjusts its step size to compensate for the discrete error.",
+            "The discrete model triggers an automatic dimensional reduction algorithm."
+        ],
+        "answerIndex": 1,
+        "explanation": "Setting the discrete time step to a large value causes the discrete model to fail catastrophically and become unstable."
+    },
+    {
+        "question": "In the final exercise to spark autonomy, which Agent Development Environment (ADE) must you launch, and what must you name your new agent profile?",
+        "options": [
+            "ADE: JAX-PI; Agent: Architect-Zero",
+            "ADE: ADK 1.0; Agent: Simulator-Alpha",
+            "ADE: Antigravity; Agent: Observer-Prime.",
+            "ADE: Gemini Studio; Agent: Simulink-Sorcerer"
+        ],
+        "answerIndex": 2,
+        "explanation": "The required Agent Development Environment is Antigravity, and the agent profile must be named Observer-Prime."
+    },
+    {
+        "question": "Which of the following actions are part of the exact multi-step task assigned to the \"Observer-Prime\" agent using the ADE interface? (Select all that apply)",
+        "options": [
+            "Run the src/ancients.py script.",
+            "Check if the plot image was successfully created in the data folder.",
+            "Write a bash script init_nexus.sh to bootstrap the environment.",
+            "Write a markdown file named docs/Agent_Report.md summarizing the physical systems simulated."
+        ],
+        "answerIndex": [
+            0,
+            1,
+            3
+        ],
+        "explanation": "The task includes running the src/ancients.py script, checking for the plot image, and writing the Agent_Report.md file."
+    },
+    {
+        "question": "In the context of the Gemini CLI, what is the primary function of \"Plan Mode\"? (Select all that apply)",
+        "options": [
+            "To compile Python functions into highly optimized JAX Intermediate Representation graphs.",
+            "To execute terminal commands autonomously without any user intervention to maximize speed.",
+            "To provide a safe, read-only environment where the agent generates a structured execution plan before making any local file modifications.",
+            "To support real-time model steering, allowing the engineer to provide mid-draft feedback while the agent actively researches the codebase."
+        ],
+        "answerIndex": [
+            2,
+            3
+        ],
+        "explanation": "Plan Mode provides a safe, read-only environment for planning and supports real-time model steering for mid-draft feedback."
+    }
+]

@@ -1,0 +1,116 @@
+[
+    {
+        "question": "Wie skaliert die Konvergenzrate der klassischen Monte-Carlo-Integration bei steigender Dimension d?",
+        "options": [
+            "Sie sinkt exponentiell mit der Dimension d",
+            "Sie bleibt unabhängig von d konstant bei O(1/sqrt(N))",
+            "Sie verbessert sich quadratisch durch mehr Dimensionen",
+            "Der Fluch der Dimensionalität wird komplett ausgehebelt"
+        ],
+        "answerIndex": 1,
+        "explanation": "Genau das ist die Magie von Monte Carlo\\! Egal ob 2 oder 100 Dimensionen, die Konvergenzrate bleibt bei O(1/sqrt(N)). Deshalb lieben wir MC in hohen Dimensionen. Bleibt dran\\!"
+    },
+    {
+        "question": "Warum besitzt JAX keinen globalen Zufallszustand wie numpy.random?",
+        "options": [
+            "Um Race Conditions auf parallelisierten GPUs/TPUs zu verhindern",
+            "Weil funktionale Reinheit (Pure Functions) erzwungen wird",
+            "Da Google die mathematische Konstante Pi geheim halten will",
+            "JAX-Entwickler haben schlicht vergessen, ihn zu implementieren"
+        ],
+        "answerIndex": [
+            0,
+            1
+        ],
+        "explanation": "JAX zwingt uns zu funktionaler Reinheit. Ein globaler State würde bei parallelen Berechnungen auf GPUs/TPUs zu fiesen Race Conditions führen. Sauberer Code zahlt sich aus\\!"
+    },
+    {
+        "question": "Was passiert, wenn man einen JAX PRNGKey im Loop wiederverwendet, ohne ihn zu splitten?",
+        "options": [
+            "Der Code bricht sofort mit einem Compiler-Error ab",
+            "Es werden jedes Mal exakt identische Zufallszahlen generiert",
+            "Die Simulation verliert ihre funktionale Reinheit",
+            "Das System schaltet heimlich in den Gedächtnis-Modus"
+        ],
+        "answerIndex": 1,
+        "explanation": "Achtung, Falle\\! Da JAX funktional rein ist, liefert derselbe Key immer denselben Output. Vergesst also nie euer jax.random.split(), sonst simuliert ihr Murmeltiertag\\!"
+    },
+    {
+        "question": "Welche Eigenschaft definiert eine diskrete Markov-Kette erster Ordnung fundamental?",
+        "options": [
+            "Das System besitzt kein Gedächtnis historischer Zustände",
+            "Die Zukunft hängt ausschließlich vom aktuellen Zustand ab",
+            "Übergangswahrscheinlichkeiten müssen immer absolut stabil bleiben",
+            "Sie wurde ursprünglich für die Analyse von Quanten erfunden"
+        ],
+        "answerIndex": [
+            0,
+            1
+        ],
+        "explanation": "Das ist die berühmte Markov-Eigenschaft (Gedächtnislosigkeit). Die Kette interessiert sich nicht für die Vergangenheit, sondern nur für das Hier und Jetzt. Keep it simple\\!"
+    },
+    {
+        "question": "Was beschreibt das Value-at-Risk (VaR_95%) in einer stochastischen Business-Simulation?",
+        "options": [
+            "Den maximalen Gewinn, den das Unternehmen zu 95% erzielen wird",
+            "Die Schadensgrenze, die in den schlechtesten 5% der Fälle eintritt",
+            "Den exakten Mittelwert aller simulierten Umsatzpfade",
+            "Das statistische Risiko, dass die GPU wegen Überhitzung schmilzt"
+        ],
+        "answerIndex": 1,
+        "explanation": "VaR ist euer Risiko-Radar\\! Bei 95% Konfidenz zeigt es euch den Verlust, der nur in den schlimmsten 5% der Szenarien überschritten wird. Ein Must-know fürs Risikomanagement\\!"
+    },
+    {
+        "question": "Welches JAX-Primitiv wandelt eine Single-Key-Simulation in eine massiv parallele Vektorgrafik um?",
+        "options": [
+            "jax.jit",
+            "jax.vmap",
+            "jax.lax.scan",
+            "jax.grad"
+        ],
+        "answerIndex": 1,
+        "explanation": "vmap (vectorizing map) ist euer bester Freund für Performance\\! Es nimmt eine Funktion für einen Single-Input und jagt sie parallel über ganze Batches. Mega effizient\\!"
+    },
+    {
+        "question": "Warum nutzt man für operationelle Kosten in Monte-Carlo-Modellen oft eine Log-Normalverteilung?",
+        "options": [
+            "Weil Kosten niemals negativ werden können",
+            "Um seltene, extrem hohe Verlustrisiken (Fat-Tails) abzubilden",
+            "Weil sie symmetrischer ist als die klassische Gauß-Verteilung",
+            "Damit die Achsen im Plot schöner aussehen"
+        ],
+        "answerIndex": [
+            0,
+            1
+        ],
+        "explanation": "Kosten können nicht negativ werden und haben oft Ausreißer nach oben (Fat-Tails). Die Log-Normalverteilung modelliert dieses asymmetrische Risiko perfekt. Gut mitgedacht\\!"
+    },
+    {
+        "question": "Wie wirkt sich ein strukturelles Black Swan Event mathematisch auf ein Markov-Modell aus?",
+        "options": [
+            "Die Übergangsmatrix P(t) wird zeitabhängig transient modifiziert",
+            "Wahrscheinlichkeiten verschieben sich abrupt in Krisenzustände",
+            "Das System bricht deterministisch zusammen und stoppt",
+            "Alle Wahrscheinlichkeiten werden augenblicklich perfekt gleich"
+        ],
+        "answerIndex": [
+            0,
+            1
+        ],
+        "explanation": "Black Swans brechen die normalen Regeln. Mathematisch bedeutet das, dass sich unsere Übergangswahrscheinlichkeiten abrupt ändern und in Krisenzustände springen. Expect the unexpected\\!"
+    },
+    {
+        "question": "Wie unterstützen Antigravity 2.0 Skills und Gemini 3.5 Flash die stochastische Pipeline?",
+        "options": [
+            "Durch automatisiertes Profiling von JAX-Kompilierungszeiten",
+            "Autonome Subagents testen Code-Variationsgrenzen im Sandbox-Terminal",
+            "Sie verbieten die Nutzung von Zufallszahlen vollständig",
+            "Sie ersetzen mathematische Formeln durch reine KI-Halluzinationen"
+        ],
+        "answerIndex": [
+            0,
+            1
+        ],
+        "explanation": "Hier trifft KI auf Stochastik\\! Autonome Subagents testen riesige Code-Variationsräume im Sandbox-Terminal, während ihr euch auf die Logik konzentriert. Die Zukunft\\!"
+    }
+]

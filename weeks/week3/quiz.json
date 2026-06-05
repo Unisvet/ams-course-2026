@@ -1,0 +1,128 @@
+[
+    {
+        "question": "Wozu zwingt der künstliche \"Latent Space\" den Deep Autoencoder?",
+        "options": [
+            "Fundamentale Systemdynamiken zu erlernen",
+            "Das irrelevante Sensorrauschen zu verwerfen",
+            "Rohdaten unkomprimiert in einer SQL-Datenbank zu speichern",
+            "Dynamische Python-Skripte für die Cloud zu generieren"
+        ],
+        "answerIndex": [
+            0,
+            1
+        ],
+        "explanation": "Der Latent Space zwingt das Modell zur Kompression, wodurch es fundamentale Dynamiken lernt und Rauschen verwirft."
+    },
+    {
+        "question": "Woran erkennt unser trainierter Autoencoder eine Systemanomalie?",
+        "options": [
+            "Das Netzwerk generiert einen Python-Syntaxfehler",
+            "Die Accuracy-Metrik fällt schlagartig auf null",
+            "Der Reconstruction Loss (z. B. MAE) steigt massiv an",
+            "Die physikalische Rekonstruktion des Signals scheitert"
+        ],
+        "answerIndex": [
+            2,
+            3
+        ],
+        "explanation": "Anomalien erzeugen untypische Signale, die der Autoencoder nicht rekonstruieren kann, was den Reconstruction Loss erhöht."
+    },
+    {
+        "question": "Was nutzt ein Optimierungsalgorithmus (wie Adam) zum Lernen?",
+        "options": [
+            "Die iterative Anpassung durch den Gradienten der Loss Function",
+            "Reines Trial-and-Error (Brute Force) ohne Mathematik",
+            "Manuelle Eingabe durch \"Sorcerers of Simulink\"",
+            "Mathematische Ableitungen zur Minimierung des Fehlers"
+        ],
+        "answerIndex": [
+            0,
+            3
+        ],
+        "explanation": "Optimierungsalgorithmen nutzen mathematische Ableitungen (Gradienten), um die Fehlerfunktion iterativ zu minimieren."
+    },
+    {
+        "question": "Was ist der massive architektonische Vorteil von Keras 3?",
+        "options": [
+            "Es benötigt überhaupt keine GPUs oder TPUs mehr",
+            "Backend-Agnostik (Code läuft in TensorFlow, PyTorch oder JAX)",
+            "Es wandelt physikalische Systeme automatisch in C++ um",
+            "Man muss Code nicht mehr für verschiedene Frameworks umschreiben"
+        ],
+        "answerIndex": [
+            1,
+            3
+        ],
+        "explanation": "Keras 3 ist backend-agnostisch, sodass der gleiche Code ohne Umschreiben in TensorFlow, PyTorch oder JAX läuft."
+    },
+    {
+        "question": "Was ist der entscheidende Vorteil von \"Automatic Differentiation\" (Autodiff)?",
+        "options": [
+            "Es ist eine extrem schnelle numerische Näherung",
+            "Es zieht exakte analytische Ableitungen direkt durch Python-Code",
+            "Es ermöglicht die gradientenbasierte Optimierung in der Physik",
+            "Es formatiert den Quellcode nach dem PEP8-Standard"
+        ],
+        "answerIndex": [
+            1,
+            2
+        ],
+        "explanation": "Autodiff berechnet exakte Ableitungen direkt aus dem Code und ermöglicht so effiziente gradientenbasierte Optimierung."
+    },
+    {
+        "question": "Wofür steht XLA und welche Aufgabe erfüllt es in JAX?",
+        "options": [
+            "Xtreme Learning Agent zur Code-Generierung",
+            "Accelerated Linear Algebra",
+            "Es verschmilzt (JIT) Mathe-Operationen für Hardware-Beschleuniger",
+            "XML Log Analyzer zur Fehlererkennung in Colab"
+        ],
+        "answerIndex": [
+            1,
+            2
+        ],
+        "explanation": "XLA (Accelerated Linear Algebra) optimiert Berechnungen, indem es Mathe-Operationen für Hardware-Beschleuniger verschmilzt."
+    },
+    {
+        "question": "Warum empfiehlt der KI-Agent Conv1D statt Dense-Layern für Zeitreihen?",
+        "options": [
+            "Dense-Layer verlieren das concept für die zeitliche Reihenfolge",
+            "Faltungsfilter gleiten über die Zeitachse und erfassen Frequenzen",
+            "Dense-Layer haben keine trainierbaren Gewichte",
+            "Conv1D-Modelle ignorieren physikalische Transienten"
+        ],
+        "answerIndex": [
+            0,
+            1
+        ],
+        "explanation": "Conv1D-Filter erfassen durch das Gleiten über die Zeitachse zeitliche Muster und Frequenzen, die Dense-Layer ignorieren."
+    },
+    {
+        "question": "Warum nutzen wir in Woche 3 Google Colab und das Tool \"uv\"?",
+        "options": [
+            "Um massiv-parallele Hardware-Beschleuniger (TPUs/GPUs) zu nutzen",
+            "Weil lokales Python keine Arrays speichern kann",
+            "Weil \"uv pip\" Abhängigkeiten blitzschnell im System installiert",
+            "Um den Code vor lokalen Viren zu schützen"
+        ],
+        "answerIndex": [
+            0,
+            2
+        ],
+        "explanation": "Colab bietet kostenlose GPUs/TPUs, während das Tool \"uv\" eine extrem schnelle Installation von Abhängigkeiten ermöglicht."
+    },
+    {
+        "question": "Welche Metrik dient im Woche 3 Projekt zur Erkennung der System-Sabotage?",
+        "options": [
+            "Der Mean Squared Error (MSE) oder Mean Absolute Error (MAE)",
+            "Die Anzahl der Code-Zeilen im Python-Skript",
+            "Der Reconstruction Loss",
+            "Der JAX Tracing-Error"
+        ],
+        "answerIndex": [
+            0,
+            2
+        ],
+        "explanation": "System-Sabotage führt zu Anomalien, die sich in einem erhöhten Reconstruction Loss (wie MSE oder MAE) widerspiegeln."
+    }
+]

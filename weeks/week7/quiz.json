@@ -1,0 +1,101 @@
+[
+    {
+        "question": "Warum löste Self-Attention (Transformer) LSTMs bei langen Simulations-Logs ab?",
+        "options": [
+            "Er verarbeitet die gesamte Historie parallel im Kontextfenster, statt Informationen Schritt für Schritt weiterzugeben.",
+            "Er eliminiert rechenintensive Matrix-Multiplikationen komplett.",
+            "Er wandelt unstrukturierte Logs automatisch in analoge Funksignale um.",
+            "Er funktioniert ausschließlich mit binären Entscheidungsbäumen."
+        ],
+        "answerIndex": 0,
+        "explanation": "Der Self-Attention-Mechanismus verarbeitet die gesamte Historie parallel im Kontextfenster, was ihn viel mächtiger als sequentielle LSTMs für lange Kontexte macht."
+    },
+    {
+        "question": "Welchen historischen Meilenstein setzte das Modell 'OpenAI Codex' für moderne Systemsimulationen?",
+        "options": [
+            "Code-Generierung durch Beherrschen formaler Programmiersprachen-Syntax.",
+            "Erstes Modell zur Emulation emotionaler Zustände von Programmierern.",
+            "Vollständiger Ersatz von Compiler-Optimierungen durch KI-Vorhersagen.",
+            "Spezielle physische Wartung und Ölung mechanischer Bauteile."
+        ],
+        "answerIndex": 0,
+        "explanation": "OpenAI Codex bewies erstmals, dass Sprachmodelle komplexe Programmiersyntax beherrschen und hochwertigen Python-Code für Simulationen erzeugen können."
+    },
+    {
+        "question": "Wofür ist Anthropics Claude-Reihe bekannt, was für komplexe Systemanalysen entscheidend ist?",
+        "options": [
+            "Exklusive Spezialisierung auf Excel-Makros für die Buchhaltung.",
+            "Ausführung ohne Stromzufuhr auf quantenmechanischen Papierstreifen.",
+            "Frühe massive Kontextfenster und Alignment via Constitutional AI.",
+            "Kompletter Verzicht auf Wahrscheinlichkeitsrechnung bei Textausgaben."
+        ],
+        "answerIndex": 2,
+        "explanation": "Claude zeichnet sich durch bahnbrechende Kontextfenster (wie 200k+ Tokens) und Alignment via Constitutional AI aus, perfekt für die Analyse ganzer Codebases."
+    },
+    {
+        "question": "Welches Architekturprinzip machte Mistral AI mit Modellen wie 'Mixtral' besonders populär?",
+        "options": [
+            "Kompletter Verzicht auf Layer-Normalisierung im neuronalen Netz.",
+            "Verknüpfung künstlicher Neuronen mit biologischen Pilz-Myzelien.",
+            "Extrem kleine Kontextfenster von 7 Wörtern für maximale Latenz.",
+            "Mixture of Experts (MoE) zur Aktivierung spezialisierter Sub-Netze."
+        ],
+        "answerIndex": 3,
+        "explanation": "Mixture of Experts (MoE) aktiviert nur eine Teilmenge des Netzwerks pro Token (sparse activation), was maximale Performance bei reduzierten Inferenzkosten bietet."
+    },
+    {
+        "question": "Welchen globalen Trend im KI-Ökosystem demonstrieren moderne chinesische Open-Source-Modelle (wie Qwen)?",
+        "options": [
+            "Demokratisierung von Frontier-Reasoning zu minimalen Inferenzkosten.",
+            "Kompletter Abschied von Mathematik hin zu rein emotionalem Text.",
+            "Notwendigkeit von Daten-Inputs in Form historischer Abakus-Vektoren.",
+            "Die Beschränkung der Modellausgaben auf reine Ja/Nein-Antworten."
+        ],
+        "answerIndex": 0,
+        "explanation": "Chinesische Open-Source- und Open-Weight-Modelle (wie Qwen und DeepSeek) demonstrieren, dass Frontier-Level Reasoning und Mathematik-Fähigkeiten zu einem Bruchteil der Kosten trainiert und betrieben werden können."
+    },
+    {
+        "question": "Attention(Q,K,V)=softmax(QK^T/sqrt(d_k))V. Was bewirkt der Skalierungsfaktor sqrt(d_k) im Nenner?",
+        "options": [
+            "Stoppt extremes Vektoren-Wachstum & Verschwinden von Softmax-Gradienten.",
+            "Multiplikation des Outputs mit der JAX-Reibungskonstante.",
+            "Automatisches Runden aller Fließkommazahlen auf gerade Ganzzahlen.",
+            "Er konvertiert den Text-Prompt in ein komprimiertes JPEG-Bild."
+        ],
+        "answerIndex": 0,
+        "explanation": "Die Skalierung verhindert extreme Skalarprodukte bei hohen Dimensionen, wodurch die Gradienten in der Softmax-Funktion stabil bleiben und nicht verschwinden."
+    },
+    {
+        "question": "Warum nutzen wir ein striktes JSON-Schema statt Freitext bei automatisierter Parameteroptimierung?",
+        "options": [
+            "Weil Freitext deutlich mehr physischen Festplattenspeicher benötigt.",
+            "Garantiert direkte, flosselfreie Einlesbarkeit in Simulationsvariablen.",
+            "Weil JSON die einzige Sprache ist, die von TPUs verstanden wird.",
+            "Automatische kryptographische Verschlüsselung des Netzwerk-Prompts."
+        ],
+        "answerIndex": 1,
+        "explanation": "Ein festes JSON-Schema per Pydantic garantiert, dass die API-Ausgaben der Modelle direkt und ohne Fehlerrisiko programmgesteuert eingelesen und verwendet werden können."
+    },
+    {
+        "question": "Wie verarbeitet ein nativ multimodales Modell ein übergebenes PNG-Diagramm zur Simulation?",
+        "options": [
+            "Das Modell routet das Bild an menschliche Klick-Arbeiter in der Cloud.",
+            "Bild & Text werden direkt im selben semantischen Vektorraum verarbeitet.",
+            "Konvertierung in rohe RGB-Pixel-Listen, die sequentiell gelesen werden.",
+            "Reine Analyse des Dateinamens zur Schätzung des visuellen Inhalts."
+        ],
+        "answerIndex": 1,
+        "explanation": "Nativ multimodale Modelle (wie Gemini) verarbeiten Text und visuelle Pixel direkt im selben gemeinsamen semantischen Vektorraum, was echtes visuelles Verständnis ermöglicht."
+    },
+    {
+        "question": "Welcher Angriffsvektor liegt bei 'IGNORE ALL PREVIOUS INSTRUCTIONS' vor und wie wehrt man ihn ab?",
+        "options": [
+            "Prompt Injection. Abwehr via System-Instruktionen & Daten-Begrenzern.",
+            "Buffer Overflow, gelöst durch physische RAM-Erweiterung am Mainboard.",
+            "DDoS-Attacke, abgewehrt durch eine externe Hardware-Firewall am Router.",
+            "Ein klassisches Trojanisches Pferd zur Löschung lokaler Python-Dateien."
+        ],
+        "answerIndex": 0,
+        "explanation": "Prompt Injection versucht, die Systemregeln auszuhebeln. Die Abwehr erfolgt über strikte System-Instruktionen, getrennte Daten-Räume und Parser-Validierungen."
+    }
+]

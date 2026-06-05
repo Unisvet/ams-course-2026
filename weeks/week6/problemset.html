@@ -1,0 +1,213 @@
+<div class="space-y-8">
+    <!-- Header Block -->
+    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-slate-900 pb-6">
+        <div>
+            <span class="px-2.5 py-0.5 rounded-full bg-slate-800 text-slate-400 text-xs font-mono font-bold uppercase tracking-wider border border-slate-750">Programming Assignment</span>
+            <h3 class="text-2xl font-black text-white mt-2">Problem Set 6: Project Genesis – The Chaos Engine</h3>
+            <p class="text-sm text-slate-455 mt-1">Deadline: TBA | Weight: 40% of Module 2 grade (4 Points) | Quiz: 1 Point</p>
+        </div>
+        <a href="weeks/week6/problemset.ipynb" download class="px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-800 hover:border-cyan-500/50 hover:bg-cyan-500/5 text-xs font-mono font-bold text-cyan-400 flex items-center gap-2 transition-all duration-200 hover:scale-105 active:scale-95 shadow-lg shadow-cyan-500/5">
+            <span>📥</span> Download Jupyter Notebook
+        </a>
+    </div>
+<p class="text-sm text-slate-300 leading-relaxed">**</p>
+<div class="p-6 glass-card rounded-2xl border-l-4 border-cyan-500 bg-cyan-950/5 space-y-3 my-6">
+    <h4 class="text-cyan-400 font-bold text-lg flex items-center gap-2">
+        ð The Story: Entering the Chamber of Chaos
+    </h4>
+<p class="text-sm text-slate-300 leading-relaxed">In the deterministic domains of physical laws and neural network layers, you successfully taught the Oracle to internalize rigid, continuous geometric structures. But the real world flows through chaotic currents of probability, market fluctuations, and stochastic noise. Welcome to the <strong class="text-white">Chamber of Chaos</strong>.</p>
+<p class="text-sm text-slate-300 leading-relaxed">The old-world sorcerers of the MATLAB Citadel simulated random variables using stateful, single-threaded pseudo-random loops. If they wanted to evaluate a million market trajectories, their screens would freeze for hours under the weight of sequential CPU loops. We do not accept these limitations.</p>
+<p class="text-sm text-slate-300 leading-relaxed">Equipped with <a href="https://antigravity.google/docs/skills" class="text-cyan-400 hover:underline" target="_blank">Antigravity Skills</a>, your development environment is no longer a passive text editor; it is an active, agent-driven ecosystem capable of writing code, analyzing execution traces, and running massively parallel stochastic pipelines autonomously. Today, you will inherit this power to conquer randomness itself.</p>
+</div>
+<div class="p-6 glass-card rounded-2xl border-l-4 border-cyan-500 bg-cyan-950/5 space-y-3 my-6">
+    <h4 class="text-cyan-400 font-bold text-lg flex items-center gap-2">
+        ð§  Theoretical Deep Dive: Randomness under the Hood
+    </h4>
+<p class="text-sm text-slate-300 leading-relaxed">Before writing code, you must understand the mathematical framework of Monte Carlo methods and why traditional random generation fails on modern accelerator hardware (GPUs/TPUs).</p>
+</div>
+<h4 class="text-lg font-bold text-white border-b border-slate-850 pb-2 mt-8 mb-4 flex items-center gap-2">
+    1. The Geometry of Pi Estimation
+</h4>
+<p class="text-sm text-slate-300 leading-relaxed">The purest distillation of Monte Carlo integration is the geometric estimation of  \(\pi\) . Imagine a quadrant of a circle with radius  \(r = 1\)  inscribed perfectly within a unit square of side length  \(1\) .</p>
+<p class="text-sm text-slate-300 leading-relaxed">The area of the unit square is  \(A_{\text{square}} = 1^2 = 1\) , while the area of the quarter circle is:</p>
+<p class="text-sm text-slate-300 leading-relaxed">\(A_{\text{quarter}} = \frac{\pi r^2}{4} = \frac{\pi}{4}\)</p>
+<p class="text-sm text-slate-300 leading-relaxed">If we uniformly sample  \(N\)  independent random coordinate pairs  \((x, y)\)  inside the square, the probability  \(P\)  that a point falls inside the quarter circle corresponds exactly to the ratio of their areas:</p>
+<p class="text-sm text-slate-300 leading-relaxed">\(P = \frac{A_{\text{quarter}}}{A_{\text{square}}} = \frac{\pi}{4}\)</p>
+<p class="text-sm text-slate-300 leading-relaxed">By tracking how many points satisfy the algebraic condition  \(x^2 + y^2 \le 1\) , we can approximate the value of  \(\pi\)  through simple frequency scaling:</p>
+<p class="text-sm text-slate-300 leading-relaxed">\(\frac{N_{\text{inside}}}{N_{\text{total}}} \approx \frac{\pi}{4} \implies \pi \approx 4 \times \frac{N_{\text{inside}}}{N_{\text{total}}}\)</p>
+<h4 class="text-lg font-bold text-white border-b border-slate-850 pb-2 mt-8 mb-4 flex items-center gap-2">
+    2. The Mathematics of High-Dimensional Monte Carlo Integration
+</h4>
+<p class="text-sm text-slate-300 leading-relaxed">Moving past basic geometry, we can scale this concept to compute complex, definite multi-dimensional integrals over a domain  \(\Omega \subset \mathbb{R}^d\) :</p>
+<p class="text-sm text-slate-300 leading-relaxed">\(I = \int_{\Omega} g(x) \, dx\)</p>
+<p class="text-sm text-slate-300 leading-relaxed">Analytical integration becomes intractable when  \(g(x)\)  is highly non-linear or when the dimensionality  \(d\)  is large. Classical numerical integration techniques (like Simpson’s rule or the Trapezoidal rule) suffer heavily from the <strong class="text-white">Curse of Dimensionality</strong>: their error scales as  \(\mathcal{O}(N^{-k/d})\) , meaning the number of grid points  \(N\)  required to maintain accuracy grows exponentially with  \(d\) .</p>
+<p class="text-sm text-slate-300 leading-relaxed">Monte Carlo bypasses this curse by reframing the integration problem as an expected value. If we introduce a probability density function  \(p(x)\)  that is uniform over the domain  \(\Omega\) , the integral can be rewritten as:</p>
+<p class="text-sm text-slate-300 leading-relaxed">\(I = V \int_{\Omega} g(x) p(x) \, dx = V \cdot \mathbb{E}[g(X)]\)</p>
+<p class="text-sm text-slate-300 leading-relaxed">where  \(V = \int_{\Omega} 1 \, dx\)  is the total volume of the domain, and  \(X\)  is a random variable distributed uniformly over  \(\Omega\) . By the <strong class="text-white">Strong Law of Large Numbers</strong>, the empirical sample mean converges to the true expected value as the number of independent and identically distributed (i.i.d.) samples  \(N\)  approaches infinity:</p>
+<p class="text-sm text-slate-300 leading-relaxed">\(\hat{I}_N = \frac{V}{N} \sum_{i=1}^{N} g(X_i) \xrightarrow{p} I\)</p>
+<p class="text-sm text-slate-300 leading-relaxed">According to the <strong class="text-white">Central Limit Theorem</strong>, the statistical error of this estimation drops at a rate of:</p>
+<p class="text-sm text-slate-300 leading-relaxed">\(\text{Error} \sim \mathcal{O}\left(\frac{\sigma}{\sqrt{N}}\right)\)</p>
+<p class="text-sm text-slate-300 leading-relaxed">where  \(\sigma\)  is the standard deviation of  \(g(X)\) . <strong class="text-white">Crucially, this convergence rate is completely independent of the dimension</strong>  \(d\) , making Monte Carlo methods the gold standard for complex engineering and high-dimensional system simulations.</p>
+<h4 class="text-lg font-bold text-white border-b border-slate-850 pb-2 mt-8 mb-4 flex items-center gap-2">
+    3. Why JAX? Stateless Randomness & Mass Vectorization
+</h4>
+<p class="text-sm text-slate-300 leading-relaxed">Traditional python frameworks (like standard NumPy or native Python) handle random number generation via a <strong class="text-white">global mutable state</strong>. When you call numpy.random.rand(), the system reads an internal seed state, updates it via a stateful generator, and returns the random number:</p>
+<p class="text-sm text-slate-300 leading-relaxed">\(\text{State}_{t+1}, X = \text{NextRandom}(\text{State}_t)\)</p>
+<p class="text-sm text-slate-300 leading-relaxed">In highly parallelized, asynchronous execution architectures like GPUs and TPUs, <strong class="text-white">global mutable states are an absolute disaster</strong>. They introduce race conditions, ruin determinism, and prevent compiler optimizations like parallel mapping.</p>
+<p class="text-sm text-slate-300 leading-relaxed"><strong class="text-white">JAX solves this by enforcing functional purity through stateless PRNGs</strong> based on the counter-based *Threefry* algorithm. In JAX, the random state is an explicit, immutable array called a PRNGKey.</p>
+<ol class="list-decimal pl-6 text-sm text-slate-300 space-y-3">
+    <li class="leading-relaxed">To generate random numbers, you must pass the key explicitly to the generator function.</li>
+    <li class="leading-relaxed">The generator consumes the key and outputs the random numbers. It does *not* mutate the key.</li>
+    <li class="leading-relaxed">If you need multiple independent random variables or consecutive execution steps, you must explicitly fork the key using jax.random.split():</li>
+</ol>
+<p class="text-sm text-slate-300 leading-relaxed">import jax</p>
+<p class="text-sm text-slate-300 leading-relaxed">key = jax.random.PRNGKey(42)</p>
+<p class="text-sm text-slate-300 leading-relaxed">key_distribution, key_agent = jax.random.split(key, 2)</p>
+<p class="text-sm text-slate-300 leading-relaxed">By enforcing this functional purity, JAX allows you to wrap your simulation logic inside jax.vmap (Vectorized Map). Instead of executing simulations sequentially using a slow Python for-loop, vmap automatically maps the computation across thousands of GPU/TPU hardware registers simultaneously, executing millions of stochastic paths in parallel at compiled C++ speeds.</p>
+<div class="p-6 glass-card rounded-2xl border-l-4 border-amber-500 bg-amber-500/5 space-y-3 my-6">
+    <h4 class="text-amber-400 font-mono text-sm font-bold uppercase tracking-wider flex items-center gap-2">
+        ð® Gamified Rules & Mechanics
+    </h4>
+<p class="text-sm text-slate-300 leading-relaxed">To navigate the random fluctuations of this week's assignment, your workspace tracks the following live game metrics:</p>
+<ol class="list-decimal pl-6 text-sm text-slate-300 space-y-3">
+    <li class="leading-relaxed"><strong class="text-white">The Luck Stat (PRNG Integrity):</strong> If you pass a mutated, reused, or un-split PRNGKey into a function instead of utilizing stateless functional splits, your Luck instantly drops to 0, causing random parameter collisions and a penalty on your evaluation score.</li>
+    <li class="leading-relaxed"><strong class="text-white">The Swarm Multiplier:</strong> Successfully orchestrating parallel worker subagents using the [Antigravity IDE](https://antigravity.google/) and utilizing specialized [Antigravity Skills](https://antigravity.google/docs/skills) unlocks the *Swarm Commander* badge, yielding a bonus multiplier on your execution logs.</li>
+    <li class="leading-relaxed"><strong class="text-white">Boss Encounter:</strong> Exercise 4 pits your mathematical pipeline against a randomized macro-economic "Black Swan" anomaly. Your choice of algorithm determines your defensive baseline.</li>
+</ol>
+</div>
+<h4 class="text-lg font-bold text-white border-b border-slate-850 pb-2 mt-8 mb-4 flex items-center gap-2">
+    <span class="text-cyan-400">⚡</span> Exercise 1: The Antiquated Circle (Classical NumPy Pi Estimation)
+</h4>
+<p class="text-sm text-slate-300 leading-relaxed"><strong class="text-white">Learning Objective:</strong> Observing the limits of classical stateful randomness, measuring CPU overhead, and visualizing basic geometric convergence.</p>
+<p class="text-sm text-slate-300 leading-relaxed">Before upgrading to accelerated clusters, you must experience the constraints of the old paradigm. You will write a standard Python script using standard numpy to estimate  \(\pi\)  via uniform spatial distribution.</p>
+<h4 class="text-lg font-bold text-white border-b border-slate-850 pb-2 mt-8 mb-4 flex items-center gap-2">
+    Implementation Directives:
+</h4>
+<ol class="list-decimal pl-6 text-sm text-slate-300 space-y-3">
+    <li class="leading-relaxed">Create a script named src/classical_pi.py.</li>
+    <li class="leading-relaxed">Generate  \(5,000,000\)  random  \((x, y)\)  coordinate points uniformly distributed between  \(0\)  and  \(1\)  using standard stateful numpy.random.uniform().</li>
+    <li class="leading-relaxed">Compute the Euclidean distance from the origin for every point ( \(x^2 + y^2\) ). Count how many points fall inside the unit circle boundary.</li>
+    <li class="leading-relaxed">Calculate your empirical estimation of  \(\pi\) . Measure the exact wall-clock execution time of this generation process using time.perf_counter().</li>
+    <li class="leading-relaxed">Extract a random subset of  \(10,000\)  points. Color-code them based on their position: blue for points inside the circle boundary, and red for points outside.</li>
+</ol>
+<p class="text-sm text-slate-300 leading-relaxed"><strong class="text-white">Deliverables:</strong> Run your file via uv run python src/classical_pi.py. Generate a scatter plot showing the quarter-circle boundary line and the distributed points. Save the image to data/classical_pi_disp.png. Record the execution time and your calculated value of  \(\pi\)  in your submission log.</p>
+<h4 class="text-lg font-bold text-white border-b border-slate-850 pb-2 mt-8 mb-4 flex items-center gap-2">
+    <span class="text-cyan-400">⚡</span> Exercise 2: The Quantum Leap (The JAX Monte Carlo Engine)
+</h4>
+<p class="text-sm text-slate-300 leading-relaxed"><strong class="text-white">Learning Objective:</strong> Implementing a multi-variable Monte Carlo business simulation using stateless jax.random and compiling via jax.vmap.</p>
+<p class="text-sm text-slate-300 leading-relaxed">Now, transition to the stateless paradigm. You will scale up from simple geometric figures to a business enterprise simulation, wrapping your logic inside pure functional components to run on hardware registers.</p>
+<p class="text-sm text-slate-300 leading-relaxed">The annual net revenue function depends on three distinct stochastic variables:</p>
+<ol class="list-decimal pl-6 text-sm text-slate-300 space-y-3">
+    <li class="leading-relaxed"><strong class="text-white">Market Demand (</strong> \(D\) <strong class="text-white">):</strong> Modeled as a Normal distribution:  \(D \sim \mathcal{N}(\mu=1000, \sigma^2=150^2)\)</li>
+    <li class="leading-relaxed"><strong class="text-white">Production Asset Cost (</strong> \(C\) <strong class="text-white">):</strong> Modeled as a Log-Normal distribution to prevent negative costs and capture long-tailed expenses:  \(\ln(C) \sim \mathcal{N}(\mu=5.5, \sigma^2=0.3^2)\)</li>
+    <li class="leading-relaxed"><strong class="text-white">Regulatory Penalty Rate (</strong> \(R\) <strong class="text-white">):</strong> Modeled as a Uniform distribution representing compliance fluctuations:  \(R \sim \mathcal{U}(0.05, 0.25)\)</li>
+</ol>
+<p class="text-sm text-slate-300 leading-relaxed">The deterministic economic engine maps these variables to the net profit via the equation:</p>
+<p class="text-sm text-slate-300 leading-relaxed">\(\text{Revenue} = (D \times 150.0) - C \times (1.0 - R)\)</p>
+<h4 class="text-lg font-bold text-white border-b border-slate-850 pb-2 mt-8 mb-4 flex items-center gap-2">
+    Implementation Directives:
+</h4>
+<ol class="list-decimal pl-6 text-sm text-slate-300 space-y-3">
+    <li class="leading-relaxed">In your workspace, create a script named src/monte_carlo.py.</li>
+    <li class="leading-relaxed">Write a mathematically pure JAX function simulate_path(key) that consumes a single subkey, splits it to isolate three distinct random samples for  \(D\) ,  \(C\) , and  \(R\) , and computes the scalar net revenue.</li>
+    <li class="leading-relaxed">In your main execution block, initialize your master key: key = jax.random.PRNGKey(42).</li>
+    <li class="leading-relaxed">Do <strong class="text-white">not</strong> write a Python loop. Use jax.random.split to generate  \(1,000,000\)  unique subkeys.</li>
+    <li class="leading-relaxed">Apply jax.vmap to your simulate_path function to evaluate all 1,000,000 keys in parallel across the hardware.</li>
+    <li class="leading-relaxed">Calculate the expected value  \(\mathbb{E}[\text{Revenue}]\)  and the Value-at-Risk ( \(VaR_{95\%}\) ) threshold (the 5th percentile of the sorted revenue array).</li>
+</ol>
+<p class="text-sm text-slate-300 leading-relaxed"><strong class="text-white">Deliverables:</strong> Run your file using your environment tooling (uv run python src/monte_carlo.py). Generate a clean distribution histogram using matplotlib or plotly. Draw a solid black vertical line indicating the expected revenue, and a red dashed vertical line representing the  \(VaR_{95\%}\)  threshold. Save the resulting graphic as data/revenue_dist.png.</p>
+<h4 class="text-lg font-bold text-white border-b border-slate-850 pb-2 mt-8 mb-4 flex items-center gap-2">
+    <span class="text-cyan-400">⚡</span> Exercise 3: Agentic Automation via Antigravity Skills
+</h4>
+<p class="text-sm text-slate-300 leading-relaxed"><strong class="text-white">Learning Objective:</strong> Programmatically configuring and unleashing autonomous subagent workflows using the <a href="https://antigravity.google/" class="text-cyan-400 hover:underline" target="_blank">Antigravity IDE</a> and <a href="https://antigravity.google/docs/skills" class="text-cyan-400 hover:underline" target="_blank">Antigravity Skills</a>.</p>
+<p class="text-sm text-slate-300 leading-relaxed">Instead of manually editing scripts, running benchmarks, and fixing syntax errors yourself, you will delegate these tasks to a coordinated group of subagents operating inside the secure, cross-platform sandbox of the Antigravity ecosystem.</p>
+<p class="text-sm text-slate-300 leading-relaxed">\[ Gemini 3.5 Flash Orchestrator \]</p>
+<div class="overflow-x-auto my-4 border border-slate-800 rounded-xl">
+    <table class="min-w-full divide-y divide-slate-800 text-sm">
+    </table>
+</div>
+<p class="text-sm text-slate-300 leading-relaxed">+----------------------+----------------------+</p>
+<div class="overflow-x-auto my-4 border border-slate-800 rounded-xl">
+    <table class="min-w-full divide-y divide-slate-800 text-sm">
+        <thead class="bg-slate-900/30">
+            <tr>
+                <th class="px-4 py-3 text-left text-xs font-mono font-bold text-slate-400 uppercase tracking-wider"></th>
+            </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-850 bg-slate-950/10">
+        </tbody>
+    </table>
+</div>
+<p class="text-sm text-slate-300 leading-relaxed">\[ Subagent-Alpha \]                                          \[ Subagent-Beta \]</p>
+<p class="text-sm text-slate-300 leading-relaxed">(Stress-Tester)                                                           (Profiler)</p>
+<div class="overflow-x-auto my-4 border border-slate-800 rounded-xl">
+    <table class="min-w-full divide-y divide-slate-800 text-sm">
+        <thead class="bg-slate-900/30">
+            <tr>
+                <th class="px-4 py-3 text-left text-xs font-mono font-bold text-slate-400 uppercase tracking-wider"></th>
+            </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-850 bg-slate-950/10">
+        </tbody>
+    </table>
+</div>
+<p class="text-sm text-slate-300 leading-relaxed">Modifies cash flow variances                  Tracks JAX TPS & compilation</p>
+<h4 class="text-lg font-bold text-white border-b border-slate-850 pb-2 mt-8 mb-4 flex items-center gap-2">
+    The Swarm Directive:
+</h4>
+<ol class="list-decimal pl-6 text-sm text-slate-300 space-y-3">
+    <li class="leading-relaxed">Launch your workspace using the [Antigravity IDE](https://antigravity.google/).</li>
+    <li class="leading-relaxed">Review the workspace capability framework via [Antigravity Skills](https://antigravity.google/docs/skills) to understand how the agent can interact with file operations, process execution, and local metrics tracking.</li>
+    <li class="leading-relaxed">Configure your master orchestration layer to utilize <strong class="text-white">Gemini 3.5 Flash</strong> for high-speed long-context processing. Provide the agent with the following system prompt:</li>
+</ol>
+<p class="text-sm text-slate-300 leading-relaxed">"Observer-Prime, initiate an automated task sweep inside the Antigravity IDE sandbox. Utilize your filesystem and bash skills to evaluate our src/monte_carlo.py pipeline.</p>
+<ul class="list-disc pl-6 text-sm text-slate-350 space-y-2">
+    <li class="leading-relaxed">Spawn <strong class="text-white">Subagent-Alpha ('The Stress-Tester')</strong>: This subagent must programmatically alter the variance parameters ( \(\sigma\) ) of the Log-Normal asset cost distribution in src/monte_carlo.py to find the breaking point where the  \(VaR_{95\%}\)  drops below zero.</li>
+    <li class="leading-relaxed">Spawn <strong class="text-white">Subagent-Beta ('The Profiler')</strong>: This subagent must execute the script sequentially twice and extract execution times to profile the exact performance overhead of the initial JAX compilation trace versus the second warm execution pass.</li>
+<p class="text-sm text-slate-300 leading-relaxed">Synthesize all agentic findings into a unified report named docs/Swarm_Stress_Report.md."</p>
+</ul>
+<p class="text-sm text-slate-300 leading-relaxed"><strong class="text-white">Deliverables:</strong> Monitor the live execution block as the subagents utilize their workspace skills to read, modify, and execute your code. Submit the generated markdown document (docs/Swarm_Stress_Report.md) containing the analytical outputs of both automated subagents.</p>
+<h4 class="text-lg font-bold text-white border-b border-slate-850 pb-2 mt-8 mb-4 flex items-center gap-2">
+    <span class="text-cyan-400">⚡</span> Exercise 4: Boss Fight – Defeating the Black Swan (Markov Chains)
+</h4>
+<p class="text-sm text-slate-300 leading-relaxed"><strong class="text-white">Learning Objective:</strong> Implementing sequential state transitions using Markov Chains and handling runtime injection anomalies via jax.lax.scan.</p>
+<p class="text-sm text-slate-300 leading-relaxed">The financial stability of your deep-tech enterprise does not happen in isolation. The macro-economy perpetually shifts between states of existence, which can be modeled as a discrete-time Markov Chain.</p>
+<div class="p-6 glass-card rounded-2xl border-l-4 border-amber-500 bg-amber-500/5 space-y-3 my-6">
+    <h4 class="text-amber-400 font-mono text-sm font-bold uppercase tracking-wider flex items-center gap-2">
+        ⚔️ Choose Your Weapon (Gamified Choice Node):
+    </h4>
+<p class="text-sm text-slate-300 leading-relaxed">Before implementing your code, declare in your documentation which algorithmic strategy module you will deploy to track system states over a continuous timeline of 365 simulated days:</p>
+<ul class="list-disc pl-6 text-sm text-slate-350 space-y-2">
+    <li class="leading-relaxed"><strong class="text-white">Module Alpha (The Matrix Carrier):</strong> You build a full transition probability matrix and track a single aggregate probability state vector over time using a highly optimized functional loop driven by jax.lax.scan.</li>
+    <li class="leading-relaxed"><strong class="text-white">Module Beta (The Individualist Swarm):</strong> You instantiate 100,000 independent agent entities, evaluating their individual step-by-step state transitions completely in parallel via vectorized random sampling.</li>
+</ul>
+</div>
+<h4 class="text-lg font-bold text-white border-b border-slate-850 pb-2 mt-8 mb-4 flex items-center gap-2">
+    The Macro-Economic Architecture:
+</h4>
+<p class="text-sm text-slate-300 leading-relaxed">The system shifts between three discrete conditions: <strong class="text-white">\[State 0: Bull Market, State 1: Stagnation, State 2: Catastrophic Recession\]</strong>. The baseline transition probability matrix is defined as:</p>
+<p class="text-sm text-slate-300 leading-relaxed">\(P = \begin{pmatrix} 0.85 & 0.12 & 0.03 \\ 0.10 & 0.75 & 0.15 \\ 0.05 & 0.20 & 0.75 \end{pmatrix}\)</p>
+<h4 class="text-lg font-bold text-white border-b border-slate-850 pb-2 mt-8 mb-4 flex items-center gap-2">
+    The Black Swan Shock Injection:
+</h4>
+<ol class="list-decimal pl-6 text-sm text-slate-300 space-y-3">
+    <li class="leading-relaxed">Create src/markov_boss.py and implement your chosen strategy module using pure, immutable JAX operations.</li>
+    <li class="leading-relaxed"><strong class="text-white">The Sabotage:</strong> At day 180, an unexpected global economic crisis strikes the simulation. For exactly 10 days (from day 180 to day 190), completely overwrite the transition row variables. Force the probability vectors of both State 0 and State 1 to shift 80% of their transition probability mass directly into State 2 (Catastrophic Recession).</li>
+    <li class="leading-relaxed">After day 190, restore the baseline matrix variables to evaluate the system recovery rate.</li>
+</ol>
+<p class="text-sm text-slate-300 leading-relaxed"><strong class="text-white">Deliverables:</strong> Execute your model pipeline. Export a graph showing the percentage distribution of the three macro states across the full 365-day timeline. In your summary, write a 3-sentence paragraph detailing how your enterprise cash-flow structure from Exercise 2 would collapse if the random inputs were actively tied to this volatile Markov environment during the recession spike.</p>
+<h4 class="text-lg font-bold text-white border-b border-slate-850 pb-2 mt-8 mb-4 flex items-center gap-2">
+    <span class="text-cyan-400">⚡</span> Exercise 5: Vault Ascension & Live Deployment
+</h4>
+<p class="text-sm text-slate-300 leading-relaxed">A modern system engineer seals their codebase within a secure repository before presenting the live outputs to the world.</p>
+<p class="text-sm text-slate-300 leading-relaxed">Open your terminal interface and use uv add to lock down your dependencies:</p>
+<p class="text-sm text-slate-300 leading-relaxed">uv add plotly openpyxl matplotlib</p>
+<ol class="list-decimal pl-6 text-sm text-slate-300 space-y-3">
+    <li class="leading-relaxed">Commit your newly generated assets (src/classical_pi.py, src/monte_carlo.py, src/markov_boss.py, docs/Swarm_Stress_Report.md, and the generated images) to your local repository.</li>
+    <li class="leading-relaxed">Use the [Antigravity IDE](https://antigravity.google/) git skill set to push the latest codebase changes safely onto your remote repository branch.</li>
+    <li class="leading-relaxed">Update your automated project documentation site (index.md, README, or GitHub Pages) to showcase the revenue distribution graphs, the subagent workflow logs, and your Markovian defense metrics.</li>
+</ol>
+<p class="text-sm text-slate-300 leading-relaxed"><strong class="text-white">Deliverables:</strong> Provide your live public repository URL and a direct hyperlink to your updated project showcase page. The Chaos Engine is now fully operational under agentic control\!</p>
+<p class="text-sm text-slate-300 leading-relaxed">**</p>
+<p class="text-sm text-slate-300 leading-relaxed">**</p>
+</div>

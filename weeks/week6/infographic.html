@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Woche 6: Stochastische Simulationen im KI-Zeitalter</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+theme: {
+extend: {
+colors: {
+vibrant: {
+bg: '#0f172a',
+surface: '#1e293b',
+surfaceLight: '#334155',
+cyan: '#06b6d4',
+pink: '#ec4899',
+yellow: '#eab308',
+purple: '#8b5cf6',
+text: '#f8fafc',
+textMuted: '#94a3b8'
+}
+},
+fontFamily: {
+sans: ['Inter', 'system-ui', 'sans-serif'],
+mono: ['JetBrains Mono', 'monospace']
+}
+}
+}
+}
+</script>
+<style>
+body {
+background-color: #0f172a;
+color: #f8fafc;
+font-family: 'Inter', system-ui, sans-serif;
+line-height: 1.6;
+}
+.chart-container {
+position: relative;
+width: 100%;
+margin-left: auto;
+margin-right: auto;
+height: 350px;
+}
+.glass-card {
+background: rgba(30, 41, 59, 0.7);
+backdrop-filter: blur(10px);
+border: 1px solid rgba(255, 255, 255, 0.1);
+}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="antialiased min-h-screen">
+<nav class="sticky top-0 z-50 glass-card border-b border-vibrant-surfaceLight">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex items-center justify-between h-16">
+<div class="flex items-center gap-2">
+<span class="text-vibrant-cyan font-mono text-xl font-bold">Woche_6</span>
+<span class="text-vibrant-text font-semibold">Stochastische Simulationen</span>
+</div>
+<div class="hidden md:block">
+<div class="ml-10 flex items-baseline space-x-4">
+<a href="#intro" class="hover:text-vibrant-cyan px-3 py-2 rounded-md text-sm font-medium transition-colors">Einführung</a>
+<a href="#convergence" class="hover:text-vibrant-pink px-3 py-2 rounded-md text-sm font-medium transition-colors">Konvergenzvergleich</a>
+<a href="#markov" class="hover:text-vibrant-yellow px-3 py-2 rounded-md text-sm font-medium transition-colors">Markov-Ketten</a>
+</div>
+</div>
+</div>
+</div>
+</nav>
+
+<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+<header class="text-center mb-16" id="intro">
+<div class="inline-block px-4 py-1 rounded-full border border-vibrant-cyan text-vibrant-cyan text-sm font-mono mb-6">
+Modul 2: High-Performance Simulation & Stochastik
+</div>
+<h1 class="text-4xl md:text-5xl font-extrabold tracking-tight mb-6">
+Das Gesetz der großen Zahlen in <span class="text-transparent bg-clip-text bg-gradient-to-r from-vibrant-cyan via-vibrant-purple to-vibrant-pink">Lichtgeschwindigkeit</span>
+</h1>
+<p class="mt-4 max-w-3xl mx-auto text-lg text-vibrant-textMuted">
+Stochastische Simulationen ermöglichen es uns, Risiken mathematisch greifbar zu machen. Doch erst durch moderne Beschleunigungs-Bibliotheken wie JAX können wir Millionen Szenarien parallel simulieren und komplexe Wahrscheinlichkeitsverteilungen in Echtzeit explorieren.
+</p>
+</header>
+
+<!-- Section 1: Convergence -->
+<section id="convergence" class="mb-20">
+<div class="text-center mb-8">
+<h2 class="text-2xl md:text-3xl font-bold mb-3">Monte-Carlo-Integration vs. Gitter-Integration</h2>
+<p class="text-sm text-vibrant-textMuted max-w-2xl mx-auto">
+Bei steigender Dimension $d$ kollabiert die Effizienz klassischer Integrationsgitter komplett (Fluch der Dimensionalität). Monte Carlo behält seine Konvergenzrate von $O(1/\sqrt{N})$ unbeeindruckt bei.
+</p>
+</div>
+
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<div class="lg:col-span-2 glass-card rounded-2xl p-6">
+<h3 class="text-lg font-semibold mb-4 text-center">Integrationsfehler vs. Anzahl der Stichproben (N)</h3>
+<div class="chart-container">
+<canvas id="convergenceChart"></canvas>
+</div>
+</div>
+<div class="space-y-4 flex flex-col justify-center">
+<div class="glass-card rounded-xl p-5 border-l-4 border-vibrant-cyan">
+<h4 class="text-md font-bold text-white mb-1">Gitter-Integration (d=1)</h4>
+<p class="text-xs text-vibrant-textMuted">Konvergiert hervorragend mit $O(1/N)$. In einer Dimension sind deterministische Gitter unschlagbar schnell.</p>
+</div>
+<div class="glass-card rounded-xl p-5 border-l-4 border-vibrant-purple">
+<h4 class="text-md font-bold text-white mb-1">Monte Carlo (dimensionsunabhängig)</h4>
+<p class="text-xs text-vibrant-textMuted">Besitzt stets die Fehlerrate $O(1/\sqrt{N})$ (Gleichgewicht). Egal ob 1 oder 100 Dimensionen, die Fehlerkurve bleibt identisch.</p>
+</div>
+<div class="glass-card rounded-xl p-5 border-l-4 border-vibrant-pink">
+<h4 class="text-md font-bold text-white mb-1">Gitter-Integration (d=4)</h4>
+<p class="text-xs text-vibrant-textMuted">Der Fehler sinkt nur noch mit $O(N^{-1/4})$. Um denselben Fehler wie im eindimensionalen Fall zu erhalten, benötigt man gigantisch viele Samples.</p>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Section 2: Markov Chains -->
+<section id="markov" class="mb-12">
+<div class="text-center mb-8">
+<h2 class="text-2xl md:text-3xl font-bold mb-3">Simulation einer Markov-Kette erster Ordnung</h2>
+<p class="text-sm text-vibrant-textMuted max-w-2xl mx-auto">
+Verfolge den transienten Verlauf der Zustände Normal, Degraded (Abgenutzt) und Failed (Ausgefallen) über einen Zeitraum von 30 Tagen. Berechnet aus der Übergangsmatrix.
+</p>
+</div>
+
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<div class="lg:col-span-2 glass-card rounded-2xl p-6">
+<h3 class="text-lg font-semibold mb-4 text-center">Zustandsanteile über 30 Simulationsschritte</h3>
+<div class="chart-container">
+<canvas id="markovChart"></canvas>
+</div>
+</div>
+<div class="space-y-4 flex flex-col justify-center">
+<div class="glass-card rounded-xl p-5">
+<h4 class="text-sm font-mono text-vibrant-yellow font-bold mb-2">Die Übergangsmatrix P:</h4>
+<div class="bg-vibrant-bg p-3 rounded border border-vibrant-surfaceLight font-mono text-xs text-center space-y-1">
+<div>[ 0.90 , 0.08 , 0.02 ] &rarr; Normal</div>
+<div>[ 0.00 , 0.85 , 0.15 ] &rarr; Degraded</div>
+<div>[ 0.20 , 0.00 , 0.80 ] &rarr; Failed</div>
+</div>
+<p class="text-xs text-vibrant-textMuted mt-3 leading-relaxed">
+Am Tag 0 starten 100% aller Maschinen im Zustand <strong>Normal</strong>. Über die Zeit pendeln sich die Anteile im stationären Gleichgewicht ein. Der Ausfallzustand regeneriert sich zu 20% pro Schritt durch Reparaturarbeiten.
+</p>
+</div>
+</div>
+</div>
+</section>
+</main>
+
+<footer class="glass-card py-6 border-t border-vibrant-surfaceLight mt-12 text-center text-vibrant-textMuted text-xs font-mono">
+<p>Angewandte Modellierung und Systemsimulation | Woche 6 | Generiert für Lehrzwecke (2026)</p>
+</footer>
+
+<script>
+// Convergence Chart setup
+const N = [];
+const grid1 = [];
+const mc = [];
+const grid4 = [];
+
+for (let i = 10; i <= 50000; i = Math.round(i * 1.3)) {
+    N.push(i);
+    grid1.push(1 / i);
+    mc.push(1 / Math.sqrt(i));
+    grid4.push(1 / Math.pow(i, 0.25));
+}
+
+const ctxConv = document.getElementById('convergenceChart').getContext('2d');
+new Chart(ctxConv, {
+    type: 'line',
+    data: {
+        labels: N,
+        datasets: [
+            {
+                label: 'Deterministisches Gitter (d=1)',
+                data: grid1,
+                borderColor: '#06b6d4',
+                backgroundColor: 'rgba(6, 182, 212, 0.1)',
+                borderWidth: 2,
+                pointRadius: 0
+            },
+            {
+                label: 'Monte Carlo (alle d)',
+                data: mc,
+                borderColor: '#8b5cf6',
+                backgroundColor: 'rgba(139, 92, 246, 0.1)',
+                borderWidth: 2,
+                pointRadius: 0
+            },
+            {
+                label: 'Deterministisches Gitter (d=4)',
+                data: grid4,
+                borderColor: '#ec4899',
+                backgroundColor: 'rgba(236, 72, 153, 0.1)',
+                borderWidth: 2,
+                pointRadius: 0
+            }
+        ]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                labels: { color: '#f8fafc', font: { family: 'Inter', size: 11 } },
+                position: 'top'
+            }
+        },
+        scales: {
+            x: {
+                type: 'logarithmic',
+                title: { display: true, text: 'Anzahl Samples (N) - log Skala', color: '#94a3b8' },
+                ticks: { color: '#94a3b8' },
+                grid: { color: 'rgba(255,255,255,0.05)' }
+            },
+            y: {
+                type: 'logarithmic',
+                title: { display: true, text: 'Integrationsfehler', color: '#94a3b8' },
+                ticks: { color: '#94a3b8' },
+                grid: { color: 'rgba(255,255,255,0.05)' }
+            }
+        }
+    }
+});
+
+// Markov Chain dynamics
+const P = [
+    [0.90, 0.08, 0.02],
+    [0.00, 0.85, 0.15],
+    [0.20, 0.00, 0.80]
+];
+let currentState = [1.0, 0.0, 0.0]; // Normal, Degraded, Failed
+
+const steps = Array.from({length: 31}, (_, i) => i);
+const normalHist = [currentState[0]];
+const degradedHist = [currentState[1]];
+const failedHist = [currentState[2]];
+
+for (let t = 1; t <= 30; t++) {
+    const nextState = [0.0, 0.0, 0.0];
+    for (let j = 0; j < 3; j++) {
+        for (let i = 0; i < 3; i++) {
+            nextState[j] += currentState[i] * P[i][j];
+        }
+    }
+    currentState = nextState;
+    normalHist.push(currentState[0] * 100);
+    degradedHist.push(currentState[1] * 100);
+    failedHist.push(currentState[2] * 100);
+}
+
+const ctxMarkov = document.getElementById('markovChart').getContext('2d');
+new Chart(ctxMarkov, {
+    type: 'line',
+    data: {
+        labels: steps,
+        datasets: [
+            {
+                label: 'Normal (%)',
+                data: normalHist,
+                borderColor: '#06b6d4',
+                backgroundColor: 'rgba(6, 182, 212, 0.1)',
+                borderWidth: 2,
+                fill: true
+            },
+            {
+                label: 'Degraded (%)',
+                data: degradedHist,
+                borderColor: '#eab308',
+                backgroundColor: 'rgba(234, 179, 8, 0.1)',
+                borderWidth: 2,
+                fill: true
+            },
+            {
+                label: 'Failed (%)',
+                data: failedHist,
+                borderColor: '#ec4899',
+                backgroundColor: 'rgba(236, 72, 153, 0.1)',
+                borderWidth: 2,
+                fill: true
+            }
+        ]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                labels: { color: '#f8fafc', font: { family: 'Inter', size: 11 } },
+                position: 'top'
+            }
+        },
+        scales: {
+            x: {
+                title: { display: true, text: 'Simulationsschritte (Tage)', color: '#94a3b8' },
+                ticks: { color: '#94a3b8' },
+                grid: { color: 'rgba(255,255,255,0.05)' }
+            },
+            y: {
+                min: 0,
+                max: 100,
+                title: { display: true, text: 'Maschinen-Anteil (%)', color: '#94a3b8' },
+                ticks: { color: '#94a3b8' },
+                grid: { color: 'rgba(255,255,255,0.05)' }
+            }
+        }
+    }
+});
+</script>
+</body>
+</html>
