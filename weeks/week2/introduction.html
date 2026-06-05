@@ -1,48 +1,213 @@
-<!-- Template für theoretische Einführungen -->
 <div class="space-y-8">
-    <!-- Wöchentliche Illustration (Optional: cover.png im wöchentlichen Ordner platzieren) -->
-    <img 
-        src="weeks/week2/cover.png" 
-        alt="Woche Thema Illustration" 
-        class="w-full h-48 md:h-64 object-cover rounded-2xl border border-slate-800 shadow-lg"
-        onerror="this.style.display='none'"
-    >
-
     <!-- Intro Banner -->
     <div class="p-6 glass-card rounded-2xl border-l-4 border-cyan-500 bg-gradient-to-r from-cyan-950/20 to-transparent">
-        <h3 class="text-xl font-bold text-white mb-2">Prädiktive Modellierung & Maschinelles Lernen</h3>
+        <h3 class="text-xl font-bold text-white mb-2">Woche 2: Prädiktive Modellierung, Keras 3 & JAX Grundlagen</h3>
         <p class="text-slate-300 text-sm leading-relaxed">
-            In dieser Woche erlernen wir das Fundament datengetriebener Modellierung. Wir betrachten, wie kontinuierliche physikalische Signale erfasst und als neuronale Netze abgebildet werden können.
+            In dieser Woche steigen wir in die datengetriebene Simulation ein. Wir lernen den Paradigmenwechsel von klassischen, deterministischen Blockdiagrammen (Simulink) hin zu neuronalen Emulatoren mit Keras 3 kennen. Parallel steigen wir in die Programmierung mit JAX ein, um hocheffiziente, hardwarebeschleunigte Berechnungen durchzuführen.
         </p>
     </div>
 
-    <!-- Core Objectives -->
-    <div class="space-y-4">
-        <h3 class="text-2xl font-bold text-white flex items-center gap-2">
-            <span>🎯</span> Lernziele der Woche
-        </h3>
-        <ul class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <li class="p-4 bg-slate-900/40 border border-slate-800 rounded-xl flex gap-3">
-                <span class="text-cyan-400 font-bold">1.</span>
-                <span class="text-sm text-slate-300">Verständnis der theoretischen Grundlagen und mathematischen Modelle.</span>
-            </li>
-            <li class="p-4 bg-slate-900/40 border border-slate-800 rounded-xl flex gap-3">
-                <span class="text-pink-400 font-bold">2.</span>
-                <span class="text-sm text-slate-300">Praktische Umsetzung in Python unter Nutzung moderner Simulationstools.</span>
-            </li>
-        </ul>
-    </div>
-
-    <!-- Key Concepts Section -->
+    <!-- Switcher Tabs -->
     <div class="space-y-6">
-        <h3 class="text-2xl font-bold text-white">Wichtige theoretische Konzepte</h3>
-        <div class="space-y-4">
-            <div class="space-y-1">
-                <h4 class="text-lg font-bold text-pink-400">Konzept A</h4>
-                <p class="text-slate-300 text-sm leading-relaxed">
-                    Beschreibe das Konzept hier detailliert. Nutze Absätze für Lesbarkeit.
-                </p>
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-slate-800 pb-3">
+            <h3 class="text-xl md:text-2xl font-extrabold text-white flex items-center gap-2">
+                <span class="text-cyan-400">📚</span> Theoretische Handbücher (PDFs)
+            </h3>
+            
+            <!-- Tab Controls -->
+            <div class="flex bg-slate-950/80 p-1.5 rounded-xl border border-slate-800/80 w-full sm:w-auto">
+                <button 
+                    id="tab-btn-physics"
+                    onclick="switchWeek2Tab('physics')"
+                    class="flex-1 sm:flex-none text-xs font-semibold px-4 py-2.5 rounded-lg transition duration-200 bg-cyan-600 text-white border border-cyan-500 shadow-md shadow-cyan-900/30"
+                >
+                    Neural Physics Emulation
+                </button>
+                <button 
+                    id="tab-btn-jax"
+                    onclick="switchWeek2Tab('jax')"
+                    class="flex-1 sm:flex-none text-xs font-semibold px-4 py-2.5 rounded-lg transition duration-200 text-slate-400 hover:text-slate-200 hover:bg-slate-900/40"
+                >
+                    Mastering JAX
+                </button>
+            </div>
+        </div>
+
+        <!-- Panel 1: Neural Physics Emulation -->
+        <div id="pnl-physics" class="space-y-6">
+            <!-- Objectives & Meta -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div class="lg:col-span-2 space-y-4">
+                    <h4 class="text-lg font-bold text-cyan-400">Teil A: Neural Physics Emulation with Keras 3</h4>
+                    <p class="text-sm text-slate-300 leading-relaxed">
+                        Dieses Handbuch führt in die datengetriebene Emulation physikalischer Systeme ein. Am Beispiel eines klassischen RC-Tiefpassfilters wird gezeigt, wie transiente Phasenübergänge und Rauschen durch latente Rekonstruktion (Autoencoder) abgebildet und Anomalien detektiert werden.
+                    </p>
+                </div>
+                <div class="p-5 glass-card rounded-xl border border-slate-800/60 bg-slate-950/20 space-y-3">
+                    <h5 class="text-xs font-bold text-slate-400 uppercase tracking-wider">Kernthemen</h5>
+                    <ul class="text-xs text-slate-300 space-y-2">
+                        <li class="flex items-center gap-2">
+                            <span class="text-cyan-400">◆</span> Keras 3 Backend-Routing (JAX/TF/PyTorch)
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="text-cyan-400">◆</span> TPU Systolic Arrays & MXU Architektur
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="text-cyan-400">◆</span> Latent Space Kompression (Hourglass-Modelle)
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="text-cyan-400">◆</span> Anomaliendetektion via MAE Reconstruction Loss
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Action Area -->
+            <div class="flex items-center justify-between border-t border-slate-900 pt-4">
+                <span class="text-xs text-slate-400 font-mono">Dateigröße: 7.6 MB | Format: PDF</span>
+                <a 
+                    href="weeks/week2/woche-02-Neural_Physics_Emulation.pdf" 
+                    download="woche-02-Neural_Physics_Emulation.pdf"
+                    class="inline-flex items-center gap-2 bg-slate-900 hover:bg-slate-850 text-white font-semibold text-xs px-4 py-2 border border-slate-800 rounded-xl transition duration-200 shadow-md shadow-slate-950/80"
+                >
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                    </svg>
+                    Dokument Herunterladen
+                </a>
+            </div>
+
+            <!-- Frame Container -->
+            <div class="relative w-full h-[600px] rounded-2xl overflow-hidden border border-slate-850 bg-slate-950 shadow-2xl">
+                <object 
+                    data="weeks/week2/woche-02-Neural_Physics_Emulation.pdf" 
+                    type="application/pdf" 
+                    class="w-full h-full"
+                >
+                    <div class="absolute inset-0 flex flex-col items-center justify-center p-6 text-center bg-slate-900/80 backdrop-blur-md">
+                        <span class="text-4xl mb-4">⚠️</span>
+                        <h4 class="text-lg font-bold text-white mb-2">Vorschau nicht verfügbar</h4>
+                        <p class="text-sm text-slate-400 max-w-md mb-6">
+                            Ihr Browser unterstützt das direkte Anzeigen von PDF-Dateien in der Seite nicht. Bitte laden Sie das Handbuch über den Button oben herunter, um es zu lesen.
+                        </p>
+                        <a 
+                            href="weeks/week2/woche-02-Neural_Physics_Emulation.pdf" 
+                            download="woche-02-Neural_Physics_Emulation.pdf"
+                            class="bg-cyan-600 hover:bg-cyan-500 text-white font-bold text-sm px-6 py-2.5 rounded-xl transition duration-200"
+                        >
+                            Dokument Herunterladen
+                        </a>
+                    </div>
+                </object>
+            </div>
+        </div>
+
+        <!-- Panel 2: Mastering JAX -->
+        <div id="pnl-jax" class="space-y-6 hidden">
+            <!-- Objectives & Meta -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div class="lg:col-span-2 space-y-4">
+                    <h4 class="text-lg font-bold text-purple-400">Teil B: Mastering JAX – Cyber-Magic Academy Manual</h4>
+                    <p class="text-sm text-slate-300 leading-relaxed">
+                        Das Cyber-Magic Academy Manual bietet eine praxisnahe, tiefe Einführung in das JAX-Ökosystem. Es erklärt, warum Python für massive Simulationen einen Compiler wie XLA benötigt und wie JAX funktionale Reinheit, zustandslose Arrays und explizite Zufallsschlüssel (PRNGs) nutzt, um Berechnungen auf GPUs und TPUs zu skalieren.
+                    </p>
+                </div>
+                <div class="p-5 glass-card rounded-xl border border-slate-800/60 bg-slate-950/20 space-y-3">
+                    <h5 class="text-xs font-bold text-slate-400 uppercase tracking-wider">Kernthemen</h5>
+                    <ul class="text-xs text-slate-300 space-y-2">
+                        <li class="flex items-center gap-2">
+                            <span class="text-purple-400">◆</span> Memory Wall, GIL-Limits & JAX JIT/XLA Compiler
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="text-purple-400">◆</span> Funktionale Reinheit & Immutable Arrays
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="text-purple-400">◆</span> Explicit PRNG key splitting (Threefry)
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="text-purple-400">◆</span> JAX-Transformationen: grad, jit, vmap & pmap
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Action Area -->
+            <div class="flex items-center justify-between border-t border-slate-900 pt-4">
+                <span class="text-xs text-slate-400 font-mono">Dateigröße: 20.4 MB | Format: PDF</span>
+                <a 
+                    href="weeks/week2/woche-02-JAX_Cyber-Magic_Academy.pdf" 
+                    download="woche-02-JAX_Cyber-Magic_Academy.pdf"
+                    class="inline-flex items-center gap-2 bg-slate-900 hover:bg-slate-850 text-white font-semibold text-xs px-4 py-2 border border-slate-800 rounded-xl transition duration-200 shadow-md shadow-slate-950/80"
+                >
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                    </svg>
+                    Dokument Herunterladen
+                </a>
+            </div>
+
+            <!-- Frame Container -->
+            <div class="relative w-full h-[600px] rounded-2xl overflow-hidden border border-slate-850 bg-slate-950 shadow-2xl">
+                <object 
+                    data="weeks/week2/woche-02-JAX_Cyber-Magic_Academy.pdf" 
+                    type="application/pdf" 
+                    class="w-full h-full"
+                >
+                    <div class="absolute inset-0 flex flex-col items-center justify-center p-6 text-center bg-slate-900/80 backdrop-blur-md">
+                        <span class="text-4xl mb-4">⚠️</span>
+                        <h4 class="text-lg font-bold text-white mb-2">Vorschau nicht verfügbar</h4>
+                        <p class="text-sm text-slate-400 max-w-md mb-6">
+                            Ihr Browser unterstützt das direkte Anzeigen von PDF-Dateien in der Seite nicht. Bitte laden Sie das Handbuch über den Button oben herunter, um es zu lesen.
+                        </p>
+                        <a 
+                            href="weeks/week2/woche-02-JAX_Cyber-Magic_Academy.pdf" 
+                            download="woche-02-JAX_Cyber-Magic_Academy.pdf"
+                            class="bg-cyan-600 hover:bg-cyan-500 text-white font-bold text-sm px-6 py-2.5 rounded-xl transition duration-200"
+                        >
+                            Dokument Herunterladen
+                        </a>
+                    </div>
+                </object>
             </div>
         </div>
     </div>
 </div>
+
+<!-- Simple Tab Controller Script -->
+<script>
+    function switchWeek2Tab(tabName) {
+        const physicsBtn = document.getElementById('tab-btn-physics');
+        const jaxBtn = document.getElementById('tab-btn-jax');
+        const physicsPnl = document.getElementById('pnl-physics');
+        const jaxPnl = document.getElementById('pnl-jax');
+
+        const activeBtnClasses = ['bg-cyan-600', 'text-white', 'border', 'border-cyan-500', 'shadow-md', 'shadow-cyan-900/30'];
+        const inactiveBtnClasses = ['text-slate-400', 'hover:text-slate-200', 'hover:bg-slate-900/40'];
+
+        if (tabName === 'physics') {
+            // Setup active tab button
+            physicsBtn.classList.add(...activeBtnClasses);
+            physicsBtn.classList.remove(...inactiveBtnClasses);
+            
+            // Setup inactive tab button
+            jaxBtn.classList.remove(...activeBtnClasses);
+            jaxBtn.classList.add(...inactiveBtnClasses);
+
+            // Toggle panels visibility
+            physicsPnl.classList.remove('hidden');
+            jaxPnl.classList.add('hidden');
+        } else if (tabName === 'jax') {
+            // Setup active tab button
+            jaxBtn.classList.add(...activeBtnClasses);
+            jaxBtn.classList.remove(...inactiveBtnClasses);
+            
+            // Setup inactive tab button
+            physicsBtn.classList.remove(...activeBtnClasses);
+            physicsBtn.classList.add(...inactiveBtnClasses);
+
+            // Toggle panels visibility
+            jaxPnl.classList.remove('hidden');
+            physicsPnl.classList.add('hidden');
+        }
+    }
+</script>
