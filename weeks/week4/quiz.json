@@ -1,24 +1,128 @@
 [
     {
-        "question": "Was bewirkt die JAX-Transformation `vmap`?",
+        "question": "Warum bringt eine Python for-Schleife bei 100.000 Pendeln den Rechner zum Weinen?",
         "options": [
-            "Sie optimiert den Code für spezifische CPUs",
-            "Sie führt automatische Vorwärts-Differentiation durch",
-            "Sie vektorisiert eine Funktion über eine Batch-Dimension, ohne manuelle Python-Schleifen zu schreiben",
-            "Sie kompiliert den Code mittels XLA direkt in Maschinencode"
+            "Der Global Interpreter Lock (GIL) blockiert Parallelität",
+            "Python weigert sich aus rein ethischen Gründen",
+            "Der pure Interpreter-Overhead bremst die Berechnungen massiv",
+            "Die CPU macht lieber heimlich Kaffeepausen"
         ],
-        "answerIndex": 2,
-        "explanation": "`vmap` steht für 'vectorized map' und ermöglicht die vollautomatische parallele Ausführung einer mathematischen Funktion über Arrays."
+        "answerIndex": [
+            0,
+            2
+        ],
+        "explanation": "Der GIL blockiert Parallelität und der Interpreter-Overhead bremst Berechnungen massiv."
     },
     {
-        "question": "Warum ist die erste Ausführung einer mit `@jax.jit` dekorierten Funktion langsamer als nachfolgende Aufrufe?",
+        "question": "Oje, du schreibst heimlich \"array[0] = 5\" in JAX! Was ist die Reaktion?",
         "options": [
-            "Weil JAX die Daten im Speicher kopieren muss",
-            "Aufgrund des Kompilierungs- und Tracing-Vorgangs des XLA-Compilers beim ersten Durchlauf",
-            "Weil der Garbage Collector den Speicher bereinigt",
-            "Das ist ein bekanntes Performance-Problem in JAX"
+            "JAX lobt dich für exzellente Speichereffizienz",
+            "Die \"Pure Function\"-Polizei wirft sofort einen TypeError",
+            "In-Place Mutationen sind in JAX strengstens verboten",
+            "Der Wert 5 wird gespeichert, aber nur wenn niemand hinsieht"
         ],
-        "answerIndex": 1,
-        "explanation": "Beim ersten Aufruf analysiert JAX die Dimensionen und Typen (Tracing) und generiert den optimierten XLA-Code. Nachfolgende Aufrufe nutzen den vorkompilierten Maschinen-Code."
+        "answerIndex": [
+            1,
+            2
+        ],
+        "explanation": "In-Place Mutationen sind verboten, JAX wirft einen TypeError wegen der Pure-Function-Regel."
+    },
+    {
+        "question": "Wie rettet uns \"jax.vmap\" davor, \"Ozeane mit einer Teetasse zu leeren\"?",
+        "options": [
+            "Es trinkt den Ozean einfach heimlich auf Ex aus",
+            "Es drückt Skalar-Code parallel auf SIMD-Vektor-Hardware",
+            "Es wandelt eine Einzelfunktion magisch in eine Batch-Funktion um",
+            "Es löscht den Browserverlauf, um mehr Arbeitsspeicher zu generieren"
+        ],
+        "answerIndex": [
+            1,
+            2
+        ],
+        "explanation": "Wandelt Einzelfunktionen in Batch-Funktionen um und führt sie parallel auf SIMD-Hardware aus."
+    },
+    {
+        "question": "Warum ist der allererste Aufruf einer @jax.jit dekorierten Funktion oft so langsam?",
+        "options": [
+            "Die GPU muss erst \"vorgeglüht\" werden wie ein alter Diesel",
+            "JAX schickt Platzhalter durch den Code (Tracing-Phase)",
+            "Python lädt die Matrizen erst noch per Fax herunter",
+            "Der XLA-Compiler baut den abstrakten Graphen (JAXPR) auf"
+        ],
+        "answerIndex": [
+            1,
+            3
+        ],
+        "explanation": "JAX führt eine Tracing-Phase durch, in der der XLA-Compiler den abstrakten Graphen aufbaut."
+    },
+    {
+        "question": "Wovon bekommt der XLA-Compiler sofort Panik und wirft den ConcretizationTypeError?",
+        "options": [
+            "Von dynamischem \"if/else\"-Control-Flow basierend auf Laufzeitdaten",
+            "Von rein funktionaler, zustandsloser Mathematik",
+            "Wenn klassischer Python-Code den JAXPR-Tracing-Graphen bricht",
+            "Von Code-Kommentaren, die nicht auf Englisch formuliert sind"
+        ],
+        "answerIndex": [
+            0,
+            2
+        ],
+        "explanation": "Dynamischer Control-Flow basierend auf Laufzeitdaten bricht den statischen JAXPR-Tracing-Graphen."
+    },
+    {
+        "question": "Wie unterscheidet sich jax.grad von der klassischen numerischen Trial-and-Error Methode?",
+        "options": [
+            "Es macht einfach 10 Millionen Zufallsversuche pro Sekunde",
+            "Es nutzt Reverse-Mode Autodiff für exakte analytische Steigungen",
+            "Es fragt heimlich den KI-Agenten Observer-Prime nach der Lösung",
+            "Es macht das Universum differentiell, statt numerisch zu raten"
+        ],
+        "answerIndex": [
+            1,
+            3
+        ],
+        "explanation": "Nutzt Reverse-Mode Autodiff für exakte analytische Steigungen statt numerischem Raten."
+    },
+    {
+        "question": "Du hast numpy.random im JAX-Code verwendet! Warum zerstört das unser Universum?",
+        "options": [
+            "Weil implizite globale Seeds absolut verbotene \"Side Effects\" sind",
+            "JAX generiert magisch Entschuldigungs-Keys für dich",
+            "Asynchrones Rechnen führt so zum totalen mathematischen Chaos",
+            "JAX ignoriert dich und würfelt physisch auf dem Mainboard"
+        ],
+        "answerIndex": [
+            0,
+            2
+        ],
+        "explanation": "Implizite globale Seeds sind verbotene Side Effects, die bei asynchroner Ausführung zu Chaos führen."
+    },
+    {
+        "question": "Welchen \"Kulturschock\" erleben klassische Keras-Entwickler beim Wechsel zu Flax?",
+        "options": [
+            "Das Modell speichert seine Gewichte heimlich als self.weights",
+            "Flax trennt die leere Architektur (Blueprint) komplett vom Zustand",
+            "Die Gewichte werden als externes Lexikon (FrozenDict) herumgereicht",
+            "Neuronale Netze müssen auf Disketten gespeichert werden"
+        ],
+        "answerIndex": [
+            1,
+            2
+        ],
+        "explanation": "Flax trennt Architektur vom Zustand; Gewichte werden extern als FrozenDict verwaltet."
+    },
+    {
+        "question": "Wie rettet der XLA-Compiler uns vor dem fatalen \"Memory Bandwidth Bottleneck\" der GPU?",
+        "options": [
+            "Er kauft heimlich mehr RAM bei Amazon Cloud auf unsere Kosten",
+            "Durch \"Operator Fusion\" (Verschmelzung kleiner Mathe-Kernel)",
+            "Daten bleiben in schnellen Registern und verlassen den Chip seltener",
+            "Er komprimiert alle Fließkommazahlen einfach als MP3-Dateien"
+        ],
+        "answerIndex": [
+            1,
+            2
+        ],
+        "explanation": "Operator Fusion verschmilzt kleine Kernel, sodass Daten seltener schnelle Register verlassen."
     }
 ]
