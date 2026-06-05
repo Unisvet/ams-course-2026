@@ -825,6 +825,18 @@ def convert_theory_markdown_to_html(md_text, week_id):
     return '\n'.join(html_lines)
 
 
+def load_theory_md(week_id):
+    md_path = os.path.join(os.path.dirname(__file__), f"week{week_id}_theory.md")
+    if os.path.exists(md_path):
+        with open(md_path, 'r', encoding='utf-8') as f:
+            return f.read()
+    # Fallback to global if exists
+    global_name = f"THEORY_W{week_id}"
+    if global_name in globals():
+        return globals()[global_name]
+    raise FileNotFoundError(f"Theory markdown not found for week {week_id} at {md_path}")
+
+
 def update_theory(week_id, md_raw):
     clean_md = preprocess_markdown(md_raw)
     html = convert_theory_markdown_to_html(clean_md, week_id)
@@ -848,7 +860,11 @@ for wid, raw_csv in QUIZ_DATA.items():
     build_quiz(wid, raw_csv)
 
 # Process Theory Introductions
+update_theory(3, load_theory_md(3))
+update_theory(4, load_theory_md(4))
+update_theory(5, load_theory_md(5))
 update_theory(6, THEORY_W6)
 update_theory(7, THEORY_W7)
 
 print("=== PIPELINE RUN COMPLETE ===")
+

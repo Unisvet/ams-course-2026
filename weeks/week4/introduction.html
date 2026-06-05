@@ -1,48 +1,114 @@
-<!-- Template für theoretische Einführungen -->
 <div class="space-y-8">
-    <!-- Wöchentliche Illustration (Optional: cover.png im wöchentlichen Ordner platzieren) -->
-    <img 
-        src="weeks/week4/cover.png" 
-        alt="Woche Thema Illustration" 
-        class="w-full h-48 md:h-64 object-cover rounded-2xl border border-slate-800 shadow-lg"
-        onerror="this.style.display='none'"
-    >
-
     <!-- Intro Banner -->
     <div class="p-6 glass-card rounded-2xl border-l-4 border-cyan-500 bg-gradient-to-r from-cyan-950/20 to-transparent">
-        <h3 class="text-xl font-bold text-white mb-2">Differenzierbare Simulation mit JAX & Flax</h3>
-        <p class="text-slate-300 text-sm leading-relaxed">
-            Der Übergang zu JAX und Flax revolutioniert die Rechengeschwindigkeit. Wir nutzen automatische Differentiation, Vektorisierung und Just-In-Time (JIT) Kompilierung auf GPUs.
-        </p>
+        <h3 class="text-xl md:text-2xl font-bold text-white mb-2">Woche 4: JAX & Flax (Silicon Ascension)</h3>
+        <p class="text-slate-300 text-sm leading-relaxed">Shattering the Speed of Light: Functional Purity, the JAX Trinity, and Stateless Architectures</p>
     </div>
-
-    <!-- Core Objectives -->
-    <div class="space-y-4">
-        <h3 class="text-2xl font-bold text-white flex items-center gap-2">
-            <span>🎯</span> Lernziele der Woche
-        </h3>
-        <ul class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <li class="p-4 bg-slate-900/40 border border-slate-800 rounded-xl flex gap-3">
-                <span class="text-cyan-400 font-bold">1.</span>
-                <span class="text-sm text-slate-300">Verständnis der theoretischen Grundlagen und mathematischen Modelle.</span>
-            </li>
-            <li class="p-4 bg-slate-900/40 border border-slate-800 rounded-xl flex gap-3">
-                <span class="text-pink-400 font-bold">2.</span>
-                <span class="text-sm text-slate-300">Praktische Umsetzung in Python unter Nutzung moderner Simulationstools.</span>
-            </li>
-        </ul>
+<h3 class="text-xl md:text-2xl font-extrabold text-white mt-12 mb-4 border-b border-slate-900 pb-2 flex items-center gap-2">
+    <span class="text-cyan-400">📖</span> The Story: Shattering the Speed of Light
+</h3>
+<p class="text-sm text-slate-300 leading-relaxed my-3">Liebe Architekten des *Neo-Simulacrums*,</p>
+<p class="text-sm text-slate-300 leading-relaxed my-3">in den vergangenen drei Wochen haben wir das Fundament unserer digitalen Welt gegossen. Wir haben physikalische Differenzialgleichungen in Python übersetzt, Umgebungen sauber versioniert und mithilfe von Keras Anomalien aus dem Datenrauschen extrahiert. Unser System kann beobachten und reagieren. Doch während unsere Modelle kognitiv erwachten, stoßen wir nun an eine unsichtbare, aber unerbittliche Mauer: <strong class="text-white">die architektonischen Grenzen von Standard-Python.</strong></p>
+<p class="text-sm text-slate-300 leading-relaxed my-3">Wenn wir in der klassischen Ingenieurswelt eine Systemsimulation mit 100.000 interagierenden Drohnen, kollidierenden Partikeln oder schwingenden Oszillatoren schreiben, greifen wir instinktiv zur for-Schleife. Doch Python ist eine interpretierte, hochgradig dynamische Sprache. Gefesselt durch den *Global Interpreter Lock (GIL)*, der echte Parallelität auf CPU-Ebene verhindert, zwingt Python unseren Prozessor dazu, jede physikalische Formel brav nacheinander zu übersetzen, Objekttypen zu prüfen, Ergebnisse in den Speicher zu schreiben und wieder abzurufen. Für moderne KI-Systeme und gigantische Multi-Agenten-Umgebungen ist dies, als würden wir versuchen, einen Ozean mit einer Teetasse zu leeren.</p>
+<p class="text-sm text-slate-300 leading-relaxed my-3">Heute lassen wir diese Legacy-Welt endgültig hinter uns. Wir betreten das maschinennahe Level der Hardware-Beschleuniger (GPUs und Google TPUs) und verändern die Art und Weise, wie wir Code schreiben, fundamental. Unser Werkzeug für diese *Silicon Ascension* is <strong class="text-white">JAX</strong>, ein vom Google DeepMind Team entwickeltes Framework für hochperformantes Machine Learning und differenzierbares Computing.</p>
+<p class="text-sm text-slate-300 leading-relaxed my-3">Um das Universum nicht nur in Echtzeit zu simulieren, sondern es zu einem massiv-parallelen, lernenden Ökosystem zu machen, müssen wir die klassische Objektorientierung ablegen. Wir müssen die <strong class="text-white">drei elementaren Primitiven von JAX (vmap, jit, grad)</strong> sowie das darauf aufbauende funktionale Architektur-Framework <strong class="text-white">Flax</strong> meistern. *Let’s shatter the speed of light.*</p>
+<h3 class="text-xl md:text-2xl font-extrabold text-white mt-12 mb-4 border-b border-slate-900 pb-2 flex items-center gap-2">
+    <span class="text-cyan-400">⚙️</span> 1. Der konzeptionelle Schock: Functional Purity
+</h3>
+<p class="text-sm text-slate-300 leading-relaxed my-3">Bevor wir die Superkräfte von JAX nutzen können, müssen wir eine strenge Regel akzeptieren, die dem klassischen Python-Entwickler oft widerstrebt: <strong class="text-white">JAX erfordert Pure Functions (Reine Funktionen).</strong></p>
+<p class="text-sm text-slate-300 leading-relaxed my-3">In der klassischen objektorientierten Programmierung (OOP) hat ein Objekt einen Zustand (*State*). Ein simuliertes Roboter-Objekt verändert über die Zeit seine internen Variablen (z. B. self.position += geschwindigkeit). Dies nennt man in der Informatik einen <strong class="text-white">Seiteneffekt (Side Effect)</strong>. JAX verbietet dies absolut. Eine reine Funktion in JAX ist wie unantastbare mathematische Gesetze:</p>
+<ol class="list-decimal pl-6 text-sm text-slate-300 space-y-3 my-4">
+    <li class="leading-relaxed"><strong class="text-white">Deterministisch:</strong> Sie liefert für exakt denselben Input <strong class="text-white">immer</strong> exakt denselben Output.</li>
+    <li class="leading-relaxed"><strong class="text-white">Keine Interaktion mit dem Außen:</strong> Sie liefert oder verändert <strong class="text-white">keine</strong> globalen Variablen.</li>
+    <li class="leading-relaxed"><strong class="text-white">Keine Mutation:</strong> Sie mutiert keine internen Zustände oder Eingabe-Arrays (ein array[0] = 5 In-Place-Update ist verboten!).</li>
+</ol>
+<p class="text-sm text-slate-300 leading-relaxed my-3">*Warum diese dogmatische Strenge?* Weil nur rein funktionale, zustandslose Mathematik von einem Compiler gefahrlos auf 10.000 GPU-Cores gleichzeitig aufgeteilt werden kann. Wenn Funktionen "rein" sind, hat der Compiler die absolute Garantie, dass diese Cores beim Schreiben in den Arbeitsspeicher niemals miteinander kollidieren (*Race Conditions*).</p>
+<h3 class="text-xl md:text-2xl font-extrabold text-white mt-12 mb-4 border-b border-slate-900 pb-2 flex items-center gap-2">
+    <span class="text-cyan-400">⚡</span> 2. Die Heilige Dreifaltigkeit von JAX
+</h3>
+<p class="text-sm text-slate-300 leading-relaxed my-3">An der Oberfläche sieht JAX aus wie das vertraute NumPy (import jax.numpy as jnp). Die wahre Magie entsteht jedoch erst, wenn wir unsere reinen Funktionen durch sogenannte JAX-Transformationen jagen, die den Code manipulieren und mit Superkräften versehen.</p>
+<h4 class="text-base font-bold text-cyan-400 mt-8 mb-3 flex items-center gap-2">
+    <span class="text-xs">◆</span> Superkraft 1: Das Multiversum aufspalten (jax.vmap)
+</h4>
+<ul class="list-disc pl-6 text-sm text-slate-300 space-y-2.5 my-4">
+    <li class="leading-relaxed"><strong class="text-white">Das Problem:</strong> Vektorisierung ist klassischerweise schmerzhaft. Wenn ihr eine Funktion geschrieben habt, die die Aerodynamik *einer einzelnen* Drohne berechnet, und nun 10.000 Drohnen simulieren wollt, müsstet ihr die Formeln mühsam umschreiben, künstliche Matrix-Dimensionen hinzufügen und aufwendiges *Broadcasting* (axis=0) betreiben.</li>
+    <li class="leading-relaxed"><strong class="text-white">Die JAX-Lösung:</strong> <strong class="text-white">jax.vmap (Vectorizing Map)</strong>. Ihr schreibt eure Logik so, als würdet ihr exakt <strong class="text-white">ein einziges</strong> Individuum simulieren. Wenn ihr diese skalare Funktion in vmap hüllt, transformiert JAX den Code automatisch in eine Batch-Funktion. Ihr übergebt ein Array mit 100.000 Startparametern, und vmap drückt eure Einzelfunktion simultan auf die Vektor-Hardware (SIMD) der GPU – ganz ohne for-Schleife. *Ihr denkt im Mikrosystem, JAX skaliert es fehlerfrei ins Makrosystem.*</li>
+</ul>
+<h4 class="text-base font-bold text-cyan-400 mt-8 mb-3 flex items-center gap-2">
+    <span class="text-xs">◆</span> Superkraft 2: Code in Silizium gießen (jax.jit)
+</h4>
+<ul class="list-disc pl-6 text-sm text-slate-300 space-y-2.5 my-4">
+    <li class="leading-relaxed"><strong class="text-white">Das Problem:</strong> Hardware-GPUs können absurd schnell rechnen, aber der Datentransport zwischen Grafikspeicher (VRAM) und den Rechenkernen ist der Flaschenhals (*Memory Bandwidth Bottleneck*). Rechnet Python a = x * 2 und im nächsten Schritt b = a + 3, wird das Zwischenergebnis a in den langsamen Speicher geschrieben und sofort wieder geladen. Eine massive Verschwendung.</li>
+    <li class="leading-relaxed"><strong class="text-white">Die JAX-Lösung:</strong> <strong class="text-white">jax.jit (Just-In-Time Compilation)</strong> nutzt den <strong class="text-white">XLA-Compiler</strong> (Accelerated Linear Algebra). Wenn ihr eine Funktion mit @jax.jit dekoriert, wird Python umgangen:</li>
+</ul>
+<ol class="list-decimal pl-6 text-sm text-slate-300 space-y-3 my-4">
+    <li class="leading-relaxed"><strong class="text-white">Tracing-Phase:</strong> Beim *allerersten* Aufruf der Funktion schickt JAX abstrakte Platzhalter (Tracer) durch den Code. Es zeichnet auf, welche mathematischen Schritte passieren, und erstellt einen abstrakten Graphen (die *JAXPR - JAX Intermediate Representation*).</li>
+    <li class="leading-relaxed"><strong class="text-white">Operator Fusion:</strong> Der XLA-Compiler analysiert diesen Graphen. Er verschmilzt (*fuses*) kleine Operationen wie Multiplikation und Addition zu einem einzigen, perfekt maßgeschneiderten Hardware-Kernel. Die Daten verlassen die ultraschnellen Register des Chips während der Rechnung nicht mehr.</li>
+    <li class="leading-relaxed"><strong class="text-white">Execution-Phase:</strong> Ab dem zweiten Aufruf läuft euer Python-Code als hocheffizienter Maschinencode in Bruchteilen von Millisekunden.</li>
+</ol>
+<h4 class="text-base font-bold text-cyan-400 mt-8 mb-3 flex items-center gap-2">
+    <span class="text-xs">◆</span> Superkraft 3: Die differenzierbare Realität (jax.grad)
+</h4>
+<ul class="list-disc pl-6 text-sm text-slate-300 space-y-2.5 my-4">
+    <li class="leading-relaxed"><strong class="text-white">Das Problem:</strong> In der klassischen Ingenieurswelt ist eine Simulation eine "Black Box". Ihr gebt einen Parameter $x$ hinein, wartet, und bekommt einen Fehlerwert $y$ heraus. Um Parameter zu optimieren, nutzt man fehleranfällige numerische Näherungen (den Differenzenquotienten $\frac{f(x+h)-f(x)}{h}$). Bei Deep-Learning-Modellen mit Milliarden Parametern würde diese Methode Äonen dauern.</li>
+    <li class="leading-relaxed"><strong class="text-white">Die JAX-Lösung:</strong> <strong class="text-white">jax.grad (Automatic Differentiation)</strong>. Da JAX beim Tracing exakt weiß, aus welchen elementaren Rechenoperationen eure gesamte physikalische Simulation besteht, macht es die Realität differenzierbar. Ihr übergebt jax.grad eure Simulationsfunktion, und es liefert euch eine <strong class="text-white">völlig neue Funktion</strong> zurück. Diese gibt nicht das Ergebnis aus, sondern den <strong class="text-white">exakten, analytischen Gradienten</strong> (die Steigung) des Fehlers bezüglich *jedes einzelnen* Eingabeparameters. JAX nutzt dafür *Reverse-Mode Autodiff* (Backpropagation) und wendet systematisch die Kettenregel der Differentialrechnung rückwärts durch euren Code an. Die Physik wird lernfähig: Der Gradient zeigt dem Optimierer immer exakt den direkte Weg zum Minimum.</li>
+</ul>
+<h3 class="text-xl md:text-2xl font-extrabold text-white mt-12 mb-4 border-b border-slate-900 pb-2 flex items-center gap-2">
+    <span class="text-purple-400">🧠</span> 3. Der funktionale Paradigmenwechsel: Zustandslos skalieren mit Flax
+</h3>
+<p class="text-sm text-slate-300 leading-relaxed my-3">Mit diesen drei Superkräften können wir physikalische Systeme unfassbar beschleunigen und optimieren. Doch wenn wir nun tiefe neuronale Netze als Orakel bauen wollen, stoßen wir auf einen philosophischen Konflikt.</p>
+<p class="text-sm text-slate-300 leading-relaxed my-3">In Frameworks wie <strong class="text-white">Keras</strong> (Woche 3) oder <strong class="text-white">PyTorch</strong> ist ein neuronales Netz ein Objekt (OOP). Die trainierbaren Parameter (Gewichte) leben unsichtbar *in* diesem Objekt (model.weights). Wenn das Modell durch den Optimizer aktualisiert wird, mutiert es von innen heraus. Wie wir oben gelernt haben, verabscheut JAX solche Seiteneffekte. JAX erzwingt, dass alle Berechnungen rein funktional und zustandslos ablaufen.</p>
+<p class="text-sm text-slate-300 leading-relaxed my-3">Hier tritt <strong class="text-white">Flax</strong> auf den Plan. Flax ist die offizielle Neural-Network-Bibliothek für das JAX-Ökosystem. Sie löst das Problem durch eine strikte <strong class="text-white">Trennung von Architektur und Zustand</strong>.</p>
+<p class="text-sm text-slate-300 leading-relaxed my-3">In Flax sieht der Workflow radikal anders aus als in Keras:</p>
+<ol class="list-decimal pl-6 text-sm text-slate-300 space-y-3 my-4">
+    <li class="leading-relaxed"><strong class="text-white">Die Architektur (Blueprint):</strong> Ihr definiert das Netz (z. B. ein Convolutional Network) lediglich als leere Struktur. Das Modell ist ein "nackter" Bauplan, es besitzt keine Daten.</li>
+    <li class="leading-relaxed"><strong class="text-white">Die Initialisierung (model.init):</strong> Ihr übergebt der Architektur einen Zufallsschlüssel und Form-Daten. Das Modell baut sich auf und gibt euch ein <strong class="text-white">externes Lexikon</strong> (ein FrozenDict) zurück, das alle Start-Gewichte enthält. Die Gewichte liegen nun *außerhalb* des Netzes.</li>
+    <li class="leading-relaxed"><strong class="text-white">Der Vorwärtsdurchlauf (model.apply):</strong> Um eine Vorhersage zu treffen, müsst ihr der Architektur nun jedes Mal explizit sowohl die Sensordaten als auch das externe Gewichts-Lexikon übergeben: y = model.apply(gewichte, x).</li>
+</ol>
+<p class="text-sm text-slate-300 leading-relaxed my-3"><strong class="text-white">Warum dieser Aufwand?</strong> Da die apply-Funktion des Netzwerks völlig zustandslos (*stateless*) is, können wir sie absolut nahtlos in vmap, jit und grad einwickeln! Wir können das Training auf einen Cluster von 1.000 TPUs verteilen, ohne Angst haben zu müssen, dass sich asynchrone Objekte im Speicher gegenseitig überschreiben.</p>
+<h4 class="text-base font-bold text-cyan-400 mt-8 mb-3 flex items-center gap-2">
+    <span class="text-xs">◆</span> Die Bändigung des Chaos: PRNGKeys
+</h4>
+<p class="text-sm text-slate-300 leading-relaxed my-3">Das Paradigma der Reinheit betrifft auch den <strong class="text-white">Zufall</strong>. In Standard-Python erzeugt numpy.random.rand() eine Zufallszahl und verändert dabei heimlich einen globalen Hintergrund-Status ("Seed"). Das ist ein Side Effect! In JAX müsst ihr bei jedem Zufallsaufruf (und damit auch bei Modellinitialisierungen) explizit einen Schlüssel übergeben: jax.random.PRNGKey(42).</p>
+<p class="text-sm text-slate-300 leading-relaxed my-3">Wenn ihr neuen Zufall braucht, dürft ihr den Key nicht wiederverwenden, sondern müsst ihn explizit aufspalten (key, subkey = jax.random.split(key)), um frische Entropie zu generieren. Dies zwingt euch, die Historie des Zufalls explizit im Code mitzuführen, was 100%ige mathematische Reproduzierbarkeit auf jedem verteilten System der Welt garantiert.</p>
+<p class="text-sm text-slate-300 leading-relaxed my-3">Willkommen in der differenzierbaren Dimension.</p>
+<h3 class="text-xl md:text-2xl font-extrabold text-white mt-12 mb-4 border-b border-slate-900 pb-2 flex items-center gap-2">
+    <span class="text-cyan-400">📚</span> Literaturempfehlungen & Reading List
+</h3>
+<p class="text-sm text-slate-300 leading-relaxed my-3">Um diese fundamentalen Konzepte tiefgreifend zu durchdringen (und um eure 5-Minuten-Kurzpräsentationen oder Capstone-Projekte exzellent vorzubereiten), ist die Auseinandersetzung mit der Originaldokumentation unerlässlich.</p>
+<h4 class="text-base font-bold text-cyan-400 mt-8 mb-3 flex items-center gap-2">
+    <span class="text-xs">◆</span> 1. Das offizielle JAX-Überlebenshandbuch (Pflichtlektüre)
+</h4>
+<ul class="list-disc pl-6 text-sm text-slate-300 space-y-2.5 my-4">
+    <li class="leading-relaxed"><strong class="text-white">Titel:</strong> *"JAX - The Sharp Bits"*</li>
+    <li class="leading-relaxed"><strong class="text-white">Fokus:</strong> JAX sieht aus wie NumPy, verhält sich unter der Haube aber fundamental anders (Out-of-Bounds Indexing verhält sich still, In-Place Updates sind verboten). Dies ist der wichtigste Text, den ihr lesen werdet, um frustrierende Bugs beim Programmieren zu vermeiden. Lest hier besonders den Abschnitt über Pseudo-Randomness (PRNG)!</li>
+    <li class="leading-relaxed"><strong class="text-white">Link:</strong> <a href="https://jax.readthedocs.io/en/latest/notebooks/Common_Gotchas_in_JAX.html" class="text-cyan-400 hover:underline" target="_blank">jax.readthedocs.io/en/latest/notebooks/Common_Gotchas_in_JAX.html</a></li>
+</ul>
+<h4 class="text-base font-bold text-cyan-400 mt-8 mb-3 flex items-center gap-2">
+    <span class="text-xs">◆</span> 2. Die Mathematik der Optimierung (jax.grad)
+</h4>
+<ul class="list-disc pl-6 text-sm text-slate-300 space-y-2.5 my-4">
+    <li class="leading-relaxed"><strong class="text-white">Titel:</strong> *"The Autodiff Cookbook" (JAX Docs)*</li>
+    <li class="leading-relaxed"><strong class="text-white">Fokus:</strong> Einer der am besten geschriebenen Guides zur *Automatic Differentiation*. Versteht den konzeptionellen Unterschied zwischen jax.grad (Skalare Ausgabe) und jax.jacobian (Matrix-Ausgabe) sowie den eleganten Umgang mit Ableitungen höherer Ordnung (Hesse-Matrizen), die wir für komplexe physikalische Beschleunigungen brauchen.</li>
+    <li class="leading-relaxed"><strong class="text-white">Link:</strong> <a href="https://jax.readthedocs.io/en/latest/notebooks/autodiff_cookbook.html" class="text-cyan-400 hover:underline" target="_blank">jax.readthedocs.io/en/latest/notebooks/autodiff_cookbook.html</a></li>
+</ul>
+<h4 class="text-base font-bold text-cyan-400 mt-8 mb-3 flex items-center gap-2">
+    <span class="text-xs">◆</span> 3. Architektur von zustandslosen neuronalen Netzen (Flax)
+</h4>
+<ul class="list-disc pl-6 text-sm text-slate-300 space-y-2.5 my-4">
+    <li class="leading-relaxed"><strong class="text-white">Titel:</strong> *"Flax Philosophy & Design Principles"*</li>
+    <li class="leading-relaxed"><strong class="text-white">Fokus:</strong> Ein kurzer, exzellenter Essay der DeepMind-Entwickler darüber, warum sie Keras/OOP für JAX aufgegeben haben und wie explizites State-Management zu robusterem, besser skalierbarem Code in großen Engineering-Teams führt.</li>
+    <li class="leading-relaxed"><strong class="text-white">Link:</strong> <a href="https://flax.readthedocs.io/en/latest/philosophy.html" class="text-cyan-400 hover:underline" target="_blank">flax.readthedocs.io/en/latest/philosophy.html</a></li>
+</ul>
+<h4 class="text-base font-bold text-cyan-400 mt-8 mb-3 flex items-center gap-2">
+    <span class="text-xs">◆</span> 4. Akademisches Fundament (Deep Learning Theory)
+</h4>
+<ul class="list-disc pl-6 text-sm text-slate-300 space-y-2.5 my-4">
+    <li class="leading-relaxed"><strong class="text-white">Buch:</strong> *Goodfellow, I., Bengio, Y., & Courville, A. (2016). Deep Learning. MIT Press.*</li>
+    <li class="leading-relaxed"><strong class="text-white">Fokus:</strong> Für alle, die es mathematisch exakt wissen wollen: Lest <strong class="text-white">Kapitel 6.5 (Back-Propagation and Other Differentiation Algorithms)</strong>. Dies ist die akademische Gold-Standard-Erklärung, wie "Reverse Mode Autodiff" (die Theorie hinter jax.grad) funktioniert und warum es der numerischen und symbolischen Differenzierung meilenweit überlegen ist. (Frei verfügbar auf <a href="https://www.deeplearningbook.org/" class="text-cyan-400 hover:underline" target="_blank">deeplearningbook.org</a>).</li>
+</ul>
+    <div class="p-5 glass-card rounded-xl border-l-4 border-yellow-500 bg-yellow-500/5 my-6 space-y-2">
+        <h4 class="text-yellow-400 font-bold text-sm flex items-center gap-2"><span>💡</span> Praxis-Tipp für euren Agentic Workflow:</h4>
     </div>
-
-    <!-- Key Concepts Section -->
-    <div class="space-y-6">
-        <h3 class="text-2xl font-bold text-white">Wichtige theoretische Konzepte</h3>
-        <div class="space-y-4">
-            <div class="space-y-1">
-                <h4 class="text-lg font-bold text-pink-400">Konzept A</h4>
-                <p class="text-slate-300 text-sm leading-relaxed">
-                    Beschreibe das Konzept hier detailliert. Nutze Absätze für Lesbarkeit.
-                </p>
-            </div>
-        </div>
-    </div>
+<p class="text-sm text-slate-300 leading-relaxed my-3">*Nutzt beim Bearbeiten der Problem Sets eure KI-Agenten (Gemini CLI / Antigravity) aktiv als Tutoren\! JAX-Fehlermeldungen beim jit-Kompilieren (z. B. der gefürchtete ConcretizationTypeError) können anfangs sehr kryptisch sein. Nutzt Prompts wie: "Mein JAX-Code scheitert in der Tracing-Phase bei einer if/else-Bedingung. Erkläre mir konzeptionell, warum JAX dynamischen Control Flow ablehnt, und schreibe die Bedingung unter Verwendung von jax.lax.cond funktional um."*</p>
 </div>

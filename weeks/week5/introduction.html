@@ -1,48 +1,85 @@
-<!-- Template für theoretische Einführungen -->
 <div class="space-y-8">
-    <!-- Wöchentliche Illustration (Optional: cover.png im wöchentlichen Ordner platzieren) -->
-    <img 
-        src="weeks/week5/cover.png" 
-        alt="Woche Thema Illustration" 
-        class="w-full h-48 md:h-64 object-cover rounded-2xl border border-slate-800 shadow-lg"
-        onerror="this.style.display='none'"
-    >
-
     <!-- Intro Banner -->
     <div class="p-6 glass-card rounded-2xl border-l-4 border-cyan-500 bg-gradient-to-r from-cyan-950/20 to-transparent">
-        <h3 class="text-xl font-bold text-white mb-2">Partielle Differentialgleichungen (PDEs) neu gedacht</h3>
-        <p class="text-slate-300 text-sm leading-relaxed">
-            Physikalische Gesetze lassen sich direkt in neuronale Netzwerke einbetten. Wir betrachten Physics-Informed Neural Networks (PINNs) zur lösung von Wärmeleitungsgleichungen.
-        </p>
+        <h3 class="text-xl md:text-2xl font-bold text-white mb-2">Woche 5: Das Gewebe der Realität</h3>
+        <p class="text-slate-300 text-sm leading-relaxed">Scientific Machine Learning: Physics-Informed Neural Networks (PINNs) and Fourier Neural Operators (FNOs)</p>
     </div>
-
-    <!-- Core Objectives -->
-    <div class="space-y-4">
-        <h3 class="text-2xl font-bold text-white flex items-center gap-2">
-            <span>🎯</span> Lernziele der Woche
-        </h3>
-        <ul class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <li class="p-4 bg-slate-900/40 border border-slate-800 rounded-xl flex gap-3">
-                <span class="text-cyan-400 font-bold">1.</span>
-                <span class="text-sm text-slate-300">Verständnis der theoretischen Grundlagen und mathematischen Modelle.</span>
-            </li>
-            <li class="p-4 bg-slate-900/40 border border-slate-800 rounded-xl flex gap-3">
-                <span class="text-pink-400 font-bold">2.</span>
-                <span class="text-sm text-slate-300">Praktische Umsetzung in Python unter Nutzung moderner Simulationstools.</span>
-            </li>
-        </ul>
+<h3 class="text-xl md:text-2xl font-extrabold text-white mt-12 mb-4 border-b border-slate-900 pb-2 flex items-center gap-2">
+    <span class="text-cyan-400">📖</span> Einleitung: Physik als kontinuierliches Gewebe
+</h3>
+<p class="text-sm text-slate-300 leading-relaxed my-3">Liebe Architekten des *Neo-Simulacrums*,</p>
+<p class="text-sm text-slate-300 leading-relaxed my-3">in den vergangenen Wochen habt ihr gelernt, die deterministischen Regeln von Systemen zu modellieren und diese durch die Hardware-Beschleunigung von JAX in unvorstellbare Geschwindigkeiten zu skalieren. Doch pure Rechenleistung ohne physikalisches Verständnis ist blind. Ein KI-Modell, das lediglich riesige Datenmengen interpoliert, "versteht" die Welt nicht. Extrapoliert es auch nur einen Schritt über seine Trainingsdaten hinaus, bricht es chaotisch zusammen – es verletzt die Massenerhaltung, ignoriert die Thermodynamik und erzeugt physikalische Unmöglichkeiten.</p>
+<p class="text-sm text-slate-300 leading-relaxed my-3">In dieser Woche vollziehen wir den ultimativen Paradigmenwechsel. Wir lassen die klassische Numerik hinter uns und betreten die Ära des <strong class="text-white">Scientific Machine Learning (SciML)</strong>. Wir werden unseren autonomen KI-Agenten (wie *Observer-Prime*) beibringen, die fundamentalen Partielle Differentialgleichungen (PDEs) nicht einfach zu simulieren, sondern sie als kontinuierliches mathematisches Gewebe zu *verinnerlichen*.</p>
+<h3 class="text-xl md:text-2xl font-extrabold text-white mt-12 mb-4 border-b border-slate-900 pb-2 flex items-center gap-2">
+    <span class="text-cyan-400">⚙️</span> 1. Der Paradigmenwechsel: Das Ende der starren Gitter
+</h3>
+<p class="text-sm text-slate-300 leading-relaxed my-3">In der klassischen Ingenieurswelt – der Ära der *"Sorcerers of Simulink"* – wurden Naturgesetze durch starre Gitter (Meshes) angenähert. Methoden wie die Finite-Differenzen-Methode (FDM) zerteilen Raum und Zeit in winzige, zerbrechliche Blöcke, um Steigungen als einfache Quotienten (\(\frac{\Delta u}{\Delta t}\)) zu berechnen.</p>
+<p class="text-sm text-slate-300 leading-relaxed my-3">Diese iterativen Algorithmen wandern quälend langsam von Zeitschritt zu Zeitschritt. Sie akkumulieren Rundungsfehler, leiden bei 3D-Problemen unter dem exponentiellen Fluch der Dimensionalität und scheitern katastrophal an lückenhaften Sensordaten. Das größte Problem: Ändert sich auch nur eine winzige Randbedingung in der Konstruktion, zerbricht das Raster und die gesamte Simulation muss über Stunden hinweg neu gestartet werden.</p>
+<p class="text-sm text-slate-300 leading-relaxed my-3">Mit eurem Aufstieg in die funktionalen Netzwerke von JAX brechen wir dieses gitterbasierte Korsett auf. Ein neuronales Netz ist von Natur aus ein *universeller Funktionsapproximator*. Wir nutzen es, um eine kontinuierliche, analytisch differenzierbare Ersatzfunktion (ein *Surrogat*) \(u(x, t)\) zu erlernen. Das Modell spannt ein nahtloses Feld über Raum und Zeit auf. Man kann es an *jeder* beliebigen Koordinate abfragen, ohne dass dort je ein Gitterpunkt existieren musste (<strong class="text-white">mesh-free</strong>).</p>
+<h3 class="text-xl md:text-2xl font-extrabold text-white mt-12 mb-4 border-b border-slate-900 pb-2 flex items-center gap-2">
+    <span class="text-purple-400">🧠</span> 2. Physics-Informed Neural Networks (PINNs): Die Physik als Loss-Funktion
+</h3>
+<p class="text-sm text-slate-300 leading-relaxed my-3">Doch wie zwingt man ein von Natur aus "daten-gläubiges" Netz, die Erhaltungssätze der Physik zu respektieren? Die Genialität der <strong class="text-white">PINNs</strong> (erstmals formalisiert von *Raissi et al., 2019*) liegt in der Modifikation der Loss-Funktion (Verlustfunktion). Wir nutzen die Differentialgleichung selbst als mathematische Bestrafung (Penalty).</p>
+<p class="text-sm text-slate-300 leading-relaxed my-3">Das Training zwingt das Flax-Netzwerk durch drei separate Restriktionen, sich an die Realität anzupassen:</p>
+<ol class="list-decimal pl-6 text-sm text-slate-300 space-y-3 my-4">
+    <li class="leading-relaxed"><strong class="text-white">Initial Condition (IC) Loss –</strong> <strong class="text-white">*The Genesis State</strong><strong class="text-white">*:</strong><br>Mathematik allein ist endlos. Das System braucht einen Startpunkt. Das Netzwerk muss lernen, dass es zum Zeitpunkt \(t=0\) exakt dem uns bekannten Startzustand der Welt entsprechen muss (z. B. einer eiskalten Sinus-Welle).</li>
+    <li class="leading-relaxed"><strong class="text-white">Boundary Condition (BC) Loss –</strong> <strong class="text-white">*The Edges of the Sandbox</strong><strong class="text-white">*:</strong><br>Wir müssen das System räumlich begrenzen. An den Rändern des Systems (z. B. den Enden eines Metallstabs bei \(x=-1\) und \(x=1\)) muss das Netz dauerhaft die dort herrschenden Temperaturen (z.B. \(0^\circ C\)) respektieren.</li>
+    <li class="leading-relaxed"><strong class="text-white">PDE Residual Loss –</strong> <strong class="text-white">*The Fabric of Reality</strong><strong class="text-white">*:</strong><br>Das Herzstück des PINNs. Wir streuen tausende zufällige „Kollokationspunkte“ \((x, t)\) kreuz und quer durch unseren virtuellen Raum-Zeit-Zylinder. An diesen Punkten haben wir *keinerlei* Messdaten. Stattdessen berechnen wir, wie stark das Netzwerk vom physikalischen Gesetz abweicht (z. B. der 1D-Wärmeleitungsgleichung \(u_t - \alpha u_{xx} = 0\)). Jede Abweichung von \(0\) ist das sogenannte Residuum. Es wird im Gradientenabstieg hart bestraft.</li>
+</ol>
+<p class="text-sm text-slate-300 leading-relaxed my-3">Die KI formt ihre Gewichte so lange um, bis die Hitze überall exakt nach den Gesetzen der Thermodynamik fließt.</p>
+<h4 class="text-base font-bold text-cyan-400 mt-8 mb-3 flex items-center gap-2">
+    <span class="text-xs">◆</span> Illustration 1: Architektur eines PINNs
+</h4>
+<p class="text-sm text-slate-300 leading-relaxed my-3">*Das Diagramm zeigt den Forward-Pass in JAX. Die Automatische Differenzierung wird die Vorhersagen abzweigen, um sie direkt in die physikalische Gleichung einzusetzen.*</p>
+<h3 class="text-xl md:text-2xl font-extrabold text-white mt-12 mb-4 border-b border-slate-900 pb-2 flex items-center gap-2">
+    <span class="text-cyan-400">⚡</span> 3. JAX und das Skalpell der Automatischen Differenzierung
+</h3>
+<p class="text-sm text-slate-300 leading-relaxed my-3">Wie berechnen wir das PDE-Residuum? Wie leiten wir den Temperatur-Output exakt nach Raum (\(x\)) und Zeit (\(t\)) ab, ohne auf verrauschte Differenzenquotienten zurückzugreifen?</p>
+<p class="text-sm text-slate-300 leading-relaxed my-3">Hier offenbart sich die absolute Überlegenheit eurer JAX-Umgebung. Da euer neuronales Flax-Modell ein purer, zustandsloser mathematischer Graph ist, können wir <strong class="text-white">Automatische Differenzierung (AutoDiff)</strong> nutzen. Mit Primitiven wie jax.grad (oder jax.jacrev/jax.hessian für zweite Ableitungen) wenden wir die analytische Kettenregel fehlerfrei auf das gesamte Netzwerk an. Wir erhalten exakte Ableitungen in Maschinenpräzision.</p>
+<p class="text-sm text-slate-300 leading-relaxed my-3">Das neuronale Netz lernt nicht nur die Lösung einer Gleichung – es wird durch JAX selbst zu einem differenzierbaren physikalischen Körper.</p>
+<h3 class="text-xl md:text-2xl font-extrabold text-white mt-12 mb-4 border-b border-slate-900 pb-2 flex items-center gap-2">
+    <span class="text-cyan-400">🎯</span> 4. Der Operator-Horizont: Fourier Neural Operators (FNOs)
+</h3>
+<p class="text-sm text-slate-300 leading-relaxed my-3">Ein trainiertes PINN ist beeindruckend, besitzt jedoch einen strukturellen Engpass: Es lernt genau <strong class="text-white">eine</strong> Lösungsinstanz. Trainiert ihr euer PINN auf einen Startzustand (den Genesis State) in Form einer Sinuswelle, rechnet es für diese Welt extrem schnell. Ändert der Auftraggeber jedoch die Starttemperatur in ein asymmetrisches Kastenprofil, müsst ihr das PINN komplett verwerfen und über tausende Epochen neu trainieren.</p>
+<p class="text-sm text-slate-300 leading-relaxed my-3">Im digitalen Endgame moderner Industrien (Echtzeit-Aerodynamik für Formel-1-Wagen oder globale Wettervorhersagen) betreten wir daher die nächste Abstraktionsebene: <strong class="text-white">Neural Operators</strong>.</p>
+<p class="text-sm text-slate-300 leading-relaxed my-3">Ein Operator mappt nicht einfach Einzelkoordinaten auf einen Wert (\((x, t) \rightarrow u\)). Er mappt ganze *unendlich-dimensionale Funktionsräume* aufeinander. Ein <strong class="text-white">Fourier Neural Operator (FNO)</strong> nimmt eine *komplette Startbedingungen-Funktion* als Input und generiert in einem einzigen Vorwärtsdurchlauf die *komplette Lösungsfunktion* für die Zukunft.</p>
+<p class="text-sm text-slate-300 leading-relaxed my-3"><strong class="text-white">Der Frequenz-Trick:</strong> Der FNO nutzt die Fast Fourier Transformation (FFT), um die physikalischen Raumdaten in den <strong class="text-white">Frequenzraum</strong> zu transformieren. In der Frequenzdomäne wirken komplexe Naturgesetze (wie Diffusion) wie simple integrale Kernel-Filter – sie dämpfen hohe Frequenzen einfach ab. Danach transformiert das Modell das Signal zurück in unseren Ortsraum.</p>
+<p class="text-sm text-slate-300 leading-relaxed my-3"><strong class="text-white">Das unglaubliche Resultat (Zero-Shot Super-Resolution):</strong></p>
+<p class="text-sm text-slate-300 leading-relaxed my-3">Weil Frequenzen kontinuierlich sind, ist der FNO *auflösungsunabhängig*. Ihr könnt einen FNO auf stark komprimierten Daten (z.B. einem \(32 \times 32\) Gitter) trainieren und im Einsatz hochauflösende \(1024 \times 1024\) Eingabedaten einspeisen. Der FNO wird die Lösung in Bruchteilen einer Millisekunde absolut fehlerfrei vorhersagen. Er hat nicht die Lösung *eines* Problems gelernt, sondern die <strong class="text-white">Regeln der Physik selbst</strong>.</p>
+<h4 class="text-base font-bold text-cyan-400 mt-8 mb-3 flex items-center gap-2">
+    <span class="text-xs">◆</span> Illustration 2: Klassische PINNs vs. Neural Operators
+</h4>
+<p class="text-sm text-slate-300 leading-relaxed my-3">*Während das PINN einen festen Raum abarbeitet, verarbeitet der FNO ganze Funktionen durch Frequenz-Filterung zu komplett neuen Lösungsräumen.*</p>
+    <div class="p-6 glass-card rounded-2xl border-t-2 border-t-purple-500/35 bg-purple-950/5 space-y-4 my-8">
+        <h4 class="text-purple-400 font-bold text-lg flex items-center gap-2"><span>📚</span> Literaturhinweise</h4>
+<p class="text-sm text-slate-300 leading-relaxed my-3">Für Architekten, die die Mathematik hinter dem Code durchdringen wollen, um ihren KI-Agenten Prompts zu liefern, sind folgende Quellen für Problem Set 05 essenziell:</p>
+<h4 class="text-base font-bold text-purple-400 mt-8 mb-3 flex items-center gap-2">
+    <span class="text-xs">◆</span> 1. Die phänomenologische Grundlage (Visuelle Intuition)
+</h4>
+<ul class="list-disc pl-6 text-sm text-slate-300 space-y-2.5 my-4">
+    <li class="leading-relaxed"><strong class="text-white">VisualPDE (</strong><a href="https://visualpde.com" class="text-cyan-400 hover:underline" target="_blank"><strong class="text-white">visualpde.com</strong></a><strong class="text-white">):</strong><br>Bevor ihr Tensoren programmiert, öffnet diesen browserbasierten Solver. Wählt die parabolische Wärmeleitungsgleichung (Heat Equation) und variiert interaktiv den Diffusionsparameter (\(\alpha\)) sowie die Randbedingungen. Beobachtet, wie das System in Echtzeit reagiert. Dieses physikalische Bauchgefühl ist notwendig, um zu beurteilen, ob euer neuronales Netz später konvergiert.</li>
+</ul>
+<h4 class="text-base font-bold text-purple-400 mt-8 mb-3 flex items-center gap-2">
+    <span class="text-xs">◆</span> 2. Der akademische Ursprung (Die PINN-Bibel)
+</h4>
+<ul class="list-disc pl-6 text-sm text-slate-300 space-y-2.5 my-4">
+    <li class="leading-relaxed">*Raissi, M., Perdikaris, P., & Karniadakis, G. E. (2019). „Physics-informed neural networks: A deep learning framework for solving forward and inverse problems...“* Journal of Computational Physics.<br>*(Fokus: Lest spezifisch die Methodik für „Continuous-Time Models“. Dieses Paper definiert, wie der PDE-Residual-Loss formal korrekt in Deep Learning Frameworks eingebaut wird.)*</li>
+</ul>
+<h4 class="text-base font-bold text-purple-400 mt-8 mb-3 flex items-center gap-2">
+    <span class="text-xs">◆</span> 3. Moderne JAX-Architektur & Autodiff-Technik
+</h4>
+<ul class="list-disc pl-6 text-sm text-slate-300 space-y-2.5 my-4">
+    <li class="leading-relaxed">*DeepChem Community: „Tutorial: Physics Informed Neural Networks using JAX“.*<br>*(Fokus: Eine hervorragende Code-Referenzimplementierung. Sie zeigt detailliert, wie man die JAX-Primitiven jax.grad und jax.jacrev verschachteln muss, um die zweite räumliche Ableitung (*\(u_{xx}\)*) für physikalische Diffusion aus einem zustandslosen Netz zu extrahieren.* <a href="https://github.com/deepchem/deepchem/blob/master/examples/tutorials/Physics_Informed_Neural_Networks.ipynb" class="text-cyan-400 hover:underline" target="_blank">*https://github.com/deepchem/deepchem/blob/master/examples/tutorials/Physics_Informed_Neural_Networks.ipynb*</a> *,* <a href="https://pub.towardsai.net/physics-informed-neural-networks-the-complete-guide-to-making-neural-networks-obey-the-laws-of-9d9c4c913e6c" class="text-cyan-400 hover:underline" target="_blank">*https://pub.towardsai.net/physics-informed-neural-networks-the-complete-guide-to-making-neural-networks-obey-the-laws-of-9d9c4c913e6c*</a> *,* <a href="https://arxiv.org/html/2412.14132v1" class="text-cyan-400 hover:underline" target="_blank">*https://arxiv.org/html/2412.14132v1*</a> *.)*</li>
+</ul>
+<h4 class="text-base font-bold text-purple-400 mt-8 mb-3 flex items-center gap-2">
+    <span class="text-xs">◆</span> 4. Der Blick in die Zukunft (Neural Operators)
+</h4>
+<ul class="list-disc pl-6 text-sm text-slate-300 space-y-2.5 my-4">
+    <li class="leading-relaxed">*Li, Z. et al. (2020 / Caltech). „Fourier Neural Operator for Parametric Partial Differential Equations.“* ICLR. <a href="https://arxiv.org/abs/2010.08895" class="text-cyan-400 hover:underline" target="_blank">https://arxiv.org/abs/2010.08895</a><br>*(Fokus: Lest die Einleitung und die Methodik zur „Zero-Shot Super-Resolution“. Dies begründet, warum die aktuelle Spitzenforschung von statischen PINNs hin zu Foundation Models migriert.)*</li>
+</ul>
+    <div class="p-5 glass-card rounded-xl border-l-4 border-yellow-500 bg-yellow-500/5 my-6 space-y-2">
+        <h4 class="text-yellow-400 font-bold text-sm flex items-center gap-2"><span>💡</span> Eure Mission für diese Woche:</h4>
     </div>
-
-    <!-- Key Concepts Section -->
-    <div class="space-y-6">
-        <h3 class="text-2xl font-bold text-white">Wichtige theoretische Konzepte</h3>
-        <div class="space-y-4">
-            <div class="space-y-1">
-                <h4 class="text-lg font-bold text-pink-400">Konzept A</h4>
-                <p class="text-slate-300 text-sm leading-relaxed">
-                    Beschreibe das Konzept hier detailliert. Nutze Absätze für Lesbarkeit.
-                </p>
-            </div>
-        </div>
+<p class="text-sm text-slate-300 leading-relaxed my-3">*Ihr werdet eure Agenten anweisen, diese Konzepte in funktionierenden JAX-Code zu gießen und die 3D-Hitzeausbreitung visuell greifbar zu machen. Willkommen im Gewebe der Realität!*</p>
     </div>
 </div>
