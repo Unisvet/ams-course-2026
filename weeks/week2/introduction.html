@@ -1,4 +1,48 @@
 <div class="space-y-8">
+    <!-- Radio triggers for tab selection -->
+    <input type="radio" id="tab-physics-trigger" name="week2-tabs" class="hidden" checked />
+    <input type="radio" id="tab-jax-trigger" name="week2-tabs" class="hidden" />
+
+    <style>
+        /* Hide panels by default */
+        .tab-panel-physics, .tab-panel-jax {
+            display: none !important;
+        }
+        
+        /* Show active panel depending on which radio is checked */
+        #tab-physics-trigger:checked ~ div.tab-content-wrapper > .tab-panel-physics {
+            display: block !important;
+        }
+        #tab-jax-trigger:checked ~ div.tab-content-wrapper > .tab-panel-jax {
+            display: block !important;
+        }
+        
+        /* Default styling for labels */
+        .tab-label-physics, .tab-label-jax {
+            color: #94a3b8; /* text-slate-400 */
+            background-color: transparent;
+            border-color: transparent;
+        }
+        .tab-label-physics:hover, .tab-label-jax:hover {
+            color: #e2e8f0; /* text-slate-200 */
+            background-color: rgba(15, 23, 42, 0.4); /* hover:bg-slate-900/40 */
+        }
+        
+        /* Active styling for labels using sibling selectors */
+        #tab-physics-trigger:checked ~ div.tab-content-wrapper label.tab-label-physics {
+            background-color: #0891b2 !important; /* bg-cyan-600 */
+            color: #ffffff !important; /* text-white */
+            border-color: #06b6d4 !important; /* border-cyan-500 */
+            box-shadow: 0 4px 6px -1px rgba(6, 182, 212, 0.3) !important;
+        }
+        #tab-jax-trigger:checked ~ div.tab-content-wrapper label.tab-label-jax {
+            background-color: #0891b2 !important; /* bg-cyan-600 */
+            color: #ffffff !important; /* text-white */
+            border-color: #06b6d4 !important; /* border-cyan-500 */
+            box-shadow: 0 4px 6px -1px rgba(6, 182, 212, 0.3) !important;
+        }
+    </style>
+
     <!-- Intro Banner -->
     <div class="p-6 glass-card rounded-2xl border-l-4 border-cyan-500 bg-gradient-to-r from-cyan-950/20 to-transparent">
         <h3 class="text-xl font-bold text-white mb-2">Woche 2: Prädiktive Modellierung, Keras 3 & JAX Grundlagen</h3>
@@ -7,34 +51,32 @@
         </p>
     </div>
 
-    <!-- Switcher Tabs -->
-    <div class="space-y-6">
+    <!-- Wrapper that contains tab headers and panels -->
+    <div class="tab-content-wrapper space-y-6">
         <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-slate-800 pb-3">
             <h3 class="text-xl md:text-2xl font-extrabold text-white flex items-center gap-2">
                 <span class="text-cyan-400">📚</span> Theoretische Handbücher (PDFs)
             </h3>
             
-            <!-- Tab Controls -->
+            <!-- Tab Controls using labels -->
             <div class="flex bg-slate-950/80 p-1.5 rounded-xl border border-slate-800/80 w-full sm:w-auto">
-                <button 
-                    id="tab-btn-physics"
-                    onclick="switchWeek2Tab('physics')"
-                    class="flex-1 sm:flex-none text-xs font-semibold px-4 py-2.5 rounded-lg transition duration-200 bg-cyan-600 text-white border border-cyan-500 shadow-md shadow-cyan-900/30"
+                <label 
+                    for="tab-physics-trigger"
+                    class="tab-label-physics flex-1 sm:flex-none text-center cursor-pointer text-xs font-semibold px-4 py-2.5 rounded-lg border border-transparent transition duration-200"
                 >
                     Neural Physics Emulation
-                </button>
-                <button 
-                    id="tab-btn-jax"
-                    onclick="switchWeek2Tab('jax')"
-                    class="flex-1 sm:flex-none text-xs font-semibold px-4 py-2.5 rounded-lg transition duration-200 text-slate-400 hover:text-slate-200 hover:bg-slate-900/40"
+                </label>
+                <label 
+                    for="tab-jax-trigger"
+                    class="tab-label-jax flex-1 sm:flex-none text-center cursor-pointer text-xs font-semibold px-4 py-2.5 rounded-lg border border-transparent transition duration-200"
                 >
                     Mastering JAX
-                </button>
+                </label>
             </div>
         </div>
 
-        <!-- Panel 1: Neural Physics Emulation -->
-        <div id="pnl-physics" class="space-y-6">
+        <!-- Panel A: Physics -->
+        <div class="tab-panel-physics space-y-6">
             <!-- Objectives & Meta -->
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 <div class="lg:col-span-2 space-y-4">
@@ -102,8 +144,8 @@
             </div>
         </div>
 
-        <!-- Panel 2: Mastering JAX -->
-        <div id="pnl-jax" class="space-y-6 hidden">
+        <!-- Panel B: JAX -->
+        <div class="tab-panel-jax space-y-6">
             <!-- Objectives & Meta -->
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 <div class="lg:col-span-2 space-y-4">
@@ -172,42 +214,3 @@
         </div>
     </div>
 </div>
-
-<!-- Simple Tab Controller Script -->
-<script>
-    function switchWeek2Tab(tabName) {
-        const physicsBtn = document.getElementById('tab-btn-physics');
-        const jaxBtn = document.getElementById('tab-btn-jax');
-        const physicsPnl = document.getElementById('pnl-physics');
-        const jaxPnl = document.getElementById('pnl-jax');
-
-        const activeBtnClasses = ['bg-cyan-600', 'text-white', 'border', 'border-cyan-500', 'shadow-md', 'shadow-cyan-900/30'];
-        const inactiveBtnClasses = ['text-slate-400', 'hover:text-slate-200', 'hover:bg-slate-900/40'];
-
-        if (tabName === 'physics') {
-            // Setup active tab button
-            physicsBtn.classList.add(...activeBtnClasses);
-            physicsBtn.classList.remove(...inactiveBtnClasses);
-            
-            // Setup inactive tab button
-            jaxBtn.classList.remove(...activeBtnClasses);
-            jaxBtn.classList.add(...inactiveBtnClasses);
-
-            // Toggle panels visibility
-            physicsPnl.classList.remove('hidden');
-            jaxPnl.classList.add('hidden');
-        } else if (tabName === 'jax') {
-            // Setup active tab button
-            jaxBtn.classList.add(...activeBtnClasses);
-            jaxBtn.classList.remove(...inactiveBtnClasses);
-            
-            // Setup inactive tab button
-            physicsBtn.classList.remove(...activeBtnClasses);
-            physicsBtn.classList.add(...inactiveBtnClasses);
-
-            // Toggle panels visibility
-            jaxPnl.classList.remove('hidden');
-            physicsPnl.classList.add('hidden');
-        }
-    }
-</script>
