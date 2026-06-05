@@ -28,9 +28,10 @@ export class QuizEngine {
 
     renderQuestion() {
         this.isAnswered = false;
-        this.selectedAnswer = null;
+        this.selectedAnswers = [];
         const q = this.questions[this.currentIndex];
         const progressPercent = ((this.currentIndex) / this.questions.length) * 100;
+        const isMultiCorrect = Array.isArray(q.answerIndex);
         
         this.container.innerHTML = `
             <div class="animate-slide-up space-y-6">
@@ -46,7 +47,10 @@ export class QuizEngine {
                 </div>
 
                 <!-- Question Title -->
-                <div class="glass-card rounded-xl p-6 border-l-4 border-cyan-500">
+                <div class="glass-card rounded-xl p-6 border-l-4 ${isMultiCorrect ? 'border-purple-500 bg-purple-950/5' : 'border-cyan-500 bg-cyan-950/5'}">
+                    <span class="text-[10px] font-mono px-2 py-0.5 rounded ${isMultiCorrect ? 'bg-purple-500/20 text-purple-400 border border-purple-500/30' : 'bg-cyan-500/20 text-cyan-400 border border-cyan-500/30'} mb-3 inline-block font-bold uppercase tracking-wider">
+                        ${isMultiCorrect ? 'Mehrfachauswahl (Wähle alle richtigen Antworten)' : 'Einfachauswahl (Wähle eine richtige Antwort)'}
+                    </span>
                     <h3 class="text-xl font-bold text-white leading-relaxed">${q.question}</h3>
                 </div>
 
@@ -55,10 +59,13 @@ export class QuizEngine {
                     ${q.options.map((opt, idx) => `
                         <button 
                             data-index="${idx}" 
-                            class="quiz-option text-left w-full p-4 rounded-lg bg-slate-800/40 text-slate-300 font-medium hover:text-white border border-slate-700/50 transition duration-200"
+                            class="quiz-option text-left w-full p-4 rounded-lg bg-slate-800/40 text-slate-300 font-medium hover:text-white border border-slate-700/50 transition duration-200 flex items-center justify-between"
                         >
-                            <span class="inline-block w-8 h-8 mr-3 rounded-full bg-slate-800 text-center leading-8 text-sm text-cyan-400 font-mono">${String.fromCharCode(65 + idx)}</span>
-                            ${opt}
+                            <span class="flex items-center">
+                                <span class="inline-block w-8 h-8 mr-3 rounded-full bg-slate-800 text-center leading-8 text-sm text-cyan-400 font-mono option-prefix">${String.fromCharCode(65 + idx)}</span>
+                                <span class="option-text">${opt}</span>
+                            </span>
+                            <span class="checkbox-box w-5 h-5 rounded border ${isMultiCorrect ? 'border-purple-800/60' : 'border-cyan-800/60'} flex items-center justify-center text-[10px] text-white opacity-0 transition-opacity">✓</span>
                         </button>
                     `).join('')}
                 </div>
@@ -69,13 +76,20 @@ export class QuizEngine {
                     <p class="text-slate-300 text-sm leading-relaxed">${q.explanation || 'Keine Erklärung verfügbar.'}</p>
                 </div>
 
-                <!-- Action Button -->
-                <div class="flex justify-end pt-2">
+                <!-- Action Buttons -->
+                <div class="flex justify-end gap-4 pt-2">
+                    <button 
+                        id="quiz-submit-btn" 
+                        class="px-6 py-2.5 rounded-lg font-bold text-sm bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white transition duration-200 shadow-lg disabled:opacity-40 disabled:cursor-not-allowed focus:outline-none"
+                        disabled
+                    >
+                        Antwort abgeben
+                    </button>
                     <button 
                         id="quiz-next-btn" 
-                        class="hidden px-6 py-2.5 rounded-lg font-bold text-sm bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white transition duration-200 shadow-lg"
+                        class="hidden px-6 py-2.5 rounded-lg font-bold text-sm bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-white transition duration-200 shadow-lg focus:outline-none"
                     >
-                        ${this.currentIndex === this.questions.length - 1 ? 'Quiz abschließen' : 'Nächste Frage &rarr;'}
+                        ${this.currentIndex === this.questions.length - 1 ? 'Quiz abschließen &rarr;' : 'Nächste Frage &rarr;'}
                     </button>
                 </div>
             </div>
@@ -87,6 +101,10 @@ export class QuizEngine {
             btn.addEventListener('click', () => this.handleAnswerSelect(btn));
         });
 
+        // Add Event Listener for Submit Button
+        const submitBtn = this.container.querySelector('#quiz-submit-btn');
+        submitBtn.addEventListener('click', () => this.handleSubmitAnswer());
+
         // Add Event Listener for Next Button
         const nextBtn = this.container.querySelector('#quiz-next-btn');
         nextBtn.addEventListener('click', () => this.handleNextQuestion());
@@ -94,38 +112,101 @@ export class QuizEngine {
 
     handleAnswerSelect(clickedButton) {
         if (this.isAnswered) return;
-        this.isAnswered = true;
         
         const selectedIdx = parseInt(clickedButton.getAttribute('data-index'));
-        const correctIdx = this.questions[this.currentIndex].answerIndex;
+        const q = this.questions[this.currentIndex];
+        const isMultiCorrect = Array.isArray(q.answerIndex);
+        
+        if (isMultiCorrect) {
+            // Toggle selection
+            const idxInSelected = this.selectedAnswers.indexOf(selectedIdx);
+            if (idxInSelected > -1) {
+                this.selectedAnswers.splice(idxInSelected, 1);
+                clickedButton.classList.remove('selected');
+                clickedButton.querySelector('.checkbox-box').classList.add('opacity-0');
+            } else {
+                this.selectedAnswers.push(selectedIdx);
+                clickedButton.classList.add('selected');
+                clickedButton.querySelector('.checkbox-box').classList.remove('opacity-0');
+            }
+        } else {
+            // Single select: deselect others
+            this.selectedAnswers = [selectedIdx];
+            const optionButtons = this.container.querySelectorAll('.quiz-option');
+            optionButtons.forEach(btn => {
+                const idx = parseInt(btn.getAttribute('data-index'));
+                const check = btn.querySelector('.checkbox-box');
+                if (idx === selectedIdx) {
+                    btn.classList.add('selected');
+                    if (check) check.classList.remove('opacity-0');
+                } else {
+                    btn.classList.remove('selected');
+                    if (check) check.classList.add('opacity-0');
+                }
+            });
+        }
+        
+        // Enable submit button if at least one selected
+        const submitBtn = this.container.querySelector('#quiz-submit-btn');
+        if (submitBtn) {
+            submitBtn.disabled = this.selectedAnswers.length === 0;
+        }
+    }
+
+    handleSubmitAnswer() {
+        if (this.isAnswered) return;
+        this.isAnswered = true;
+        
+        const q = this.questions[this.currentIndex];
+        const correctIdx = q.answerIndex;
         const isMultiCorrect = Array.isArray(correctIdx);
         
         const optionButtons = this.container.querySelectorAll('.quiz-option');
         
-        // Highlight choices
+        // Lock all options and highlight correct/incorrect
         optionButtons.forEach(btn => {
             btn.classList.add('locked');
+            btn.classList.remove('selected'); // remove selected styling
             const idx = parseInt(btn.getAttribute('data-index'));
+            const check = btn.querySelector('.checkbox-box');
+            if (check) check.classList.add('opacity-0');
+            
             const isCorrect = isMultiCorrect ? correctIdx.includes(idx) : idx === correctIdx;
+            const isSelected = this.selectedAnswers.includes(idx);
+            
             if (isCorrect) {
                 btn.classList.add('correct');
-            } else if (idx === selectedIdx) {
+            } else if (isSelected) {
                 btn.classList.add('incorrect');
             }
         });
-
-        const selectedIsCorrect = isMultiCorrect ? correctIdx.includes(selectedIdx) : selectedIdx === correctIdx;
-        if (selectedIsCorrect) {
+        
+        // Grade the answer
+        let isUserCorrect = false;
+        if (isMultiCorrect) {
+            // User must have selected exactly the correct set
+            const sortedSelected = [...this.selectedAnswers].sort((a, b) => a - b);
+            const sortedCorrect = [...correctIdx].sort((a, b) => a - b);
+            isUserCorrect = sortedSelected.length === sortedCorrect.length && 
+                           sortedSelected.every((val, index) => val === sortedCorrect[index]);
+        } else {
+            isUserCorrect = this.selectedAnswers[0] === correctIdx;
+        }
+        
+        if (isUserCorrect) {
             this.score++;
         }
-
+        
+        // Hide submit button, show next button
+        const submitBtn = this.container.querySelector('#quiz-submit-btn');
+        if (submitBtn) submitBtn.classList.add('hidden');
+        
+        const nextBtn = this.container.querySelector('#quiz-next-btn');
+        if (nextBtn) nextBtn.classList.remove('hidden');
+        
         // Show explanation
         const explanationBox = this.container.querySelector('#quiz-explanation-box');
-        explanationBox.classList.remove('hidden');
-
-        // Show Next Button
-        const nextBtn = this.container.querySelector('#quiz-next-btn');
-        nextBtn.classList.remove('hidden');
+        if (explanationBox) explanationBox.classList.remove('hidden');
     }
 
     handleNextQuestion() {
