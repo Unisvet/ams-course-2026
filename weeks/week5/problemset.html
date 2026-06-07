@@ -10,10 +10,10 @@
             <span>📥</span> Download Jupyter Notebook
         </a>
     </div>
-<p class="text-sm text-slate-300 leading-relaxed">**</p>
+
 <div class="p-6 glass-card rounded-2xl border-l-4 border-cyan-500 bg-cyan-950/5 space-y-3 my-6">
     <h4 class="text-cyan-400 font-bold text-lg flex items-center gap-2">
-        ð The Story: Bending Space and Time
+        📖 The Story: Bending Space and Time
     </h4>
 <p class="text-sm text-slate-300 leading-relaxed">Architects of the *Neo-Simulacrum*, your progress is undeniable. In Week 4, you shattered the sequential limits of classical computing. Through the *Silicon Ascension* of JAX, you accelerated your systems to the speed of light. But pure computational power without physical comprehension is dangerous. An AI that only interpolates data is blind to the underlying laws of the universe.</p>
 <p class="text-sm text-slate-300 leading-relaxed">In the old world, the "Sorcerers of Simulink" solved Partial Differential Equations (PDEs) - the fundamental source code of reality - by slicing space and time into rigid, fragile grids (Finite Difference Methods). If a single parameter or boundary changed, their entire simulation had to be painstakingly restarted.</p>
@@ -52,7 +52,12 @@
 <p class="text-sm text-slate-300 leading-relaxed">You are the Architect. You design the system; the Agent writes the code. A standard network outputs discrete labels, but we need a continuous field.</p>
 <ul class="list-disc pl-6 text-sm text-slate-350 space-y-2">
     <li class="leading-relaxed"><strong class="text-white">Summon Observer-Prime:</strong> Launch your <strong class="text-white">ADE Antigravity</strong> interface or open the <strong class="text-white">Gemini CLI</strong> in Plan Mode. Load your agent profile, *Observer-Prime*.</li>
-    <li class="leading-relaxed"><strong class="text-white">The Prompt (Architecture):</strong> Feed your Agent the following prompt (you may adjust it slightly, but the core instructions must remain):*"Observer-Prime, we are transcending classical grid-based solvers to build a PINN. Please write a pure JAX/Flax script using flax.linen that defines a Multi-Layer Perceptron named HeatSurrogate. It must take continuous 2D inputs (space x and time t) and predict a 1D scalar (temperature u). Use 4 hidden layers with 32 neurons each and tanh activation functions (since we need smooth, non-zero second derivatives for our physics constraints). Include an execution block demonstrating how to initialize the model's weights explicitly using jax.random.PRNGKey."*</li>
+    <li class="leading-relaxed">
+    <strong class="text-white">The Prompt (Architecture):</strong> Feed your Agent the following prompt (you may adjust it slightly, but the core instructions must remain):
+    <div class="my-3 max-w-3xl">
+        <pre class="bg-slate-950/85 border border-slate-850 rounded-xl p-4 font-mono text-xs text-slate-300 overflow-x-auto shadow-inner"><code class="language-text">Observer-Prime, we are transcending classical grid-based solvers to build a PINN. Please write a pure JAX/Flax script using flax.linen that defines a Multi-Layer Perceptron named HeatSurrogate. It must take continuous 2D inputs (space x and time t) and predict a 1D scalar (temperature u). Use 4 hidden layers with 32 neurons each and tanh activation functions (since we need smooth, non-zero second derivatives for our physics constraints). Include an execution block demonstrating how to initialize the model's weights explicitly using jax.random.PRNGKey.</code></pre>
+    </div>
+</li>
     <li class="leading-relaxed"><strong class="text-white">Deliverables:</strong> Save the generated code as src/fabric_pinn.py. Run it locally via uv run to ensure the stateless architecture initializes without errors. Push to GitHub.</li>
 </ul>
 <h4 class="text-lg font-bold text-white border-b border-slate-850 pb-2 mt-8 mb-4 flex items-center gap-2">
@@ -89,7 +94,12 @@
 </h4>
 <p class="text-sm text-slate-300 leading-relaxed">*Learning Objective: Conceptualizing the leap from single-instance PINNs to family-solving Neural Operators.*</p>
 <ol class="list-decimal pl-6 text-sm text-slate-300 space-y-3">
-    <li class="leading-relaxed"><strong class="text-white">The FNO Endgame:</strong> Your trained PINN is a masterpiece, but it has a critical flaw: it only knows how to solve the heat equation for the exact initial condition  \(u_{true}(x, 0) = -\sin(\pi x)\) . If the factory changes the starting temperature to a square wave, you must retrain the network from scratch. Return to your ADE and prompt Observer-Prime:*"Observer-Prime, our PINN is beautiful but limited to a single initial condition. Explain to me - in 3 concise bullet points - how a Fourier Neural Operator (FNO) solves this scalability problem. How does an FNO map functional spaces compared to a PINN, and why does doing convolutions in the frequency domain allow it to achieve 'Zero-Shot' predictions for entirely new initial conditions?"*</li>
+    <li class="leading-relaxed">
+    <strong class="text-white">The FNO Endgame:</strong> Your trained PINN is a masterpiece, but it has a critical flaw: it only knows how to solve the heat equation for the exact initial condition  \(u_{true}(x, 0) = -\sin(\pi x)\) . If the factory changes the starting temperature to a square wave, you must retrain the network from scratch. Return to your ADE and prompt Observer-Prime:
+    <div class="my-3 max-w-3xl">
+        <pre class="bg-slate-950/85 border border-slate-850 rounded-xl p-4 font-mono text-xs text-slate-300 overflow-x-auto shadow-inner"><code class="language-text">Observer-Prime, our PINN is beautiful but limited to a single initial condition. Explain to me - in 3 concise bullet points - how a Fourier Neural Operator (FNO) solves this scalability problem. How does an FNO map functional spaces compared to a PINN, and why does doing convolutions in the frequency domain allow it to achieve 'Zero-Shot' predictions for entirely new initial conditions?</code></pre>
+    </div>
+</li>
     <li class="leading-relaxed"><strong class="text-white">Final Deployment:</strong> Create a docs/Fabric_Report.md.</li>
 </ol>
 <p class="text-sm text-slate-300 leading-relaxed"><!-- end list --></p>
@@ -100,6 +110,6 @@
     <li class="leading-relaxed">Ask your Agent to update your GitHub Pages index.md with this week's progress. Push to the main branch.</li>
 </ul>
 <p class="text-sm text-slate-300 leading-relaxed">*Your Oracle now understands thermodynamics. The fabric of reality is yours to mold.*</p>
-<p class="text-sm text-slate-300 leading-relaxed">**</p>
-<p class="text-sm text-slate-300 leading-relaxed">**</p>
+
+
 </div>

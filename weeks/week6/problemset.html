@@ -10,10 +10,10 @@
             <span>📥</span> Download Jupyter Notebook
         </a>
     </div>
-<p class="text-sm text-slate-300 leading-relaxed">**</p>
+
 <div class="p-6 glass-card rounded-2xl border-l-4 border-cyan-500 bg-cyan-950/5 space-y-3 my-6">
     <h4 class="text-cyan-400 font-bold text-lg flex items-center gap-2">
-        ð The Story: Entering the Chamber of Chaos
+        📖 The Story: Entering the Chamber of Chaos
     </h4>
 <p class="text-sm text-slate-300 leading-relaxed">In the deterministic domains of physical laws and neural network layers, you successfully taught the Oracle to internalize rigid, continuous geometric structures. But the real world flows through chaotic currents of probability, market fluctuations, and stochastic noise. Welcome to the <strong class="text-white">Chamber of Chaos</strong>.</p>
 <p class="text-sm text-slate-300 leading-relaxed">The old-world sorcerers of the MATLAB Citadel simulated random variables using stateful, single-threaded pseudo-random loops. If they wanted to evaluate a million market trajectories, their screens would freeze for hours under the weight of sequential CPU loops. We do not accept these limitations.</p>
@@ -21,7 +21,7 @@
 </div>
 <div class="p-6 glass-card rounded-2xl border-l-4 border-cyan-500 bg-cyan-950/5 space-y-3 my-6">
     <h4 class="text-cyan-400 font-bold text-lg flex items-center gap-2">
-        ð§  Theoretical Deep Dive: Randomness under the Hood
+        🧠 Theoretical Deep Dive: Randomness under the Hood
     </h4>
 <p class="text-sm text-slate-300 leading-relaxed">Before writing code, you must understand the mathematical framework of Monte Carlo methods and why traditional random generation fails on modern accelerator hardware (GPUs/TPUs).</p>
 </div>
@@ -60,13 +60,15 @@
     <li class="leading-relaxed">The generator consumes the key and outputs the random numbers. It does *not* mutate the key.</li>
     <li class="leading-relaxed">If you need multiple independent random variables or consecutive execution steps, you must explicitly fork the key using jax.random.split():</li>
 </ol>
-<p class="text-sm text-slate-300 leading-relaxed">import jax</p>
-<p class="text-sm text-slate-300 leading-relaxed">key = jax.random.PRNGKey(42)</p>
-<p class="text-sm text-slate-300 leading-relaxed">key_distribution, key_agent = jax.random.split(key, 2)</p>
+<div class="my-3 max-w-2xl">
+    <pre class="bg-slate-950/85 border border-slate-850 rounded-xl p-4 font-mono text-xs text-slate-300 overflow-x-auto shadow-inner"><code class="language-python">import jax
+key = jax.random.PRNGKey(42)
+key_distribution, key_agent = jax.random.split(key, 2)</code></pre>
+</div>
 <p class="text-sm text-slate-300 leading-relaxed">By enforcing this functional purity, JAX allows you to wrap your simulation logic inside jax.vmap (Vectorized Map). Instead of executing simulations sequentially using a slow Python for-loop, vmap automatically maps the computation across thousands of GPU/TPU hardware registers simultaneously, executing millions of stochastic paths in parallel at compiled C++ speeds.</p>
 <div class="p-6 glass-card rounded-2xl border-l-4 border-amber-500 bg-amber-500/5 space-y-3 my-6">
     <h4 class="text-amber-400 font-mono text-sm font-bold uppercase tracking-wider flex items-center gap-2">
-        ð® Gamified Rules & Mechanics
+        🎮 Gamified Rules & Mechanics
     </h4>
 <p class="text-sm text-slate-300 leading-relaxed">To navigate the random fluctuations of this week's assignment, your workspace tracks the following live game metrics:</p>
 <ol class="list-decimal pl-6 text-sm text-slate-300 space-y-3">
@@ -201,13 +203,15 @@
 </h4>
 <p class="text-sm text-slate-300 leading-relaxed">A modern system engineer seals their codebase within a secure repository before presenting the live outputs to the world.</p>
 <p class="text-sm text-slate-300 leading-relaxed">Open your terminal interface and use uv add to lock down your dependencies:</p>
-<p class="text-sm text-slate-300 leading-relaxed">uv add plotly openpyxl matplotlib</p>
+<div class="my-3 max-w-2xl">
+    <pre class="bg-slate-950/85 border border-slate-850 rounded-xl p-4 font-mono text-xs text-slate-300 overflow-x-auto shadow-inner"><code class="language-bash">uv add plotly openpyxl matplotlib</code></pre>
+</div>
 <ol class="list-decimal pl-6 text-sm text-slate-300 space-y-3">
     <li class="leading-relaxed">Commit your newly generated assets (src/classical_pi.py, src/monte_carlo.py, src/markov_boss.py, docs/Swarm_Stress_Report.md, and the generated images) to your local repository.</li>
     <li class="leading-relaxed">Use the [Antigravity IDE](https://antigravity.google/) git skill set to push the latest codebase changes safely onto your remote repository branch.</li>
     <li class="leading-relaxed">Update your automated project documentation site (index.md, README, or GitHub Pages) to showcase the revenue distribution graphs, the subagent workflow logs, and your Markovian defense metrics.</li>
 </ol>
 <p class="text-sm text-slate-300 leading-relaxed"><strong class="text-white">Deliverables:</strong> Provide your live public repository URL and a direct hyperlink to your updated project showcase page. The Chaos Engine is now fully operational under agentic control\!</p>
-<p class="text-sm text-slate-300 leading-relaxed">**</p>
-<p class="text-sm text-slate-300 leading-relaxed">**</p>
+
+
 </div>

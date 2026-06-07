@@ -12,7 +12,7 @@
     </div>
 <div class="p-6 glass-card rounded-2xl border-l-4 border-cyan-500 bg-cyan-950/5 space-y-3 my-6">
     <h4 class="text-cyan-400 font-bold text-lg flex items-center gap-2">
-        ð The Story: Journey Beyond the Circuit Realm
+        📖 The Story: Journey Beyond the Circuit Realm
     </h4>
 <p class="text-sm text-slate-300 leading-relaxed">In the old world, deep within the mystical land of *Electronica*, engineers embarked on manual quests. They were the "Sorcerers of Simulink," painstakingly dragging and dropping rigid block diagrams, and casting manual “dsolve” spells within the walled gardens of the MATLAB Citadel. Their models were mathematically exact but cognitively blind; they required constant human supervision to map the flow of energy through pendulums, radioactive isotopes, and ancient RLC circuits.</p>
 <p class="text-sm text-slate-300 leading-relaxed">But the Legacy Era has passed. The physical systems of our modern world - from climate models to autonomous drone swarms - have grown too vast, chaotic, and high-dimensional for manual interfaces. Welcome to the <strong class="text-white">Neo-Simulacrum</strong>.</p>
@@ -27,12 +27,19 @@
 <ol class="list-decimal pl-6 text-sm text-slate-300 space-y-3">
     <li class="leading-relaxed"><strong class="text-white">The Python Uplink:</strong> Create an isolated Python 3.10+ virtual environment named nexus_env and activate it. Install the core simulation artifacts: numpy, scipy, and matplotlib.</li>
     <li class="leading-relaxed"><strong class="text-white">Summoning the Oracle:</strong> Install the [gemini-cli](https://geminicli.com/) and authenticate it with your API key. Test your connection by asking it directly from the terminal:</li>
-<p class="text-sm text-slate-300 leading-relaxed">Ask gemini-cli "In one sentence, what is the paradigm shift from classical block-diagram simulation to Agentic Engineering?"</p>
+<div class="my-3 max-w-2xl">
+    <pre class="bg-slate-950/85 border border-slate-850 rounded-xl p-4 font-mono text-xs text-slate-300 overflow-x-auto shadow-inner"><code class="language-bash">gemini-cli "In one sentence, what is the paradigm shift from classical block-diagram simulation to Agentic Engineering?"</code></pre>
+</div>
     <li class="leading-relaxed"><strong class="text-white">Agentic Bash Automation:</strong> A true Architect automates the mundane. Do not create your project directories by hand\! Prompt the Gemini CLI to generate a bash script (init_nexus.sh) that builds your workspace.</li>
 </ol>
 <p class="text-sm text-slate-300 leading-relaxed"><!-- end list --></p>
 <ul class="list-disc pl-6 text-sm text-slate-350 space-y-2">
-    <li class="leading-relaxed"><strong class="text-white">Prompt Example:</strong> *"Write a bash script that creates a modern Python project structure with directories src/, data/, agents/, and docs/. Inside src/, create an empty main.py. Output only the executable bash code."*</li>
+    <li class="leading-relaxed">
+    <strong class="text-white">Prompt Example:</strong>
+    <div class="my-3 max-w-2xl">
+        <pre class="bg-slate-950/85 border border-slate-850 rounded-xl p-4 font-mono text-xs text-slate-300 overflow-x-auto shadow-inner"><code class="language-text">Write a bash script that creates a modern Python project structure with directories src/, data/, agents/, and docs/. Inside src/, create an empty main.py. Output only the executable bash code.</code></pre>
+    </div>
+</li>
 </ul>
 <p class="text-sm text-slate-300 leading-relaxed"><!-- end list --></p>
 <ol class="list-decimal pl-6 text-sm text-slate-300 space-y-3">
@@ -85,8 +92,4 @@
     <li class="leading-relaxed"><strong class="text-white">The Autonomous Task:</strong> Give Observer-Prime the basic terminal execution tool and read/write access to your workspace. Issue the following natural language command via the ADE interface:*"Observer-Prime, please run the src/ancients.py script. Check if the plot image was successfully created in the data folder. If it exists, write a markdown file named docs/Agent_Report.md summarizing what physical systems the script simulated and confirming the successful execution."*</li>
     <li class="leading-relaxed"><strong class="text-white">Deliverables:</strong> Watch the agent's "Chain of Thought" as it independently decides to open the terminal, run the code, verify the files, and author your report. Submit the Agent_Report.md file it generated, along with a 3-sentence reflection on how it felt to orchestrate an AI agent to execute your simulation pipeline compared to running it manually block-by-block.</li>
 </ol>
-<h4 class="text-lg font-bold text-white border-b border-slate-850 pb-2 mt-8 mb-4 flex items-center gap-2">
-    **
-</h4>
-<p class="text-sm text-slate-300 leading-relaxed">**</p>
 </div>

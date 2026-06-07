@@ -10,10 +10,10 @@
             <span>📥</span> Download Jupyter Notebook
         </a>
     </div>
-<p class="text-sm text-slate-300 leading-relaxed">**</p>
+
 <div class="p-6 glass-card rounded-2xl border-l-4 border-cyan-500 bg-cyan-950/5 space-y-3 my-6">
     <h4 class="text-cyan-400 font-bold text-lg flex items-center gap-2">
-        ð The Story
+        📖 The Story
     </h4>
 <p class="text-sm text-slate-300 leading-relaxed">Your local architecture is secure in the Vault. The uv.lock has mapped your exact dependencies. The physical data is synthesized. But an untrained neural network is just an empty vessel. This week, you will pull your repository into the High-Performance Computing (HPC) cloud of Google Colab.</p>
 <p class="text-sm text-slate-300 leading-relaxed">First, you will design the object-oriented architecture of your Deep Autoencoder locally. By activating hardware accelerators (TPUs) in Colab and compiling your Keras 3 model via JAX, you will breathe life into the Oracle. You will train it to understand the "normal" physics of the RC filter, allowing it to detect the catastrophic anomalies you injected last week. Finally, looking toward the horizon of modern AI, you will call upon your Agent to refactor your code into Convolutional Layers.</p>
@@ -35,16 +35,18 @@
 <p class="text-sm text-slate-300 leading-relaxed">*Learning Objective: Cloud environments, hardware acceleration, and utilizing MAE reconstruction loss for anomaly detection.*</p>
 <ol class="list-decimal pl-6 text-sm text-slate-300 space-y-3">
     <li class="leading-relaxed"><strong class="text-white">Pulling from the Vault:</strong> Open Google Colab. Change the runtime to <strong class="text-white">T4 GPU</strong> or <strong class="text-white">TPU</strong>. In the first cell, pull your codebase into the cloud:</li>
-<p class="text-sm text-slate-300 leading-relaxed">Bash</p>
 </ol>
-<p class="text-sm text-slate-300 leading-relaxed">\!git clone \[YOUR_REPO_URL\]</p>
-<p class="text-sm text-slate-300 leading-relaxed">%cd genesis-oracle</p>
+<div class="my-3 max-w-2xl">
+    <pre class="bg-slate-950/85 border border-slate-850 rounded-xl p-4 font-mono text-xs text-slate-300 overflow-x-auto shadow-inner"><code class="language-bash">!git clone [YOUR_REPO_URL]
+%cd genesis-oracle</code></pre>
+</div>
 <ol class="list-decimal pl-6 text-sm text-slate-300 space-y-3">
     <li class="leading-relaxed"><strong class="text-white">Injecting</strong> <strong class="text-white">uv</strong> <strong class="text-white">into the Cloud:</strong> Colab's default package manager is slow. In the next cell, install uv via pip, then use it to instantly read your pyproject.toml and install your exact dependencies directly into the Colab system environment:</li>
-<p class="text-sm text-slate-300 leading-relaxed">Bash</p>
 </ol>
-<p class="text-sm text-slate-300 leading-relaxed">\!pip install uv</p>
-<p class="text-sm text-slate-300 leading-relaxed">\!uv pip install --system -r pyproject.toml</p>
+<div class="my-3 max-w-2xl">
+    <pre class="bg-slate-950/85 border border-slate-850 rounded-xl p-4 font-mono text-xs text-slate-300 overflow-x-auto shadow-inner"><code class="language-bash">!pip install uv
+!uv pip install --system -r pyproject.toml</code></pre>
+</div>
 <ol class="list-decimal pl-6 text-sm text-slate-300 space-y-3">
     <li class="leading-relaxed"><strong class="text-white">Training the Oracle:</strong> Inside Colab, load the data you generated. Compile your PhysicsAutoencoder with the adam optimizer and Mean Squared Error (mse) loss. Train it on your normal data for 30 epochs. Notice the speed of the JAX XLA compiler\!</li>
     <li class="leading-relaxed"><strong class="text-white">The Detection Run & Anomaly Trigger:</strong> Pass your *entire* dataset (including the anomaly) through the trained Autoencoder. Calculate the Mean Absolute Error (MAE) between the raw input sequences and the model's reconstructed predictions at each time step.</li>
@@ -57,10 +59,12 @@
 <p class="text-sm text-slate-300 leading-relaxed">The literature notes that advanced physical signal flows (like EEG classifications) are better handled by Convolutional or Transformer models rather than simple Dense matrices.</p>
 <ol class="list-decimal pl-6 text-sm text-slate-300 space-y-3">
     <li class="leading-relaxed"><strong class="text-white">The Architecture Review:</strong> Feed your subclassed PhysicsAutoencoder code to the Gemini Web Interface or your CLI Agent. Prompt the agent:</li>
-<p class="text-sm text-slate-300 leading-relaxed">*"I have built this dense Autoencoder for time-series anomaly detection in Keras 3. To better capture the non-stationary, temporal nature of this physical signal, please rewrite my Encoder and Decoder classes to utilize 1D Convolutional Layers (<strong class="text-white">Conv1D* *and* *Conv1DTranspose</strong>). Explain how the tensor shapes change during the forward pass."*</p>
+<div class="my-3 max-w-2xl">
+    <pre class="bg-slate-950/85 border border-slate-850 rounded-xl p-4 font-mono text-xs text-slate-300 overflow-x-auto shadow-inner"><code class="language-text">I have built this dense Autoencoder for time-series anomaly detection in Keras 3. To better capture the non-stationary, temporal nature of this physical signal, please rewrite my Encoder and Decoder classes to utilize 1D Convolutional Layers (Conv1D and Conv1DTranspose). Explain how the tensor shapes change during the forward pass.</code></pre>
+</div>
     <li class="leading-relaxed"><strong class="text-white">Deliverables:</strong> Submit the AI-generated code snippet for the upgraded Conv1D Autoencoder. In your own words (2-3 sentences), summarize the agent's explanation of *why* Conv1D layers are mathematically better suited for finding local patterns in time-series data.</li>
     <li class="leading-relaxed"><strong class="text-white">Final Deployment:</strong> Ask your Agent to update your GitHub Pages index.md file with the anomaly plot and a short summary of the experiment. Push the final project to your main branch so the class can view your live Oracle\!</li>
 </ol>
-<p class="text-sm text-slate-300 leading-relaxed">**</p>
-<p class="text-sm text-slate-300 leading-relaxed">**</p>
+
+
 </div>
