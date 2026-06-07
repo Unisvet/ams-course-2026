@@ -150,8 +150,8 @@ function initPortalPage() {
                 return `
                     <div class="glass-card rounded-2xl p-6 glow-cyan flex flex-col justify-between border-t-2 border-t-cyan-500/35 relative overflow-hidden group">
                         ${isCompleted ? `
-                            <div class="absolute top-3 right-3 bg-emerald-500/20 text-emerald-400 text-xs px-2.5 py-0.5 rounded-full font-mono font-bold flex items-center gap-1 border border-emerald-500/30">
-                                <span>✓</span> abgeschlossen
+                            <div class="absolute top-3 right-3 w-6 h-6 bg-emerald-500/20 text-emerald-400 rounded-full font-mono font-bold flex items-center justify-center border border-emerald-500/30 shadow-lg shadow-emerald-500/5" title="Abgeschlossen">
+                                ✓
                             </div>
                         ` : ''}
                         <div>

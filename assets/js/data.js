@@ -7,9 +7,9 @@ export const courseInfo = {
     institution: "BTU Cottbus-Senftenberg",
     department: "Lehrstuhl für Künstliche Intelligenz und Systemsimulation",
     grading: [
-        { label: "Wöchentliche Quizzes", value: "20%" },
-        { label: "Problem Sets (Programmieraufgaben)", value: "40%" },
-        { label: "Abschlusspräsentation (Projekt)", value: "40%" }
+        { label: "Wöchentliche Quizzes und Präsentationen", value: "18%" },
+        { label: "Problem Sets (Programmieraufgaben)", value: "52%" },
+        { label: "Abschlusspräsentation (Projekt)", value: "30%" }
     ]
 };
 
