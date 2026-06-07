@@ -153,21 +153,26 @@ Um zu verstehen, warum wir LLMs für komplexe Simulationen nutzen können, müss
 <canvas id="gpqaChart"></canvas>
 </div>
 </div>
-<div class="space-y-6 flex flex-col justify-center">
-<div class="glass-card rounded-xl p-6 border-t-4 border-vibrant-pink">
-<div class="text-4xl font-black text-vibrant-pink mb-2">85.5%</div>
-<h4 class="text-lg font-bold text-white mb-2">Gemini 3.5 Pro</h4>
-<p class="text-sm text-vibrant-textMuted">Übertrifft die menschliche PhD-Baseline deutlich und beweist herausragende Fähigkeiten im physikalisch-mathematischen Reasoning. Perfekt als "Analyst" in unserer Simulation.</p>
+<div class="space-y-4 flex flex-col justify-center">
+<div class="glass-card rounded-xl p-4 border-t-4 border-vibrant-purple bg-gradient-to-b from-vibrant-purple/10 to-transparent">
+<div class="text-3xl font-black text-vibrant-purple mb-1">93.6%</div>
+<h4 class="text-sm font-bold text-white mb-1">Claude Opus 4.8 & GPT-5.5</h4>
+<p class="text-xs text-vibrant-textMuted">Die absolute Speerspitze der Generation 2026. Sie dringen in den Bereich von über 93% vor und stoßen den Benchmark durch massive Coding- und Reasoning-Gewinne in die Sättigung.</p>
 </div>
-<div class="glass-card rounded-xl p-6 border-t-4 border-vibrant-yellow">
-<div class="text-4xl font-black text-vibrant-yellow mb-2">81.2%</div>
-<h4 class="text-lg font-bold text-white mb-2">Menschlicher Experte (PhD)</h4>
-<p class="text-sm text-vibrant-textMuted">Hochqualifizierte Akademiker erreichen in ihrem eigenen Fachgebiet (ohne Zeitlimit) im Durchschnitt diese Marke. Frontier AI der Generation 2026 hat diesen Schwellenwert durchbrochen.</p>
+<div class="glass-card rounded-xl p-4 border-t-4 border-vibrant-pink">
+<div class="text-3xl font-black text-vibrant-pink mb-1">92.2%</div>
+<h4 class="text-sm font-bold text-white mb-1">Gemini 3.5 Flash</h4>
+<p class="text-xs text-vibrant-textMuted">Herausragende 92.2% Genauigkeit bei extrem geringen Kosten und hoher Geschwindigkeit. Der primäre Echtzeit-Controller in unseren Systemsimulationen.</p>
 </div>
-<div class="glass-card rounded-xl p-6 border-t-4 border-vibrant-cyan">
-<div class="text-4xl font-black text-vibrant-cyan mb-2">Open-Weights</div>
-<h4 class="text-lg font-bold text-white mb-2">Grok-3 & Llama-4</h4>
-<p class="text-sm text-vibrant-textMuted">Auch offene oder halboffene Modelle (wie Metas Llama-4 oder xAIs Grok-3) erreichen in 2026 Expertenniveau, was lokale Multi-Agenten-Systeme (MAS) extrem mächtig macht.</p>
+<div class="glass-card rounded-xl p-4 border-t-4 border-vibrant-yellow">
+<div class="text-3xl font-black text-vibrant-yellow mb-1">81.2%</div>
+<h4 class="text-sm font-bold text-white mb-1">Menschlicher Experte (PhD)</h4>
+<p class="text-xs text-vibrant-textMuted">Hochqualifizierte Akademiker erreichen in ihrem eigenen Fachgebiet (ohne Zeitlimit) im Durchschnitt diese Marke. Frontier AI der Generation 2026 hat diesen Schwellenwert durchbrochen.</p>
+</div>
+<div class="glass-card rounded-xl p-4 border-t-4 border-vibrant-cyan">
+<div class="text-sm font-bold text-vibrant-cyan mb-1">Expertenniveau</div>
+<h4 class="text-sm font-bold text-white mb-1">Open-Weights (Grok-3 & Llama-4)</h4>
+<p class="text-xs text-vibrant-textMuted">Auch offene oder halboffene Modelle erreichen in 2026 Expertenniveau, was lokale Multi-Agenten-Systeme (MAS) extrem mächtig macht.</p>
 </div>
 </div>
 </div>
@@ -258,8 +263,8 @@ Pionierarbeit von Systemen wie DeepSeek, die von modernen Modellen übernommen w
 </div>
 <div class="relative timeline-item">
 <div class="text-vibrant-pink font-bold text-xl mb-1">2026 - Das Orakel erwacht</div>
-<h3 class="text-2xl font-bold text-white mb-2">Agentic Era & Gemini 3.5 API</h3>
-<p class="text-vibrant-textMuted">LLMs sind nicht mehr nur Chatbots. Sie fungieren als autonome Controller in Systemsimulationen (Antigravity). Sie analysieren Graphen in Echtzeit, steuern JAX-Routinen und kommunizieren in Multi-Agenten-Systemen.</p>
+<h3 class="text-2xl font-bold text-white mb-2">Agentic Era, Claude Opus 4.8 & Gemini 3.5</h3>
+<p class="text-vibrant-textMuted">LLMs sind nicht mehr nur Chatbots. Sie fungieren als autonome Controller in Systemsimulationen (Antigravity). Claude Opus 4.8 und GPT-5.5 erreichen eine nie dagewesene Zuverlässigkeit bei autonomen Code-Änderungen und logischen Analysen, während Gemini 3.5 Flash Latenzen im Millisekundenbereich für Echtzeit-Interaktionen bietet.</p>
 </div>
 </div>
 </section>
@@ -282,12 +287,12 @@ In der kommenden Übung werden wir die Gemini API anbinden. Wichtig für die Sys
 <h3 class="text-2xl font-bold text-white">Agenten-Klassen in unserer ADE</h3>
 <div class="p-5 border border-vibrant-surfaceLight rounded-xl bg-vibrant-surface">
 <h4 class="text-lg font-bold text-vibrant-cyan mb-1 flex items-center"><span class="mr-2 text-2xl">⚡</span> Der Echtzeit-Controller</h4>
-<p class="text-sm text-vibrant-textMuted mb-2">Nutzt Modelle wie <strong>Gemini 3.5 Flash</strong> oder <strong>Llama-4-8B</strong>.</p>
+<p class="text-sm text-vibrant-textMuted mb-2">Nutzt Modelle wie <strong>Gemini 3.5 Flash</strong> (92.2% GPQA @ &lt;10ms Latenz) oder <strong>Llama-4-8B</strong>.</p>
 <p class="text-sm">Zuständig für Parameter-Tuning pro Frame. Extreme Latenz-Anforderungen (unter 10ms/Token). Trifft schnelle, heuristische Entscheidungen basierend auf JAX-Sensordaten.</p>
 </div>
 <div class="p-5 border border-vibrant-surfaceLight rounded-xl bg-vibrant-surface">
 <h4 class="text-lg font-bold text-vibrant-pink mb-1 flex items-center"><span class="mr-2 text-2xl">🧠</span> Der Strategische Analyst</h4>
-<p class="text-sm text-vibrant-textMuted mb-2">Nutzt Modelle wie <strong>Gemini 3.5 Pro</strong> oder <strong>Claude 3.5 Opus</strong>.</p>
+<p class="text-sm text-vibrant-textMuted mb-2">Nutzt Modelle wie <strong>Claude Opus 4.8</strong> (auch im 2.5× schnelleren Fast-Mode) oder <strong>GPT-5.5</strong>.</p>
 <p class="text-sm">Analysiert das Makro-Verhalten der Simulation. Wird nur alle paar hundert Iterationen aufgerufen. Bekommt ganze Graphen und Log-Historien übermittelt. Überprüft, ob das System den thermodynamischen oder ökonomischen Gleichgewichten folgt.</p>
 </div>
 </div>
@@ -335,7 +340,9 @@ const gpqaLabelsRaw = [
 "GPT-4o (OpenAI)",
 "Grok-3 (xAI)",
 "Claude 3.5 Opus (Anthropic)",
-"Gemini 3.5 Pro (Google)"
+"Gemini 3.5 Flash (Google)",
+"GPT-5.5 (OpenAI)",
+"Claude Opus 4.8 (Anthropic)"
 ];
 const gpqaLabels = gpqaLabelsRaw.map(label => wrapLabel(label, 16));
 const ctxBar = document.getElementById('gpqaChart').getContext('2d');
@@ -345,14 +352,16 @@ data: {
 labels: gpqaLabels,
 datasets: [{
 label: 'GPQA Diamond Score (%)',
-data: [81.2, 81.9, 83.5, 83.8, 84.1, 85.5],
+data: [81.2, 81.9, 83.5, 83.8, 84.1, 92.2, 93.6, 93.6],
 backgroundColor: [
 'rgba(234, 179, 8, 0.7)',
 'rgba(6, 182, 212, 0.7)',
 'rgba(148, 163, 184, 0.7)',
 'rgba(248, 113, 113, 0.7)',
 'rgba(167, 139, 250, 0.7)',
-'rgba(236, 72, 153, 0.9)'
+'rgba(236, 72, 153, 0.7)',
+'rgba(15, 118, 110, 0.7)',
+'rgba(217, 119, 6, 0.9)'
 ],
 borderColor: [
 'rgba(234, 179, 8, 1)',
@@ -360,7 +369,9 @@ borderColor: [
 'rgba(148, 163, 184, 1)',
 'rgba(248, 113, 113, 1)',
 'rgba(167, 139, 250, 1)',
-'rgba(236, 72, 153, 1)'
+'rgba(236, 72, 153, 1)',
+'rgba(15, 118, 110, 1)',
+'rgba(217, 119, 6, 1)'
 ],
 borderWidth: 1,
 borderRadius: 4
@@ -384,7 +395,7 @@ borderWidth: 1
 scales: {
 x: {
 min: 75,
-max: 90,
+max: 96,
 grid: { color: 'rgba(255,255,255,0.1)' },
 ticks: { color: '#94a3b8' },
 title: { display: true, text: 'GPQA Diamond Genauigkeit (%)', color: '#94a3b8' }
@@ -402,9 +413,24 @@ type: 'scatter',
 data: {
 datasets: [
 {
-label: 'Gemini 3.5 Pro',
-data: [{x: 45, y: 85.5}],
-backgroundColor: '#ec4899',
+label: 'Claude Opus 4.8 (Standard)',
+data: [{x: 50, y: 93.6}],
+backgroundColor: '#d97706',
+pointRadius: 8,
+pointHoverRadius: 10
+},
+{
+label: 'Claude Opus 4.8 (Fast Mode)',
+data: [{x: 20, y: 93.6}],
+backgroundColor: '#f59e0b',
+pointStyle: 'rectRot',
+pointRadius: 9,
+pointHoverRadius: 11
+},
+{
+label: 'GPT-5.5',
+data: [{x: 42, y: 93.6}],
+backgroundColor: '#0f766e',
 pointRadius: 8,
 pointHoverRadius: 10
 },
@@ -414,6 +440,14 @@ data: [{x: 52, y: 84.1}],
 backgroundColor: '#a78bfa',
 pointRadius: 8,
 pointHoverRadius: 10
+},
+{
+label: 'Gemini 3.5 Flash',
+data: [{x: 8, y: 92.2}],
+backgroundColor: '#ec4899',
+pointStyle: 'triangle',
+pointRadius: 9,
+pointHoverRadius: 11
 },
 {
 label: 'Grok-3',
@@ -426,14 +460,6 @@ pointHoverRadius: 10
 label: 'Llama-4 70B',
 data: [{x: 25, y: 81.9}],
 backgroundColor: '#06b6d4',
-pointRadius: 8,
-pointHoverRadius: 10
-},
-{
-label: 'Gemini 3.5 Flash',
-data: [{x: 8, y: 76.5}],
-backgroundColor: '#f43f5e',
-pointStyle: 'triangle',
 pointRadius: 8,
 pointHoverRadius: 10
 },

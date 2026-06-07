@@ -358,7 +358,7 @@ function loadTabContent(tab) {
                 <div class="iframe-container shadow-2xl border border-slate-800">
                     <iframe 
                         id="infographic-iframe" 
-                        src="${weekPath}/infographic.html"
+                        src="${weekPath}/infographic.html?v=${Date.now()}"
                         allow="fullscreen"
                     ></iframe>
                 </div>
@@ -369,7 +369,7 @@ function loadTabContent(tab) {
         if (reloadBtn) {
             reloadBtn.addEventListener('click', () => {
                 const iframe = document.getElementById('infographic-iframe');
-                if (iframe) iframe.src = iframe.src;
+                if (iframe) iframe.src = `${weekPath}/infographic.html?v=${Date.now()}`;
             });
         }
         
