@@ -17,7 +17,7 @@ if __name__ == "__main__":
     # Open browser after 1 second
     Timer(1.0, open_browser).start()
     
-    with socketserver.TCPServer(("", PORT), Handler) as httpd:
+    with socketserver.TCPServer(("127.0.0.1", PORT), Handler) as httpd:
         print(f"\n==================================================")
         print(f"AMS-Kurs 2026 - Lokaler Development Server gestartet")
         print(f"URL: http://localhost:{PORT}")
