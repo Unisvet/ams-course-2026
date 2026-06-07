@@ -11,6 +11,9 @@ document.addEventListener('DOMContentLoaded', () => {
     } else if (page === 'week.html') {
         initWeekPage();
     }
+    
+    // Setup global lightbox
+    setupImageLightbox(document);
 });
 
 /* ==========================================
@@ -333,7 +336,7 @@ function loadTabContent(tab) {
     const weekPath = `weeks/week${currentWeekId}`;
 
     if (tab === 'intro') {
-        fetch(`${weekPath}/introduction.html`)
+        fetch(`${weekPath}/introduction.html?v=${Date.now()}`)
             .then(res => {
                 if (!res.ok) throw new Error("Einführung nicht gefunden");
                 return res.text();
@@ -341,6 +344,7 @@ function loadTabContent(tab) {
             .then(html => {
                 contentArea.innerHTML = `<div class="animate-slide-up space-y-6">${html}</div>`;
                 highlightCodeSnippets(contentArea);
+                setupImageLightbox(contentArea);
                 renderMath(contentArea);
             })
             .catch(err => {
@@ -374,7 +378,7 @@ function loadTabContent(tab) {
         }
         
     } else if (tab === 'problemset') {
-        fetch(`${weekPath}/problemset.html`)
+        fetch(`${weekPath}/problemset.html?v=${Date.now()}`)
             .then(res => {
                 if (!res.ok) throw new Error("Problem Set nicht gefunden");
                 return res.text();
@@ -452,6 +456,7 @@ function loadTabContent(tab) {
 
                 highlightCodeSnippets(contentArea);
                 addCopyButtonsToCode(contentArea);
+                setupImageLightbox(contentArea);
                 renderMath(contentArea);
             })
             .catch(err => {
@@ -459,7 +464,7 @@ function loadTabContent(tab) {
             });
             
     } else if (tab === 'quiz') {
-        fetch(`${weekPath}/quiz.json`)
+        fetch(`${weekPath}/quiz.json?v=${Date.now()}`)
             .then(res => {
                 if (!res.ok) throw new Error("Quiz-Datenbank nicht gefunden");
                 return res.json();
@@ -538,4 +543,71 @@ function renderMath(container) {
     } else {
         setTimeout(() => renderMath(container), 100);
     }
+}
+
+function setupImageLightbox(container) {
+    let lightbox = document.getElementById('global-lightbox');
+    if (!lightbox) {
+        lightbox = document.createElement('div');
+        lightbox.id = 'global-lightbox';
+        lightbox.className = 'fixed inset-0 z-[100] hidden bg-slate-950/90 backdrop-blur-md flex flex-col items-center justify-center p-4 cursor-zoom-out opacity-0 transition-opacity duration-300';
+        lightbox.innerHTML = `
+            <div class="relative max-w-5xl max-h-[90vh] flex flex-col items-center transform scale-95 transition-transform duration-300 ease-out" id="lightbox-content">
+                <button class="absolute -top-12 right-0 text-slate-400 hover:text-white transition-colors text-xs font-mono flex items-center gap-1.5 bg-slate-900/60 px-3 py-1.5 rounded-lg border border-white/10 select-none">
+                    ✕ CLOSE
+                </button>
+                <img class="max-w-full max-h-[80vh] object-contain rounded-2xl border border-white/10 shadow-2xl" id="lightbox-img" src="" alt="Enlarged view">
+                <p class="text-xs font-mono text-cyan-400 mt-4 bg-slate-900/65 px-4 py-2 rounded-lg border border-white/10 select-none" id="lightbox-caption"></p>
+            </div>
+        `;
+        document.body.appendChild(lightbox);
+
+        lightbox.addEventListener('click', () => {
+            closeLightbox();
+        });
+        
+        const img = lightbox.querySelector('#lightbox-img');
+        img.addEventListener('click', (e) => {
+            e.stopPropagation();
+        });
+    }
+
+    function openLightbox(src, alt) {
+        const img = lightbox.querySelector('#lightbox-img');
+        const caption = lightbox.querySelector('#lightbox-caption');
+        const content = lightbox.querySelector('#lightbox-content');
+        
+        img.src = src;
+        caption.innerText = alt || 'Abbildung';
+        
+        lightbox.classList.remove('hidden');
+        void lightbox.offsetWidth; // Force reflow
+        
+        lightbox.classList.remove('opacity-0');
+        content.classList.remove('scale-95');
+        content.classList.add('scale-100');
+        document.body.classList.add('overflow-hidden');
+    }
+
+    function closeLightbox() {
+        const content = lightbox.querySelector('#lightbox-content');
+        lightbox.classList.add('opacity-0');
+        content.classList.remove('scale-100');
+        content.classList.add('scale-95');
+        
+        setTimeout(() => {
+            lightbox.classList.add('hidden');
+            document.body.classList.remove('overflow-hidden');
+        }, 300);
+    }
+
+    const images = container.querySelectorAll('img');
+    images.forEach(img => {
+        if (img.classList.contains('w-6') || img.classList.contains('h-6') || img.id === 'lightbox-img') return;
+        
+        img.classList.add('cursor-zoom-in', 'hover:brightness-95', 'transition-all', 'duration-200');
+        img.addEventListener('click', () => {
+            openLightbox(img.src, img.alt);
+        });
+    });
 }
