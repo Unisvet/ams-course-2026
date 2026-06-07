@@ -605,8 +605,22 @@ function setupImageLightbox(container) {
     images.forEach(img => {
         if (img.classList.contains('w-6') || img.classList.contains('h-6') || img.id === 'lightbox-img') return;
         
-        img.classList.add('cursor-zoom-in', 'hover:brightness-95', 'transition-all', 'duration-200');
-        img.addEventListener('click', () => {
+        // Find closest wrapper (relative container or glass-card) that holds overlays
+        let wrapper = img;
+        if (img.parentElement && img.parentElement.classList.contains('relative')) {
+            wrapper = img.parentElement;
+        } else if (img.parentElement && img.parentElement.parentElement && img.parentElement.parentElement.classList.contains('glass-card')) {
+            wrapper = img.parentElement.parentElement;
+        }
+        
+        wrapper.classList.add('cursor-zoom-in');
+        img.classList.add('cursor-zoom-in');
+        
+        // Add hover styles to wrapper/image
+        wrapper.classList.add('hover:brightness-95', 'transition-all', 'duration-200');
+        
+        wrapper.addEventListener('click', (e) => {
+            e.stopPropagation();
             openLightbox(img.src, img.alt);
         });
     });
