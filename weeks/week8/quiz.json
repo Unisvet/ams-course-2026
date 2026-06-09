@@ -20,5 +20,118 @@
         ],
         "answerIndex": 1,
         "explanation": "Gemma 4 nutzt spezielle Kontroll-Tokens. Der Native Thought Mode wird durch das '<|think|>' -Token am Beginn des System-Prompts getriggert, woraufhin das Modell seine Überlegungen in einem geschützten Kanal generiert."
+    },
+    {
+        "question": "Warum ist der Wechsel von Cloud-APIs (wie Gemini) zu lokalen Open-Weights-Modellen (wie Gemma 4) in unserem industriellen Neo-Simulacrum so entscheidend?",
+        "options": [
+            "Um das WLAN im Werk zu entlasten",
+            "Weil Latenzen fluktuieren und sensible Telemetriedaten die physischen Werksgrenzen nicht verlassen dürfen",
+            "Da Cloud-Modelle keine komplexen stochastischen Gleichungen lösen können",
+            "Weil Gemma 4 cloudbasierte Modelle grundsätzlich in jeder Disziplin schlägt"
+        ],
+        "answerIndex": 1,
+        "explanation": "Exakt! Die 'Festung der Autarkie' basiert auf absoluter Datensouveränität. In Echtzeit-Regelschleifen sind deterministische Millisekunden-Latenzen ohne externe Netzwerkabhängigkeit das oberste Gebot."
+    },
+    {
+        "question": "Welches Architekturmerkmal verleiht dem kompakten Gemma 4 E2B-Modell (2,3 Mrd. Parameter) seine überraschend hohe logische Leistungsdichte auf Edge-Geräten?",
+        "options": [
+            "Mixture-of-Experts (MoE) Routing",
+            "Ein unendlich großes Context Window (Transformer-XL)",
+            "Per-Layer Embeddings (PLE)",
+            "LSTM-Rückkopplungsschleifen auf Hardware-Ebene"
+        ],
+        "answerIndex": 2,
+        "explanation": "Richtig! Per-Layer Embeddings (PLE) ordnen jeder Dekoderschicht eigene hochfrequente Einbettungstabellen zu. Das verringert die nötige Tiefe des Transformator-Netzwerks, ohne kognitive Intelligenz einzubüßen."
+    },
+    {
+        "question": "Wie wird der kognitive Denkmodus (Thought Mode) bei Gemma 4 nativ aufgerufen und vom restlichen Text abgegrenzt?",
+        "options": [
+            "Durch den simplen Text-Prompt 'Denke Schritt für Schritt'",
+            "Mit dem Steuerungs-Token <|think|> am Anfang und den Kanal-Begrenzern <|channel>thought und <channel|>",
+            "Über ein externes Python-Skript, das den Text pausiert",
+            "Durch Erhöhung der Temperature-Variable der Inferenz-Engine auf 1.5"
+        ],
+        "answerIndex": 1,
+        "explanation": "Boom! Das Modell schaltet direkt auf Vokabular-Ebene in den Denkmodus um, wenn es das <|think|> Token am Anfang sieht. Kein plumpes Prompting mehr nötig, die Logik ist nativ in die Architektur eingebrannt!"
+    },
+    {
+        "question": "Was passiert (und warum), wenn wir die verborgenen Denkprozesse (<|channel>thought) bei einem Multi-Turn-Chat unbereinigt in die Historie des nächsten Schritts übernehmen?",
+        "options": [
+            "Das Modell wird schlauer, da es mehr Kontext hat",
+            "Das Token-Wachstum explodiert und das Modell erleidet eine kognitive Überladung durch veraltete Logikzweige",
+            "Die GPU stürzt sofort mit einem OutOfMemory-Error (OOM) ab",
+            "Es hat keinerlei Auswirkungen auf die Inferenz"
+        ],
+        "answerIndex": 1,
+        "explanation": "Korrekt! Wir müssen die Historie bereinigen (Sanitization). Alte Gedanken aus vorherigen Ticks verwirren das Modell nur und fressen wertvolle Token-Limits auf. Nur die finale, sichtbare Aktion zählt für die Vergangenheit!"
+    },
+    {
+        "question": "Warum nutzen wir für die lokale Textgenerierung (Inferenz) meist PyTorch (Hugging Face) statt purem JAX, obwohl JAX für mathematische Simulationen der Geschwindigkeitskönig ist?",
+        "options": [
+            "Weil JAX grundsätzlich keine Textdaten verarbeiten kann",
+            "Da PyTorch dynamische Sequenzlängen (Eager Execution) ohne ständiges, langsames XLA-Rekompilieren meistert",
+            "Weil Google JAX komplett aus dem Open-Source-Angebot genommen hat",
+            "Um die Lizenzkosten von JAX zu sparen"
+        ],
+        "answerIndex": 1,
+        "explanation": "Treffer! JAX liebt statische Graphen und feste Array-Größen für die Kompilierung. Da Textgenerierung unvorhersehbar lang ist, müsste reines JAX bei jeder Token-Längenänderung neu kompilieren. PyTorch ist hier deutlich pragmatischer!"
+    },
+    {
+        "question": "Wie hilft uns offline Retrieval-Augmented Generation (RAG) konkret in unserem Wächter-System?",
+        "options": [
+            "Es erlaubt dem Agenten, das Internet nach Lösungen zu durchsuchen",
+            "Es wandelt Textbefehle blitzschnell in Bilder um",
+            "Es injiziert situationsspezifische Standardarbeitsanweisungen (SOPs) lokal in den Prompt, basierend auf dem aktuellen Systemzustand",
+            "Es komprimiert die Gewichte des Modells, um VRAM zu sparen"
+        ],
+        "answerIndex": 2,
+        "explanation": "Exzellent! Durch RAG wird der Prompt dynamisch mit der passenden Regel (z. B. für hohe Puffer-Auslastung) angereichert. Ändern sich die Werksvorschriften, tauschen wir nur die lokale Textdatei aus, ohne aufwendiges Fine-Tuning!"
+    },
+    {
+        "question": "Welchen strategischen Vorteil bietet uns die Google Colab CLI (google-colab-cli) in unserem autonomen Edge-Workflow?",
+        "options": [
+            "Sie macht unsere lokalen Laptop-GPUs durch Übertaktung doppelt so schnell",
+            "Wir können rechenintensives Fine-Tuning transparent in die Cloud auslagern und Gewichte direkt zurück in den lokalen Workspace ziehen",
+            "Sie ersetzt Git und GitHub vollständig",
+            "Sie umgeht den Kaggle-Login für proprietäre Modelle"
+        ],
+        "answerIndex": 1,
+        "explanation": "Richtig! Wir behalten unseren flüssigen, lokalen Edge-Workflow bei, werfen aber die massiven Matrix-Multiplikationen für das Training elegant über die CLI auf externe Google-Rechenzentren. Die fertige KI läuft danach wieder lokal."
+    },
+    {
+        "question": "Was geschieht in unserer stochastischen DiscreteFoundry-Simulation unweigerlich, wenn die Ankunftsrate (Poisson) dauerhaft größer ist als die Service-Rate?",
+        "options": [
+            "Das System erreicht von selbst ein magisches, stabiles Gleichgewicht",
+            "Die Maschine wird physikalisch heißer und schaltet ab",
+            "Der Puffer läuft voll und es kommt zu Systemüberläufen (Dropped Parts / Ausschuss)",
+            "Die Simulation dividiert durch Null und bricht mit einem Python-Fehler ab"
+        ],
+        "answerIndex": 2,
+        "explanation": "Ein klassisches Problem der stochastischen Warteschlangentheorie! Ohne unseren KI-Agenten als Regler baut sich durch die Instabilität eine endlose Schlange auf, bis das System kollabiert und Bauteile als Ausschuss 'gedroppt' werden."
+    },
+    {
+        "question": "Warum zwingen wir das LLM im System-Prompt dazu, seine Entscheidung in einem strikten Format wie 'NEW_SERVICE_RATE: 3.0' auszugeben?",
+        "options": [
+            "Weil das Modell sonst nur in Gedichten und Metaphern antwortet",
+            "Um den numerischen Wert programmatisch per Regular Expressions (RegEx) sicher extrahieren und als Float-Variable in die Simulation einspeisen zu können",
+            "Das ist eine fest verdrahtete, unveränderliche Eigenart der Gemma-Architektur",
+            "Um die Token-Anzahl bei der Ausgabe künstlich in die Höhe zu treiben"
+        ],
+        "answerIndex": 1,
+        "explanation": "Schnittstellensicherheit ist alles! Ein Agent muss maschinenlesbare Outputs liefern. Ohne striktes Parsing-Muster verpufft die beste kognitive Entscheidung im Text, und der geschlossene Regelkreis (Closed-Loop) bricht ab."
+    },
+    {
+        "question": "Welche der folgenden Prinzipien gehören zum Kernkonzept der 'Festung der Autarkie' (Lokaler Wächter) unseres Neo-Simulacrums?",
+        "options": [
+            "Absolute Datensouveränität und Offline-Fähigkeit",
+            "Globale Mutable States in der Simulation",
+            "Verwendung von Cloud-APIs für kritische Echtzeitentscheidungen",
+            "Ausführung von Open-Weights Modellen direkt auf der Edge-Hardware"
+        ],
+        "answerIndex": [
+            0,
+            3
+        ],
+        "explanation": "Perfekt! Die Edge-Inferenz garantiert uns Datensicherheit und Ausfallsicherheit ohne externe Netzwerke. Open-Weights-Modelle wie Gemma geben uns dabei die uneingeschränkte, latenzfreie Kontrolle über den gesamten kognitiven Inferenzprozess."
     }
 ]
