@@ -1,0 +1,713 @@
+<div class="space-y-8">
+    <!-- Intro Banner -->
+    <div class="p-6 glass-card rounded-2xl border-l-4 border-cyan-500 bg-gradient-to-r from-cyan-950/20 to-transparent">
+        <h3 class="text-xl md:text-2xl font-bold text-white mb-2">Woche 8: Lokale Inferenz-Architekturen in der Systemsimulation</h3>
+        <p class="text-slate-300 text-sm leading-relaxed mt-3 font-sans">
+            Die Evolution der computergestützten Systemsimulation vollzieht sich in einer zunehmenden Verschmelzung von klassischen mathematischen Zustandsraummodellen und kognitiven Entscheidungselementen. Während physikalische Kernprozesse – etwa partielle Differentialgleichungen oder stochastische Monte-Carlo-Simulationen – hocheffizient auf spezialisierten Hardware-Beschleunigern mittels JAX oder TensorFlow gelöst werden, erfordert die intelligente Steuerung und Überwachung dieser Simulationen flexible, kontextsensitive Agentenarchitekturen. Der historische Ansatz, diese kognitive Ebene über globale Cloud-Schnittstellen (wie die Gemini API) zu realisieren, stößt in industriellen Umgebungen an fundamentale Grenzen: unvorhersehbare Netzwerklatenzen, die Abhängigkeit von einer permanenten Internetverbindung und das Risiko des unkontrollierten Abflusses sensibler Betriebsdaten.  
+        </p>
+        <p class="text-slate-300 text-sm leading-relaxed mt-2 font-sans">
+            Diese Woche wollen wir die Konzeption und Implementierung eines lokalen, offline-fähigen Überwachungs- und Optimierungs-Agenten für ereignisdiskrete Systemsimulationen testen. Im Mittelpunkt steht <strong>„Problem Set 8: Project Genesis – Der souveräne Wächter“</strong>. Dieses Problem Set baut auf der neuen, für die On-Device-Ausführung optimierten Open-Weights-Modellfamilie Google Gemma 4 auf und verknüpft lokale Inferenz über Kagglehub mit einer reaktiv gesteuerten physikalischen Warteschlangensimulation sowie den Grundlagen der lokalen Retrieval-Augmented Generation (RAG) und dem remote Fine-Tuning über die neue Google Colab CLI.
+        </p>
+    </div>
+
+    <!-- Section 1 -->
+    <h3 class="text-xl md:text-2xl font-extrabold text-white mt-12 mb-4 border-b border-slate-900 pb-2 flex items-center gap-2">
+        <span>🌐</span> Open-Source, Open-Weights und Closed-Source
+    </h3>
+    <p class="text-sm text-slate-300 leading-relaxed font-sans">
+        In der modernen kognitiven Systemsimulation hat sich die Auswahl des richtigen LLM-Paradigmas zu einer strategischen Kernentscheidung entwickelt. Die Landschaft der KI-Modelle wird im Wesentlichen durch drei Architekturklassen geprägt, die sich hinsichtlich Transparenz, Souveränität und Betriebskosten fundamental unterscheiden:
+    </p>
+    <ul class="list-disc pl-6 text-sm text-slate-300 space-y-3.5 my-4 font-sans">
+        <li class="leading-relaxed">
+            <strong class="text-white">Closed-Source / Proprietäre Modelle:</strong> Diese Modelle (z. B. GPT-4, Google Gemini Ultra, Claude 3.5 Sonnet) werden ausschließlich über REST-APIs der Hersteller angeboten. Sie bieten zwar eine enorme logische Tiefe, sind jedoch für echtzeitkritische geschlossene Regelschleifen ungeeignet. Die Latenzen fluktuieren stark und sensible Telemetrie- und Steuerungsdaten müssen die physischen Werksgrenzen verlassen. Zudem erzeugen kontinuierliche API-Aufrufe unkalkulierbare Betriebskosten.
+        </li>
+        <li class="leading-relaxed">
+            <strong class="text-white">Echte Open-Source-Modelle:</strong> Modelle wie <em>Pythia</em> (EleutherAI) oder <em>BLOOM</em> (BigScience) legen neben den Modellgewichten auch die exakten Trainingsdaten, Filteralgorithmen und den vollständigen Quellcode der Vorverarbeitung offen. Sie erlauben eine lückenlose wissenschaftliche Auditierung, hinken jedoch in ihrer mathematisch-logischen Leistungsdichte pro Parameter den kommerziellen Modellen oft hinterher.
+        </li>
+        <li class="leading-relaxed">
+            <strong class="text-white">Open-Weights-Modelle:</strong> Diese hybride Klasse bildet das Fundament für moderne Industrieanwendungen. Führende Beispiele sind <strong>Llama 3</strong> (Meta), <strong>Mistral</strong> (Mistral AI) und die <strong>Gemma 4-Familie</strong> (Google DeepMind). Entwickler erhalten uneingeschränkten Zugriff auf die trainierten Gewichtsmatrizen und können diese lokal auf eigener Hardware ausführen, anpassen und per Fine-Tuning auf spezifische Systemsimulationen spezialisieren. Der zugrundeliegende Trainingsdatensatz bleibt zwar meist proprietär, doch die lokale Ausführbarkeit garantiert absolute Datensouveränität, deterministische Millisekunden-Latenzen und vollständige Netzunabhängigkeit (Offline-Fähigkeit).
+        </li>
+    </ul>
+    <p class="text-sm text-slate-300 leading-relaxed font-sans">
+        Für Systemingenieure bieten Open-Weights-Modelle wie Gemma 4 somit den idealen Kompromiss: die logische Brillanz kommerzieller Spitzenforschung kombiniert mit der uneingeschränkten, kostenfreien Kontrolle und Anpassbarkeit einer lokalen Open-Source-Software.
+    </p>
+
+    <!-- Section 2 -->
+    <h3 class="text-xl md:text-2xl font-extrabold text-white mt-12 mb-4 border-b border-slate-900 pb-2 flex items-center gap-2">
+        <span>🚀</span> Architektur und Leistungsspektren der Gemma 4-Modellfamilie
+    </h3>
+    <p class="text-sm text-slate-300 leading-relaxed font-sans">
+        Die von Google DeepMind entwickelte Gemma 4-Modellfamilie wurde auf Basis der Gemini 3-Forschung entworfen, um eine maximale kognitive Leistungsdichte pro Parameter (Intelligence-per-Parameter) direkt auf Endgeräten bereitzustellen. Für simulationsgestützte Optimierungsaufgaben ist diese Effizienz entscheidend, da sie es erlaubt, hochkomplexe Sprachmodelle parallel zu rechenintensiven numerischen Simulationen auf derselben physischen Hardware auszuführen.
+    </p>
+
+    <h4 class="text-lg font-bold text-cyan-400 mt-8 mb-3 flex items-center gap-2">
+        <span class="text-xs">◆</span> Strukturelle Spezifikationen und Speicheranforderungen
+    </h4>
+    <p class="text-sm text-slate-300 leading-relaxed font-sans">
+        Die Modellfamilie unterteilt sich in fünf unterschiedliche Parameterklassen, die jeweils für spezifische Hardware-Ressourcen und operative Randbedingungen optimiert sind:
+    </p>
+
+    <!-- Visual Cards for Table 1 -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 my-6">
+        <!-- Gemma 4 E2B -->
+        <div class="glass-card rounded-2xl p-5 border-t-2 border-t-cyan-500/50 flex flex-col justify-between hover:scale-[1.02] transition-transform duration-200 bg-slate-900/10">
+            <div>
+                <div class="flex justify-between items-center mb-2">
+                    <h5 class="text-white font-bold text-base">Gemma 4 E2B</h5>
+                    <span class="px-2 py-0.5 rounded bg-cyan-950 border border-cyan-500/35 text-cyan-400 text-[10px] font-mono font-bold uppercase">Edge & Mobile</span>
+                </div>
+                <ul class="text-xs text-slate-350 space-y-1.5 mt-3">
+                    <li><strong class="text-slate-200">Parameter:</strong> 2,3 Mrd. effektiv</li>
+                    <li><strong class="text-slate-200">Speicherbedarf:</strong> ~11,4 GB</li>
+                    <li><strong class="text-slate-200">Fokus:</strong> Edge-Geräte & Mobil</li>
+                    <li><strong class="text-slate-200">Besonderheit:</strong> PLE-Architektur</li>
+                </ul>
+            </div>
+        </div>
+        <!-- Gemma 4 E4B -->
+        <div class="glass-card rounded-2xl p-5 border-t-2 border-t-pink-500/50 flex flex-col justify-between hover:scale-[1.02] transition-transform duration-200 bg-slate-900/10">
+            <div>
+                <div class="flex justify-between items-center mb-2">
+                    <h5 class="text-white font-bold text-base">Gemma 4 E4B</h5>
+                    <span class="px-2 py-0.5 rounded bg-pink-950 border border-pink-500/35 text-pink-400 text-[10px] font-mono font-bold uppercase">Workstation</span>
+                </div>
+                <ul class="text-xs text-slate-350 space-y-1.5 mt-3">
+                    <li><strong class="text-slate-200">Parameter:</strong> 4,5 Mrd. effektiv</li>
+                    <li><strong class="text-slate-200">Speicherbedarf:</strong> ~17,9 GB</li>
+                    <li><strong class="text-slate-200">Fokus:</strong> Lokale Workstations</li>
+                    <li><strong class="text-slate-200">Besonderheit:</strong> Optimierter Durchsatz</li>
+                </ul>
+            </div>
+        </div>
+        <!-- Gemma 4 12B -->
+        <div class="glass-card rounded-2xl p-5 border-t-2 border-t-yellow-500/50 flex flex-col justify-between hover:scale-[1.02] transition-transform duration-200 bg-slate-900/10">
+            <div>
+                <div class="flex justify-between items-center mb-2">
+                    <h5 class="text-white font-bold text-base">Gemma 4 12B</h5>
+                    <span class="px-2 py-0.5 rounded bg-yellow-950 border border-yellow-500/35 text-yellow-400 text-[10px] font-mono font-bold uppercase">Multimodal</span>
+                </div>
+                <ul class="text-xs text-slate-350 space-y-1.5 mt-3">
+                    <li><strong class="text-slate-200">Parameter:</strong> 12,0 Mrd. effektiv</li>
+                    <li><strong class="text-slate-200">Speicherbedarf:</strong> ~26,7 GB</li>
+                    <li><strong class="text-slate-200">Fokus:</strong> Multimodal (Encoder-frei)</li>
+                    <li><strong class="text-slate-200">Besonderheit:</strong> Ohne separaten Visual Encoder</li>
+                </ul>
+            </div>
+        </div>
+        <!-- Gemma 4 26B A4B -->
+        <div class="glass-card rounded-2xl p-5 border-t-2 border-t-purple-500/50 flex flex-col justify-between hover:scale-[1.02] transition-transform duration-200 bg-slate-900/10">
+            <div>
+                <div class="flex justify-between items-center mb-2">
+                    <h5 class="text-white font-bold text-base">Gemma 4 26B A4B</h5>
+                    <span class="px-2 py-0.5 rounded bg-purple-950 border border-purple-500/35 text-purple-400 text-[10px] font-mono font-bold uppercase">MoE / Throughput</span>
+                </div>
+                <ul class="text-xs text-slate-350 space-y-1.5 mt-3">
+                    <li><strong class="text-slate-200">Parameter:</strong> 4,0 Mrd. aktiv (26B ges.)</li>
+                    <li><strong class="text-slate-200">Speicherbedarf:</strong> ~57,7 GB</li>
+                    <li><strong class="text-slate-200">Fokus:</strong> Massiver Durchsatz</li>
+                    <li><strong class="text-slate-200">Besonderheit:</strong> Mixture-of-Experts (MoE)</li>
+                </ul>
+            </div>
+        </div>
+        <!-- Gemma 4 31B -->
+        <div class="glass-card rounded-2xl p-5 border-t-2 border-t-emerald-500/50 flex flex-col justify-between hover:scale-[1.02] transition-transform duration-200 bg-slate-900/10">
+            <div>
+                <div class="flex justify-between items-center mb-2">
+                    <h5 class="text-white font-bold text-base">Gemma 4 31B</h5>
+                    <span class="px-2 py-0.5 rounded bg-emerald-950 border border-emerald-500/35 text-emerald-400 text-[10px] font-mono font-bold uppercase">Server</span>
+                </div>
+                <ul class="text-xs text-slate-350 space-y-1.5 mt-3">
+                    <li><strong class="text-slate-200">Parameter:</strong> 31,0 Mrd. effektiv</li>
+                    <li><strong class="text-slate-200">Speicherbedarf:</strong> ~69,9 GB</li>
+                    <li><strong class="text-slate-200">Fokus:</strong> Industrieller Server</li>
+                    <li><strong class="text-slate-200">Besonderheit:</strong> Dichtes High-End-Modell</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mermaid 1 -->
+    <pre class="mermaid bg-slate-950/40 p-4 rounded-xl border border-slate-900/60 my-6 flex justify-center">
+    graph TD
+        %% Kategorisierung der Gemma 4 Familie
+        subgraph Edge_Systeme [Edge & Mobile Hardware]
+            E2B[Gemma 4 E2B<br/>2,3 Mrd. Eff.]
+            E4B[Gemma 4 E4B<br/>4,5 Mrd. Eff.]
+        end
+
+        subgraph High_Performance [Workstation & Server]
+            M12B[Gemma 4 12B<br/>12,0 Mrd. Eff.]
+            A4B[Gemma 4 26B A4B<br/>MoE - Massiver Durchsatz]
+            S31B[Gemma 4 31B<br/>31,0 Mrd. Eff.]
+        end
+
+        %% Definition des Primärfokus
+        E2B & E4B --> PLE[Per-Layer Embeddings]
+        A4B --> MOE[Mixture-of-Experts]
+        S31B --> DENSE[Dichtes High-End-Modell]
+        
+        style Edge_Systeme fill:#090d16,stroke:#06b6d4,stroke-width:2px,color:#f8fafc
+        style High_Performance fill:#090d16,stroke:#8b5cf6,stroke-width:2px,color:#f8fafc
+        style E2B fill:#0f172a,stroke:#06b6d4,color:#f8fafc
+        style E4B fill:#0f172a,stroke:#06b6d4,color:#f8fafc
+        style M12B fill:#0f172a,stroke:#8b5cf6,color:#f8fafc
+        style A4B fill:#0f172a,stroke:#8b5cf6,color:#f8fafc
+        style S31B fill:#0f172a,stroke:#8b5cf6,color:#f8fafc
+        style PLE fill:#090d16,stroke:#06b6d4,color:#f8fafc
+        style MOE fill:#090d16,stroke:#8b5cf6,color:#f8fafc
+        style DENSE fill:#090d16,stroke:#8b5cf6,color:#f8fafc
+    </pre>
+
+    <p class="text-sm text-slate-300 leading-relaxed font-sans">
+        Die Effizienz der kleinen Modelle (E2B und E4B) resultiert maßgeblich aus der Per-Layer Embeddings (PLE) Struktur. Hierbei wird anstelle eines einzelnen globalen Einbettungsraumes jeder Dekoderschicht eine eigene, hochfrequente Einbettungstabelle für jeden Token zugeordnet. Dies verringert die notwendige Tiefe des Transformator-Netzwerks zur Abstraktion von logischen Beziehungen, erhöht jedoch die statische Speichergröße beim Laden der Gewichtstabellen geringfügig im Vergleich zu traditionellen dichten Modellen ähnlicher effektiver Parameterzahl.  
+    </p>
+    <p class="text-sm text-slate-300 leading-relaxed font-sans">
+        Zusätzlich verfügen alle Varianten über eine native Unterstützung für Multi-Token Prediction (MTP). Durch die Integration eines kleineren Entwurfsmodells (Draft Model) zur spekulativen Dekodierung wird die Generierungsgeschwindigkeit bei identischer mathematischer Ausgabequalität signifikant gesteigert.
+    </p>
+
+    <h4 class="text-lg font-bold text-cyan-400 mt-8 mb-3 flex items-center gap-2">
+        <span class="text-xs">◆</span> Leistungsbewertung im globalen Vergleich
+    </h4>
+    <p class="text-sm text-slate-300 leading-relaxed font-sans">
+        In standardisierten Leistungsmessungen demonstriert die Gemma 4-Familie eine bemerkenswerte Überlegenheit gegenüber älteren Architekturen und nähert sich in spezialisierten Teildisziplinen geschlossenen Cloud-Modellen an. Der folgende Vergleich zeigt die Werte:
+    </p>
+
+    <!-- Visual Benchmark Table (Table 2) -->
+    <div class="overflow-x-auto my-6 border border-slate-800 rounded-xl bg-slate-950/25">
+        <table class="min-w-full divide-y divide-slate-800 text-sm">
+            <thead class="bg-slate-900/40">
+                <tr>
+                    <th class="px-4 py-3 text-left text-xs font-mono font-bold text-slate-400 uppercase tracking-wider">Benchmark</th>
+                    <th class="px-4 py-3 text-left text-xs font-mono font-bold text-cyan-400 uppercase tracking-wider">Gemma 4 31B IT</th>
+                    <th class="px-4 py-3 text-left text-xs font-mono font-bold text-purple-400 uppercase tracking-wider">Gemma 4 26B MoE</th>
+                    <th class="px-4 py-3 text-left text-xs font-mono font-bold text-pink-400 uppercase tracking-wider">Gemma 4 E4B IT</th>
+                    <th class="px-4 py-3 text-left text-xs font-mono font-bold text-slate-400 uppercase tracking-wider">Gemma 4 E2B IT</th>
+                    <th class="px-4 py-3 text-left text-xs font-mono font-bold text-slate-500 uppercase tracking-wider">Gemma 3 27B IT</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-850 bg-slate-950/10">
+                <!-- Arena AI -->
+                <tr class="hover:bg-slate-900/20 transition-colors">
+                    <td class="px-4 py-3 text-white font-semibold text-xs">Arena AI (text) <em>(Elo)</em></td>
+                    <td class="px-4 py-3 text-cyan-400 font-mono text-xs font-bold">1452</td>
+                    <td class="px-4 py-3 text-purple-400 font-mono text-xs font-bold">1441</td>
+                    <td class="px-4 py-3 text-slate-500 font-mono text-xs">—</td>
+                    <td class="px-4 py-3 text-slate-500 font-mono text-xs">—</td>
+                    <td class="px-4 py-3 text-slate-400 font-mono text-xs">1365</td>
+                </tr>
+                <!-- MMMLU -->
+                <tr class="hover:bg-slate-900/20 transition-colors">
+                    <td class="px-4 py-3 text-white font-semibold text-xs">MMMLU <em>(Mehrsprachige Q&A)</em></td>
+                    <td class="px-4 py-3 text-slate-300 font-mono text-xs">
+                        <div class="flex items-center justify-between gap-2">
+                            <span>85.2%</span>
+                            <div class="w-12 h-1 bg-slate-900 rounded-full overflow-hidden">
+                                <div class="h-full bg-cyan-500" style="width: 85.2%"></div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-4 py-3 text-slate-300 font-mono text-xs">
+                        <div class="flex items-center justify-between gap-2">
+                            <span>82.6%</span>
+                            <div class="w-12 h-1 bg-slate-900 rounded-full overflow-hidden">
+                                <div class="h-full bg-purple-500" style="width: 82.6%"></div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-4 py-3 text-slate-300 font-mono text-xs">
+                        <div class="flex items-center justify-between gap-2">
+                            <span>69.4%</span>
+                            <div class="w-12 h-1 bg-slate-900 rounded-full overflow-hidden">
+                                <div class="h-full bg-pink-500" style="width: 69.4%"></div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-4 py-3 text-slate-300 font-mono text-xs">
+                        <div class="flex items-center justify-between gap-2">
+                            <span>60.0%</span>
+                            <div class="w-12 h-1 bg-slate-900 rounded-full overflow-hidden">
+                                <div class="h-full bg-slate-500" style="width: 60.0%"></div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-4 py-3 text-slate-400 font-mono text-xs">
+                        <div class="flex items-center justify-between gap-2">
+                            <span>67.6%</span>
+                            <div class="w-12 h-1 bg-slate-900 rounded-full overflow-hidden">
+                                <div class="h-full bg-slate-700" style="width: 67.6%"></div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <!-- MMMU Pro -->
+                <tr class="hover:bg-slate-900/20 transition-colors">
+                    <td class="px-4 py-3 text-white font-semibold text-xs">MMMU Pro <em>(Multimodales Schließen)</em></td>
+                    <td class="px-4 py-3 text-slate-300 font-mono text-xs">
+                        <div class="flex items-center justify-between gap-2">
+                            <span>76.9%</span>
+                            <div class="w-12 h-1 bg-slate-900 rounded-full overflow-hidden">
+                                <div class="h-full bg-cyan-500" style="width: 76.9%"></div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-4 py-3 text-slate-300 font-mono text-xs">
+                        <div class="flex items-center justify-between gap-2">
+                            <span>73.8%</span>
+                            <div class="w-12 h-1 bg-slate-900 rounded-full overflow-hidden">
+                                <div class="h-full bg-purple-500" style="width: 73.8%"></div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-4 py-3 text-slate-300 font-mono text-xs">
+                        <div class="flex items-center justify-between gap-2">
+                            <span>52.6%</span>
+                            <div class="w-12 h-1 bg-slate-900 rounded-full overflow-hidden">
+                                <div class="h-full bg-pink-500" style="width: 52.6%"></div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-4 py-3 text-slate-300 font-mono text-xs">
+                        <div class="flex items-center justify-between gap-2">
+                            <span>44.2%</span>
+                            <div class="w-12 h-1 bg-slate-900 rounded-full overflow-hidden">
+                                <div class="h-full bg-slate-500" style="width: 44.2%"></div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-4 py-3 text-slate-400 font-mono text-xs">
+                        <div class="flex items-center justify-between gap-2">
+                            <span>49.7%</span>
+                            <div class="w-12 h-1 bg-slate-900 rounded-full overflow-hidden">
+                                <div class="h-full bg-slate-700" style="width: 49.7%"></div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <!-- AIME 2026 -->
+                <tr class="hover:bg-slate-900/20 transition-colors">
+                    <td class="px-4 py-3 text-white font-semibold text-xs">AIME 2026 <em>(Mathe ohne Tools)</em></td>
+                    <td class="px-4 py-3 text-slate-300 font-mono text-xs">
+                        <div class="flex items-center justify-between gap-2">
+                            <span>89.2%</span>
+                            <div class="w-12 h-1 bg-slate-900 rounded-full overflow-hidden">
+                                <div class="h-full bg-cyan-500" style="width: 89.2%"></div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-4 py-3 text-slate-300 font-mono text-xs">
+                        <div class="flex items-center justify-between gap-2">
+                            <span>88.3%</span>
+                            <div class="w-12 h-1 bg-slate-900 rounded-full overflow-hidden">
+                                <div class="h-full bg-purple-500" style="width: 88.3%"></div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-4 py-3 text-slate-300 font-mono text-xs">
+                        <div class="flex items-center justify-between gap-2">
+                            <span>42.5%</span>
+                            <div class="w-12 h-1 bg-slate-900 rounded-full overflow-hidden">
+                                <div class="h-full bg-pink-500" style="width: 42.5%"></div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-4 py-3 text-slate-300 font-mono text-xs">
+                        <div class="flex items-center justify-between gap-2">
+                            <span>37.5%</span>
+                            <div class="w-12 h-1 bg-slate-900 rounded-full overflow-hidden">
+                                <div class="h-full bg-slate-500" style="width: 37.5%"></div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-4 py-3 text-slate-400 font-mono text-xs">
+                        <div class="flex items-center justify-between gap-2">
+                            <span>20.8%</span>
+                            <div class="w-12 h-1 bg-slate-900 rounded-full overflow-hidden">
+                                <div class="h-full bg-slate-700" style="width: 20.8%"></div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <!-- LiveCodeBench -->
+                <tr class="hover:bg-slate-900/20 transition-colors">
+                    <td class="px-4 py-3 text-white font-semibold text-xs">LiveCodeBench v6 <em>(Coding)</em></td>
+                    <td class="px-4 py-3 text-slate-300 font-mono text-xs">
+                        <div class="flex items-center justify-between gap-2">
+                            <span>80.0%</span>
+                            <div class="w-12 h-1 bg-slate-900 rounded-full overflow-hidden">
+                                <div class="h-full bg-cyan-500" style="width: 80.0%"></div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-4 py-3 text-slate-300 font-mono text-xs">
+                        <div class="flex items-center justify-between gap-2">
+                            <span>77.1%</span>
+                            <div class="w-12 h-1 bg-slate-900 rounded-full overflow-hidden">
+                                <div class="h-full bg-purple-500" style="width: 77.1%"></div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-4 py-3 text-slate-300 font-mono text-xs">
+                        <div class="flex items-center justify-between gap-2">
+                            <span>52.0%</span>
+                            <div class="w-12 h-1 bg-slate-900 rounded-full overflow-hidden">
+                                <div class="h-full bg-pink-500" style="width: 52.0%"></div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-4 py-3 text-slate-300 font-mono text-xs">
+                        <div class="flex items-center justify-between gap-2">
+                            <span>44.0%</span>
+                            <div class="w-12 h-1 bg-slate-900 rounded-full overflow-hidden">
+                                <div class="h-full bg-slate-500" style="width: 44.0%"></div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-4 py-3 text-slate-400 font-mono text-xs">
+                        <div class="flex items-center justify-between gap-2">
+                            <span>29.1%</span>
+                            <div class="w-12 h-1 bg-slate-900 rounded-full overflow-hidden">
+                                <div class="h-full bg-slate-700" style="width: 29.1%"></div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <!-- GPQA -->
+                <tr class="hover:bg-slate-900/20 transition-colors">
+                    <td class="px-4 py-3 text-white font-semibold text-xs">GPQA Diamond <em>(Wissenschaft)</em></td>
+                    <td class="px-4 py-3 text-slate-300 font-mono text-xs">
+                        <div class="flex items-center justify-between gap-2">
+                            <span>84.3%</span>
+                            <div class="w-12 h-1 bg-slate-900 rounded-full overflow-hidden">
+                                <div class="h-full bg-cyan-500" style="width: 84.3%"></div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-4 py-3 text-slate-300 font-mono text-xs">
+                        <div class="flex items-center justify-between gap-2">
+                            <span>82.3%</span>
+                            <div class="w-12 h-1 bg-slate-900 rounded-full overflow-hidden">
+                                <div class="h-full bg-purple-500" style="width: 82.3%"></div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-4 py-3 text-slate-300 font-mono text-xs">
+                        <div class="flex items-center justify-between gap-2">
+                            <span>58.6%</span>
+                            <div class="w-12 h-1 bg-slate-900 rounded-full overflow-hidden">
+                                <div class="h-full bg-pink-500" style="width: 58.6%"></div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-4 py-3 text-slate-300 font-mono text-xs">
+                        <div class="flex items-center justify-between gap-2">
+                            <span>43.4%</span>
+                            <div class="w-12 h-1 bg-slate-900 rounded-full overflow-hidden">
+                                <div class="h-full bg-slate-500" style="width: 43.4%"></div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-4 py-3 text-slate-400 font-mono text-xs">
+                        <div class="flex items-center justify-between gap-2">
+                            <span>42.4%</span>
+                            <div class="w-12 h-1 bg-slate-900 rounded-full overflow-hidden">
+                                <div class="h-full bg-slate-700" style="width: 42.4%"></div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <!-- Tool Use -->
+                <tr class="hover:bg-slate-900/20 transition-colors">
+                    <td class="px-4 py-3 text-white font-semibold text-xs">𝝉2-bench <em>(Agenten-Werkzeuge)</em></td>
+                    <td class="px-4 py-3 text-slate-300 font-mono text-xs">
+                        <div class="flex items-center justify-between gap-2">
+                            <span>86.4%</span>
+                            <div class="w-12 h-1 bg-slate-900 rounded-full overflow-hidden">
+                                <div class="h-full bg-cyan-500" style="width: 86.4%"></div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-4 py-3 text-slate-300 font-mono text-xs">
+                        <div class="flex items-center justify-between gap-2">
+                            <span>85.5%</span>
+                            <div class="w-12 h-1 bg-slate-900 rounded-full overflow-hidden">
+                                <div class="h-full bg-purple-500" style="width: 85.5%"></div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-4 py-3 text-slate-300 font-mono text-xs">
+                        <div class="flex items-center justify-between gap-2">
+                            <span>57.5%</span>
+                            <div class="w-12 h-1 bg-slate-900 rounded-full overflow-hidden">
+                                <div class="h-full bg-pink-500" style="width: 57.5%"></div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-4 py-3 text-slate-300 font-mono text-xs">
+                        <div class="flex items-center justify-between gap-2">
+                            <span>29.4%</span>
+                            <div class="w-12 h-1 bg-slate-900 rounded-full overflow-hidden">
+                                <div class="h-full bg-slate-500" style="width: 29.4%"></div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-4 py-3 text-slate-400 font-mono text-xs">
+                        <div class="flex items-center justify-between gap-2">
+                            <span>6.6%</span>
+                            <div class="w-12 h-1 bg-slate-900 rounded-full overflow-hidden">
+                                <div class="h-full bg-slate-700" style="width: 6.6%"></div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <p class="text-sm text-slate-300 leading-relaxed font-sans">
+        Besonders hervorzuheben ist die Leistungssteigerung im Bereich der agentenbasierten Werkzeugnutzung (𝝉2-bench) und des komplexen logischen Schließens (AIME 2026). Diese Fortschritte qualifizieren Gemma 4 in hohem Maße als kognitiven Koordinator in simulationsgestützten Regelungsschleifen.
+    </p>
+
+    <!-- Section 3 -->
+    <h3 class="text-xl md:text-2xl font-extrabold text-white mt-12 mb-4 border-b border-slate-900 pb-2 flex items-center gap-2">
+        <span>🧠</span> Der native Denkmodus (Thinking Mode) und Token-Steuerung
+    </h3>
+    <p class="text-sm text-slate-300 leading-relaxed font-sans">
+        Ein herausragendes Merkmal von Gemma 4 ist der native Denkmodus, der tiefe kognitive Analyseschritte vor der finalen Antwortgenerierung ermöglicht. Im Gegensatz zu herkömmlichen Prompts, bei denen das Modell durch explizite Textanweisungen („Denke Schritt für Schritt“) zu einem strukturierten Denkprozess gezwungen werden muss, ist dieses Verhalten direkt in die Architektur und das Vokabular des Modells integriert.
+    </p>
+
+    <h4 class="text-lg font-bold text-cyan-400 mt-8 mb-3 flex items-center gap-2">
+        <span class="text-xs">◆</span> Strukturierung über native Kontroll-Token
+    </h4>
+    <p class="text-sm text-slate-300 leading-relaxed font-sans">
+        Der Denkmodus wird durch das Einfügen des Steuerungs-Tokens <code class="text-cyan-400 font-mono bg-slate-900/60 px-1.5 py-0.5 rounded text-xs">&lt;|think|&gt;</code> direkt zu Beginn des System-Prompts aktiviert. Während des Inferenzprozesses öffnet das Modell daraufhin einen dedizierten Kanal, der durch die speziellen Vokabular-Token <code class="text-cyan-400 font-mono bg-slate-900/60 px-1.5 py-0.5 rounded text-xs">&lt;|channel&gt;thought\n</code> und <code class="text-cyan-400 font-mono bg-slate-900/60 px-1.5 py-0.5 rounded text-xs">&lt;channel|&gt;</code> abgegrenzt ist.
+    </p>
+
+    <!-- Mermaid 2 -->
+    <pre class="mermaid bg-slate-950/40 p-4 rounded-xl border border-slate-900/60 my-6 flex justify-center">
+    flowchart LR
+        classDef control fill:#1e293b,stroke:#06b6d4,stroke-width:2px,color:#06b6d4;
+        classDef content fill:#0f172a,stroke:#8b5cf6,stroke-width:2px,color:#f8fafc;
+
+        BOS("<bos>"):::control
+        
+        subgraph System_Turn [System-Segment]
+            T_SYS("<|turn>system"):::control
+            THINK("<|think|>"):::control
+            SYS_INSTR[System-Instruktion]:::content
+        end
+        
+        subgraph User_Turn [User-Segment]
+            T_USR("<|turn>user"):::control
+            USER_REQ[Benutzer-Anfrage]:::content
+        end
+        
+        subgraph Model_Turn [Model-Segment]
+            T_MOD("<|turn>model"):::control
+        end
+
+        BOS --> T_SYS --> THINK --> SYS_INSTR --> END1(["<|turn|>"]):::control
+        END1 --> T_USR --> USER_REQ --> END2(["<|turn|>"]):::control
+        END2 --> T_MOD
+        
+        style System_Turn fill:#090d16,stroke:#334155,color:#f8fafc
+        style User_Turn fill:#090d16,stroke:#334155,color:#f8fafc
+        style Model_Turn fill:#090d16,stroke:#334155,color:#f8fafc
+    </pre>
+
+    <!-- Mermaid 3 -->
+    <pre class="mermaid bg-slate-950/40 p-4 rounded-xl border border-slate-900/60 my-6 flex justify-center">
+    flowchart LR
+        classDef channel_token fill:#1e293b,stroke:#06b6d4,stroke-width:2px,color:#06b6d4;
+        classDef thought_content fill:#1e1b4b,stroke:#8b5cf6,stroke-width:2px,color:#f8fafc;
+        classDef final_output fill:#064e3b,stroke:#059669,stroke-width:2px,color:#a7f3d0;
+        classDef end_token fill:#450a0a,stroke:#dc2626,stroke-width:2px,color:#fecaca;
+
+        subgraph Model_Response [Modell-Ausgabe (Inferenz-Stream)]
+            START_THOUGHT("<|channel>thought"):::channel_token
+            THOUGHT_BODY[Gedankenprozess / Logik]:::thought_content
+            END_THOUGHT("<channel|>"):::channel_token
+            FINAL_ANS[Finale, sichtbare Antwort]:::final_output
+            END_TURN("<turn|>"):::end_token
+        end
+
+        START_THOUGHT --> THOUGHT_BODY --> END_THOUGHT --> FINAL_ANS --> END_TURN
+        
+        style Model_Response fill:#090d16,stroke:#334155,color:#f8fafc
+    </pre>
+
+    <p class="text-sm text-slate-300 leading-relaxed font-sans">
+        Für die Systemintegration und das State-Management ist ein technisches Detail von kritischer Bedeutung: Bei mehrstufigen Unterhaltungen (Multi-Turn Chat) dürfen die in vorherigen Runden generierten Inhalte des Denkanals (thought) <strong>nicht</strong> wieder in die Historie des nächsten Durchlaufs eingespeist werden. Der Kontext für den nächsten Schritt wird bereinigt, indem lediglich die finalen, für den Benutzer sichtbaren Modellantworten als Historie übergeben werden. Dies schützt das System vor übermäßigem Token-Wachstum und verhindert eine kognitive Überladung des Modells durch veraltete logische Verzweigungen.
+    </p>
+
+    <!-- Section 4 -->
+    <h3 class="text-xl md:text-2xl font-extrabold text-white mt-12 mb-4 border-b border-slate-900 pb-2 flex items-center gap-2">
+        <span>🔍</span> Lokale Retrieval-Augmented Generation (RAG) in der Systemsteuerung
+    </h3>
+    <p class="text-sm text-slate-300 leading-relaxed font-sans">
+        Die Integration von RAG-Strukturen auf Edge-Geräten erweitert die Fähigkeiten des lokalen Beobachter-Agenten erheblich. Während ein Standard-Sprachmodell ausschließlich auf dem während des Trainings erworbenen Wissen agiert, erlaubt RAG dem Modell, in Echtzeit auf externe Datenquellen zuzugreifen. Im Kontext industrieller Fertigungssimulationen betrifft dies vor allem maschinenspezifische Betriebsanleitungen, Standardarbeitsanweisungen (Standard Operating Procedures, SOPs) und regulatorische Sicherheitsgrenzen.  
+    </p>
+    <p class="text-sm text-slate-300 leading-relaxed font-sans">
+        Durch die Ausführung von RAG auf einer lokalen Edge-Instanz wird sichergestellt, dass vertrauliche Werksdokumente niemals externe Netzwerke passieren. Der Mechanismus basiert auf einem dreistufigen Prozess, der direkt in der Simulationsschleife abläuft:
+    </p>
+
+    <!-- Mermaid 4 -->
+    <pre class="mermaid bg-slate-950/40 p-4 rounded-xl border border-slate-900/60 my-6 flex justify-center">
+    graph TD
+        A[Aktueller Simulationszustand] --> B{Lokaler Vektor-Index}
+        B -- Kosinus-Ähnlichkeit --> C[Abruf relevanter Regelungsvorschriften]
+        C --> D[Gemma 4 lokale Inferenz]
+        D --> E[Präzise Steuerungsentscheidung]
+        E --> F[Rückführung in die Simulation]
+        
+        style A fill:#0f172a,stroke:#06b6d4,color:#f8fafc
+        style B fill:#1e1b4b,stroke:#8b5cf6,color:#f8fafc
+        style C fill:#0f172a,stroke:#06b6d4,color:#f8fafc
+        style D fill:#1e1b4b,stroke:#8b5cf6,color:#f8fafc
+        style E fill:#064e3b,stroke:#059669,color:#a7f3d0
+        style F fill:#4c1d95,stroke:#7c3aed,color:#ddd6fe
+    </pre>
+
+    <p class="text-sm text-slate-300 leading-relaxed font-sans">
+        Das Modell liest den aktuellen Simulationszustand, gleicht diesen über eine lokale Kosinus-Ähnlichkeitsberechnung mit einer eingebetteten Wissensdatenbank ab, zieht die relevanten physikalischen Regelungsvorschriften heran und generiert auf dieser Basis eine präzise, fachlich fundierte Steuerungsentscheidung.
+    </p>
+
+    <!-- Section 5 -->
+    <h3 class="text-xl md:text-2xl font-extrabold text-white mt-12 mb-4 border-b border-slate-900 pb-2 flex items-center gap-2">
+        <span>📊</span> Nutzwertanalyse: Cloud-Inferenz versus lokale Edge-Modelle
+    </h3>
+    <p class="text-sm text-slate-300 leading-relaxed font-sans">
+        Die integration lokaler Sprachmodelle wie Gemma 4 in industrielle Simulationsumgebungen stellt eine bewusste Abkehr von zentralisierten Cloud-Topologien dar. Um die strategische Tragfähigkeit dieser Entscheidung zu bewerten, ist eine systematische Gegenüberstellung der Architekturen anhand quantitativer und qualitativer Parameter erforderlich.
+    </p>
+
+    <h4 class="text-lg font-bold text-cyan-400 mt-8 mb-3 flex items-center gap-2">
+        <span class="text-xs">◆</span> Vergleichsmatrix der Inferenz-Paradigmen
+    </h4>
+
+    <!-- Visual Table 3 with Advantage Badges -->
+    <div class="overflow-x-auto my-6 border border-slate-800 rounded-xl bg-slate-950/25">
+        <table class="min-w-full divide-y divide-slate-800 text-sm">
+            <thead class="bg-slate-900/40">
+                <tr>
+                    <th class="px-4 py-3 text-left text-xs font-mono font-bold text-slate-400 uppercase tracking-wider">Bewertungskriterium</th>
+                    <th class="px-4 py-3 text-left text-xs font-mono font-bold text-slate-450 uppercase tracking-wider">Cloud-Inferenz (z. B. Gemini API)</th>
+                    <th class="px-4 py-3 text-left text-xs font-mono font-bold text-cyan-400 uppercase tracking-wider">Lokale Edge-Inferenz (z. B. Gemma 4)</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-850 bg-slate-950/10 text-xs">
+                <!-- Latency -->
+                <tr class="hover:bg-slate-900/20 transition-colors">
+                    <td class="px-4 py-3 text-white font-bold font-mono">Latenzverhalten</td>
+                    <td class="px-4 py-3 text-slate-400 leading-relaxed">Fluktuierend (netzwerkabhängig); typischerweise zwischen 100 ms und 2000 ms.</td>
+                    <td class="px-4 py-3 text-slate-200 leading-relaxed">
+                        <span class="inline-block px-1.5 py-0.5 rounded bg-emerald-950 border border-emerald-500/35 text-emerald-400 text-[9px] font-mono font-bold uppercase mr-1.5">Vorteil</span>
+                        Gering und hochgradig deterministisch; direkt an die lokale Hardware-Auslastung gebunden.
+                    </td>
+                </tr>
+                <!-- Security -->
+                <tr class="hover:bg-slate-900/20 transition-colors">
+                    <td class="px-4 py-3 text-white font-bold font-mono">Datensicherheit & Souveränität</td>
+                    <td class="px-4 py-3 text-slate-400 leading-relaxed">Telemetriedaten und Systemmetriken müssen an externe Rechenzentren übertragen werden.</td>
+                    <td class="px-4 py-3 text-slate-200 leading-relaxed">
+                        <span class="inline-block px-1.5 py-0.5 rounded bg-emerald-950 border border-emerald-500/35 text-emerald-400 text-[9px] font-mono font-bold uppercase mr-1.5">Vorteil</span>
+                        Vollständige Datensouveränität; sensible Industriedaten verbleiben lokal auf der physischen Maschine.
+                    </td>
+                </tr>
+                <!-- Fail-safety -->
+                <tr class="hover:bg-slate-900/20 transition-colors">
+                    <td class="px-4 py-3 text-white font-bold font-mono">Ausfallsicherheit</td>
+                    <td class="px-4 py-3 text-slate-400 leading-relaxed">Anfällig für Netzwerkstörungen und Verbindungsabbrüche; erfordert permanenten Online-Status.</td>
+                    <td class="px-4 py-3 text-slate-200 leading-relaxed">
+                        <span class="inline-block px-1.5 py-0.5 rounded bg-emerald-950 border border-emerald-500/35 text-emerald-400 text-[9px] font-mono font-bold uppercase mr-1.5">Vorteil</span>
+                        100% ausfallsicher gegenüber externen Netzwerkunterbrechungen; vollständige Offline-Fähigkeit.
+                    </td>
+                </tr>
+                <!-- Costs -->
+                <tr class="hover:bg-slate-900/20 transition-colors">
+                    <td class="px-4 py-3 text-white font-bold font-mono">Kostenstruktur</td>
+                    <td class="px-4 py-3 text-slate-400 leading-relaxed">Variable Betriebskosten basierend auf Token-Nutzung (Pay-per-Token); schwer kalkulierbar bei permanenten Regelschleifen.</td>
+                    <td class="px-4 py-3 text-slate-200 leading-relaxed">
+                        <span class="inline-block px-1.5 py-0.5 rounded bg-emerald-950 border border-emerald-500/35 text-emerald-400 text-[9px] font-mono font-bold uppercase mr-1.5">Vorteil</span>
+                        Planbare einmalige Hardware-Investition (CAPEX); keine fortlaufenden Kosten pro Inferenz-Schritt.
+                    </td>
+                </tr>
+                <!-- Scalability -->
+                <tr class="hover:bg-slate-900/20 transition-colors">
+                    <td class="px-4 py-3 text-white font-bold font-mono">Skalierbarkeit</td>
+                    <td class="px-4 py-3 text-slate-200 leading-relaxed">
+                        <span class="inline-block px-1.5 py-0.5 rounded bg-emerald-950 border border-emerald-500/35 text-emerald-400 text-[9px] font-mono font-bold uppercase mr-1.5">Vorteil</span>
+                        Nahezu unbegrenzt durch dynamische Zuweisung von Cloud-Ressourcen bei hoher paralleler Last.
+                    </td>
+                    <td class="px-4 py-3 text-slate-400 leading-relaxed">Begrenzt durch die installierte VRAM- und Rechenkapazität der lokalen Steuerungseinheiten.</td>
+                </tr>
+                <!-- Customization -->
+                <tr class="hover:bg-slate-900/20 transition-colors">
+                    <td class="px-4 py-3 text-white font-bold font-mono">Modellanpassung</td>
+                    <td class="px-4 py-3 text-slate-400 leading-relaxed">Eingeschränkt auf Few-Shot-Prompting oder kostenintensive Cloud-Feintuning-Pipelines.</td>
+                    <td class="px-4 py-3 text-slate-200 leading-relaxed">
+                        <span class="inline-block px-1.5 py-0.5 rounded bg-emerald-950 border border-emerald-500/35 text-emerald-400 text-[9px] font-mono font-bold uppercase mr-1.5">Vorteil</span>
+                        Uneingeschränkte Modifikation; vereinfachtes Feintuning (z. B. LoRA) direkt über lokale Bibliotheken.
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <h4 class="text-lg font-bold text-cyan-400 mt-8 mb-3 flex items-center gap-2">
+        <span class="text-xs">◆</span> Kausal-analytische Synthese für industrielle Anwendungsszenarien
+    </h4>
+    <p class="text-sm text-slate-300 leading-relaxed font-sans">
+        Die Entscheidung für lokale Modelle der Gemma 4-Klasse wird durch kausale Ketten innerhalb industrieller Regelschleifen gestützt. In sicherheitskritischen Anwendungen, wie beispielsweise automatisierten Produktionslinien oder autonomen Transportsystemen, muss die Interventionslatenz unter einem strikten Schwellenwert gehalten werden. Eine Cloud-Verbindung weist statistisch signifikante Latenzspitzen auf, die durch Netzwerk-Routing und Server-Warteschlangen verursacht werden. Diese unvorhersehbaren Verzögerungen führen im Kontext ereignisdiskreter Systeme zu instabilen Regelungsschleifen. Wenn der Regelungs-Agent die Telemetriedaten eines drohenden Pufferstaus verzögert erhält, kann die korrigierende Anpassung der Bearbeitungsrate erst vorgenommen werden, wenn bereits ein physischer Ausschuss durch Pufferüberlauf entstanden ist. Die lokale Inferenz über Gemma 4 eliminiert diese externe Latenz-Varianz vollständig, da die Berechnungen direkt im lokalen Speicher (VRAM) ausgeführt werden.  
+    </p>
+    <p class="text-sm text-slate-300 leading-relaxed font-sans">
+        Ein weiterer entscheidender Faktor ist die Verlässlichkeit der Systemverbindung. In entlegenen Förderstätten, maritimen Anlagen oder unterirdischen Logistikzentren ist eine stabile Internetverbindung physikalisch oft nicht realisierbar. Ein cloudbasiertes System würde in diesen Umgebungen kontinuierlich Fehlfunktionen aufweisen. Das lokale Gemma 4-Modell garantiert eine unterbrechungsfreie Verfügbarkeit des kognitiven Beobachters. In Verbindung mit hochgradig komprimierten Quantisierungsformaten (z. B. GGUF im Q4_K_M Format über Inference-Engines wie llama.cpp) lässt sich dieses System auf kostengünstigen Industrie-PCs oder On-Board-Computern ausführen, ohne dass teure Server-Infrastrukturen beschafft werden müssen.
+    </p>
+
+    <!-- Section 6 -->
+    <h3 class="text-xl md:text-2xl font-extrabold text-white mt-12 mb-4 border-b border-slate-900 pb-2 flex items-center gap-2">
+        <span>🔮</span> Strategischer Ausblick: Das Multi-Agenten-Paradigma an der Edge
+    </h3>
+    <p class="text-sm text-slate-300 leading-relaxed font-sans">
+        Die Etablierung des lokalen Wächters auf Basis von Gemma 4 bildet das Fundament für fortgeschrittene, dezentrale Steuerungskonzepte in der Systemsimulation. Die Zukunft dieser Entwicklung liegt in der Orchestrierung verteilter Multi-Agenten-Systeme (MAS), die über spezialisierte Frameworks koordiniert werden.
+    </p>
+
+    <h4 class="text-lg font-bold text-cyan-400 mt-8 mb-3 flex items-center gap-2">
+        <span class="text-xs">◆</span> Integration des Google DeepMind Science Skills Repositories
+    </h4>
+    <p class="text-sm text-slate-300 leading-relaxed font-sans">
+        Ein wesentlicher Beschleuniger für wissenschaftliche und ingenieurstechnische Agenten-Workflows ist das von Google DeepMind bereitgestellte <strong>Science Skills</strong>-Repository. Diese quelloffene Sammlung stellt spezialisierte Werkzeuge und Schnittstellen bereit, um kognitive Agenten direkt mit externen wissenschaftlichen und physischen Datenbanken zu verknüpfen. Im Kontext hochkomplexer Simulationen (z. B. molekulares Design oder thermophysikalische Materialprüfungen) erlaubt die Integration dieser Skills den lokalen Agenten, simulationsbasierte Vorhersagen mit realen Datenbanken abzugleichen, ohne den logischen Kontext manuell programmieren zu müssen. Die verbindung erfolgt nahtlos unter Verwendung des Paketmanagers <code class="text-cyan-400 font-mono bg-slate-900/60 px-1.5 py-0.5 rounded text-xs">uv</code>, was eine schnelle und deterministische Bereitstellung der notwendigen mathematischen Bibliotheken garantiert.
+    </p>
+
+    <h4 class="text-lg font-bold text-cyan-400 mt-8 mb-3 flex items-center gap-2">
+        <span class="text-xs">◆</span> Kollaborative Fehlerdiagnose in Multi-Agenten-Systemen
+    </h4>
+    <p class="text-sm text-slate-300 leading-relaxed font-sans">
+        Durch die Kombination kleiner, spezialisierter Edge-Modelle (wie Gemma 4 E2B) mit mächtigen, zentralen Koordinatoren (wie Gemma 4 31B oder Cloud-Schnittstellen für unkritische Hintergrundaufgaben) lassen sich hierarchische Multi-Agenten-Strukturen realisieren.  
+    </p>
+    <p class="text-sm text-slate-300 leading-relaxed font-sans">
+        In einer solchen kooperativen Industriearchitektur übernimmt ein lokaler Gemma 4 E2B-Agent die kontinuierliche Echtzeit-Überwachung einer einzelnen Maschine und trifft unmittelbare Sicherheitsentscheidungen. Erkennt dieser Edge-Wächter eine hochkomplexe, ungelöste Anomalie, die außerhalb seiner lokalen Wissensdatenbank liegt, übergibt er das aggregierte Fehlerprotokoll an einen übergeordneten, zentralen Gemma 4 31B-Agenten. Dieser analysiert die Problemhistorie im tiefen Denkmodus, greift auf das Science-Skills-Repository zu und spielt eine optimierte Steuerungsstrategie an den lokalen Edge-Regler zurück.  
+    </p>
+    <p class="text-sm text-slate-300 leading-relaxed font-sans">
+        Diese hybride Kombination aus deterministischer Echtzeit-Simulation auf JAX/Flax-Ebene, lokaler Edge-Inferenz für unmittelbare Ausfallsicherheit und übergeordneter kognitiver Agentensteuerung definiert den aktuellen Stand der Technik im modernen Software-Engineering-Stack der Systemsimulation.
+    </p>
+
+    <!-- Works Cited -->
+    <div class="p-6 glass-card rounded-2xl border-t-2 border-t-slate-800 bg-slate-950/5 mt-12">
+        <h4 class="text-slate-400 font-mono text-xs font-bold uppercase tracking-wider mb-4">
+            📚 Zitierte Literatur & Quellen
+        </h4>
+        <ol class="list-decimal pl-6 text-xs text-slate-400 space-y-2.5 font-sans">
+            <li>I ran Gemma 4 as a local model in Codex CLI | by Daniel Vaughan | Google Cloud - Community | Apr, 2026, <a href="https://medium.com/google-cloud/i-ran-gemma-4-as-a-local-model-in-codex-cli-7fda754dc0d4" class="text-cyan-400 hover:underline" target="_blank">Link</a></li>
+            <li>Gemma 4 model overview | Google AI for Developers, <a href="https://ai.google.dev/gemma/docs/core" class="text-cyan-400 hover:underline" target="_blank">Link</a></li>
+            <li>Gemma 4:E2B Multilingual and Multimodal - Kaggle, <a href="https://www.kaggle.com/code/gpreda/gemma-4-e2b-multilangual-and-multimodal" class="text-cyan-400 hover:underline" target="_blank">Link</a></li>
+            <li>Gemma 4 - How to Run Locally | Unsloth Documentation, <a href="https://unsloth.ai/docs/models/gemma-4" class="text-cyan-400 hover:underline" target="_blank">Link</a></li>
+            <li>Gemma 4 - Google - Kaggle, <a href="https://www.kaggle.com/models/google/gemma-4" class="text-cyan-400 hover:underline" target="_blank">Link</a></li>
+            <li>google/gemma-4-E4B - Hugging Face, <a href="https://huggingface.co/google/gemma-4-E4B" class="text-cyan-400 hover:underline" target="_blank">Link</a></li>
+            <li>Gemma 4 - Keras - Kaggle, <a href="https://www.kaggle.com/models/keras/gemma4" class="text-cyan-400 hover:underline" target="_blank">Link</a></li>
+            <li>Multimodal and Agentic Workflows with Gemma 4 in KerasHub, <a href="https://keras.io/keras_hub/guides/gemma4_multimodal_and_agentic_workflows/" class="text-cyan-400 hover:underline" target="_blank">Link</a></li>
+            <li>Download Gemma 4: Ollama LM Studio Hugging Face Guide 2026, <a href="https://gemma4-ai.com/blog/gemma4-download-guide" class="text-cyan-400 hover:underline" target="_blank">Link</a></li>
+            <li>Gemma 4 Deep Dive: Local LLM with Ollama, vLLM & llama.cpp (Video), <a href="https://www.youtube.com/watch?v=XD68MiaxdgU" class="text-cyan-400 hover:underline" target="_blank">Link</a></li>
+            <li>Gemma - Google - Kaggle, <a href="https://www.kaggle.com/models/google/gemma" class="text-cyan-400 hover:underline" target="_blank">Link</a></li>
+            <li>Gemma 4 - LM Studio, <a href="https://lmstudio.ai/models/gemma-4" class="text-cyan-400 hover:underline" target="_blank">Link</a></li>
+        </ol>
+    </div>
+</div>

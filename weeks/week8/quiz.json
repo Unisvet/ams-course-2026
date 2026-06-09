@@ -1,0 +1,24 @@
+[
+    {
+        "question": "Was ist das Hauptziel von \"Edge AI\" in der industriellen Systemsimulation?",
+        "options": [
+            "Die Auslagerung der rechenintensiven Simulation auf externe Cloud-Server zur Kosteneinsparung.",
+            "Der Schutz der Datensouveränität (Intellectual Sovereignty) und die Vermeidung von Netzwerklatenzen.",
+            "Die automatische Generierung von PowerPoint-Präsentationen durch multimodale Eingaben.",
+            "Die Beschleunigung von JAX-Berechnungen durch stochastische Monte-Carlo-Methoden."
+        ],
+        "answerIndex": 1,
+        "explanation": "Die Ausführung von Modellen direkt auf der lokalen Hardware (Edge) stellt sicher, dass sensible Telemetriedaten das lokale Netz nie verlassen. Zudem entfallen Latenzen und Verbindungsrisiken bei Regelungsschleifen."
+    },
+    {
+        "question": "Wie wird der Gedankenkanal (Thought Channel) bei Gemma 4 nativ aktiviert und isoliert?",
+        "options": [
+            "Durch Anhängen von 'import thought' im Python-Code.",
+            "Durch das Platzieren des '<|think|>' -Tokens am Anfang der System-Message und anschließendes RegEx-Parsing.",
+            "Durch die automatische Generierung eines Git-Commits über die Colab CLI.",
+            "Durch Festlegen der Ankunftsrate \u03bb in einer diskreten Ereignissimulation."
+        ],
+        "answerIndex": 1,
+        "explanation": "Gemma 4 nutzt spezielle Kontroll-Tokens. Der Native Thought Mode wird durch das '<|think|>' -Token am Beginn des System-Prompts getriggert, woraufhin das Modell seine Überlegungen in einem geschützten Kanal generiert."
+    }
+]

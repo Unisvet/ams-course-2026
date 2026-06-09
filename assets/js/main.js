@@ -346,6 +346,7 @@ function loadTabContent(tab) {
                 highlightCodeSnippets(contentArea);
                 setupImageLightbox(contentArea);
                 renderMath(contentArea);
+                renderMermaid(contentArea);
             })
             .catch(err => {
                 contentArea.innerHTML = renderErrorState("Einführung konnte nicht geladen werden.", err.message);
@@ -458,6 +459,7 @@ function loadTabContent(tab) {
                 addCopyButtonsToCode(contentArea);
                 setupImageLightbox(contentArea);
                 renderMath(contentArea);
+                renderMermaid(contentArea);
             })
             .catch(err => {
                 contentArea.innerHTML = renderErrorState("Problem Set (in English) konnte nicht geladen werden.", err.message);
@@ -624,4 +626,29 @@ function setupImageLightbox(container) {
             openLightbox(img.src, img.alt);
         });
     });
+}
+
+function renderMermaid(container) {
+    if (window.mermaid) {
+        window.mermaid.initialize({
+            startOnLoad: false,
+            theme: 'dark',
+            securityLevel: 'loose',
+            themeVariables: {
+                background: '#090d16',
+                primaryColor: '#0f172a',
+                primaryTextColor: '#f8fafc',
+                lineColor: '#06b6d4',
+                textColor: '#f8fafc',
+                fontSize: '12px'
+            }
+        });
+        
+        const elements = container.querySelectorAll('.mermaid');
+        if (elements.length > 0) {
+            window.mermaid.run({
+                nodes: Array.from(elements)
+            });
+        }
+    }
 }

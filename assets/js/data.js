@@ -76,7 +76,7 @@ export const weeksData = {
         title: "Open-Weights Modelle: Lokale Simulation mit Gemma",
         module: "3",
         description: "Architektur lokaler Open-Weights Modelle (Gemma). Lokales Ausführen und Anbindung an eine laufende Simulation.",
-        active: false
+        active: true
     },
     "9": {
         id: "9",

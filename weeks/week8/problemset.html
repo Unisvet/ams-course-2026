@@ -1,0 +1,239 @@
+<div class="space-y-8">
+    <!-- Header Block -->
+    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-slate-900 pb-6">
+        <div>
+            <span class="px-2.5 py-0.5 rounded-full bg-slate-800 text-slate-400 text-xs font-mono font-bold uppercase tracking-wider border border-slate-750">Programming Assignment</span>
+            <h3 class="text-2xl font-black text-white mt-2">Problem Set 8: Project Genesis – The Sovereign Sentinel</h3>
+            <p class="text-sm text-slate-400 mt-1">Deadline: TBA | Weight: 40% of Module 3 grade (4 Points) | Quiz: 1 Point</p>
+        </div>
+        <a href="assets/notebooks/ams-ps08-en.ipynb" download class="px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-800 hover:border-cyan-500/50 hover:bg-cyan-500/5 text-xs font-mono font-bold text-cyan-400 flex items-center gap-2 transition-all duration-200 hover:scale-105 active:scale-95 shadow-lg shadow-cyan-500/5">
+            <span>📥</span> Download Jupyter Notebook
+        </a>
+    </div>
+
+    <!-- Problem Set Header Image -->
+    <div class="glass-card p-1.5 rounded-3xl border border-cyan-500/15 shadow-xl relative overflow-hidden w-full aspect-[2752/1536] max-h-64 my-6">
+        <img 
+            src="assets/images/ams-ps-08.png" 
+            alt="Sovereign Sentinel Control Interface" 
+            class="w-full h-full object-cover rounded-2xl"
+        >
+        <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/25 to-transparent flex items-end p-6">
+            <div class="font-mono text-xs text-cyan-400 font-bold bg-slate-950/65 px-3 py-1.5 rounded-lg border border-white/10 backdrop-blur-md select-none">
+                🤖 SOVEREIGN SENTINEL INTERFACE v8.0
+            </div>
+        </div>
+    </div>
+
+    <!-- The Story -->
+    <div class="p-6 glass-card rounded-2xl border-l-4 border-cyan-500 bg-cyan-950/5 space-y-3 my-6">
+        <h4 class="text-cyan-400 font-bold text-lg flex items-center gap-2">
+            📖 The Story: The Fortress of Sovereignty
+        </h4>
+        <p class="text-sm text-slate-300 leading-relaxed font-sans">
+            In the past, sensitive telemetry data, physical anomalies, and protected system states were transmitted over unsecured networks to external cloud servers. Every millisecond of latency threatened the stability of your real-time loops; every network failure led to the immediate collapse of your digital twin.
+        </p>
+        <p class="text-sm text-slate-300 leading-relaxed font-sans">
+            Today, we construct the <strong>Fortress of Sovereignty</strong>. You will embed a highly advanced, locally executable model from the <strong>Google Gemma 4</strong> family deep within the foundation of your own hardware. Your mission is to couple a discrete-event queue simulation—the beating heart of a virtual production line—with this local Sentinel. Without sending a single data packet to the outside world, the Sentinel will monitor telemetry, perform logical analysis in a protected thought channel, access a local knowledge base, and actively regulate the physics of the queue.
+        </p>
+        <p class="text-sm text-slate-300 leading-relaxed font-sans font-bold text-white">
+            Prepare your terminals. Activate your local Tensor Cores. Data sovereignty is the key to absolute control. Let's build!
+        </p>
+    </div>
+
+    <hr class="border-slate-900 my-8">
+
+    <!-- Exercise 1 -->
+    <h4 class="text-lg font-bold text-white border-b border-slate-850 pb-2 mt-8 mb-4 flex items-center gap-2">
+        <span class="text-cyan-400">⚡</span> Exercise 1: Initializing the Local Sentinel (Gemma 4 Edge)
+    </h4>
+    <p class="text-sm text-slate-300 leading-relaxed font-sans font-medium italic">
+        *Learning Objective: Sourcing and locally executing Open-Weights models for edge computing.*
+    </p>
+    <p class="text-sm text-slate-300 leading-relaxed font-sans">
+        We are using the highly efficient <strong>Gemma 4 E2B-IT</strong> variant. Despite its compact size (2.3 billion effective parameters), this model demonstrates excellent logical reasoning capabilities thanks to the novel Per-Layer Embeddings (PLE) architecture.
+    </p>
+    <ol class="list-decimal pl-6 text-sm text-slate-300 space-y-4 font-sans">
+        <li class="leading-relaxed">
+            <strong class="text-white">Kaggle Setup:</strong> Log into <a href="https://www.kaggle.com" class="text-cyan-400 hover:underline" target="_blank">Kaggle</a> and accept the terms of use on the official Gemma 4 model page.
+        </li>
+        <li class="leading-relaxed">
+            <strong class="text-white">API Keys:</strong> Create an API token in your Kaggle account settings to download the <code class="text-cyan-400 font-mono bg-slate-900/60 px-1.5 py-0.5 rounded text-xs">kaggle.json</code> file. Create a <code class="text-cyan-400 font-mono bg-slate-900/60 px-1.5 py-0.5 rounded text-xs">.env</code> file in the root of your project directory and set the environment variables:
+            <div class="my-3 max-w-2xl">
+                <pre class="bg-slate-950/85 border border-slate-850 rounded-xl p-4 font-mono text-xs text-slate-300 overflow-x-auto shadow-inner"><code class="language-text">KAGGLE_USERNAME="your_username"
+KAGGLE_KEY="your_api_key"</code></pre>
+            </div>
+            Make sure that <code class="text-cyan-400 font-mono bg-slate-900/60 px-1.5 py-0.5 rounded text-xs">.env</code> is added to your <code class="text-cyan-400 font-mono bg-slate-900/60 px-1.5 py-0.5 rounded text-xs">.gitignore</code> so that it is never committed to GitHub.
+        </li>
+        <li class="leading-relaxed">
+            <strong class="text-white">Download:</strong> Install <code class="text-cyan-400 font-mono bg-slate-900/60 px-1.5 py-0.5 rounded text-xs">python-dotenv</code> and load variables. Use <code class="text-cyan-400 font-mono bg-slate-900/60 px-1.5 py-0.5 rounded text-xs">kagglehub</code> to download the model and initialize the inference pipeline.
+        </li>
+    </ol>
+    <div class="p-6 glass-card rounded-2xl border-l-4 border-amber-500 bg-amber-500/5 space-y-3 my-6">
+        <h5 class="text-amber-400 font-mono text-sm font-bold uppercase tracking-wider flex items-center gap-2">
+            📥 Deliverable (Question)
+        </h5>
+        <p class="text-xs text-slate-300 leading-relaxed font-sans">
+            Answer the following question in the notebook:<br>
+            <em class="text-white">"Why is this memory footprint reduction a critical factor when executing parallel physical simulations on the same hardware?"</em>
+        </p>
+    </div>
+
+    <!-- Exercise 2 -->
+    <h4 class="text-lg font-bold text-white border-b border-slate-850 pb-2 mt-8 mb-4 flex items-center gap-2">
+        <span class="text-cyan-400">⚡</span> Exercise 2: Activating the Cognitive Core (Native Thought Mode)
+    </h4>
+    <p class="text-sm text-slate-300 leading-relaxed font-sans font-medium italic">
+        *Learning Objective: Programmatic evaluation of the model's thought process via token isolation and RegEx.*
+    </p>
+    <p class="text-sm text-slate-300 leading-relaxed font-sans">
+        The thought process is natively initiated by placing the <code class="text-cyan-400 font-mono bg-slate-900/60 px-1.5 py-0.5 rounded text-xs">&lt;|think|&gt;</code> token at the very beginning of the system message. The model outputs its logical chain of thought between the <code class="text-cyan-400 font-mono bg-slate-900/60 px-1.5 py-0.5 rounded text-xs">&lt;|channel&gt;thought\n</code> and <code class="text-cyan-400 font-mono bg-slate-900/60 px-1.5 py-0.5 rounded text-xs">&lt;channel|&gt;</code> separators.
+    </p>
+    <ol class="list-decimal pl-6 text-sm text-slate-300 space-y-4 font-sans">
+        <li class="leading-relaxed">
+            <strong class="text-white">Inference Function:</strong> Implement a function <code class="text-cyan-400 font-mono bg-slate-900/60 px-1.5 py-0.5 rounded text-xs">generate_thoughtful_response</code> that formats the system prompt to activate the native thought mode.
+        </li>
+        <li class="leading-relaxed">
+            <strong class="text-white">Extracting the Thought Channel:</strong> Use Regular Expressions (RegEx) to isolate the thought channel (<code class="text-cyan-400 font-mono bg-slate-900/60 px-1.5 py-0.5 rounded text-xs">thought</code>) from the final response.
+        </li>
+        <li class="leading-relaxed">
+            <strong class="text-white">Clean History:</strong> Write a helper function that strips the thought blocks from the conversation history before the next user interaction occurs to prevent cognitive overload.
+        </li>
+    </ol>
+    <div class="p-6 glass-card rounded-2xl border-l-4 border-amber-500 bg-amber-500/5 space-y-3 my-6">
+        <h5 class="text-amber-400 font-mono text-sm font-bold uppercase tracking-wider flex items-center gap-2">
+            📥 Deliverables
+        </h5>
+        <p class="text-xs text-slate-300 leading-relaxed font-sans">
+            Provide the functional implementation and a sample trace showing the isolated thought channel.
+        </p>
+    </div>
+
+    <!-- Exercise 3 -->
+    <h4 class="text-lg font-bold text-white border-b border-slate-850 pb-2 mt-8 mb-4 flex items-center gap-2">
+        <span class="text-cyan-400">⚡</span> Exercise 3: The Discrete Queue Simulation (Foundry)
+    </h4>
+    <p class="text-sm text-slate-300 leading-relaxed font-sans font-medium italic">
+        *Learning Objective: Stochastic simulation of discrete events.*
+    </p>
+    <p class="text-sm text-slate-300 leading-relaxed font-sans font-sans">
+        Parts arrive, wait in a buffer, and are processed by a machine. We simulate this behavior stochastically. Arrival times follow a Poisson process with rate \(\lambda\) (Arrival Rate), while processing times at the station follow a stochastic distribution with rate \(\mu\) (Service Rate).
+    </p>
+    <ol class="list-decimal pl-6 text-sm text-slate-300 space-y-4 font-sans">
+        <li class="leading-relaxed">
+            <strong class="text-white">Class <code class="text-cyan-400 font-mono bg-slate-900/60 px-1.5 py-0.5 rounded text-xs">DiscreteFoundry</code>:</strong> Write a simulation class representing the state of a buffer.
+        </li>
+        <li class="leading-relaxed">
+            <strong class="text-white">Instability:</strong> If the arrival rate exceeds the service rate, the buffer fills up.
+        </li>
+        <li class="leading-relaxed">
+            <strong class="text-white">Overflow:</strong> Upon reaching maximum capacity, a buffer overflow occurs (data loss/scrap).
+        </li>
+        <li class="leading-relaxed">
+            <strong class="text-white">Step Function:</strong> The <code class="text-cyan-400 font-mono bg-slate-900/60 px-1.5 py-0.5 rounded text-xs">step()</code> method must update system variables and export a JSON string containing the metrics.
+        </li>
+    </ol>
+    <div class="p-6 glass-card rounded-2xl border-l-4 border-amber-500 bg-amber-500/5 space-y-3 my-6">
+        <h5 class="text-amber-400 font-mono text-sm font-bold uppercase tracking-wider flex items-center gap-2">
+            📥 Deliverables
+        </h5>
+        <p class="text-xs text-slate-300 leading-relaxed font-sans">
+            Show the Python class code and a sample output of the JSON metrics after a few simulation ticks.
+        </p>
+    </div>
+
+    <!-- Exercise 4 -->
+    <h4 class="text-lg font-bold text-white border-b border-slate-850 pb-2 mt-8 mb-4 flex items-center gap-2">
+        <span class="text-cyan-400">⚡</span> Exercise 4: Closed-Loop Control with a Cognitive Entity
+    </h4>
+    <p class="text-sm text-slate-300 leading-relaxed font-sans font-medium italic">
+        *Learning Objective: Building an autonomous feedback loop where AI agents dynamically regulate physical variables.*
+    </p>
+    <p class="text-sm text-slate-300 leading-relaxed font-sans">
+        The telemetry data is passed to the local Sentinel. It analyzes the situation offline within its thought channel, makes a cognitive decision, and dictates a new value for the service rate, which is immediately fed back into the simulation.
+    </p>
+    <ol class="list-decimal pl-6 text-sm text-slate-300 space-y-4 font-sans">
+        <li class="leading-relaxed">
+            <strong class="text-white">Agent Prompting:</strong> Design a system prompt for Gemma 4 instructing the model to act as an industrial controller.
+        </li>
+        <li class="leading-relaxed">
+            <strong class="text-white">Decision Making:</strong> The model must evaluate the system state and adjust the service rate (Interval: \([0.5, 3.0]\)).
+        </li>
+        <li class="leading-relaxed">
+            <strong class="text-white">Parsing:</strong> Enforce a strict output format to programmatically parse the new numerical parameter (e.g., RegEx on <code class="text-cyan-400 font-mono bg-slate-900/60 px-1.5 py-0.5 rounded text-xs">NEW_SERVICE_RATE</code>).
+        </li>
+        <li class="leading-relaxed">
+            <strong class="text-white">Execution:</strong> Run the controlled simulation over 8 time steps.
+        </li>
+    </ol>
+    <div class="p-6 glass-card rounded-2xl border-l-4 border-amber-500 bg-amber-500/5 space-y-3 my-6">
+        <h5 class="text-amber-400 font-mono text-sm font-bold uppercase tracking-wider flex items-center gap-2">
+            📥 Deliverables
+        </h5>
+        <p class="text-xs text-slate-300 leading-relaxed font-sans">
+            Provide the controller loop script and a plot of the queue size vs. the service rate over time.
+        </p>
+    </div>
+
+    <!-- Exercise 5 -->
+    <h4 class="text-lg font-bold text-white border-b border-slate-850 pb-2 mt-8 mb-4 flex items-center gap-2">
+        <span class="text-cyan-400">⚡</span> Exercise 5: Cloud-Assisted Fine-Tuning via Colab CLI
+    </h4>
+    <p class="text-sm text-slate-300 leading-relaxed font-sans font-medium italic">
+        *Learning Objective: Using the Google Colab CLI to seamlessly offload compute-intensive fine-tuning jobs from the local edge workflow.*
+    </p>
+    <p class="text-sm text-slate-300 leading-relaxed font-sans font-sans">
+        To offload data- and compute-intensive model training without interrupting the local terminal workflow, we utilize the new <strong>Google Colab CLI</strong> (<code class="text-cyan-400 font-mono bg-slate-900/60 px-1.5 py-0.5 rounded text-xs">google-colab-cli</code>). It allows us to provision remote GPUs in Google data centers, execute scripts, and download the training results (LoRA adapters) directly back into our local workspace using a single command sequence.
+    </p>
+    <ol class="list-decimal pl-6 text-sm text-slate-300 space-y-4 font-sans">
+        <li class="leading-relaxed">
+            <strong class="text-white">Colab CLI Setup:</strong> Install the official Google Colab CLI in your terminal environment.
+        </li>
+        <li class="leading-relaxed">
+            <strong class="text-white">Script Creation:</strong> Create a local Python script <code class="text-cyan-400 font-mono bg-slate-900/60 px-1.5 py-0.5 rounded text-xs">finetune_run.py</code> that initializes Gemma 4 for LoRA fine-tuning using Keras.
+        </li>
+        <li class="leading-relaxed">
+            <strong class="text-white">Remote Execution:</strong> Use the Colab CLI command sequence (<code class="text-cyan-400 font-mono bg-slate-900/60 px-1.5 py-0.5 rounded text-xs">colab new</code>, <code class="text-cyan-400 font-mono bg-slate-900/60 px-1.5 py-0.5 rounded text-xs">colab exec</code>, <code class="text-cyan-400 font-mono bg-slate-900/60 px-1.5 py-0.5 rounded text-xs">colab download</code>) to request a remote system with a T4 GPU, execute the script, and save the weights locally.
+        </li>
+    </ol>
+    <div class="p-6 glass-card rounded-2xl border-l-4 border-amber-500 bg-amber-500/5 space-y-3 my-6">
+        <h5 class="text-amber-400 font-mono text-sm font-bold uppercase tracking-wider flex items-center gap-2">
+            📥 Deliverable (Question)
+        </h5>
+        <p class="text-xs text-slate-300 leading-relaxed font-sans">
+            Answer the following question in the notebook:<br>
+            <em class="text-white">"How does the interaction between the Colab CLI and the local edge model protect the intellectual sovereignty of your simulation data?"</em>
+        </p>
+    </div>
+
+    <!-- Exercise 6 -->
+    <h4 class="text-lg font-bold text-white border-b border-slate-850 pb-2 mt-8 mb-4 flex items-center gap-2">
+        <span class="text-cyan-400">⚡</span> Exercise 6: Context Injection (Local RAG for SOPs)
+    </h4>
+    <p class="text-sm text-slate-300 leading-relaxed font-sans font-medium italic">
+        *Learning Objective: Offline Retrieval-Augmented Generation (RAG) to inject local Standard Operating Procedures (SOPs).*
+    </p>
+    <p class="text-sm text-slate-300 leading-relaxed font-sans">
+        The Sentinel must consult specific machine guidelines (Standard Operating Procedures, SOPs). In this exercise, you will implement an offline-capable RAG system that extracts the appropriate regulatory guideline from a local document index based on the current queue length.
+    </p>
+    <ol class="list-decimal pl-6 text-sm text-slate-300 space-y-4 font-sans">
+        <li class="leading-relaxed">
+            <strong class="text-white">SOP Index:</strong> Create a list of SOPs as a local text index.
+        </li>
+        <li class="leading-relaxed">
+            <strong class="text-white">Retrieval Function:</strong> Implement a search function to filter the most relevant SOP document based on the queue length.
+        </li>
+        <li class="leading-relaxed">
+            <strong class="text-white">Contextualization:</strong> Integrate this document as additional context into the prompt for Gemma 4.
+        </li>
+    </ol>
+    <div class="p-6 glass-card rounded-2xl border-l-4 border-amber-500 bg-amber-500/5 space-y-3 my-6">
+        <h5 class="text-amber-400 font-mono text-sm font-bold uppercase tracking-wider flex items-center gap-2">
+            📥 Deliverable (Question)
+        </h5>
+        <p class="text-xs text-slate-300 leading-relaxed font-sans">
+            Answer the following question in the notebook:<br>
+            <em class="text-white">"In what way does this approach simplify adjusting the system logic when factory regulations change?"</em>
+        </p>
+    </div>
+</div>

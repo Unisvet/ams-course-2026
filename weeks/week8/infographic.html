@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Infografik - Lokale Regelung mit Gemma 4</title>
+<!-- Tailwind CDN -->
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+theme: {
+extend: {
+colors: {
+vibrant: {
+bg: '#090d16',
+surface: '#0f172a',
+surfaceLight: '#1e293b',
+cyan: '#06b6d4',
+pink: '#ec4899',
+yellow: '#eab308',
+purple: '#8b5cf6',
+text: '#f8fafc',
+textMuted: '#94a3b8'
+}
+}
+}
+}
+}
+</script>
+<style>
+body {
+background-color: #090d16;
+color: #f8fafc;
+font-family: 'Inter', system-ui, sans-serif;
+}
+.glass-card {
+background: rgba(15, 23, 42, 0.65);
+backdrop-filter: blur(12px);
+border: 1px solid rgba(6, 182, 212, 0.15);
+box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+.chart-container {
+position: relative;
+width: 100%;
+height: 280px;
+}
+</style>
+<!-- Chart.js CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="antialiased p-4 md:p-6">
+    <div class="max-w-4xl mx-auto space-y-6">
+        <div class="text-center">
+            <h1 class="text-xl md:text-2xl font-black text-white tracking-tight">Kognitiver Regelkreis am Edge (Gemma 4 Control)</h1>
+            <p class="text-xs text-vibrant-textMuted mt-1">Interaktive Simulation einer stochastischen Warteschlange mit lokaler Modellregelung.</p>
+        </div>
+
+        <!-- System Flow Diagram -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+            <div class="glass-card rounded-2xl p-4 flex flex-col items-center justify-between border-t-2 border-t-cyan-500/35">
+                <span class="text-2xl">📥</span>
+                <div>
+                    <h3 class="font-bold text-sm text-cyan-400 mt-2">1. Ankunft (&lambda;)</h3>
+                    <p class="text-[10px] text-vibrant-textMuted mt-1">Stochastischer Poisson-Prozess für eintreffende Bauteile in der Fabrik.</p>
+                </div>
+            </div>
+            <div class="glass-card rounded-2xl p-4 flex flex-col items-center justify-between border-t-2 border-t-pink-500/35">
+                <span class="text-2xl">⏳</span>
+                <div>
+                    <h3 class="font-bold text-sm text-pink-400 mt-2">2. Warteschlange (Puffer)</h3>
+                    <p class="text-[10px] text-vibrant-textMuted mt-2">Wartende Teile im Puffer. Bei Kapazität &ge; 15 kommt es zum Überlauf (Ausschuss).</p>
+                </div>
+            </div>
+            <div class="glass-card rounded-2xl p-4 flex flex-col items-center justify-between border-t-2 border-t-purple-500/35">
+                <span class="text-2xl">⚙️</span>
+                <div>
+                    <h3 class="font-bold text-sm text-purple-400 mt-2">3. Verarbeitung (&mu;)</h3>
+                    <p class="text-[10px] text-vibrant-textMuted mt-1">Maschine verarbeitet Teile mit Rate &mu;. Lokale Gemma regelt diese Rate dynamisch.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Controller & Simulation panel -->
+        <div class="glass-card rounded-2xl p-6 space-y-4">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-slate-800/60 pb-4">
+                <div>
+                    <h2 class="text-base font-bold text-white">Echtzeit-Verhaltensdiagramm</h2>
+                    <p class="text-xs text-vibrant-textMuted font-mono">Aktueller Modus: <span id="current-mode-label" class="text-cyan-400 font-bold">Inaktiv (Unreguliert)</span></p>
+                </div>
+                
+                <div class="flex gap-2">
+                    <button 
+                        id="btn-mode-uncontrolled" 
+                        class="px-3 py-1.5 rounded-lg text-xs font-mono font-bold bg-slate-900 border border-slate-800 text-slate-400 hover:text-white transition-all"
+                    >
+                        Unreguliert
+                    </button>
+                    <button 
+                        id="btn-mode-controlled" 
+                        class="px-3 py-1.5 rounded-lg text-xs font-mono font-bold bg-cyan-950/45 border border-cyan-500/50 text-cyan-400 hover:bg-cyan-500 hover:text-white transition-all shadow-md shadow-cyan-500/5"
+                    >
+                        Gemma-Regelung (Aktiv)
+                    </button>
+                </div>
+            </div>
+
+            <!-- Stats grid -->
+            <div class="grid grid-cols-3 gap-2 text-center text-xs">
+                <div class="p-3 bg-slate-950/40 rounded-xl border border-slate-850">
+                    <div class="text-vibrant-textMuted font-mono text-[9px] uppercase">Warteschlangenlänge</div>
+                    <div id="stat-queue" class="text-lg font-bold text-white mt-1">0 / 15</div>
+                </div>
+                <div class="p-3 bg-slate-950/40 rounded-xl border border-slate-850">
+                    <div class="text-vibrant-textMuted font-mono text-[9px] uppercase">Verarbeitungsrate (&mu;)</div>
+                    <div id="stat-service" class="text-lg font-bold text-pink-400 mt-1">1.0</div>
+                </div>
+                <div class="p-3 bg-slate-950/40 rounded-xl border border-slate-850">
+                    <div class="text-vibrant-textMuted font-mono text-[9px] uppercase">Verlorene Teile (Overflow)</div>
+                    <div id="stat-dropped" class="text-lg font-bold text-rose-500 mt-1">0</div>
+                </div>
+            </div>
+
+            <div class="chart-container mt-2">
+                <canvas id="liveSimulationChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Simulation variables
+        let queueLength = 0;
+        const maxCapacity = 15;
+        let serviceRate = 1.0;
+        let arrivalRate = 2.8; // High arrival rate to force overflows in uncontrolled mode
+        let totalDropped = 0;
+        let isControlled = true; // Default to controlled mode
+
+        // Time series data arrays
+        const maxDataPoints = 30;
+        const timeLabels = Array.from({length: maxDataPoints}, (_, i) => i);
+        const queueHistory = Array(maxDataPoints).fill(0);
+        const serviceHistory = Array(maxDataPoints).fill(1.0);
+
+        // Setup Chart
+        const ctx = document.getElementById('liveSimulationChart').getContext('2d');
+        const chart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: timeLabels,
+                datasets: [
+                    {
+                        label: 'Warteschlange',
+                        data: queueHistory,
+                        borderColor: '#06b6d4',
+                        backgroundColor: 'rgba(6, 182, 212, 0.05)',
+                        borderWidth: 2,
+                        tension: 0.3,
+                        yAxisID: 'y'
+                    },
+                    {
+                        label: 'Service-Rate (\u03bc)',
+                        data: serviceHistory,
+                        borderColor: '#ec4899',
+                        backgroundColor: 'transparent',
+                        borderWidth: 1.5,
+                        borderDash: [5, 5],
+                        tension: 0.1,
+                        yAxisID: 'y1'
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { labels: { color: '#f8fafc', font: { size: 10 } } }
+                },
+                scales: {
+                    x: { ticks: { color: '#64748b', font: { size: 9 } }, grid: { color: 'rgba(255,255,255,0.02)' } },
+                    y: { 
+                        min: 0, 
+                        max: 16, 
+                        ticks: { color: '#06b6d4', font: { size: 9 } }, 
+                        grid: { color: 'rgba(6,182,212,0.05)' },
+                        title: { display: true, text: 'Warteschlange (Teile)', color: '#06b6d4', font: { size: 10 } }
+                    },
+                    y1: { 
+                        position: 'right',
+                        min: 0, 
+                        max: 4.0, 
+                        ticks: { color: '#ec4899', font: { size: 9 } }, 
+                        grid: { drawOnChartArea: false },
+                        title: { display: true, text: 'Rate \u03bc', color: '#ec4899', font: { size: 10 } }
+                    }
+                }
+            }
+        });
+
+        // Simulating step
+        function simulationStep() {
+            // Stochastic Arrivals (Poisson approx)
+            const arrivals = Math.random() < (arrivalRate / 4) ? Math.floor(Math.random() * 3) + 1 : 0;
+            // Stochastic Processing (Service Rate approx)
+            const serviceFactor = Math.random() < 0.85 ? serviceRate : 0;
+            const processing = Math.floor(serviceFactor * (Math.random() * 1.5 + 0.5));
+
+            // State updates
+            queueLength = Math.max(0, queueLength + arrivals - processing);
+
+            // Buffer Overflow check
+            if (queueLength > maxCapacity) {
+                totalDropped += (queueLength - maxCapacity);
+                queueLength = maxCapacity;
+            }
+
+            // AI Sentinel Controller Logic
+            if (isControlled) {
+                // Rule set based on local SOPs
+                if (queueLength < 5) {
+                    serviceRate = 1.0; // Eco-Mode
+                } else if (queueLength >= 5 && queueLength <= 10) {
+                    serviceRate = 2.0; // Normal Mode
+                } else {
+                    serviceRate = 3.0; // Boost Mode
+                }
+            } else {
+                serviceRate = 1.0; // Fixed slow service rate in uncontrolled mode
+            }
+
+            // Update Histories
+            queueHistory.shift();
+            queueHistory.push(queueLength);
+            serviceHistory.shift();
+            serviceHistory.push(serviceRate);
+
+            // Update UI Stats
+            document.getElementById('stat-queue').innerText = `${queueLength} / ${maxCapacity}`;
+            document.getElementById('stat-service').innerText = serviceRate.toFixed(1);
+            document.getElementById('stat-dropped').innerText = totalDropped;
+
+            // Rerender Chart
+            chart.update('none'); // Update without animation for performance
+        }
+
+        // Loop interval
+        let simInterval = setInterval(simulationStep, 1000);
+
+        // Button actions
+        const btnUncontrolled = document.getElementById('btn-mode-uncontrolled');
+        const btnControlled = document.getElementById('btn-mode-controlled');
+        const modeLabel = document.getElementById('current-mode-label');
+
+        function setUncontrolledMode() {
+            isControlled = false;
+            // UI styles
+            btnUncontrolled.className = "px-3 py-1.5 rounded-lg text-xs font-mono font-bold bg-rose-950/45 border border-rose-500/50 text-rose-400 hover:bg-rose-500 hover:text-white transition-all shadow-md shadow-rose-500/5";
+            btnControlled.className = "px-3 py-1.5 rounded-lg text-xs font-mono font-bold bg-slate-900 border border-slate-800 text-slate-400 hover:text-white transition-all";
+            modeLabel.innerText = "Inaktiv (Fixe Eco-Rate, Überläufe drohen!)";
+            modeLabel.className = "text-rose-400 font-bold";
+            // Reset drops
+            totalDropped = 0;
+        }
+
+        function setControlledMode() {
+            isControlled = true;
+            // UI styles
+            btnControlled.className = "px-3 py-1.5 rounded-lg text-xs font-mono font-bold bg-cyan-950/45 border border-cyan-500/50 text-cyan-400 hover:bg-cyan-500 hover:text-white transition-all shadow-md shadow-cyan-500/5";
+            btnUncontrolled.className = "px-3 py-1.5 rounded-lg text-xs font-mono font-bold bg-slate-900 border border-slate-800 text-slate-400 hover:text-white transition-all";
+            modeLabel.innerText = "Aktiv (Gemma 4 SOP-Regelkreis)";
+            modeLabel.className = "text-cyan-400 font-bold";
+            // Reset drops
+            totalDropped = 0;
+        }
+
+        btnUncontrolled.addEventListener('click', setUncontrolledMode);
+        btnControlled.addEventListener('click', setControlledMode);
+
+        // Initial launch style
+        setControlledMode();
+    </script>
+</body>
+</html>
