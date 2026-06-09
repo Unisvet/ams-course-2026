@@ -479,65 +479,76 @@
         <span class="text-xs">◆</span> Strukturierung über native Kontroll-Token
     </h4>
     <p class="text-sm text-slate-300 leading-relaxed font-sans">
-        Der Denkmodus wird durch das Einfügen des Steuerungs-Tokens <code class="text-cyan-400 font-mono bg-slate-900/60 px-1.5 py-0.5 rounded text-xs">&lt;|think|&gt;</code> direkt zu Beginn des System-Prompts aktiviert. Während des Inferenzprozesses öffnet das Modell daraufhin einen dedizierten Kanal, der durch die speziellen Vokabular-Token <code class="text-cyan-400 font-mono bg-slate-900/60 px-1.5 py-0.5 rounded text-xs">&lt;|channel&gt;thought\n</code> und <code class="text-cyan-400 font-mono bg-slate-900/60 px-1.5 py-0.5 rounded text-xs">&lt;channel|&gt;</code> abgegrenzt ist.
+        Der Denkmodus wird durch das Einfügen des Steuerungs-Tokens <code class="text-cyan-400 font-mono bg-slate-900/60 px-1.5 py-0.5 rounded text-xs">&lt;|think|&gt;</code> direkt zu Beginn des System-Prompts aktiviert. Während des Inferenzprozesses öffnet das Modell daraufhin einen dedizierten Kanal, der durch die speziellen Vokabular-Token <code class="text-cyan-400 font-mono bg-slate-900/60 px-1.5 py-0.5 rounded text-xs">&lt;|channel&gt;thought</code> und <code class="text-cyan-400 font-mono bg-slate-900/60 px-1.5 py-0.5 rounded text-xs">&lt;channel|&gt;</code> abgegrenzt ist.
     </p>
 
-    <!-- Mermaid 2 -->
-    <pre class="mermaid bg-slate-950/40 p-4 rounded-xl border border-slate-900/60 my-6 flex justify-center">
-    flowchart LR
-        classDef control fill:#1e293b,stroke:#06b6d4,stroke-width:2px,color:#06b6d4;
-        classDef content fill:#0f172a,stroke:#8b5cf6,stroke-width:2px,color:#f8fafc;
+    <p class="text-sm text-slate-350 leading-relaxed font-sans my-4">
+        Anstelle abstrakter Diagramme betrachten wir die exakte String-Repräsentation, um zu verstehen, wie der Tokenizer diese Kontroll-Token unter der Haube formatiert.
+    </p>
 
-        BOS("<bos>"):::control
-        
-        subgraph System_Turn [System-Segment]
-            T_SYS("<|turn>system"):::control
-            THINK("<|think|>"):::control
-            SYS_INSTR[System-Instruktion]:::content
-        end
-        
-        subgraph User_Turn [User-Segment]
-            T_USR("<|turn>user"):::control
-            USER_REQ[Benutzer-Anfrage]:::content
-        end
-        
-        subgraph Model_Turn [Model-Segment]
-            T_MOD("<|turn>model"):::control
-        end
-
-        BOS --> T_SYS --> THINK --> SYS_INSTR --> END1(["<|turn|>"]):::control
-        END1 --> T_USR --> USER_REQ --> END2(["<|turn|>"]):::control
-        END2 --> T_MOD
-        
-        style System_Turn fill:#090d16,stroke:#334155,color:#f8fafc
-        style User_Turn fill:#090d16,stroke:#334155,color:#f8fafc
-        style Model_Turn fill:#090d16,stroke:#334155,color:#f8fafc
-    </pre>
-
-    <!-- Mermaid 3 -->
-    <pre class="mermaid bg-slate-950/40 p-4 rounded-xl border border-slate-900/60 my-6 flex justify-center">
-    flowchart LR
-        classDef channel_token fill:#1e293b,stroke:#06b6d4,stroke-width:2px,color:#06b6d4;
-        classDef thought_content fill:#1e1b4b,stroke:#8b5cf6,stroke-width:2px,color:#f8fafc;
-        classDef final_output fill:#064e3b,stroke:#059669,stroke-width:2px,color:#a7f3d0;
-        classDef end_token fill:#450a0a,stroke:#dc2626,stroke-width:2px,color:#fecaca;
-
-        subgraph Model_Response [Modell-Ausgabe (Inferenz-Stream)]
-            START_THOUGHT("<|channel>thought"):::channel_token
-            THOUGHT_BODY[Gedankenprozess / Logik]:::thought_content
-            END_THOUGHT("<channel|>"):::channel_token
-            FINAL_ANS[Finale, sichtbare Antwort]:::final_output
-            END_TURN("<turn|>"):::end_token
-        end
-
-        START_THOUGHT --> THOUGHT_BODY --> END_THOUGHT --> FINAL_ANS --> END_TURN
-        
-        style Model_Response fill:#090d16,stroke:#334155,color:#f8fafc
-    </pre>
-
+    <h4 class="text-md font-bold text-cyan-400 mt-6 mb-2 flex items-center gap-2">
+        <span class="text-xs">◆</span> 1. Der Eingabe-Prompt (Was das Modell sieht)
+    </h4>
     <p class="text-sm text-slate-300 leading-relaxed font-sans">
-        Für die Systemintegration und das State-Management ist ein technisches Detail von kritischer Bedeutung: Bei mehrstufigen Unterhaltungen (Multi-Turn Chat) dürfen die in vorherigen Runden generierten Inhalte des Denkanals (thought) <strong>nicht</strong> wieder in die Historie des nächsten Durchlaufs eingespeist werden. Der Kontext für den nächsten Schritt wird bereinigt, indem lediglich die finalen, für den Benutzer sichtbaren Modellantworten als Historie übergeben werden. Dies schützt das System vor übermäßigem Token-Wachstum und verhindert eine kognitive Überladung des Modells durch veraltete logische Verzweigungen.
+        Wenn Sie das Chat-Template über den Prozessor anwenden, formatiert das System Ihre Instruktionen und die Benutzeranfrage in einen einzigen Roh-String. Dabei werden spezifische Begrenzungs-Token (<code class="text-cyan-400 font-mono bg-slate-900/60 px-1 py-0.5 rounded text-[10px]">&lt;bos&gt;</code>, <code class="text-cyan-400 font-mono bg-slate-900/60 px-1 py-0.5 rounded text-[10px]">&lt;|turn&gt;</code>, <code class="text-cyan-400 font-mono bg-slate-900/60 px-1 py-0.5 rounded text-[10px]">&lt;turn|&gt;</code>) verwendet:
     </p>
+    <pre class="bg-slate-950/40 p-4 rounded-xl border border-slate-900/60 my-4 overflow-x-auto"><code class="language-python"># Die exakte Roh-String-Struktur, die an den Input des Modells gesendet wird
+raw_prompt = (
+    "&lt;bos&gt;"
+    "&lt;|turn&gt;system\n"
+    "&lt;|think|&gt;\n"
+    "Du bist ein industrieller KI-Regler. Analysiere die Telemetrie.&lt;turn|&gt;\n"
+    "&lt;|turn&gt;user\n"
+    "Statusbericht: Queue=12, Capacity=15. Entscheidung?&lt;turn|&gt;\n"
+    "&lt;|turn&gt;model\n"
+)</code></pre>
+
+    <h4 class="text-md font-bold text-cyan-400 mt-6 mb-2 flex items-center gap-2">
+        <span class="text-xs">◆</span> 2. Der Inferenz-Stream (Was das Modell generiert)
+    </h4>
+    <p class="text-sm text-slate-300 leading-relaxed font-sans">
+        Sobald das Modell das <code class="text-cyan-400 font-mono bg-slate-900/60 px-1.5 py-0.5 rounded text-xs">&lt;|turn&gt;model\n</code>-Token am Ende des Prompts erhält, übernimmt es die Kontrolle und beginnt mit der Generierung. Da wir es mit dem <code class="text-cyan-400 font-mono bg-slate-900/60 px-1.5 py-0.5 rounded text-xs">&lt;|think|&gt;</code>-Flag vorbereitet haben, besteht seine unmittelbare Reaktion darin, den Denkanal zu öffnen, das Problem logisch zu durchdenken, den Kanal zu schließen und schließlich die für den Benutzer sichtbare Aktion auszugeben:
+    </p>
+    <pre class="bg-slate-950/40 p-4 rounded-xl border border-slate-900/60 my-4 overflow-x-auto"><code class="language-python"># Der rohe Ausgabe-Stream, der vom Modell generiert wird
+raw_output = (
+    "&lt;|channel&gt;thought\n"
+    "Die Warteschlange liegt aktuell bei 12. Dies überschreitet den Warnwert von 10. "
+    "Gemäß der SOP muss ich die Rate sofort auf 3.0 setzen, um einen Überlauf zu verhindern.\n"
+    "&lt;channel|&gt;\n"
+    "NEW_SERVICE_RATE: 3.0&lt;turn|&gt;"
+)</code></pre>
+
+    <p class="text-sm text-slate-300 leading-relaxed font-sans my-4">
+        Für die Systemintegration und das State-Management ist ein technisches Detail von kritischer Bedeutung: Bei mehrstufigen Unterhaltungen (Multi-Turn Chat) dürfen die in vorherigen Runden generierten Inhalte des Denkanals (thought) <strong>nicht</strong> wieder in die Historie des nächsten Durchlaufs eingespeist werden.
+    </p>
+    <p class="text-sm text-slate-300 leading-relaxed font-sans my-4">
+        Der Kontext für den nächsten Schritt wird bereinigt, indem lediglich die finalen, für den Benutzer sichtbaren Modellantworten als Historie übergeben werden. Dies schützt das System vor übermäßigem Token-Wachstum und verhindert eine kognitive Überladung des Modells durch veraltete logische Verzweigungen. Hier sehen Sie, wie dies programmatisch mittels regulärer Ausdrücke erzwungen wird:
+    </p>
+
+    <h4 class="text-md font-bold text-cyan-400 mt-6 mb-2 flex items-center gap-2">
+        <span class="text-xs">◆</span> 3. State-Management und Token-Bereinigung
+    </h4>
+    <pre class="bg-slate-950/40 p-4 rounded-xl border border-slate-900/60 my-4 overflow-x-auto"><code class="language-python">import re
+
+# RegEx-Muster zur Isolation aller Inhalte zwischen den Kanal-Tokens
+thought_pattern = r"&lt;\|channel&gt;thought\s*(.*?)\s*&lt;channel\|&gt;"
+
+# Extraktion des Denkprozesses (für lokale Terminal-Logs/Debugging)
+thought_match = re.search(thought_pattern, raw_output, re.DOTALL)
+thought_process = thought_match.group(1).strip() if thought_match else ""
+
+# Bereinigung der Ausgabe: Entfernen des Gedankenblocks und des schließenden Turn-Tokens
+final_response = re.sub(thought_pattern, "", raw_output, flags=re.DOTALL)
+final_response = final_response.replace("&lt;turn|&gt;", "").strip()
+
+print(f"--- VERBORGENE LOGIK ---\n{thought_process}\n")
+print(f"--- SICHTBARE AKTION ---\n{final_response}")
+
+# Korrektes Historien-Management: NUR die bereinigte Antwort wird in den nächsten Zyklus übernommen
+# conversation_history.append({
+#     "role": "model", 
+#     "content": final_response
+# })</code></pre>
 
     <!-- Section 4 -->
     <h3 class="text-xl md:text-2xl font-extrabold text-white mt-12 mb-4 border-b border-slate-900 pb-2 flex items-center gap-2">
