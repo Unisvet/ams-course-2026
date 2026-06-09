@@ -1,97 +1,1164 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="de" class="min-h-screen">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Infografik Template</title>
-<!-- Tailwind CDN -->
-<script src="https://cdn.tailwindcss.com"></script>
-<script>
-tailwind.config = {
-theme: {
-extend: {
-colors: {
-vibrant: {
-bg: '#0f172a',
-surface: '#1e293b',
-surfaceLight: '#334155',
-cyan: '#06b6d4',
-pink: '#ec4899',
-yellow: '#eab308',
-purple: '#8b5cf6',
-text: '#f8fafc',
-textMuted: '#94a3b8'
-}
-}
-}
-}
-}
-</script>
-<style>
-body {
-background-color: #0f172a;
-color: #f8fafc;
-font-family: 'Inter', system-ui, sans-serif;
-}
-.chart-container {
-position: relative;
-width: 100%;
-max-width: 800px;
-margin-left: auto;
-margin-right: auto;
-height: 350px;
-}
-.glass-card {
-background: rgba(30, 41, 59, 0.7);
-backdrop-filter: blur(10px);
-border: 1px solid rgba(255, 255, 255, 0.1);
-}
-</style>
-<!-- Chart.js CDN -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-</head>
-<body class="antialiased p-6">
-    <div class="max-w-4xl mx-auto space-y-8">
-        <div class="text-center">
-            <h1 class="text-2xl md:text-3xl font-black text-white">Visualisierung - Woche 4</h1>
-            <p class="text-sm text-vibrant-textMuted mt-1">Hier kannst du interaktive Graphen und Animationen einbetten.</p>
-        </div>
-
-        <!-- Chart Card -->
-        <div class="glass-card rounded-2xl p-6">
-            <div class="chart-container">
-                <canvas id="chartW4"></canvas>
-            </div>
-        </div>
-    </div>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Syllabus Woche 4: Silicon Ascension - JAX & Flax</title>
+    
+    <!-- Google Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800;900&display=swap">
+    
+    <!-- Tailwind CSS (CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
     <script>
-        const ctx = document.getElementById('chartW4').getContext('2d');
-        new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: ['NumPy (CPU)', 'JAX (CPU)', 'JAX (GPU compiled)'],
-                datasets: [{
-                    label: 'Relative Rechenzeit (weniger ist besser)',
-                    data: [100, 15, 0.02],
-                    backgroundColor: 'rgba(6, 182, 212, 0.7)',
-                    borderColor: '#06b6d4',
-                    borderWidth: 1,
-                    borderRadius: 4
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: { labels: { color: '#f8fafc' } }
-                },
-                scales: {
-                    x: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255,255,255,0.05)' } },
-                    y: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255,255,255,0.05)' } }
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        vibrant: {
+                            bg: '#090d16',
+                            surface: '#0f172a',
+                            surfaceLight: '#1e293b',
+                            cyan: '#06b6d4',
+                            pink: '#ec4899',
+                            yellow: '#eab308',
+                            purple: '#8b5cf6',
+                            text: '#f8fafc',
+                            textMuted: '#94a3b8',
+                            grid: 'rgba(255, 255, 255, 0.05)'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'Outfit', 'system-ui', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace']
+                    }
                 }
             }
+        }
+    </script>
+
+    <!-- KaTeX for math formatting -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" onload="renderMath()"></script>
+
+    <style>
+        body {
+            background-color: #090d16;
+            color: #f8fafc;
+            font-family: 'Inter', system-ui, sans-serif;
+        }
+        h1, h2, h3, h4 {
+            font-family: 'Outfit', sans-serif;
+        }
+        .glass-card {
+            background: rgba(15, 23, 42, 0.65);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .glass-card:hover {
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+        .glow-cyan:hover, .glow-cyan.active {
+            box-shadow: 0 0 20px rgba(6, 182, 212, 0.15);
+            border-color: rgba(6, 182, 212, 0.4);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(15, 23, 42, 0.4);
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #1e293b;
+            border-radius: 99px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #334155;
+        }
+        .tab-btn.active {
+            color: #06b6d4;
+            border-bottom: 2px solid #06b6d4;
+        }
+        .fused-block {
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .console-log {
+            font-family: 'JetBrains Mono', monospace;
+            background: rgba(5, 5, 10, 0.85);
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+        .prng-node {
+            transition: all 0.4s ease;
+        }
+    </style>
+</head>
+<body class="antialiased p-4 sm:p-6 min-h-screen flex flex-col items-center">
+
+    <div class="max-w-6xl w-full space-y-6">
+        
+        <!-- Header -->
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-slate-900 pb-4">
+            <div>
+                <span class="px-2.5 py-0.5 rounded-full bg-cyan-950/40 text-cyan-400 text-xs font-mono font-bold uppercase tracking-wider border border-cyan-900/30">
+                    Syllabus Visualizer - Woche 4
+                </span>
+                <h1 class="text-2xl sm:text-3xl font-black text-white mt-1">JAX & Flax (Silicon Ascension)</h1>
+                <p class="text-xs sm:text-sm text-vibrant-textMuted mt-0.5">Erforsche die JAX Trinity, Operator-Fusion in JIT, zustandslose Modellierung in Flax und deterministische PRNG Key-Splitting-Bäume.</p>
+            </div>
+            
+            <!-- Tab Menu -->
+            <div class="flex bg-slate-950/60 p-1.5 rounded-xl border border-slate-900 shrink-0 self-stretch md:self-auto overflow-x-auto custom-scrollbar">
+                <button onclick="switchTab('trinity')" id="btn-tab-trinity" class="tab-btn active px-3.5 py-1.5 rounded-lg text-xs font-bold font-mono transition-all flex items-center gap-1.5 whitespace-nowrap">
+                    <span>🔱</span> JAX Dreifaltigkeit
+                </button>
+                <button onclick="switchTab('jit')" id="btn-tab-jit" class="tab-btn px-3.5 py-1.5 rounded-lg text-xs font-bold font-mono transition-all text-slate-400 hover:text-white flex items-center gap-1.5 whitespace-nowrap">
+                    <span>⚡</span> Operator Fusion (JIT)
+                </button>
+                <button onclick="switchTab('flax')" id="btn-tab-flax" class="tab-btn px-3.5 py-1.5 rounded-lg text-xs font-bold font-mono transition-all text-slate-400 hover:text-white flex items-center gap-1.5 whitespace-nowrap">
+                    <span>🧠</span> Flax Architektur
+                </button>
+                <button onclick="switchTab('prng')" id="btn-tab-prng" class="tab-btn px-3.5 py-1.5 rounded-lg text-xs font-bold font-mono transition-all text-slate-400 hover:text-white flex items-center gap-1.5 whitespace-nowrap">
+                    <span>🔑</span> PRNG Keys & Reinheit
+                </button>
+            </div>
+        </div>
+
+        <!-- TAB 1: THE JAX TRINITY (VMAP & GRAD PLAYGROUND) -->
+        <div id="tab-trinity" class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            <!-- Left Controls -->
+            <div class="lg:col-span-4 space-y-4">
+                <div class="glass-card rounded-2xl p-5 space-y-5">
+                    <h3 class="text-base font-bold text-white border-b border-slate-900 pb-2 flex items-center gap-2">
+                        <span>🔱</span> Trinity: vmap & grad
+                    </h3>
+
+                    <!-- vmap Selector -->
+                    <div class="space-y-2">
+                        <label class="text-xs font-mono text-cyan-400 font-bold uppercase tracking-wider block">Vektorisierung (jax.vmap)</label>
+                        <div class="grid grid-cols-2 gap-2">
+                            <button onclick="setVectorization(false)" id="btn-vmap-off" class="py-2 rounded font-mono text-xs font-bold bg-cyan-500/10 border border-cyan-500/40 text-cyan-400">
+                                CPU-Schleife (NumPy)
+                            </button>
+                            <button onclick="setVectorization(true)" id="btn-vmap-on" class="py-2 rounded font-mono text-xs font-bold bg-slate-900 border border-slate-800 text-slate-400 hover:border-slate-700">
+                                Parallel SIMD (vmap)
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- grad Selector -->
+                    <div class="space-y-2">
+                        <label class="text-xs font-mono text-pink-400 font-bold uppercase tracking-wider block">Gradienten (jax.grad)</label>
+                        <div class="grid grid-cols-2 gap-2">
+                            <button onclick="setGradientMethod('numeric')" id="btn-grad-numeric" class="py-2 rounded font-mono text-xs font-bold bg-slate-900 border border-slate-800 text-slate-400 hover:border-slate-700">
+                                Numerisch (\(\Delta x\))
+                            </button>
+                            <button onclick="setGradientMethod('autodiff')" id="btn-grad-autodiff" class="py-2 rounded font-mono text-xs font-bold bg-pink-500/10 border border-pink-500/40 text-pink-400">
+                                JAX Autodiff (grad)
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Particle Slider -->
+                    <div class="space-y-2">
+                        <div class="flex justify-between items-center text-xs font-mono">
+                            <span class="text-slate-400">Partikelanzahl (\(N\))</span>
+                            <span id="val-particles" class="text-cyan-400 font-bold">40 Partikel</span>
+                        </div>
+                        <input type="range" id="slide-particles" min="1" max="150" step="1" value="40" oninput="updateParticles(this.value)" class="w-full h-1.5 bg-slate-900 rounded-lg appearance-none cursor-pointer accent-cyan-500">
+                    </div>
+
+                    <!-- Performance monitor -->
+                    <div class="p-3 bg-slate-950/60 rounded-xl border border-slate-900 font-mono text-[10px] space-y-2">
+                        <span class="text-slate-500 uppercase tracking-widest text-[8px] font-bold block">Status & Performanz</span>
+                        <div class="flex justify-between">
+                            <span class="text-slate-400">Schrittweise Berechnung:</span>
+                            <span id="stat-trinity-step" class="text-white font-bold">Aktiv (CPU)</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-slate-400">Rechenlast (CPU/GPU):</span>
+                            <div class="w-24 bg-slate-900 h-2 rounded overflow-hidden">
+                                <div id="bar-trinity-load" class="bg-red-500 h-full transition-all duration-300" style="width: 85%;"></div>
+                            </div>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-slate-400">Rechenzeit pro Frame:</span>
+                            <span id="stat-trinity-time" class="text-rose-400 font-bold">~14.5 ms</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Theory Box -->
+                <div class="glass-card rounded-2xl p-5 bg-purple-950/5 border-l-4 border-l-purple-500 text-xs space-y-2">
+                    <h4 class="font-bold text-purple-400 font-mono uppercase tracking-wider block">Was passiert hier?</h4>
+                    <p id="trinity-explanation" class="text-slate-300 leading-relaxed">
+                        Im NumPy-Modus berechnet eine for-Schleife jeden Partikelschritt einzeln. Wenn du <code class="text-white">vmap</code> aktivierst, transformiert JAX die Logik in eine Batch-Operation, die parallel auf allen Hardware-Cores läuft. Numerisches Differenzieren benötigt zwei Berechnungen pro Teilchen und leidet unter Rundungsfehlern; <code class="text-white">grad</code> liefert die exakte analytische Ableitung in einem Durchlauf.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Right Visualizer -->
+            <div class="lg:col-span-8 glass-card rounded-2xl p-5 space-y-4 flex flex-col justify-between">
+                <div class="border-b border-slate-900 pb-2 flex justify-between items-center">
+                    <h3 class="text-sm font-bold text-white flex items-center gap-2">
+                        <span>🏔️</span> Partikel-Simulation im Potentialtopf
+                    </h3>
+                    <div class="flex gap-4 text-[9px] font-mono text-slate-500">
+                        <span class="flex items-center gap-1"><span class="w-2 h-1 bg-cyan-400"></span> Partikel</span>
+                        <span class="flex items-center gap-1"><span class="w-2 h-1 bg-pink-500"></span> Gradientenvektor</span>
+                    </div>
+                </div>
+
+                <!-- Canvas container -->
+                <div class="aspect-[16/9] w-full bg-slate-950/45 border border-slate-900 rounded-xl relative overflow-hidden">
+                    <canvas id="canvas-trinity-sim" class="absolute inset-0 w-full h-full"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 2: JIT & OPERATOR FUSION -->
+        <div id="tab-jit" class="grid grid-cols-1 lg:grid-cols-12 gap-6 hidden">
+            <!-- Left Controls -->
+            <div class="lg:col-span-5 space-y-4">
+                <div class="glass-card rounded-2xl p-5 space-y-5">
+                    <h3 class="text-base font-bold text-white border-b border-slate-900 pb-2 flex items-center gap-2">
+                        <span>⚡</span> XLA Operator Fusion
+                    </h3>
+                    <p class="text-xs text-slate-300 leading-relaxed">
+                        Standardmäßig führt Python Rechenschritte einzeln aus. Jedes Zwischenergebnis muss in den globalen Grafikspeicher (VRAM) zurückgeschrieben und für den nächsten Operator wieder ausgelesen werden (Memory Wall Bottleneck).
+                    </p>
+                    <p class="text-xs text-slate-400 leading-relaxed">
+                        Das Kompilieren mit <code class="text-white">jax.jit</code> analysiert den Berechnungsbaum und verschmilzt (fuses) Operationen zu einem einzigen Kernel. Die Daten verbleiben während der Berechnung direkt in den internen Registern der Hardware.
+                    </p>
+
+                    <button onclick="toggleJitCompilation()" id="btn-jit-compile" class="w-full py-2.5 rounded-xl font-bold font-mono text-xs bg-cyan-500/10 border border-cyan-500/40 text-cyan-400 hover:bg-cyan-500/20 active:scale-95 transition-all select-none">
+                        ⚡ Operator-Fusion (JIT) kompilieren
+                    </button>
+                </div>
+
+                <!-- Speed Info -->
+                <div class="glass-card rounded-2xl p-5 bg-purple-950/5 border-l-4 border-l-purple-500 text-xs space-y-2">
+                    <h4 class="font-bold text-purple-400 font-mono uppercase tracking-wider block">Tracing Phase:</h4>
+                    <p class="text-slate-300 leading-relaxed">
+                        Beim ersten Funktionsaufruf sendet JAX Platzhalter (Tracer) durch den Code, um die mathematische Zwischenstruktur (<strong class="text-white">JAXPR</strong>) aufzuzeichnen. Danach kompiliert der XLA-Compiler den Kernel für extreme Geschwindigkeit.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Right Visualizers -->
+            <div class="lg:col-span-7 space-y-6">
+                <!-- Operator Fusion animation box -->
+                <div class="glass-card rounded-2xl p-5 space-y-4 min-h-[280px] flex flex-col justify-between">
+                    <div class="flex justify-between items-center border-b border-slate-900 pb-2">
+                        <h3 class="text-sm font-bold text-white">
+                            🚥 Berechnungs-Graph & Datenfluss
+                        </h3>
+                        <span id="jit-badge" class="px-2 py-0.5 rounded text-[10px] font-mono bg-slate-900 border border-slate-800 text-slate-500">Unkompiliert (Slow)</span>
+                    </div>
+
+                    <!-- Flow container -->
+                    <div id="jit-animation-box" class="flex-1 bg-slate-950/50 p-6 rounded-xl border border-slate-900 flex flex-col md:flex-row items-center justify-around gap-4 min-h-[160px] overflow-hidden relative">
+                        <!-- Filled dynamically in JS -->
+                    </div>
+
+                    <div class="flex items-center justify-between text-[11px] font-mono text-slate-400 border-t border-slate-900/60 pt-3">
+                        <span>Performance Benchmark (Inferenz-Latenz):</span>
+                        <span id="benchmark-speed-label" class="text-pink-500 font-bold">Python Interpreter: ~165.0 ms</span>
+                    </div>
+                </div>
+
+                <!-- Benchmark Graph -->
+                <div class="glass-card rounded-2xl p-5 space-y-4">
+                    <h3 class="text-xs font-bold font-mono text-slate-400 uppercase tracking-widest border-b border-slate-900 pb-2">
+                        📊 Performance-Vergleich (Ausführungszeit - Logarithmisch)
+                    </h3>
+                    <div class="h-44 relative">
+                        <canvas id="canvas-jit-benchmark" class="w-full h-full"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 3: FLAX STATELESS MODEL EXPLORER -->
+        <div id="tab-flax" class="grid grid-cols-1 lg:grid-cols-12 gap-6 hidden">
+            <!-- Left Weights Card (External FrozenDict representation) -->
+            <div class="lg:col-span-5 space-y-4">
+                <div class="glass-card rounded-2xl p-5 space-y-4 flex flex-col h-full justify-between">
+                    <div>
+                        <h3 class="text-base font-bold text-white border-b border-slate-900 pb-2 flex items-center gap-2">
+                            <span>📦</span> Parameters (FrozenDict)
+                        </h3>
+                        <p class="text-xs text-slate-400 mt-2 leading-relaxed">
+                            Da JAX-Funktionen zustandslos sein müssen, besitzt ein Flax-Modell keine internen Gewichte. Die Parameter leben extern in einem FrozenDict und müssen bei jedem Durchlauf explizit übergeben werden.
+                        </p>
+                    </div>
+
+                    <!-- Code visualization -->
+                    <div class="flex-1 my-3 rounded-xl overflow-hidden border border-slate-850 p-4 font-mono text-[11px] text-cyan-400 bg-slate-950/90 custom-scrollbar overflow-y-auto max-h-[220px]">
+                        <pre id="flax-weights-json"></pre>
+                    </div>
+
+                    <!-- Interactive sliders to scale values -->
+                    <div class="space-y-4 border-t border-slate-900 pt-4">
+                        <div class="space-y-2">
+                            <div class="flex justify-between items-center text-xs font-mono">
+                                <span class="text-slate-400">Gewichts-Skalierung (\(w_{scale}\))</span>
+                                <span id="val-flax-w" class="text-cyan-400 font-bold">1.00</span>
+                            </div>
+                            <input type="range" id="slide-flax-w" min="-2.0" max="2.0" step="0.1" value="1.0" oninput="updateFlaxWeights()" class="w-full h-1.5 bg-slate-900 rounded-lg appearance-none cursor-pointer accent-cyan-500">
+                        </div>
+                        <div class="space-y-2">
+                            <div class="flex justify-between items-center text-xs font-mono">
+                                <span class="text-slate-400">Bias Offset (\(b_{offset}\))</span>
+                                <span id="val-flax-b" class="text-pink-400 font-bold">0.00</span>
+                            </div>
+                            <input type="range" id="slide-flax-b" min="-1.5" max="1.5" step="0.1" value="0.0" oninput="updateFlaxWeights()" class="w-full h-1.5 bg-slate-900 rounded-lg appearance-none cursor-pointer accent-pink-500">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right stateless flow animation and output plot -->
+            <div class="lg:col-span-7 space-y-6">
+                <!-- Architecture Blueprint -->
+                <div class="glass-card rounded-2xl p-5 space-y-4">
+                    <h3 class="text-sm font-bold text-white border-b border-slate-900 pb-2">
+                        🧠 Der zustandslose Aufruf: \(y = \text{model.apply}(\theta, x)\)
+                    </h3>
+
+                    <!-- Visual model structure with glowing parameter pathways -->
+                    <div class="bg-slate-950/50 rounded-xl p-4 border border-slate-900 h-44 relative flex items-center justify-around overflow-hidden">
+                        <!-- Inputs -->
+                        <div class="text-center font-mono space-y-2 z-10">
+                            <div class="px-3 py-1.5 bg-cyan-950/40 border border-cyan-800/40 rounded text-[10px] text-cyan-400 font-bold shadow-md shadow-cyan-950/10">
+                                Input \(x\)
+                            </div>
+                            <div class="px-3 py-1.5 bg-purple-950/40 border border-purple-800/40 rounded text-[10px] text-purple-400 font-bold shadow-md shadow-purple-950/10">
+                                FrozenDict \(\theta\)
+                            </div>
+                        </div>
+
+                        <!-- Apply connector arrow -->
+                        <div class="flex flex-col items-center justify-center font-bold font-mono text-[10px] text-slate-500 space-y-1">
+                            <span>Inputs fließen ein</span>
+                            <div class="w-16 h-0.5 bg-gradient-to-r from-cyan-500 to-purple-500 relative">
+                                <div class="absolute right-0 -top-1 w-2.5 h-2.5 rounded-full bg-purple-400 shadow-md animate-ping"></div>
+                            </div>
+                        </div>
+
+                        <!-- Stateless Model -->
+                        <div class="px-5 py-4 bg-slate-900 border border-slate-800 rounded-2xl text-center shadow-lg relative group z-10 w-44">
+                            <span class="text-[8px] text-pink-400 uppercase tracking-widest font-bold block mb-1">Modell-Bauplan</span>
+                            <div class="text-xs font-mono font-bold text-white">Flax.linen.Module</div>
+                            <span class="text-[9px] text-slate-400 block border-t border-slate-800 mt-2 pt-1 font-mono">apply() Funktion</span>
+                        </div>
+
+                        <!-- Outputs -->
+                        <div class="flex flex-col items-center justify-center font-bold font-mono text-[10px] text-slate-500 space-y-1">
+                            <span>Ausgabe</span>
+                            <div class="w-12 h-0.5 bg-gradient-to-r from-purple-500 to-pink-500"></div>
+                        </div>
+
+                        <div class="px-3 py-1.5 bg-pink-950/40 border border-pink-800/40 rounded font-mono text-[10px] text-pink-400 font-bold shadow-md shadow-pink-950/10 z-10">
+                            Output \(y\)
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Live Curve output -->
+                <div class="glass-card rounded-2xl p-5 space-y-4">
+                    <h3 class="text-xs font-bold font-mono text-slate-400 uppercase tracking-widest border-b border-slate-900 pb-2">
+                        📈 Modell-Output auf Basis der externen Gewichte
+                    </h3>
+                    <div class="h-44 relative">
+                        <canvas id="canvas-flax-plot" class="w-full h-full"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 4: JAX PRNG TREE -->
+        <div id="tab-prng" class="grid grid-cols-1 lg:grid-cols-12 gap-6 hidden">
+            <!-- Left PRNG Theory & Console -->
+            <div class="lg:col-span-5 space-y-4">
+                <div class="glass-card rounded-2xl p-5 space-y-5 flex flex-col justify-between h-full">
+                    <div>
+                        <h3 class="text-base font-bold text-white border-b border-slate-900 pb-2 flex items-center gap-2">
+                            <span>🔑</span> PRNG Key Splitting
+                        </h3>
+                        <p class="text-xs text-slate-300 leading-relaxed mt-2">
+                            In NumPy mutiert jeder Aufruf von <code class="text-white">np.random.rand()</code> einen versteckten globalen Zustand. In JAX wird der Zufall durch deterministische, unveränderliche Schlüssel gesteuert.
+                        </p>
+                        <p class="text-xs text-slate-400 leading-relaxed">
+                            Um neuen Zufall zu generieren, wird der Schlüssel explizit geteilt: <code class="text-white">key, subkey = jax.random.split(key)</code>. Das erzeugt einen deterministischen Baum von Schlüsseln, die absolute Reproduzierbarkeit garantieren.
+                        </p>
+                    </div>
+
+                    <!-- Split Actions -->
+                    <div class="space-y-2 border-t border-slate-900 pt-4">
+                        <label class="text-[10px] font-mono text-cyan-400 font-bold uppercase tracking-wider block">Schlüssel-Steuerung</label>
+                        <div class="grid grid-cols-2 gap-2">
+                            <button onclick="splitKey()" class="py-2.5 rounded-xl font-bold font-mono text-xs bg-cyan-500/10 border border-cyan-500/40 text-cyan-400 hover:bg-cyan-500/20 active:scale-95 transition-all">
+                                🔑 Key splitten
+                            </button>
+                            <button onclick="resetPrngTree()" class="py-2.5 rounded-xl font-bold font-mono text-xs bg-slate-900 border border-slate-800 text-slate-400 hover:border-slate-700 active:scale-95 transition-all">
+                                🔄 Zurücksetzen
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Terminal log representation -->
+                    <div class="console-log rounded-xl p-4 font-mono text-[11px] text-cyan-400 mt-4 h-44 overflow-y-auto custom-scrollbar flex-1">
+                        <span class="text-slate-500 text-[9px] block border-b border-slate-900 pb-1 mb-2 uppercase font-bold">JAX Key-Split Terminal</span>
+                        <div id="prng-console-output" class="space-y-1"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right PRNG Tree Visualizer -->
+            <div class="lg:col-span-7 glass-card rounded-2xl p-5 space-y-4 flex flex-col justify-between min-h-[420px]">
+                <div class="border-b border-slate-900 pb-2 flex justify-between items-center">
+                    <h3 class="text-sm font-bold text-white flex items-center gap-2">
+                        <span>🌳</span> Deterministischer Key-Verzögerungsbaum
+                    </h3>
+                    <span class="text-[10px] font-mono text-slate-500">Klicke auf Blätter, um selektiv zu splitten</span>
+                </div>
+
+                <!-- Tree SVG Drawing workspace -->
+                <div class="flex-1 bg-slate-950/40 border border-slate-900 rounded-xl relative min-h-[300px]">
+                    <svg id="svg-prng-tree" class="absolute inset-0 w-full h-full" viewBox="0 0 500 350">
+                        <!-- Nodes drawn dynamically in JS -->
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Core Javascript Code -->
+    <script>
+        function renderMath() {
+            if (window.renderMathInElement) {
+                window.renderMathInElement(document.body, {
+                    delimiters: [
+                        {left: '$$', right: '$$', display: true},
+                        {left: '$', right: '$', display: false},
+                        {left: '\\(', right: '\\)', display: false},
+                        {left: '\\[', right: '\\]', display: true}
+                    ],
+                    throwOnError: false
+                });
+            }
+        }
+
+        // Global states
+        let activeTab = 'trinity';
+
+        // TAB 1 States: Simulation and Particles
+        let vmapEnabled = false;
+        let gradMethod = 'autodiff';
+        let particleCount = 40;
+        let particles = [];
+        let trinityInterval = null;
+        let simFrameCount = 0;
+        let sequentialWorkIdx = 0;
+
+        // TAB 2 States: JIT and Benchmarks
+        let isJitActive = false;
+        let jitAnimationStep = 0;
+        let jitAnimationInterval = null;
+        let benchmarkChartRef = null;
+
+        // TAB 3 States: Flax weights
+        let flaxW = 1.0;
+        let flaxB = 0.0;
+
+        // TAB 4 States: PRNG split key tree
+        let prngTreeRoot = null;
+        let nodeCounter = 0;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initTrinitySim();
+            initJitTab();
+            initFlaxTab();
+            initPrngTab();
+            renderMath();
         });
+
+        // Tab selection
+        function switchTab(tabId) {
+            activeTab = tabId;
+            const tabs = ['trinity', 'jit', 'flax', 'prng'];
+            tabs.forEach(t => {
+                document.getElementById(`tab-${t}`).classList.add('hidden');
+                document.getElementById(`btn-tab-${t}`).className = "tab-btn px-3.5 py-1.5 rounded-lg text-xs font-bold font-mono transition-all text-slate-400 hover:text-white";
+            });
+            document.getElementById(`tab-${tabId}`).classList.remove('hidden');
+            document.getElementById(`btn-tab-${tabId}`).className = "tab-btn active px-3.5 py-1.5 rounded-lg text-xs font-bold font-mono transition-all text-cyan-400";
+
+            if (tabId === 'trinity') {
+                setTimeout(() => {
+                    initTrinitySim();
+                }, 50);
+            } else if (tabId === 'jit') {
+                setTimeout(() => {
+                    initJitTab();
+                }, 50);
+            } else if (tabId === 'flax') {
+                setTimeout(() => {
+                    initFlaxTab();
+                }, 50);
+            } else if (tabId === 'prng') {
+                setTimeout(() => {
+                    initPrngTab();
+                }, 50);
+            }
+        }
+
+        // ==========================================
+        // TAB 1: THE JAX TRINITY (VMAP & GRAD SIMULATION)
+        // ==========================================
+        function setVectorization(enabled) {
+            vmapEnabled = enabled;
+            const offBtn = document.getElementById('btn-vmap-off');
+            const onBtn = document.getElementById('btn-vmap-on');
+            
+            if (enabled) {
+                onBtn.className = "py-2 rounded font-mono text-xs font-bold bg-cyan-500/10 border border-cyan-500/40 text-cyan-400";
+                offBtn.className = "py-2 rounded font-mono text-xs font-bold bg-slate-900 border border-slate-800 text-slate-400 hover:border-slate-700";
+                document.getElementById('stat-trinity-step').innerText = "Parallel (vmap SIMD)";
+            } else {
+                offBtn.className = "py-2 rounded font-mono text-xs font-bold bg-cyan-500/10 border border-cyan-500/40 text-cyan-400";
+                onBtn.className = "py-2 rounded font-mono text-xs font-bold bg-slate-900 border border-slate-800 text-slate-400 hover:border-slate-700";
+                document.getElementById('stat-trinity-step').innerText = "Schrittweise (for-Schleife)";
+            }
+            updateSimPerformanceStats();
+        }
+
+        function setGradientMethod(method) {
+            gradMethod = method;
+            const numBtn = document.getElementById('btn-grad-numeric');
+            const autoBtn = document.getElementById('btn-grad-autodiff');
+            
+            if (method === 'autodiff') {
+                autoBtn.className = "py-2 rounded font-mono text-xs font-bold bg-pink-500/10 border border-pink-500/40 text-pink-400";
+                numBtn.className = "py-2 rounded font-mono text-xs font-bold bg-slate-900 border border-slate-800 text-slate-400 hover:border-slate-700";
+            } else {
+                numBtn.className = "py-2 rounded font-mono text-xs font-bold bg-pink-500/10 border border-pink-500/40 text-pink-400";
+                autoBtn.className = "py-2 rounded font-mono text-xs font-bold bg-slate-900 border border-slate-800 text-slate-400 hover:border-slate-700";
+            }
+            updateSimPerformanceStats();
+        }
+
+        function updateParticles(val) {
+            particleCount = parseInt(val);
+            document.getElementById('val-particles').innerText = `${particleCount} Partikel`;
+            generateParticles();
+            updateSimPerformanceStats();
+        }
+
+        function updateSimPerformanceStats() {
+            // Compute artificial CPU load and calculation times depending on inputs
+            let baseLatency = 0.05; // ms base (vectorized + autodiff)
+            let loadPercentage = 10;
+            
+            if (!vmapEnabled) {
+                baseLatency += particleCount * 0.15; // CPU loop penalty
+                loadPercentage += particleCount * 0.5;
+            }
+            if (gradMethod === 'numeric') {
+                baseLatency *= 2.2; // numeric penalty (double evaluations)
+                loadPercentage += 20;
+            }
+            
+            loadPercentage = Math.min(98, Math.max(8, loadPercentage));
+            
+            const timeLabel = document.getElementById('stat-trinity-time');
+            const loadBar = document.getElementById('bar-trinity-load');
+            
+            timeLabel.innerText = `~${baseLatency.toFixed(2)} ms`;
+            loadBar.style.width = `${loadPercentage}%`;
+            
+            if (baseLatency > 12.0) {
+                timeLabel.className = "text-rose-400 font-bold font-mono";
+                loadBar.className = "bg-rose-500 h-full transition-all duration-300";
+            } else if (baseLatency > 3.0) {
+                timeLabel.className = "text-yellow-400 font-bold font-mono";
+                loadBar.className = "bg-yellow-500 h-full transition-all duration-300";
+            } else {
+                timeLabel.className = "text-emerald-400 font-bold font-mono";
+                loadBar.className = "bg-emerald-500 h-full transition-all duration-300";
+            }
+        }
+
+        function getEnergy(x) {
+            // Sinusoidal potential landscape: y = A * cos(k * x) * e^(-alpha * x) + offset
+            return 80 * Math.sin(0.012 * x) * Math.cos(0.035 * x) + 20 * Math.sin(0.08 * x) + 120;
+        }
+
+        function getEnergyGradient(x, method) {
+            if (method === 'autodiff') {
+                // Exact analytical gradient
+                const h = 0.0001;
+                return (getEnergy(x + h) - getEnergy(x - h)) / (2 * h);
+            } else {
+                // Numeric finite difference with larger step and noise simulation
+                const h = 1.8;
+                const noise = (Math.random() - 0.5) * 1.5; // numerical instability
+                return (getEnergy(x + h) - getEnergy(x) + noise) / h;
+            }
+        }
+
+        function generateParticles() {
+            particles = [];
+            for (let i = 0; i < particleCount; i++) {
+                particles.push({
+                    x: 40 + Math.random() * 420,
+                    v: 0.0,
+                    color: `hsl(${180 + Math.random() * 40}, 90%, 65%)`
+                });
+            }
+        }
+
+        function initTrinitySim() {
+            generateParticles();
+            updateSimPerformanceStats();
+            
+            if (trinityInterval) clearInterval(trinityInterval);
+            
+            trinityInterval = setInterval(() => {
+                if (activeTab !== 'trinity') return;
+                
+                simFrameCount++;
+                const canvas = document.getElementById('canvas-trinity-sim');
+                if (!canvas) return;
+                
+                const ctx = canvas.getContext('2d');
+                const rect = canvas.getBoundingClientRect();
+                canvas.width = rect.width * window.devicePixelRatio;
+                canvas.height = rect.height * window.devicePixelRatio;
+                ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+                
+                const w = rect.width;
+                const h = rect.height;
+                ctx.clearRect(0, 0, w, h);
+                
+                // Draw Potential Well Curve
+                ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
+                ctx.lineWidth = 1;
+                for (let xi = 0; xi < w; xi += 20) {
+                    ctx.beginPath();
+                    ctx.moveTo(xi, 0); ctx.lineTo(xi, h);
+                    ctx.moveTo(0, xi); ctx.lineTo(w, xi);
+                    ctx.stroke();
+                }
+
+                ctx.strokeStyle = 'rgba(255, 255, 255, 0.45)';
+                ctx.lineWidth = 2.5;
+                ctx.beginPath();
+                for (let x = 0; x <= w; x += 2) {
+                    const y = getEnergy(x);
+                    if (x === 0) ctx.moveTo(x, y);
+                    else ctx.lineTo(x, y);
+                }
+                ctx.stroke();
+                
+                // Update and draw particles
+                if (vmapEnabled) {
+                    // All particles update in parallel (JAX Style)
+                    particles.forEach(p => {
+                        const grad = getEnergyGradient(p.x, gradMethod);
+                        p.v = p.v * 0.96 - grad * 0.15; // gravity force
+                        p.x += p.v;
+                        
+                        // Bounds checking
+                        if (p.x < 10) { p.x = 10; p.v = -p.v * 0.5; }
+                        if (p.x > w - 10) { p.x = w - 10; p.v = -p.v * 0.5; }
+                    });
+                } else {
+                    // NumPy Style: Sequential evaluation.
+                    // To show this visually, we update the particles slowly or highlight one sequential processor scanline
+                    const batchSize = Math.max(1, Math.floor(particleCount / 6));
+                    for (let step = 0; step < batchSize; step++) {
+                        sequentialWorkIdx = (sequentialWorkIdx + 1) % particles.length;
+                        const p = particles[sequentialWorkIdx];
+                        const grad = getEnergyGradient(p.x, gradMethod);
+                        p.v = p.v * 0.96 - grad * 0.15;
+                        p.x += p.v;
+                        
+                        if (p.x < 10) { p.x = 10; p.v = -p.v * 0.5; }
+                        if (p.x > w - 10) { p.x = w - 10; p.v = -p.v * 0.5; }
+                    }
+                }
+                
+                // Draw particles
+                particles.forEach((p, idx) => {
+                    const y = getEnergy(p.x);
+                    
+                    // Highlight if CPU sequential loop is pointing here
+                    const isSequentialFocus = !vmapEnabled && idx === sequentialWorkIdx;
+                    
+                    ctx.shadowBlur = isSequentialFocus ? 15 : 6;
+                    ctx.shadowColor = isSequentialFocus ? '#ec4899' : p.color;
+                    ctx.fillStyle = isSequentialFocus ? '#ec4899' : p.color;
+                    
+                    ctx.beginPath();
+                    ctx.arc(p.x, y, isSequentialFocus ? 6.5 : 4.5, 0, 2 * Math.PI);
+                    ctx.fill();
+                    ctx.shadowBlur = 0; // reset
+                    
+                    // Draw gradient vector arrows
+                    const grad = getEnergyGradient(p.x, gradMethod);
+                    ctx.strokeStyle = '#ec4899';
+                    ctx.lineWidth = 1.5;
+                    ctx.beginPath();
+                    ctx.moveTo(p.x, y);
+                    ctx.lineTo(p.x + (grad * 1.5), y + (grad * 0.5));
+                    ctx.stroke();
+                    
+                    // If Numeric mode, show small evaluation helper probes
+                    if (gradMethod === 'numeric' && idx % 10 === 0) {
+                        ctx.strokeStyle = 'rgba(234, 179, 8, 0.4)';
+                        ctx.lineWidth = 1.0;
+                        ctx.beginPath();
+                        ctx.arc(p.x + 1.8, getEnergy(p.x + 1.8), 2.5, 0, 2*Math.PI);
+                        ctx.stroke();
+                    }
+                });
+                
+                // Draw sequential processing highlight line if NumPy mode
+                if (!vmapEnabled) {
+                    ctx.strokeStyle = 'rgba(236, 72, 153, 0.15)';
+                    ctx.lineWidth = 2.0;
+                    ctx.beginPath();
+                    const activeP = particles[sequentialWorkIdx];
+                    ctx.moveTo(activeP.x, 0);
+                    ctx.lineTo(activeP.x, h);
+                    ctx.stroke();
+                }
+                
+            }, 30);
+        }
+
+        // ==========================================
+        // TAB 2: JIT & OPERATOR FUSION (XLA COMPILER)
+        // ==========================================
+        function initJitTab() {
+            isJitActive = false;
+            
+            document.getElementById('jit-badge').className = "px-2 py-0.5 rounded text-[10px] font-mono bg-slate-900 border border-slate-800 text-slate-500";
+            document.getElementById('jit-badge').innerText = "Unkompiliert (Slow)";
+            document.getElementById('btn-jit-compile').innerText = "⚡ Operator-Fusion (JIT) kompilieren";
+            document.getElementById('benchmark-speed-label').className = "text-pink-500 font-bold";
+            document.getElementById('benchmark-speed-label').innerText = "Python Interpreter: ~165.0 ms";
+            
+            renderJitBlocks();
+            drawJitBenchmarkChart();
+        }
+
+        function toggleJitCompilation() {
+            if (!isJitActive) {
+                isJitActive = true;
+                document.getElementById('jit-badge').className = "px-2 py-0.5 rounded text-[10px] font-mono bg-cyan-950 text-cyan-400 border border-cyan-900";
+                document.getElementById('jit-badge').innerText = "XLA Compiler Aktiv";
+                document.getElementById('btn-jit-compile').innerText = "🔄 Zurücksetzen";
+                document.getElementById('benchmark-speed-label').className = "text-emerald-400 font-bold";
+                document.getElementById('benchmark-speed-label').innerText = "JAX compiled (XLA): ~0.08 ms (2060x schneller!)";
+                
+                renderJitBlocks();
+                drawJitBenchmarkChart();
+            } else {
+                initJitTab();
+            }
+        }
+
+        function renderJitBlocks() {
+            const box = document.getElementById('jit-animation-box');
+            if (!box) return;
+            
+            if (!isJitActive) {
+                box.innerHTML = `
+                    <div class="fused-block p-4 rounded-xl bg-slate-900 border border-slate-800 space-y-1 font-mono text-[10px] text-slate-400 w-36 shadow-md hover:border-pink-500/30 relative">
+                        <span class="text-[8px] text-pink-400 font-bold block uppercase">Op 1: Matrix-Mult</span>
+                        <div class="text-white font-bold my-1 text-xs">a = x * w</div>
+                        <span class="text-[8px] text-slate-500 block border-t border-slate-850 pt-1">💾 Write VRAM ('a')</span>
+                    </div>
+                    <div class="text-slate-600 font-bold text-xl">➔</div>
+                    <div class="fused-block p-4 rounded-xl bg-slate-900 border border-slate-800 space-y-1 font-mono text-[10px] text-slate-400 w-36 shadow-md hover:border-pink-500/30 relative">
+                        <span class="text-[8px] text-pink-400 font-bold block uppercase">Op 2: Sinus</span>
+                        <div class="text-white font-bold my-1 text-xs">b = sin(a)</div>
+                        <span class="text-[8px] text-slate-500 block border-t border-slate-850 pt-1">📖 Read VRAM ('a')<br>💾 Write VRAM ('b')</span>
+                    </div>
+                    <div class="text-slate-600 font-bold text-xl">➔</div>
+                    <div class="fused-block p-4 rounded-xl bg-slate-900 border border-slate-800 space-y-1 font-mono text-[10px] text-slate-400 w-36 shadow-md hover:border-pink-500/30 relative">
+                        <span class="text-[8px] text-pink-400 font-bold block uppercase">Op 3: Bias-Add</span>
+                        <div class="text-white font-bold my-1 text-xs">y = b + bias</div>
+                        <span class="text-[8px] text-slate-500 block border-t border-slate-850 pt-1">📖 Read VRAM ('b')<br>💾 Write VRAM ('y')</span>
+                    </div>
+                `;
+            } else {
+                box.innerHTML = `
+                    <div class="fused-block p-5 rounded-2xl bg-cyan-950/25 border border-cyan-500/40 space-y-2 font-mono text-xs text-slate-400 w-80 shadow-lg shadow-cyan-500/5 text-center transform scale-105">
+                        <span class="text-[8px] text-cyan-400 font-bold uppercase tracking-widest block">Fused GPU/TPU Kernel (JIT)</span>
+                        <div class="text-white font-black my-2 text-sm">y = sin(x * w) + bias</div>
+                        <p class="text-[9px] text-slate-400 border-t border-cyan-900/50 pt-2 leading-relaxed">
+                            💡 **XLA Fusion:** Rechenschritte werden direkt in den Registern des Chips verarbeitet. Keine unnötigen VRAM-Lese-/Schreibzyklen mehr.
+                        </p>
+                    </div>
+                `;
+            }
+        }
+
+        function drawJitBenchmarkChart() {
+            const canvas = document.getElementById('canvas-jit-benchmark');
+            if (!canvas) return;
+            
+            const ctx = canvas.getContext('2d');
+            const rect = canvas.getBoundingClientRect();
+            canvas.width = rect.width * window.devicePixelRatio;
+            canvas.height = rect.height * window.devicePixelRatio;
+            ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+            
+            const w = rect.width;
+            const h = rect.height;
+            ctx.clearRect(0,0,w,h);
+            
+            const labels = ['Python (Loop)', 'NumPy (CPU)', 'JAX (CPU, jit)', 'JAX (GPU/TPU, jit)'];
+            // Logarithmic scales representations
+            const values = [165.0, 14.5, 0.8, 0.08];
+            const maxVal = Math.log10(165.0);
+            
+            // Draw horizontal bar chart
+            const chartH = h - 20;
+            const barSpacing = chartH / 4;
+            
+            for (let i = 0; i < 4; i++) {
+                const label = labels[i];
+                const val = values[i];
+                
+                // Map to log scale width
+                const logVal = Math.log10(val);
+                const barW = Math.max(10, ((logVal + 1.5) / (maxVal + 1.5)) * (w - 160));
+                const barY = i * barSpacing + 5;
+                const barHeight = 16;
+                
+                // Label text
+                ctx.fillStyle = '#94a3b8';
+                ctx.font = '10px JetBrains Mono';
+                ctx.fillText(label, 10, barY + 12);
+                
+                // Bar styling
+                const gradient = ctx.createLinearGradient(140, 0, 140 + barW, 0);
+                if (i === 0) {
+                    gradient.addColorStop(0, 'rgba(244,63,94,0.15)');
+                    gradient.addColorStop(1, '#f43f5e');
+                } else if (i === 1) {
+                    gradient.addColorStop(0, 'rgba(234,179,8,0.15)');
+                    gradient.addColorStop(1, '#eab308');
+                } else if (i === 2) {
+                    gradient.addColorStop(0, 'rgba(139,92,246,0.15)');
+                    gradient.addColorStop(1, '#8b5cf6');
+                } else {
+                    gradient.addColorStop(0, 'rgba(6,182,212,0.15)');
+                    gradient.addColorStop(1, isJitActive ? '#06b6d4' : '#1e293b');
+                }
+                
+                ctx.fillStyle = gradient;
+                ctx.fillRect(140, barY, barW, barHeight);
+                
+                // Value text
+                ctx.fillStyle = '#ffffff';
+                ctx.font = '9px JetBrains Mono';
+                ctx.fillText(`${val} ms`, 145 + barW, barY + 11);
+            }
+        }
+
+        // ==========================================
+        // TAB 3: FLAX STATELESS MODEL EXPLORER
+        // ==========================================
+        function initFlaxTab() {
+            updateFlaxWeights();
+        }
+
+        function updateFlaxWeights() {
+            flaxW = parseFloat(document.getElementById('slide-flax-w').value);
+            flaxB = parseFloat(document.getElementById('slide-flax-b').value);
+            
+            document.getElementById('val-flax-w').innerText = flaxW.toFixed(2);
+            document.getElementById('val-flax-b').innerText = flaxB.toFixed(2);
+            
+            // Draw model weights tree representation in JSON
+            const jsonText = `{
+  "params": {
+    "Dense_0": {
+      "kernel": [
+        [${(flaxW * 0.76).toFixed(3)}],
+        [${(flaxW * -0.42).toFixed(3)}]
+      ],
+      "bias": [${(flaxB * 0.35).toFixed(3)}]
+    },
+    "Dense_1": {
+      "kernel": [
+        [${(flaxW * 1.25).toFixed(3)}, ${(flaxW * 0.95).toFixed(3)}]
+      ],
+      "bias": [${(flaxB * -0.85).toFixed(3)}]
+    }
+  }
+}`;
+            document.getElementById('flax-weights-json').innerText = jsonText;
+            
+            drawFlaxPlot();
+        }
+
+        function drawFlaxPlot() {
+            const canvas = document.getElementById('canvas-flax-plot');
+            if (!canvas) return;
+            
+            const ctx = canvas.getContext('2d');
+            const rect = canvas.getBoundingClientRect();
+            canvas.width = rect.width * window.devicePixelRatio;
+            canvas.height = rect.height * window.devicePixelRatio;
+            ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+            
+            const w = rect.width;
+            const h = rect.height;
+            ctx.clearRect(0,0,w,h);
+            
+            // Grid
+            ctx.strokeStyle = 'rgba(255,255,255,0.03)';
+            ctx.lineWidth = 1;
+            for (let i = 1; i < 8; i++) {
+                ctx.beginPath();
+                ctx.moveTo(w * i / 8, 0); ctx.lineTo(w * i / 8, h);
+                ctx.moveTo(0, h * i / 8); ctx.lineTo(w, h * i / 8);
+                ctx.stroke();
+            }
+            
+            // Draw baseline wave
+            ctx.strokeStyle = 'rgba(6,182,212,0.3)';
+            ctx.lineWidth = 1.5;
+            ctx.beginPath();
+            for (let x = 0; x < w; x++) {
+                const nx = (x / w) * 4 * Math.PI;
+                const ny = h/2 - Math.sin(nx) * (h / 3);
+                if (x === 0) ctx.moveTo(x, ny);
+                else ctx.lineTo(x, ny);
+            }
+            ctx.stroke();
+            
+            // Draw network output curve: y = w * sin(x) + bias
+            ctx.strokeStyle = '#ec4899';
+            ctx.lineWidth = 2.5;
+            ctx.beginPath();
+            for (let x = 0; x < w; x++) {
+                const nx = (x / w) * 4 * Math.PI;
+                // apply simple model equation using parameters
+                const ny = h/2 - (flaxW * Math.sin(nx) + flaxB) * (h / 3);
+                if (x === 0) ctx.moveTo(x, ny);
+                else ctx.lineTo(x, ny);
+            }
+            ctx.stroke();
+        }
+
+        // ==========================================
+        // TAB 4: JAX PRNG TREE (STATELESS RANDOMNESS)
+        // ==========================================
+        function initPrngTab() {
+            resetPrngTree();
+        }
+
+        function resetPrngTree() {
+            nodeCounter = 0;
+            prngTreeRoot = {
+                id: nodeCounter++,
+                name: 'root',
+                seed: 'PRNGKey(42)',
+                val: 'a5d9cf2b',
+                x: 250,
+                y: 40,
+                children: []
+            };
+            
+            const consoleOutput = document.getElementById('prng-console-output');
+            if (consoleOutput) {
+                consoleOutput.innerHTML = `<div class="text-slate-500">&gt;&gt; key = jax.random.PRNGKey(42)</div>
+<div class="text-emerald-400">Initialized root key: [seed: 42, hex: a5d9cf2b]</div>`;
+            }
+            drawPrngTree();
+        }
+
+        function splitKey() {
+            // Find a leaf node to split
+            const leaf = findLeafToSplit(prngTreeRoot);
+            if (!leaf) return;
+            
+            const leftId = nodeCounter++;
+            const rightId = nodeCounter++;
+            
+            // Generate deterministic subkey values based on parent value
+            const hashVal1 = Math.abs(hashCode(leaf.val + "_left")).toString(16).substring(0, 8);
+            const hashVal2 = Math.abs(hashCode(leaf.val + "_right")).toString(16).substring(0, 8);
+            
+            leaf.children = [
+                {
+                    id: leftId,
+                    name: `key_${leftId}`,
+                    seed: `Subkey A (${leftId})`,
+                    val: hashVal1,
+                    x: leaf.x - 70 + (leaf.y * 0.08), // spread width shrinks down the tree
+                    y: leaf.y + 65,
+                    children: []
+                },
+                {
+                    id: rightId,
+                    name: `key_${rightId}`,
+                    seed: `Subkey B (${rightId})`,
+                    val: hashVal2,
+                    x: leaf.x + 70 - (leaf.y * 0.08),
+                    y: leaf.y + 65,
+                    children: []
+                }
+            ];
+            
+            const consoleOutput = document.getElementById('prng-console-output');
+            if (consoleOutput) {
+                consoleOutput.innerHTML += `<div class="text-slate-500 mt-2">&gt;&gt; key_${leftId}, key_${rightId} = jax.random.split(${leaf.name})</div>
+<div class="text-cyan-400">Split node [${leaf.name}]:</div>
+<div class="pl-3 text-purple-400">➔ key_${leftId} (hex: ${hashVal1})</div>
+<div class="pl-3 text-pink-400">➔ key_${rightId} (hex: ${hashVal2})</div>`;
+                consoleOutput.parentNode.scrollTop = consoleOutput.parentNode.scrollHeight;
+            }
+            
+            drawPrngTree();
+        }
+
+        function findLeafToSplit(node) {
+            if (node.children.length === 0) {
+                // Leaf node check height limit
+                return node.y < 280 ? node : null;
+            }
+            // Traverse down
+            for (let child of node.children) {
+                const leaf = findLeafToSplit(child);
+                if (leaf) return leaf;
+            }
+            return null;
+        }
+
+        function drawPrngTree() {
+            const svg = document.getElementById('svg-prng-tree');
+            if (!svg) return;
+            
+            svg.innerHTML = ''; // clear
+            
+            // Render lines first, then nodes
+            renderPrngConnections(svg, prngTreeRoot);
+            renderPrngNodes(svg, prngTreeRoot);
+        }
+
+        function renderPrngConnections(svg, node) {
+            node.children.forEach(child => {
+                const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+                line.setAttribute("x1", node.x);
+                line.setAttribute("y1", node.y);
+                line.setAttribute("x2", child.x);
+                line.setAttribute("y2", child.y);
+                line.setAttribute("stroke", "rgba(6, 182, 212, 0.4)");
+                line.setAttribute("stroke-width", "1.5");
+                line.setAttribute("stroke-dasharray", "4 3");
+                svg.appendChild(line);
+                
+                renderPrngConnections(svg, child);
+            });
+        }
+
+        function renderPrngNodes(svg, node) {
+            const group = document.createElementNS("http://www.w3.org/2000/svg", "g");
+            group.setAttribute("class", "prng-node cursor-pointer");
+            group.onclick = () => {
+                if (node.y < 280 && node.children.length === 0) {
+                    node.children = [
+                        {
+                            id: nodeCounter++,
+                            name: `key_${nodeCounter-1}`,
+                            seed: `Subkey A (${nodeCounter-1})`,
+                            val: Math.abs(hashCode(node.val + "_L")).toString(16).substring(0,8),
+                            x: node.x - 55,
+                            y: node.y + 60,
+                            children: []
+                        },
+                        {
+                            id: nodeCounter++,
+                            name: `key_${nodeCounter-1}`,
+                            seed: `Subkey B (${nodeCounter-1})`,
+                            val: Math.abs(hashCode(node.val + "_R")).toString(16).substring(0,8),
+                            x: node.x + 55,
+                            y: node.y + 60,
+                            children: []
+                        }
+                    ];
+                    const consoleOutput = document.getElementById('prng-console-output');
+                    if (consoleOutput) {
+                        consoleOutput.innerHTML += `<div class="text-slate-500 mt-2">&gt;&gt; key_${nodeCounter-2}, key_${nodeCounter-1} = jax.random.split(${node.name})</div>
+<div class="text-cyan-400">Interactive split on [${node.name}]:</div>
+<div class="pl-3 text-purple-400">➔ key_${nodeCounter-2} (hex: ${node.children[0].val})</div>
+<div class="pl-3 text-pink-400">➔ key_${nodeCounter-1} (hex: ${node.children[1].val})</div>`;
+                        consoleOutput.parentNode.scrollTop = consoleOutput.parentNode.scrollHeight;
+                    }
+                    drawPrngTree();
+                }
+            };
+            
+            const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+            circle.setAttribute("cx", node.x);
+            circle.setAttribute("cy", node.y);
+            circle.setAttribute("r", "16");
+            circle.setAttribute("fill", node.children.length > 0 ? "#1e293b" : "#06b6d4");
+            circle.setAttribute("stroke", node.children.length > 0 ? "rgba(255,255,255,0.15)" : "#06b6d4");
+            circle.setAttribute("stroke-width", "2");
+            group.appendChild(circle);
+            
+            // Text for variable name inside/above node
+            const textName = document.createElementNS("http://www.w3.org/2000/svg", "text");
+            textName.setAttribute("x", node.x);
+            textName.setAttribute("y", node.y - 22);
+            textName.setAttribute("fill", "#ffffff");
+            textName.setAttribute("font-size", "8px");
+            textName.setAttribute("font-family", "JetBrains Mono");
+            textName.setAttribute("text-anchor", "middle");
+            textName.textContent = node.name;
+            group.appendChild(textName);
+
+            // Hex seed value inside node
+            const textVal = document.createElementNS("http://www.w3.org/2000/svg", "text");
+            textVal.setAttribute("x", node.x);
+            textVal.setAttribute("y", node.y + 3);
+            textVal.setAttribute("fill", node.children.length > 0 ? "#94a3b8" : "#0f172a");
+            textVal.setAttribute("font-size", "7px");
+            textVal.setAttribute("font-family", "JetBrains Mono");
+            textVal.setAttribute("font-weight", "bold");
+            textVal.setAttribute("text-anchor", "middle");
+            textVal.textContent = node.val;
+            group.appendChild(textVal);
+
+            svg.appendChild(group);
+            
+            node.children.forEach(child => {
+                renderPrngNodes(svg, child);
+            });
+        }
+
+        // Helper string hashing function for deterministic subkey generation
+        function hashCode(str) {
+            let hash = 0;
+            for (let i = 0; i < str.length; i++) {
+                hash = str.charCodeAt(i) + ((hash << 5) - hash);
+            }
+            return hash;
+        }
     </script>
 </body>
 </html>

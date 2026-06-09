@@ -1,97 +1,1125 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="de" class="min-h-screen">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Infografik Template</title>
-<!-- Tailwind CDN -->
-<script src="https://cdn.tailwindcss.com"></script>
-<script>
-tailwind.config = {
-theme: {
-extend: {
-colors: {
-vibrant: {
-bg: '#0f172a',
-surface: '#1e293b',
-surfaceLight: '#334155',
-cyan: '#06b6d4',
-pink: '#ec4899',
-yellow: '#eab308',
-purple: '#8b5cf6',
-text: '#f8fafc',
-textMuted: '#94a3b8'
-}
-}
-}
-}
-}
-</script>
-<style>
-body {
-background-color: #0f172a;
-color: #f8fafc;
-font-family: 'Inter', system-ui, sans-serif;
-}
-.chart-container {
-position: relative;
-width: 100%;
-max-width: 800px;
-margin-left: auto;
-margin-right: auto;
-height: 350px;
-}
-.glass-card {
-background: rgba(30, 41, 59, 0.7);
-backdrop-filter: blur(10px);
-border: 1px solid rgba(255, 255, 255, 0.1);
-}
-</style>
-<!-- Chart.js CDN -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-</head>
-<body class="antialiased p-6">
-    <div class="max-w-4xl mx-auto space-y-8">
-        <div class="text-center">
-            <h1 class="text-2xl md:text-3xl font-black text-white">Visualisierung - Woche 3</h1>
-            <p class="text-sm text-vibrant-textMuted mt-1">Hier kannst du interaktive Graphen und Animationen einbetten.</p>
-        </div>
-
-        <!-- Chart Card -->
-        <div class="glass-card rounded-2xl p-6">
-            <div class="chart-container">
-                <canvas id="chartW3"></canvas>
-            </div>
-        </div>
-    </div>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Syllabus Woche 3: Optimierung und Systemdynamik</title>
+    
+    <!-- Google Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800;900&display=swap">
+    
+    <!-- Tailwind CSS (CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
     <script>
-        const ctx = document.getElementById('chartW3').getContext('2d');
-        new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: ['Wartezeit', 'Serverlast', 'Durchsatz'],
-                datasets: [{
-                    label: 'Metriken (Auslastung & Performance)',
-                    data: [12.5, 78.4, 94.1],
-                    backgroundColor: 'rgba(6, 182, 212, 0.7)',
-                    borderColor: '#06b6d4',
-                    borderWidth: 1,
-                    borderRadius: 4
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: { labels: { color: '#f8fafc' } }
-                },
-                scales: {
-                    x: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255,255,255,0.05)' } },
-                    y: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255,255,255,0.05)' } }
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        vibrant: {
+                            bg: '#090d16',
+                            surface: '#0f172a',
+                            surfaceLight: '#1e293b',
+                            cyan: '#06b6d4',
+                            pink: '#ec4899',
+                            yellow: '#eab308',
+                            purple: '#8b5cf6',
+                            text: '#f8fafc',
+                            textMuted: '#94a3b8',
+                            grid: 'rgba(255, 255, 255, 0.05)'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'Outfit', 'system-ui', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace']
+                    }
                 }
             }
+        }
+    </script>
+
+    <!-- KaTeX for math formatting -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" onload="renderMath()"></script>
+
+    <style>
+        body {
+            background-color: #090d16;
+            color: #f8fafc;
+            font-family: 'Inter', system-ui, sans-serif;
+        }
+        h1, h2, h3, h4 {
+            font-family: 'Outfit', sans-serif;
+        }
+        .glass-card {
+            background: rgba(15, 23, 42, 0.65);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .glass-card:hover {
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+        .glow-cyan:hover, .glow-cyan.active {
+            box-shadow: 0 0 20px rgba(6, 182, 212, 0.15);
+            border-color: rgba(6, 182, 212, 0.4);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(15, 23, 42, 0.4);
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #1e293b;
+            border-radius: 99px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #334155;
+        }
+        .tab-btn.active {
+            color: #06b6d4;
+            border-bottom: 2px solid #06b6d4;
+        }
+        .fused-block {
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+    </style>
+</head>
+<body class="antialiased p-4 sm:p-6 min-h-screen flex flex-col items-center">
+
+    <div class="max-w-6xl w-full space-y-6">
+        
+        <!-- Header -->
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-slate-900 pb-4">
+            <div>
+                <span class="px-2.5 py-0.5 rounded-full bg-cyan-950/40 text-cyan-400 text-xs font-mono font-bold uppercase tracking-wider border border-cyan-900/30">
+                    Syllabus Visualizer - Woche 3
+                </span>
+                <h1 class="text-2xl sm:text-3xl font-black text-white mt-1">Optimierung & Systemdynamik</h1>
+                <p class="text-xs sm:text-sm text-vibrant-textMuted mt-0.5">Lerne wie Autoencoder Kompression erzwingen, Conv1D Faltungs-Filter arbeiten und JAX XLA Berechnungen fusioniert.</p>
+            </div>
+            
+            <!-- Tab Menu -->
+            <div class="flex bg-slate-950/60 p-1.5 rounded-xl border border-slate-900 shrink-0 self-stretch md:self-auto overflow-x-auto custom-scrollbar">
+                <button onclick="switchTab('bottleneck')" id="btn-tab-bottleneck" class="tab-btn active px-3.5 py-1.5 rounded-lg text-xs font-bold font-mono transition-all flex items-center gap-1.5 whitespace-nowrap">
+                    <span>📯</span> Bottleneck (Autoencoder)
+                </button>
+                <button onclick="switchTab('architecture')" id="btn-tab-architecture" class="tab-btn px-3.5 py-1.5 rounded-lg text-xs font-bold font-mono transition-all text-slate-400 hover:text-white flex items-center gap-1.5 whitespace-nowrap">
+                    <span>🧬</span> Dense vs. Conv1D
+                </button>
+                <button onclick="switchTab('landscape')" id="btn-tab-landscape" class="tab-btn px-3.5 py-1.5 rounded-lg text-xs font-bold font-mono transition-all text-slate-400 hover:text-white flex items-center gap-1.5 whitespace-nowrap">
+                    <span>⛰️</span> Loss Landscape
+                </button>
+                <button onclick="switchTab('jit')" id="btn-tab-jit" class="tab-btn px-3.5 py-1.5 rounded-lg text-xs font-bold font-mono transition-all text-slate-400 hover:text-white flex items-center gap-1.5 whitespace-nowrap">
+                    <span>⚡</span> JIT & Operator Fusion
+                </button>
+            </div>
+        </div>
+
+        <!-- TAB 1: INFORMATION BOTTLENECK (AUTOENCODER PLAYGROUND) -->
+        <div id="tab-bottleneck" class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            <!-- Left Panel (Controls) -->
+            <div class="lg:col-span-4 space-y-4">
+                <div class="glass-card rounded-2xl p-5 space-y-5">
+                    <h3 class="text-base font-bold text-white border-b border-slate-900 pb-2 flex items-center gap-2">
+                        <span>📯</span> Flaschenhals (Latent Space)
+                    </h3>
+
+                    <!-- Bottleneck size slider -->
+                    <div class="space-y-2">
+                        <div class="flex justify-between items-center text-xs font-mono">
+                            <span class="text-slate-400">Latent Dimensions (\(D\))</span>
+                            <span id="val-bottleneck" class="text-cyan-400 font-bold">2 Dim</span>
+                        </div>
+                        <input type="range" id="slide-bottleneck" min="1" max="10" step="1" value="2" oninput="updateBottleneck(this.value)" class="w-full h-1.5 bg-slate-900 rounded-lg appearance-none cursor-pointer accent-cyan-500">
+                    </div>
+
+                    <!-- Evaluation alerts -->
+                    <div id="bottleneck-status-box" class="p-3.5 bg-cyan-950/10 border border-cyan-900/30 rounded-xl space-y-1">
+                        <span id="status-title" class="text-[10px] font-mono font-bold text-cyan-400 block uppercase">Optimaler Flaschenhals</span>
+                        <p id="status-desc" class="text-[10px] text-slate-400 leading-relaxed">
+                            Das Modell filtert Rauschen perfekt heraus und rekonstruiert die physikalische Welle fehlerfrei.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Theory helper box -->
+                <div class="glass-card rounded-2xl p-5 space-y-2 bg-purple-950/5 border-l-4 border-l-purple-500 text-xs">
+                    <h4 class="font-bold text-purple-400 font-mono uppercase tracking-wider">Warum Kompression hilft:</h4>
+                    <p class="text-slate-300 leading-relaxed">
+                        Ein Autoencoder verengt den Datenfluss. Ist der Flaschenhals zu klein, verliert er physikalische Signalanteile (Underfitting). Ist er zu groß, speichert er Rauschen statt der reinen Dynamik (Overfitting).
+                    </p>
+                </div>
+            </div>
+
+            <!-- Right Panel (Visualizer) -->
+            <div class="lg:col-span-8 grid grid-cols-1 md:grid-cols-12 gap-6">
+                <!-- Curve Visualizer -->
+                <div class="md:col-span-7 glass-card rounded-2xl p-5 space-y-4">
+                    <div class="border-b border-slate-900 pb-2 flex justify-between items-center">
+                        <h4 class="text-xs font-bold font-mono text-slate-400 uppercase tracking-widest">Signal-Rekonstruktion</h4>
+                        <div class="flex gap-4 text-[9px] font-mono text-slate-500">
+                            <span class="flex items-center gap-1"><span class="w-2 h-1 bg-cyan-400"></span> Input (Noisy)</span>
+                            <span class="flex items-center gap-1"><span class="w-2 h-1 bg-pink-500"></span> Model Output</span>
+                        </div>
+                    </div>
+                    <div class="w-full aspect-square bg-slate-950/40 border border-slate-900 rounded-xl overflow-hidden relative">
+                        <canvas id="canvas-bottleneck-plot" class="absolute inset-0 w-full h-full"></canvas>
+                    </div>
+                </div>
+
+                <!-- Neural Graph Visualizer -->
+                <div class="md:col-span-5 glass-card rounded-2xl p-5 space-y-4 flex flex-col justify-between">
+                    <div class="border-b border-slate-900 pb-2 flex justify-between items-center">
+                        <h4 class="text-xs font-bold font-mono text-slate-400 uppercase tracking-widest">Netzwerk-Architektur</h4>
+                    </div>
+                    <div class="flex-1 min-h-[200px] bg-slate-950/40 border border-slate-900 rounded-xl relative">
+                        <svg id="svg-hourglass" class="absolute inset-0 w-full h-full" viewBox="0 0 250 300">
+                            <!-- Hoursglass nodes drawn dynamically in JS -->
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 2: ARCHITECTURE SHOWDOWN (DENSE VS CONV1D) -->
+        <div id="tab-architecture" class="grid grid-cols-1 lg:grid-cols-12 gap-6 hidden">
+            <!-- Left Controls -->
+            <div class="lg:col-span-4 space-y-4">
+                <div class="glass-card rounded-2xl p-5 space-y-5">
+                    <h3 class="text-base font-bold text-white border-b border-slate-900 pb-2">
+                        🧬 Schichten-Architektur
+                    </h3>
+
+                    <!-- Dense vs Conv1D selection -->
+                    <div class="grid grid-cols-2 gap-2">
+                        <button onclick="setLayerMode('dense')" id="btn-mode-dense" class="py-2.5 rounded-xl font-bold font-mono text-xs bg-cyan-500/10 border border-cyan-500/40 text-cyan-400">
+                            Dense (Standard)
+                        </button>
+                        <button onclick="setLayerMode('conv1d')" id="btn-mode-conv1d" class="py-2.5 rounded-xl font-bold font-mono text-xs bg-slate-900 border border-slate-800 text-slate-400 hover:border-slate-700">
+                            Conv1D (Faltung)
+                        </button>
+                    </div>
+
+                    <!-- Translation shift slider -->
+                    <div class="space-y-2">
+                        <div class="flex justify-between items-center text-xs font-mono">
+                            <span class="text-slate-400">Zeitverschiebung (Shift)</span>
+                            <span id="val-shift" class="text-cyan-400 font-bold">0 Pkt</span>
+                        </div>
+                        <input type="range" id="slide-shift" min="-15" max="15" step="1" value="0" oninput="updateShift(this.value)" class="w-full h-1.5 bg-slate-900 rounded-lg appearance-none cursor-pointer accent-cyan-500">
+                    </div>
+                </div>
+
+                <!-- Interactive Info Box -->
+                <div class="glass-card rounded-2xl p-5 bg-purple-950/5 border-l-4 border-l-purple-500 text-xs space-y-2">
+                    <h4 class="font-bold text-purple-400 font-mono uppercase tracking-wider block">Translations-Kovarianz:</h4>
+                    <p id="layer-explanation" class="text-slate-300 leading-relaxed">
+                        Ein vollvernetztes **Dense Layer** verarbeitet alle Zeitschritte statisch. Verschiebt sich die Welle, ändert sich das gesamte Aktivierungsmuster der Neuronen.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Right Visualizers -->
+            <div class="lg:col-span-8 glass-card rounded-2xl p-5 space-y-4">
+                <div class="border-b border-slate-900 pb-2 flex justify-between items-center">
+                    <h3 class="text-sm font-bold text-white">
+                        🔍 Daten-Scanner & Feature Extraktion
+                    </h3>
+                    <span class="text-xs font-mono text-slate-500">Scant das Eingangssignal</span>
+                </div>
+
+                <!-- Canvas scanner -->
+                <div class="aspect-[16/9] w-full bg-slate-950/40 border border-slate-900 rounded-xl relative overflow-hidden">
+                    <canvas id="canvas-architecture-scan" class="absolute inset-0 w-full h-full"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 3: LOSS LANDSCAPE NAVIGATOR -->
+        <div id="tab-landscape" class="grid grid-cols-1 lg:grid-cols-12 gap-6 hidden">
+            <!-- Left Controls -->
+            <div class="lg:col-span-4 space-y-4">
+                <div class="glass-card rounded-2xl p-5 space-y-5">
+                    <h3 class="text-base font-bold text-white border-b border-slate-900 pb-2 flex items-center gap-2">
+                        <span>⛰️</span> Gradient Descent
+                    </h3>
+                    <p class="text-xs text-slate-400 leading-relaxed">
+                        Klicke auf die 2D-Konturkarte rechts, um ein Modell-Gewicht (Ball) zu platzieren. Wähle einen Optimizer und beobachte, wie es das Loss-Minimum sucht.
+                    </p>
+
+                    <!-- Optimizer Selection -->
+                    <div class="space-y-2">
+                        <label class="text-xs font-mono text-cyan-400 font-bold uppercase tracking-wider block">Optimizer</label>
+                        <div class="grid grid-cols-3 gap-1.5">
+                            <button onclick="setOptimizer('sgd')" id="btn-opt-sgd" class="py-2 rounded bg-cyan-500/10 border border-cyan-500/40 text-[10px] font-mono font-bold text-cyan-400">SGD</button>
+                            <button onclick="setOptimizer('momentum')" id="btn-opt-momentum" class="py-2 rounded bg-slate-900 border border-slate-800 text-[10px] font-mono font-bold text-slate-400">Momentum</button>
+                            <button onclick="setOptimizer('adam')" id="btn-opt-adam" class="py-2 rounded bg-slate-900 border border-slate-800 text-[10px] font-mono font-bold text-slate-400">Adam</button>
+                        </div>
+                    </div>
+
+                    <!-- Statistics display -->
+                    <div class="grid grid-cols-2 gap-2 font-mono text-[10px] pt-2 border-t border-slate-900">
+                        <div class="p-2 rounded bg-slate-900/40 border border-slate-850">
+                            <span class="text-slate-500 block text-[8px] uppercase tracking-wider">Loss (Höhe)</span>
+                            <span id="stat-opt-loss" class="text-white font-bold">0.000</span>
+                        </div>
+                        <div class="p-2 rounded bg-slate-900/40 border border-slate-850">
+                            <span class="text-slate-500 block text-[8px] uppercase tracking-wider">Iterationen (Epochs)</span>
+                            <span id="stat-opt-epochs" class="text-white font-bold">0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Visualizers -->
+            <div class="lg:col-span-8 grid grid-cols-1 md:grid-cols-12 gap-6">
+                <!-- 2D Contour map -->
+                <div class="md:col-span-7 glass-card rounded-2xl p-5 space-y-4">
+                    <div class="border-b border-slate-900 pb-2 flex justify-between items-center">
+                        <h4 class="text-xs font-bold font-mono text-slate-400 uppercase tracking-widest">2D Loss Landschaft</h4>
+                        <span class="text-[9px] font-mono text-slate-500">Täler (dunkel/blau), Höhen (pink)</span>
+                    </div>
+                    <div class="w-full aspect-square bg-slate-950 border border-slate-900 rounded-xl overflow-hidden relative cursor-crosshair">
+                        <canvas id="canvas-landscape-map" class="absolute inset-0 w-full h-full"></canvas>
+                    </div>
+                </div>
+
+                <!-- Loss curve over time -->
+                <div class="md:col-span-5 glass-card rounded-2xl p-5 space-y-4 flex flex-col justify-between">
+                    <div class="border-b border-slate-900 pb-2 flex justify-between items-center">
+                        <h4 class="text-xs font-bold font-mono text-slate-400 uppercase tracking-widest">Optimierungs-Verlauf</h4>
+                    </div>
+                    <div class="flex-1 min-h-[200px] bg-slate-950/40 border border-slate-900 rounded-xl relative">
+                        <canvas id="canvas-landscape-loss" class="absolute inset-0 w-full h-full"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 4: JIT & OPERATOR FUSION -->
+        <div id="tab-jit" class="grid grid-cols-1 lg:grid-cols-12 gap-6 hidden animate-fade-in">
+            <!-- Left controls -->
+            <div class="lg:col-span-5 space-y-4">
+                <div class="glass-card rounded-2xl p-5 space-y-4">
+                    <h3 class="text-base font-bold text-white border-b border-slate-900 pb-2">
+                        ⚡ XLA Operator-Fusion
+                    </h3>
+                    <p class="text-xs text-slate-300 leading-relaxed">
+                        Ein normaler Python-Interpreter führt mathematische Operationen einzeln aus. Jedes Zwischenergebnis muss zurück in den langsamen Grafikspeicher (RAM/VRAM) geschrieben werden.
+                    </p>
+                    <p class="text-xs text-slate-400 leading-relaxed">
+                        Der JAX **XLA-Compiler** verschmilzt (fusioniert) diese Rechenblöcke zu einem einzigen, hoch-optimierten Kernel, der Daten direkt in Registern verarbeitet.
+                    </p>
+
+                    <button onclick="toggleJitCompilation()" id="btn-jit-compile" class="w-full py-2.5 rounded-xl font-bold font-mono text-xs bg-cyan-500/10 border border-cyan-500/40 text-cyan-400 hover:bg-cyan-500/20 active:scale-95 transition-all select-none">
+                        ⚡ Operator-Fusion (JIT) kompilieren
+                    </button>
+                </div>
+            </div>
+
+            <!-- Fusing blocks animation -->
+            <div class="lg:col-span-7 glass-card rounded-2xl p-5 space-y-4 flex flex-col justify-between min-h-[350px]">
+                <div class="flex justify-between items-center border-b border-slate-900 pb-2">
+                    <h3 class="text-sm font-bold text-white">
+                        🚥 Rechengraph & Memory Wall
+                    </h3>
+                    <span id="jit-badge" class="px-2 py-0.5 rounded text-[10px] font-mono bg-slate-900 border border-slate-800 text-slate-500">Unkompiliert (Slow)</span>
+                </div>
+
+                <!-- Animated blocks area -->
+                <div id="jit-animation-box" class="flex-1 bg-slate-950 p-6 rounded-xl border border-slate-900 flex flex-col md:flex-row items-center justify-around gap-4 min-h-[160px] overflow-hidden relative">
+                    <!-- Fused math representations generated dynamically in JS -->
+                </div>
+
+                <div class="flex items-center justify-between text-[11px] font-mono text-slate-400 border-t border-slate-900/60 pt-3">
+                    <span>Performance Benchmark (Inferenz-Speed):</span>
+                    <span id="benchmark-speed-label" class="text-pink-500 font-bold">Python: 12.4ms (Slow)</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Core Javascript Code -->
+    <script>
+        function renderMath() {
+            if (window.renderMathInElement) {
+                window.renderMathInElement(document.body, {
+                    delimiters: [
+                        {left: '$$', right: '$$', display: true},
+                        {left: '$', right: '$', display: false},
+                        {left: '\\(', right: '\\)', display: false},
+                        {left: '\\[', right: '\\]', display: true}
+                    ],
+                    throwOnError: false
+                });
+            }
+        }
+
+        // Global states
+        let currentTab = 'bottleneck';
+        let bottleneckSize = 2;
+        let layerMode = 'dense';
+        let shiftTime = 0;
+
+        let optType = 'sgd';
+        let optEpochs = 0;
+        let optX = 0;
+        let optY = 0;
+        let optPath = [];
+        let optLossHistory = [];
+        let optInterval = null;
+
+        let isJitCompiled = false;
+        let scanStep = 0;
+        let scanInterval = null;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initHourglassNodeGraph();
+            drawBottleneckPlot();
+            
+            initLayerScan();
+            initLossLandscape();
+            initJitAnimation();
+            renderMath();
         });
+
+        // Tab selection
+        function switchTab(tabId) {
+            currentTab = tabId;
+            const tabs = ['bottleneck', 'architecture', 'landscape', 'jit'];
+            tabs.forEach(t => {
+                document.getElementById(`tab-${t}`).classList.add('hidden');
+                document.getElementById(`btn-tab-${t}`).className = "tab-btn px-3.5 py-1.5 rounded-lg text-xs font-bold font-mono transition-all text-slate-400 hover:text-white";
+            });
+            document.getElementById(`tab-${tabId}`).classList.remove('hidden');
+            document.getElementById(`btn-tab-${tabId}`).className = "tab-btn active px-3.5 py-1.5 rounded-lg text-xs font-bold font-mono transition-all text-cyan-400";
+
+            if (tabId === 'bottleneck') {
+                setTimeout(() => {
+                    initHourglassNodeGraph();
+                    drawBottleneckPlot();
+                }, 50);
+            } else if (tabId === 'architecture') {
+                setTimeout(() => {
+                    initLayerScan();
+                }, 50);
+            } else if (tabId === 'landscape') {
+                setTimeout(() => {
+                    initLossLandscape();
+                }, 50);
+            } else if (tabId === 'jit') {
+                setTimeout(() => {
+                    initJitAnimation();
+                }, 50);
+            }
+        }
+
+        // ==========================================
+        // TAB 1: INFORMATION BOTTLENECK (AUTOENCODER)
+        // ==========================================
+        function updateBottleneck(val) {
+            bottleneckSize = parseInt(val);
+            document.getElementById('val-bottleneck').innerText = `${bottleneckSize} Dim`;
+            
+            const box = document.getElementById('bottleneck-status-box');
+            const title = document.getElementById('status-title');
+            const desc = document.getElementById('status-desc');
+
+            if (bottleneckSize === 1) {
+                title.innerText = "❌ Underfitting (Verlust)";
+                title.className = "text-[10px] font-mono font-bold text-rose-400 block uppercase";
+                box.className = "p-3.5 bg-rose-950/10 border border-rose-900/30 rounded-xl space-y-1";
+                desc.innerText = "Der Flaschenhals ist zu eng. Die Amplituden-Dämpfung und Phasen-Dynamik gehen verloren. Das Modell unterfordert sich.";
+            } else if (bottleneckSize >= 2 && bottleneckSize <= 3) {
+                title.innerText = "✔️ Optimaler Flaschenhals";
+                title.className = "text-[10px] font-mono font-bold text-emerald-400 block uppercase";
+                box.className = "p-3.5 bg-emerald-950/10 border border-emerald-900/30 rounded-xl space-y-1";
+                desc.innerText = "Das Modell filtert Rauschen perfekt heraus und rekonstruiert die physikalische Welle fehlerfrei.";
+            } else {
+                title.innerText = "⚠️ Overfitting (Rauschübertragung)";
+                title.className = "text-[10px] font-mono font-bold text-amber-400 block uppercase";
+                box.className = "p-3.5 bg-amber-950/10 border border-amber-900/30 rounded-xl space-y-1";
+                desc.innerText = "Der Flaschenhals ist zu groß. Das Netz verliert den Kompressions-Zwang und lernt auch das irrelevante Rauschen mit.";
+            }
+
+            initHourglassNodeGraph();
+            drawBottleneckPlot();
+        }
+
+        function initHourglassNodeGraph() {
+            const svg = document.getElementById('svg-hourglass');
+            svg.innerHTML = ''; // clear
+
+            const inputNodes = 6;
+            const encNodes = 4;
+            const bottleneckNodes = bottleneckSize;
+            const decNodes = 4;
+            const outputNodes = 6;
+
+            const cols = [
+                { nodes: inputNodes, x: 30, color: '#06b6d4' },
+                { nodes: encNodes, x: 80, color: '#1e293b' },
+                { nodes: bottleneckNodes, x: 125, color: '#8b5cf6' },
+                { nodes: decNodes, x: 170, color: '#1e293b' },
+                { nodes: outputNodes, x: 220, color: '#ec4899' }
+            ];
+
+            const createCoords = (col) => {
+                const arr = [];
+                const step = 200 / (col.nodes + 1);
+                const startY = 150 - (col.nodes - 1) * step / 2;
+                for (let i = 0; i < col.nodes; i++) {
+                    arr.push({ x: col.x, y: startY + i * step });
+                }
+                return arr;
+            };
+
+            const layerCoords = cols.map(createCoords);
+
+            // Draw connections
+            for (let l = 0; l < layerCoords.length - 1; l++) {
+                const c1 = layerCoords[l];
+                const c2 = layerCoords[l+1];
+                c1.forEach(n1 => {
+                    c2.forEach(n2 => {
+                        const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+                        line.setAttribute("x1", n1.x);
+                        line.setAttribute("y1", n1.y);
+                        line.setAttribute("x2", n2.x);
+                        line.setAttribute("y2", n2.y);
+                        line.setAttribute("stroke", "rgba(255,255,255,0.06)");
+                        line.setAttribute("stroke-width", "1");
+                        svg.appendChild(line);
+                    });
+                });
+            }
+
+            // Draw nodes
+            cols.forEach((col, l) => {
+                layerCoords[l].forEach(node => {
+                    const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+                    circle.setAttribute("cx", node.x);
+                    circle.setAttribute("cy", node.y);
+                    circle.setAttribute("r", l === 2 ? "6" : "4.5");
+                    circle.setAttribute("fill", col.color);
+                    circle.setAttribute("stroke", "rgba(255,255,255,0.1)");
+                    circle.setAttribute("stroke-width", "1");
+                    svg.appendChild(circle);
+                });
+            });
+        }
+
+        function drawBottleneckPlot() {
+            const canvas = document.getElementById('canvas-bottleneck-plot');
+            const ctx = canvas.getContext('2d');
+            
+            const rect = canvas.getBoundingClientRect();
+            canvas.width = rect.width * window.devicePixelRatio;
+            canvas.height = rect.height * window.devicePixelRatio;
+            ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+            
+            const w = rect.width;
+            const h = rect.height;
+            ctx.clearRect(0,0,w,h);
+
+            // Baseline grids
+            ctx.strokeStyle = 'rgba(255,255,255,0.03)';
+            ctx.lineWidth = 1;
+            for (let i = 1; i < 10; i++) {
+                ctx.beginPath();
+                ctx.moveTo(w * i / 10, 0); ctx.lineTo(w * i / 10, h);
+                ctx.moveTo(0, h * i / 10); ctx.lineTo(w, h * i / 10);
+                ctx.stroke();
+            }
+
+            // Mapping: x in [0, 2pi] -> X in [30, w-30]
+            // y in [-1.5, 1.5] -> Y in [h-30, 30]
+            const mapX = (xVal) => 30 + xVal * (w - 60) / (2.0 * Math.PI);
+            const mapY = (yVal) => h / 2 - yVal * (h - 60) / 3.0;
+
+            const steps = 150;
+            const inputPoints = [];
+            const outputPoints = [];
+
+            // Generate curves
+            for (let i = 0; i <= steps; i++) {
+                const x = 2.0 * Math.PI * (i / steps);
+                
+                // Clean system dynamics: damped sine wave
+                const clean = Math.sin(2 * x) * Math.exp(-0.15 * x);
+                
+                // Gaussian noise representation
+                const noise = 0.15 * Math.sin(16 * x) + 0.08 * Math.cos(27 * x);
+                
+                const inputVal = clean + noise;
+                let outputVal = clean;
+
+                if (bottleneckSize === 1) {
+                    // Underfitting: heavily distorted amplitude and phase
+                    outputVal = 0.45 * Math.sin(2.0 * x - 0.45) * Math.exp(-0.35 * x);
+                } else if (bottleneckSize >= 2 && bottleneckSize <= 3) {
+                    // Optimal: clean wave, filters noise
+                    outputVal = clean;
+                } else {
+                    // Overfitting: copies noise fluctuations depending on dimensions
+                    const noiseLeak = (bottleneckSize - 3) / 7.0; // scale leak
+                    outputVal = clean + noiseLeak * noise;
+                }
+
+                inputPoints.push({ px: mapX(x), py: mapY(inputVal) });
+                outputPoints.push({ px: mapX(x), py: mapY(outputVal) });
+            }
+
+            // Draw Input curve (Cyan)
+            ctx.strokeStyle = 'rgba(6, 182, 212, 0.45)';
+            ctx.lineWidth = 1.5;
+            ctx.beginPath();
+            inputPoints.forEach((p, idx) => {
+                if (idx === 0) ctx.moveTo(p.px, p.py);
+                else ctx.lineTo(p.px, p.py);
+            });
+            ctx.stroke();
+
+            // Draw Reconstruction curve (Pink)
+            ctx.strokeStyle = '#ec4899';
+            ctx.lineWidth = 2.5;
+            ctx.beginPath();
+            outputPoints.forEach((p, idx) => {
+                if (idx === 0) ctx.moveTo(p.px, p.py);
+                else ctx.lineTo(p.px, p.py);
+            });
+            ctx.stroke();
+        }
+
+        // ==========================================
+        // TAB 2: ARCHITECTURE (DENSE VS CONV1D)
+        // ==========================================
+        function setLayerMode(mode) {
+            layerMode = mode;
+            const denseBtn = document.getElementById('btn-mode-dense');
+            const convBtn = document.getElementById('btn-mode-conv1d');
+            const explanation = document.getElementById('layer-explanation');
+            
+            if (mode === 'dense') {
+                denseBtn.className = "py-2.5 rounded-xl font-bold font-mono text-xs bg-cyan-500/10 border border-cyan-500/40 text-cyan-400";
+                convBtn.className = "py-2.5 rounded-xl font-bold font-mono text-xs bg-slate-900 border border-slate-800 text-slate-400 hover:border-slate-700";
+                explanation.innerText = "Ein vollvernetztes **Dense Layer** verarbeitet alle Zeitschritte statisch. Verschiebt sich die Welle, ändert sich das gesamte Aktivierungsmuster der Neuronen.";
+            } else {
+                convBtn.className = "py-2.5 rounded-xl font-bold font-mono text-xs bg-purple-500/10 border border-purple-500/40 text-purple-400";
+                denseBtn.className = "py-2.5 rounded-xl font-bold font-mono text-xs bg-slate-900 border border-slate-800 text-slate-400 hover:border-slate-700";
+                explanation.innerText = "Das **Conv1D Layer** schiebt einen kleinen Faltungs-Filter über das Signal. Verschiebt sich die Welle, verschiebt sich auch das Feature-Map-Muster proportional (Translations-Kovarianz!).";
+            }
+            initLayerScan();
+        }
+
+        function updateShift(val) {
+            shiftTime = parseInt(val);
+            document.getElementById('val-shift').innerText = `${shiftTime} Pkt`;
+            initLayerScan();
+        }
+
+        function initLayerScan() {
+            if (scanInterval) clearInterval(scanInterval);
+            scanStep = 0;
+            
+            scanInterval = setInterval(() => {
+                scanStep++;
+                if (scanStep >= 80) scanStep = 0;
+                drawLayerScan();
+            }, 50);
+        }
+
+        function drawLayerScan() {
+            const canvas = document.getElementById('canvas-architecture-scan');
+            const ctx = canvas.getContext('2d');
+            
+            const rect = canvas.getBoundingClientRect();
+            canvas.width = rect.width * window.devicePixelRatio;
+            canvas.height = rect.height * window.devicePixelRatio;
+            ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+            
+            const w = rect.width;
+            const h = rect.height;
+            ctx.clearRect(0,0,w,h);
+
+            // 1. Generate noisy wave (Shifted by shiftTime)
+            const pointsCount = 100;
+            const wavePoints = [];
+            for (let i = 0; i < pointsCount; i++) {
+                const xRatio = i / pointsCount;
+                // Add shiftTime offset
+                const t = 4 * Math.PI * xRatio + (shiftTime * 0.05);
+                const y = Math.sin(t) * 0.8 + 0.15 * Math.sin(8 * t);
+                
+                const px = 30 + xRatio * (w - 60);
+                const py = h / 2.5 - y * (h / 6);
+                wavePoints.push({ px, py });
+            }
+
+            // Draw Signal Curve (White)
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.25)';
+            ctx.lineWidth = 2.0;
+            ctx.beginPath();
+            wavePoints.forEach((p, idx) => {
+                if (idx === 0) ctx.moveTo(p.px, p.py);
+                else ctx.lineTo(p.px, p.py);
+            });
+            ctx.stroke();
+
+            // 2. Scan animation depending on Mode
+            if (layerMode === 'dense') {
+                // Dense: draws connections from ALL input points to central hidden layer neurons
+                const inputIndices = [10, 22, 35, 48, 60, 72, 85, 95];
+                const hiddenY = h - 30;
+                const hiddenCount = 5;
+                const hiddenX = [];
+                for(let j=0; j<hiddenCount; j++) {
+                    hiddenX.push(w/2 - 100 + j * 50);
+                }
+
+                // Draw dense lines
+                ctx.strokeStyle = 'rgba(6, 182, 212, 0.06)';
+                ctx.lineWidth = 1.0;
+                inputIndices.forEach(idx => {
+                    const p = wavePoints[idx];
+                    hiddenX.forEach(hx => {
+                        ctx.beginPath();
+                        ctx.moveTo(p.px, p.py);
+                        ctx.lineTo(hx, hiddenY);
+                        ctx.stroke();
+                    });
+                });
+
+                // Highlight active input points
+                ctx.fillStyle = '#06b6d4';
+                inputIndices.forEach(idx => {
+                    const p = wavePoints[idx];
+                    ctx.beginPath();
+                    ctx.arc(p.px, p.py, 3.5, 0, 2*Math.PI);
+                    ctx.fill();
+                });
+
+                // Draw hidden layer nodes
+                hiddenX.forEach(hx => {
+                    // node values fluctuate when wave is shifted
+                    // Represents activation amplitude changing completely
+                    const fluctuation = Math.sin(hx * 10 + shiftTime * 0.5) * 0.3 + 0.7;
+                    ctx.fillStyle = `rgba(139, 92, 246, ${fluctuation})`;
+                    ctx.beginPath();
+                    ctx.arc(hx, hiddenY, 6, 0, 2*Math.PI);
+                    ctx.fill();
+                });
+
+            } else {
+                // Conv1D Mode: Animate sliding 3-point convolution kernel window
+                const kernelSize = 10; // width in points
+                const maxStart = pointsCount - kernelSize;
+                const currentStart = Math.floor(scanStep % maxStart);
+                
+                // Draw sliding box window
+                const firstPt = wavePoints[currentStart];
+                const lastPt = wavePoints[currentStart + kernelSize - 1];
+                
+                ctx.strokeStyle = '#8b5cf6';
+                ctx.lineWidth = 2.0;
+                ctx.strokeRect(firstPt.px - 3, h/2.5 - h/5, (lastPt.px - firstPt.px) + 6, h/2.5);
+
+                // Highlight points inside kernel
+                ctx.fillStyle = '#ec4899';
+                for (let k = 0; k < kernelSize; k++) {
+                    const p = wavePoints[currentStart + k];
+                    ctx.beginPath();
+                    ctx.arc(p.px, p.py, 3, 0, 2*Math.PI);
+                    ctx.fill();
+                }
+
+                // Output Feature Map: Draw sliding convolved values at bottom
+                // We show convolved features shifting dynamically alongside wave shift
+                ctx.strokeStyle = 'rgba(139, 92, 246, 0.4)';
+                ctx.lineWidth = 1.5;
+                ctx.beginPath();
+                
+                const featurePoints = [];
+                for (let j = 0; j < maxStart; j++) {
+                    // Convolution output is local features: wave shape smoothed
+                    const fPt = wavePoints[j + Math.floor(kernelSize/2)];
+                    const fy = h - 25 - (Math.sin(j * 0.1 + shiftTime * 0.05) * 15);
+                    featurePoints.push({ px: fPt.px, py: fy });
+                }
+
+                featurePoints.forEach((fp, idx) => {
+                    if (idx === 0) ctx.moveTo(fp.px, fp.py);
+                    else ctx.lineTo(fp.px, fp.py);
+                });
+                ctx.stroke();
+
+                // Draw active output dot from current kernel position
+                const activeFeature = featurePoints[currentStart];
+                if (activeFeature) {
+                    ctx.fillStyle = '#8b5cf6';
+                    ctx.shadowColor = '#8b5cf6';
+                    ctx.shadowBlur = 8;
+                    ctx.beginPath();
+                    ctx.arc(activeFeature.px, activeFeature.py, 4.5, 0, 2*Math.PI);
+                    ctx.fill();
+                    ctx.shadowBlur = 0; // reset
+                    
+                    // connection line from kernel to feature
+                    ctx.strokeStyle = 'rgba(139, 92, 246, 0.3)';
+                    ctx.lineWidth = 1.0;
+                    ctx.beginPath();
+                    ctx.moveTo((firstPt.px + lastPt.px)/2, h/2.5 + h/5);
+                    ctx.lineTo(activeFeature.px, activeFeature.py - 5);
+                    ctx.stroke();
+                }
+            }
+        }
+
+        // ==========================================
+        // TAB 3: LOSS LANDSCAPE NAVIGATOR
+        // ==========================================
+        function setOptimizer(opt) {
+            optType = opt;
+            const btnSgd = document.getElementById('btn-opt-sgd');
+            const btnMom = document.getElementById('btn-opt-momentum');
+            const btnAdm = document.getElementById('btn-opt-adam');
+
+            btnSgd.className = "py-2 rounded bg-slate-900 border border-slate-800 text-[10px] font-mono font-bold text-slate-400 hover:border-slate-700";
+            btnMom.className = "py-2 rounded bg-slate-900 border border-slate-800 text-[10px] font-mono font-bold text-slate-400 hover:border-slate-700";
+            btnAdm.className = "py-2 rounded bg-slate-900 border border-slate-800 text-[10px] font-mono font-bold text-slate-400 hover:border-slate-700";
+
+            if (opt === 'sgd') {
+                btnSgd.className = "py-2 rounded bg-cyan-500/10 border border-cyan-500/40 text-[10px] font-mono font-bold text-cyan-400";
+            } else if (opt === 'momentum') {
+                btnMom.className = "py-2 rounded bg-pink-500/10 border border-pink-500/40 text-[10px] font-mono font-bold text-pink-400";
+            } else {
+                btnAdm.className = "py-2 rounded bg-purple-500/10 border border-purple-500/40 text-[10px] font-mono font-bold text-purple-400";
+            }
+        }
+
+        // 2D mathematical Loss Landscape function
+        function getLossValue(x, y) {
+            // Three minima:
+            // 1. x = 0, y = 0 (Deepest global minimum, value ~ -2)
+            // 2. x = 1.3, y = 1.3 (Val: ~ -1.3)
+            // 3. x = -1.3, y = 1.3 (Val: ~ -1.5)
+            const scaleX = x / 60.0 - 2.0; // map canvas pixels to coordinate space
+            const scaleY = y / 60.0 - 2.0;
+            
+            const g1 = -2.0 * Math.exp(-(scaleX*scaleX + scaleY*scaleY));
+            const g2 = -1.3 * Math.exp(-((scaleX-1.25)*(scaleX-1.25) + (scaleY-1.25)*(scaleY-1.25)));
+            const g3 = -1.5 * Math.exp(-((scaleX+1.25)*(scaleX+1.25) + (scaleY-1.25)*(scaleY-1.25)));
+            const boundary = 0.08 * (scaleX*scaleX + scaleY*scaleY);
+            
+            return g1 + g2 + g3 + boundary + 2.0; // normalized to positive
+        }
+
+        function getGradient(x, y) {
+            const scaleX = x / 60.0 - 2.0;
+            const scaleY = y / 60.0 - 2.0;
+            
+            const g1 = -2.0 * Math.exp(-(scaleX*scaleX + scaleY*scaleY));
+            const g2 = -1.3 * Math.exp(-((scaleX-1.25)*(scaleX-1.25) + (scaleY-1.25)*(scaleY-1.25)));
+            const g3 = -1.5 * Math.exp(-((scaleX+1.25)*(scaleX+1.25) + (scaleY-1.25)*(scaleY-1.25)));
+            
+            // Analytical gradients
+            const gx = -2.0 * scaleX * g1 - 2.0 * (scaleX - 1.25) * g2 - 2.0 * (scaleX + 1.25) * g3 + 0.16 * scaleX;
+            const gy = -2.0 * scaleY * g1 - 2.0 * (scaleY - 1.25) * g2 - 2.0 * (scaleY - 1.25) * g3 + 0.16 * scaleY;
+            
+            return { gx: gx * 60.0, gy: gy * 60.0 }; // scaled back to canvas step
+        }
+
+        function initLossLandscape() {
+            if (optInterval) clearInterval(optInterval);
+            optEpochs = 0;
+            optPath = [];
+            optLossHistory = [];
+            
+            const canvasMap = document.getElementById('canvas-landscape-map');
+            const bounding = canvasMap.getBoundingClientRect();
+            
+            // Draw background contours once
+            drawLandscapeContourBackground();
+
+            // Set click drop trigger
+            canvasMap.onmousedown = function(e) {
+                const rect = canvasMap.getBoundingClientRect();
+                const clickX = e.clientX - rect.left;
+                const clickY = e.clientY - rect.top;
+                
+                dropOptimizationBall(clickX, clickY);
+            };
+
+            // default drop ball
+            dropOptimizationBall(60, 60);
+        }
+
+        function drawLandscapeContourBackground() {
+            const canvas = document.getElementById('canvas-landscape-map');
+            const ctx = canvas.getContext('2d');
+            
+            canvas.width = canvas.offsetWidth;
+            canvas.height = canvas.offsetHeight;
+            
+            const w = canvas.width;
+            const h = canvas.height;
+            
+            // Draw color pixel contours
+            const imgData = ctx.createImageData(w, h);
+            for (let y = 0; y < h; y++) {
+                for (let x = 0; x < w; x++) {
+                    const lVal = getLossValue(x, y); // positive in [0, 2.0]
+                    const idx = (y * w + x) * 4;
+                    
+                    // High error (peaks) -> Pink/Yellow
+                    // Low error (valleys) -> Dark Blue
+                    const ratio = Math.max(0, Math.min(lVal / 2.0, 1.0));
+                    
+                    imgData.data[idx] = Math.floor(236 * ratio + 9 * (1.0 - ratio));
+                    imgData.data[idx+1] = Math.floor(72 * ratio + 13 * (1.0 - ratio));
+                    imgData.data[idx+2] = Math.floor(153 * ratio + 22 * (1.0 - ratio));
+                    imgData.data[idx+3] = 160;
+                }
+            }
+            ctx.putImageData(imgData, 0, 0);
+        }
+
+        function dropOptimizationBall(startX, startY) {
+            if (optInterval) clearInterval(optInterval);
+            
+            optX = startX;
+            optY = startY;
+            optEpochs = 0;
+            optPath = [{ x: optX, y: optY }];
+            
+            const initialLoss = getLossValue(optX, optY);
+            optLossHistory = [initialLoss];
+
+            document.getElementById('stat-opt-loss').innerText = initialLoss.toFixed(4);
+            document.getElementById('stat-opt-epochs').innerText = optEpochs;
+
+            // Physics momentum velocities
+            let vx = 0.0;
+            let vy = 0.0;
+
+            // Adam moments
+            let mx = 0.0, my = 0.0;
+            let sx = 0.0, sy = 0.0;
+            let t = 0;
+
+            // Run gradient descent loop
+            optInterval = setInterval(() => {
+                optEpochs++;
+                t++;
+                
+                const grad = getGradient(optX, optY);
+                const lr = 0.28; // Learning rate
+
+                if (optType === 'sgd') {
+                    // Standard vanilla SGD
+                    optX -= lr * grad.gx;
+                    optY -= lr * grad.gy;
+                } else if (optType === 'momentum') {
+                    // SGD + Momentum
+                    const beta = 0.88;
+                    vx = beta * vx - lr * grad.gx;
+                    vy = beta * vy - lr * grad.gy;
+                    optX += vx;
+                    optY += vy;
+                } else { // Adam
+                    const beta1 = 0.9;
+                    const beta2 = 0.999;
+                    const eps = 1e-6;
+
+                    mx = beta1 * mx + (1.0 - beta1) * grad.gx;
+                    my = beta1 * my + (1.0 - beta1) * grad.gy;
+
+                    sx = beta2 * sx + (1.0 - beta2) * grad.gx * grad.gx;
+                    sy = beta2 * sy + (1.0 - beta2) * grad.gy * grad.gy;
+
+                    // Bias correction
+                    const mx_hat = mx / (1.0 - Math.pow(beta1, t));
+                    const my_hat = my / (1.0 - Math.pow(beta1, t));
+                    const sx_hat = sx / (1.0 - Math.pow(beta2, t));
+                    const sy_hat = sy / (1.0 - Math.pow(beta2, t));
+
+                    optX -= (lr * 4.0 / (Math.sqrt(sx_hat) + eps)) * mx_hat;
+                    optY -= (lr * 4.0 / (Math.sqrt(sy_hat) + eps)) * my_hat;
+                }
+
+                // Boundary limits
+                const mapCanvas = document.getElementById('canvas-landscape-map');
+                optX = Math.max(0, Math.min(mapCanvas.width, optX));
+                optY = Math.max(0, Math.min(mapCanvas.height, optY));
+
+                optPath.push({ x: optX, y: optY });
+                
+                const currentLoss = getLossValue(optX, optY);
+                optLossHistory.push(currentLoss);
+
+                document.getElementById('stat-opt-loss').innerText = currentLoss.toFixed(4);
+                document.getElementById('stat-opt-epochs').innerText = optEpochs;
+
+                // Redraw
+                drawLandscapePath();
+                drawLossHistoryCurve();
+
+                // stopping conditions (close to zero gradient / minimum)
+                const gradMagnitude = Math.sqrt(grad.gx*grad.gx + grad.gy*grad.gy);
+                if (gradMagnitude < 0.1 || optEpochs >= 100) {
+                    clearInterval(optInterval);
+                }
+
+            }, 60);
+        }
+
+        function drawLandscapePath() {
+            // Restore contour background
+            drawLandscapeContourBackground();
+            
+            const canvas = document.getElementById('canvas-landscape-map');
+            const ctx = canvas.getContext('2d');
+
+            // Draw glowing path trace
+            ctx.strokeStyle = optType === 'sgd' ? '#06b6d4' : optType === 'momentum' ? '#ec4899' : '#8b5cf6';
+            ctx.lineWidth = 2.0;
+            ctx.beginPath();
+            optPath.forEach((pt, idx) => {
+                if (idx === 0) ctx.moveTo(pt.x, pt.y);
+                else ctx.lineTo(pt.x, pt.y);
+            });
+            ctx.stroke();
+
+            // Draw current ball
+            ctx.fillStyle = '#ffffff';
+            ctx.shadowColor = '#ffffff';
+            ctx.shadowBlur = 10;
+            ctx.beginPath();
+            ctx.arc(optX, optY, 5, 0, 2*Math.PI);
+            ctx.fill();
+            ctx.shadowBlur = 0; // reset
+        }
+
+        function drawLossHistoryCurve() {
+            const canvas = document.getElementById('canvas-landscape-loss');
+            const ctx = canvas.getContext('2d');
+            
+            canvas.width = canvas.offsetWidth;
+            canvas.height = canvas.offsetHeight;
+            
+            const w = canvas.width;
+            const h = canvas.height;
+            ctx.clearRect(0,0,w,h);
+
+            // Baseline grid
+            ctx.strokeStyle = 'rgba(255,255,255,0.03)';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(0, h - 15); ctx.lineTo(w, h - 15);
+            ctx.stroke();
+
+            // Mapping: epoch in [0, 100] -> X in [20, w-20]
+            // loss in [0, 2.0] -> Y in [h-20, 15]
+            const mapX = (ep) => 20 + ep * (w - 40) / 100.0;
+            const mapY = (l) => h - 15 - l * (h - 30) / 2.0;
+
+            ctx.strokeStyle = '#eab308';
+            ctx.lineWidth = 2.0;
+            ctx.beginPath();
+            optLossHistory.forEach((l, idx) => {
+                const px = mapX(idx);
+                const py = mapY(l);
+                if (idx === 0) ctx.moveTo(px, py);
+                else ctx.lineTo(px, py);
+            });
+            ctx.stroke();
+            
+            // X-Axis labels
+            ctx.fillStyle = '#475569';
+            ctx.font = '8px JetBrains Mono';
+            ctx.fillText('0 Epochs', 10, h - 3);
+            ctx.fillText('100 Epochs', w - 60, h - 3);
+        }
+
+        // ==========================================
+        // TAB 4: JIT & OPERATOR FUSION (XLA ANIMATION)
+        // ==========================================
+        function initJitAnimation() {
+            isJitCompiled = false;
+            
+            document.getElementById('jit-badge').className = "px-2 py-0.5 rounded text-[10px] font-mono bg-slate-900 border border-slate-800 text-slate-500";
+            document.getElementById('jit-badge').innerText = "Unkompiliert (Slow)";
+            document.getElementById('btn-jit-compile').innerText = "⚡ Operator-Fusion (JIT) kompilieren";
+            document.getElementById('benchmark-speed-label').className = "text-pink-500 font-bold";
+            document.getElementById('benchmark-speed-label').innerText = "Python: 12.4ms (Slow)";
+
+            renderJitBlocks();
+        }
+
+        function toggleJitCompilation() {
+            const box = document.getElementById('jit-animation-box');
+            const badge = document.getElementById('jit-badge');
+            const btn = document.getElementById('btn-jit-compile');
+            const benchmark = document.getElementById('benchmark-speed-label');
+
+            if (!isJitCompiled) {
+                // Compress blocks together with scale animation
+                isJitCompiled = true;
+                
+                badge.className = "px-2 py-0.5 rounded text-[10px] font-mono bg-cyan-950 text-cyan-400 border border-cyan-900";
+                badge.innerText = "JIT Compiler Active (XLA)";
+                btn.innerText = "🔄 Zurücksetzen";
+                benchmark.className = "text-emerald-400 font-bold";
+                benchmark.innerText = "JAX compiled: 0.08ms (155x schneller!)";
+
+                renderJitBlocks();
+            } else {
+                initJitAnimation();
+            }
+        }
+
+        function renderJitBlocks() {
+            const box = document.getElementById('jit-animation-box');
+            
+            if (!isJitCompiled) {
+                // Renders three separate Python blocks showing memory read/write cycles
+                box.innerHTML = `
+                    <div class="fused-block p-4 rounded-xl bg-slate-900 border border-slate-800 space-y-1 font-mono text-[10px] text-slate-400 w-36 shadow-md relative group hover:border-pink-500/30">
+                        <span class="text-[8px] text-pink-400 font-bold block uppercase">Op 1: Addition</span>
+                        <div class="text-white font-bold my-1 text-xs">a = x + y</div>
+                        <span class="text-[8px] text-slate-500 block leading-tight border-t border-slate-850 pt-1">💾 Write: RAM ('a')</span>
+                    </div>
+
+                    <div class="fused-block p-4 rounded-xl bg-slate-900 border border-slate-800 space-y-1 font-mono text-[10px] text-slate-400 w-36 shadow-md relative group hover:border-pink-500/30">
+                        <span class="text-[8px] text-pink-400 font-bold block uppercase">Op 2: Multiply</span>
+                        <div class="text-white font-bold my-1 text-xs">b = a * z</div>
+                        <span class="text-[8px] text-slate-500 block leading-tight border-t border-slate-850 pt-1">📖 Read: RAM ('a')<br>💾 Write: RAM ('b')</span>
+                    </div>
+
+                    <div class="fused-block p-4 rounded-xl bg-slate-900 border border-slate-800 space-y-1 font-mono text-[10px] text-slate-400 w-36 shadow-md relative group hover:border-pink-500/30">
+                        <span class="text-[8px] text-pink-400 font-bold block uppercase">Op 3: Subtract</span>
+                        <div class="text-white font-bold my-1 text-xs">c = b - w</div>
+                        <span class="text-[8px] text-slate-500 block leading-tight border-t border-slate-850 pt-1">📖 Read: RAM ('b')<br>💾 Write: RAM ('c')</span>
+                    </div>
+                `;
+            } else {
+                // Renders a single fused JIT kernel block avoiding intermediate RAM writes
+                box.innerHTML = `
+                    <div class="fused-block p-6 rounded-2xl bg-cyan-950/20 border border-cyan-500/40 space-y-2 font-mono text-xs text-slate-400 w-80 shadow-lg shadow-cyan-500/5 text-center transform scale-105">
+                        <span class="text-[9px] text-cyan-400 font-bold uppercase tracking-widest block">Fused GPU/TPU Kernel</span>
+                        <div class="text-white font-black my-2 text-sm">c = (x + y) * z - w</div>
+                        <p class="text-[9px] text-slate-400 border-t border-cyan-900/50 pt-2 leading-relaxed">
+                            💡 **Operator Fusion:** Die Rechnungen werden im Register verschmolzen. Es gibt keine langsamen Lese-/Schreibvorgänge (RAM) für Zwischenschritte ('a' und 'b').
+                        </p>
+                    </div>
+                `;
+            }
+        }
     </script>
 </body>
 </html>

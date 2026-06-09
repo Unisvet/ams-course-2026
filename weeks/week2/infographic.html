@@ -1,97 +1,1221 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="de" class="min-h-screen">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Infografik Template</title>
-<!-- Tailwind CDN -->
-<script src="https://cdn.tailwindcss.com"></script>
-<script>
-tailwind.config = {
-theme: {
-extend: {
-colors: {
-vibrant: {
-bg: '#0f172a',
-surface: '#1e293b',
-surfaceLight: '#334155',
-cyan: '#06b6d4',
-pink: '#ec4899',
-yellow: '#eab308',
-purple: '#8b5cf6',
-text: '#f8fafc',
-textMuted: '#94a3b8'
-}
-}
-}
-}
-}
-</script>
-<style>
-body {
-background-color: #0f172a;
-color: #f8fafc;
-font-family: 'Inter', system-ui, sans-serif;
-}
-.chart-container {
-position: relative;
-width: 100%;
-max-width: 800px;
-margin-left: auto;
-margin-right: auto;
-height: 350px;
-}
-.glass-card {
-background: rgba(30, 41, 59, 0.7);
-backdrop-filter: blur(10px);
-border: 1px solid rgba(255, 255, 255, 0.1);
-}
-</style>
-<!-- Chart.js CDN -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-</head>
-<body class="antialiased p-6">
-    <div class="max-w-4xl mx-auto space-y-8">
-        <div class="text-center">
-            <h1 class="text-2xl md:text-3xl font-black text-white">Visualisierung - Woche 2</h1>
-            <p class="text-sm text-vibrant-textMuted mt-1">Hier kannst du interaktive Graphen und Animationen einbetten.</p>
-        </div>
-
-        <!-- Chart Card -->
-        <div class="glass-card rounded-2xl p-6">
-            <div class="chart-container">
-                <canvas id="chartW2"></canvas>
-            </div>
-        </div>
-    </div>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Syllabus Woche 2: Prädiktive Modellierung & Maschinelles Lernen</title>
+    
+    <!-- Google Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800;900&display=swap">
+    
+    <!-- Tailwind CSS (CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
     <script>
-        const ctx = document.getElementById('chartW2').getContext('2d');
-        new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: ['Training-Loss', 'Val-Loss', 'Test-Loss'],
-                datasets: [{
-                    label: 'Modellfehler (MSE)',
-                    data: [0.8, 0.45, 0.46],
-                    backgroundColor: 'rgba(6, 182, 212, 0.7)',
-                    borderColor: '#06b6d4',
-                    borderWidth: 1,
-                    borderRadius: 4
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: { labels: { color: '#f8fafc' } }
-                },
-                scales: {
-                    x: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255,255,255,0.05)' } },
-                    y: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255,255,255,0.05)' } }
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        vibrant: {
+                            bg: '#090d16',
+                            surface: '#0f172a',
+                            surfaceLight: '#1e293b',
+                            cyan: '#06b6d4',
+                            pink: '#ec4899',
+                            yellow: '#eab308',
+                            purple: '#8b5cf6',
+                            text: '#f8fafc',
+                            textMuted: '#94a3b8',
+                            grid: 'rgba(255, 255, 255, 0.05)'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'Outfit', 'system-ui', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace']
+                    }
                 }
             }
+        }
+    </script>
+
+    <!-- KaTeX for math formatting -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" onload="renderMath()"></script>
+
+    <style>
+        body {
+            background-color: #090d16;
+            color: #f8fafc;
+            font-family: 'Inter', system-ui, sans-serif;
+        }
+        h1, h2, h3, h4 {
+            font-family: 'Outfit', sans-serif;
+        }
+        .glass-card {
+            background: rgba(15, 23, 42, 0.65);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .glass-card:hover {
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+        .glow-cyan:hover, .glow-cyan.active {
+            box-shadow: 0 0 20px rgba(6, 182, 212, 0.15);
+            border-color: rgba(6, 182, 212, 0.4);
+        }
+        .glow-pink:hover, .glow-pink.active {
+            box-shadow: 0 0 20px rgba(236, 72, 153, 0.15);
+            border-color: rgba(236, 72, 153, 0.4);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(15, 23, 42, 0.4);
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #1e293b;
+            border-radius: 99px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #334155;
+        }
+        .tab-btn.active {
+            color: #06b6d4;
+            border-bottom: 2px solid #06b6d4;
+        }
+        .pe-cell {
+            transition: background-color 0.2s, transform 0.2s;
+        }
+        .prng-node {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .prng-node:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(6, 182, 212, 0.3);
+        }
+    </style>
+</head>
+<body class="antialiased p-4 sm:p-6 min-h-screen flex flex-col items-center">
+
+    <div class="max-w-6xl w-full space-y-6">
+        
+        <!-- Header -->
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-slate-900 pb-4">
+            <div>
+                <span class="px-2.5 py-0.5 rounded-full bg-cyan-950/40 text-cyan-400 text-xs font-mono font-bold uppercase tracking-wider border border-cyan-900/30">
+                    Syllabus Visualizer - Woche 2
+                </span>
+                <h1 class="text-2xl sm:text-3xl font-black text-white mt-1">Prädiktive Simulation & Hardware-Beschleunigung</h1>
+                <p class="text-xs sm:text-sm text-vibrant-textMuted mt-0.5">Exploriere Fourier RC-Filter, Autoencoder Anomaliendetektion, TPU-Matrixberechnungen und funktionale JAX PRNGs.</p>
+            </div>
+            
+            <!-- Tab Menu -->
+            <div class="flex bg-slate-950/60 p-1.5 rounded-xl border border-slate-900 shrink-0 self-stretch md:self-auto overflow-x-auto custom-scrollbar">
+                <button onclick="switchTab('filter')" id="btn-tab-filter" class="tab-btn active px-3.5 py-1.5 rounded-lg text-xs font-bold font-mono transition-all flex items-center gap-1.5 whitespace-nowrap">
+                    <span>⚡</span> RC-Filter (Fourier)
+                </button>
+                <button onclick="switchTab('autoencoder')" id="btn-tab-autoencoder" class="tab-btn px-3.5 py-1.5 rounded-lg text-xs font-bold font-mono transition-all text-slate-400 hover:text-white flex items-center gap-1.5 whitespace-nowrap">
+                    <span>👁️</span> Autoencoder (Anomaly)
+                </button>
+                <button onclick="switchTab('tpu')" id="btn-tab-tpu" class="tab-btn px-3.5 py-1.5 rounded-lg text-xs font-bold font-mono transition-all text-slate-400 hover:text-white flex items-center gap-1.5 whitespace-nowrap">
+                    <span>🚥</span> TPU Systolic Array
+                </button>
+                <button onclick="switchTab('prng')" id="btn-tab-prng" class="tab-btn px-3.5 py-1.5 rounded-lg text-xs font-bold font-mono transition-all text-slate-400 hover:text-white flex items-center gap-1.5 whitespace-nowrap">
+                    <span>🔑</span> JAX PRNG Splitting
+                </button>
+            </div>
+        </div>
+
+        <!-- TAB 1: RC FILTER SIMULATOR -->
+        <div id="tab-filter" class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            <!-- Left Controls -->
+            <div class="lg:col-span-4 space-y-4">
+                <div class="glass-card rounded-2xl p-5 space-y-5">
+                    <h3 class="text-base font-bold text-white border-b border-slate-900 pb-2 flex items-center gap-2">
+                        <span>⚙️</span> Filterkonfiguration
+                    </h3>
+
+                    <!-- Harmonics Selection -->
+                    <div class="space-y-2">
+                        <label class="text-xs font-mono text-cyan-400 font-bold uppercase tracking-wider block">Oberschwingungen (Harmonics)</label>
+                        <div class="grid grid-cols-5 gap-1.5" id="harmonics-group">
+                            <!-- Toggle buttons for n = 1, 3, 5, 7, 9 -->
+                            <button onclick="toggleHarmonic(1)" id="btn-h-1" class="py-1.5 rounded bg-cyan-500/10 border border-cyan-500/40 text-[10px] font-mono font-bold text-cyan-400">1</button>
+                            <button onclick="toggleHarmonic(3)" id="btn-h-3" class="py-1.5 rounded bg-cyan-500/10 border border-cyan-500/40 text-[10px] font-mono font-bold text-cyan-400">3</button>
+                            <button onclick="toggleHarmonic(5)" id="btn-h-5" class="py-1.5 rounded bg-cyan-500/10 border border-cyan-500/40 text-[10px] font-mono font-bold text-cyan-400">5</button>
+                            <button onclick="toggleHarmonic(7)" id="btn-h-7" class="py-1.5 rounded bg-cyan-500/10 border border-cyan-500/40 text-[10px] font-mono font-bold text-cyan-400">7</button>
+                            <button onclick="toggleHarmonic(9)" id="btn-h-9" class="py-1.5 rounded bg-cyan-500/10 border border-cyan-500/40 text-[10px] font-mono font-bold text-cyan-400">9</button>
+                        </div>
+                    </div>
+
+                    <!-- Resistance Slider -->
+                    <div class="space-y-2">
+                        <div class="flex justify-between items-center text-xs font-mono">
+                            <span class="text-slate-400">Widerstand \(R\)</span>
+                            <span id="val-r" class="text-cyan-400 font-bold">0.50 kΩ</span>
+                        </div>
+                        <input type="range" id="slide-r" min="0.1" max="2.0" step="0.05" value="0.5" oninput="updateR(this.value)" class="w-full h-1.5 bg-slate-900 rounded-lg appearance-none cursor-pointer accent-cyan-500">
+                    </div>
+
+                    <!-- Capacitance Slider -->
+                    <div class="space-y-2">
+                        <div class="flex justify-between items-center text-xs font-mono">
+                            <span class="text-slate-400">Kapazität \(C\)</span>
+                            <span id="val-c" class="text-cyan-400 font-bold">1000 µF</span>
+                        </div>
+                        <input type="range" id="slide-c" min="100" max="2000" step="50" value="1000" oninput="updateC(this.value)" class="w-full h-1.5 bg-slate-900 rounded-lg appearance-none cursor-pointer accent-cyan-500">
+                    </div>
+
+                    <!-- Add Noise Toggle -->
+                    <div class="space-y-2 pt-2 border-t border-slate-900">
+                        <label class="flex items-center gap-2.5 p-2 rounded bg-slate-900/40 border border-slate-800 text-xs cursor-pointer select-none hover:bg-slate-900/60">
+                            <input type="checkbox" id="chk-noise" onchange="toggleNoise(this.checked)" class="rounded border-slate-850 bg-slate-950 text-cyan-500 cursor-pointer accent-cyan-500">
+                            <span>Gaussian-Rauschen hinzufügen (Noisy Signal)</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Theory helper box -->
+                <div class="glass-card rounded-2xl p-5 space-y-2 bg-purple-950/5 border-l-4 border-l-purple-500 text-xs">
+                    <h4 class="font-bold text-purple-400 font-mono uppercase tracking-wider">RC-Filter & Frequenzen:</h4>
+                    <p class="text-slate-300 leading-relaxed">
+                        Ein RC-Glied wirkt als **Tiefpassfilter**. Es lässt langsame (niederfrequente) Schwingungen passieren, dämpft aber schnelle (hochfrequente) ab. Der Phasenwinkel verschiebt sich ebenfalls.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Right Visualizers -->
+            <div class="lg:col-span-8 space-y-6">
+                <!-- Time-Domain Plot -->
+                <div class="glass-card rounded-2xl p-5 space-y-4">
+                    <div class="border-b border-slate-900 pb-2 flex justify-between items-center">
+                        <h4 class="text-sm font-bold text-white flex items-center gap-2">
+                            <span>📈</span> Spannungsverläufe (Zeitbereich)
+                        </h4>
+                        <div class="flex gap-4 text-[10px] font-mono text-slate-400">
+                            <span class="flex items-center gap-1"><span class="w-2.5 h-1.5 bg-pink-500 rounded-sm"></span> Eingang \(v_{in}\)</span>
+                            <span class="flex items-center gap-1"><span class="w-2.5 h-1.5 bg-cyan-400 rounded-sm"></span> Ausgang \(v_{out}\)</span>
+                        </div>
+                    </div>
+                    <div class="w-full aspect-[16/7] bg-slate-950/40 border border-slate-900 rounded-xl overflow-hidden relative">
+                        <canvas id="canvas-filter-time" class="absolute inset-0 w-full h-full"></canvas>
+                    </div>
+                </div>
+
+                <!-- Frequency-Domain Plot -->
+                <div class="glass-card rounded-2xl p-5 space-y-4">
+                    <div class="border-b border-slate-900 pb-2 flex justify-between items-center">
+                        <h4 class="text-sm font-bold text-white">
+                            <span>📊</span> Harmonische Dämpfung (Frequenzbereich)
+                        </h4>
+                        <span class="text-[10px] font-mono text-slate-500">Amplitude vs. Oberschwingung \(n\)</span>
+                    </div>
+                    <div class="w-full aspect-[16/4] bg-slate-950/40 border border-slate-900 rounded-xl overflow-hidden relative">
+                        <canvas id="canvas-filter-freq" class="absolute inset-0 w-full h-full"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 2: AUTOENCODER ANOMALY DETECTION -->
+        <div id="tab-autoencoder" class="grid grid-cols-1 lg:grid-cols-12 gap-6 hidden">
+            <!-- Left Controls -->
+            <div class="lg:col-span-4 space-y-4">
+                <div class="glass-card rounded-2xl p-5 space-y-5">
+                    <h3 class="text-base font-bold text-white border-b border-slate-900 pb-2 flex items-center gap-2">
+                        <span>🌡️</span> Anomalie-Injektor
+                    </h3>
+                    <p class="text-xs text-slate-300 leading-relaxed">
+                        Ein Autoencoder (Hourglass) wird ausschließlich auf normalen Signalen trainiert, um diese über einen kleinen Flaschenhals (Latent Space) zu komprimieren.
+                    </p>
+
+                    <!-- Anomaly Actions -->
+                    <div class="space-y-3 pt-2">
+                        <button onclick="injectAnomaly('spike')" id="btn-anom-spike" class="w-full py-2.5 rounded-xl font-bold font-mono text-xs bg-rose-500/10 border border-rose-500/40 text-rose-400 hover:bg-rose-500/20 active:scale-95 transition-all select-none">
+                            Massiven Spannungs-Spike injizieren
+                        </button>
+                        <button onclick="injectAnomaly('sensor')" id="btn-anom-sensor" class="w-full py-2.5 rounded-xl font-bold font-mono text-xs bg-amber-500/10 border border-amber-500/40 text-amber-400 hover:bg-amber-500/20 active:scale-95 transition-all select-none">
+                            Sensor-Totalausfall (Flatline) simulieren
+                        </button>
+                        <button onclick="clearAnomaly()" id="btn-anom-clear" class="w-full py-2.5 rounded-xl font-bold font-mono text-xs bg-slate-900 border border-slate-800 text-slate-400 hover:border-slate-700 active:scale-95 transition-all select-none">
+                            Normalzustand wiederherstellen
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Live alert box -->
+                <div id="anomaly-alert-box" class="glass-card rounded-2xl p-5 bg-emerald-950/10 border-emerald-900/30 border-l-4 border-l-emerald-500 text-xs flex flex-col justify-center gap-2 h-36">
+                    <div class="flex items-center gap-2">
+                        <span id="anom-alert-dot" class="w-3.5 h-3.5 rounded-full bg-emerald-500"></span>
+                        <h4 id="anom-alert-title" class="font-bold text-emerald-400 font-mono uppercase tracking-widest">Normaler Betrieb</h4>
+                    </div>
+                    <p id="anom-alert-desc" class="text-slate-300 leading-normal">
+                        Der Reconstruction Loss (MAE) liegt unter dem Schwellenwert. Das Modell emuliert die Filter-Physik fehlerfrei.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Right Visualizers -->
+            <div class="lg:col-span-8 space-y-6">
+                <!-- Reconstruct vs Input Chart -->
+                <div class="glass-card rounded-2xl p-5 space-y-4">
+                    <div class="border-b border-slate-900 pb-2 flex justify-between items-center">
+                        <h4 class="text-sm font-bold text-white flex items-center gap-2">
+                            <span>🧠</span> Latent Space Reconstruction (Keras 3 Model)
+                        </h4>
+                        <div class="flex gap-4 text-[10px] font-mono text-slate-400">
+                            <span class="flex items-center gap-1.5"><span class="w-3 h-1 bg-cyan-400 rounded-sm"></span> Modell-Eingabe (Noisy Input)</span>
+                            <span class="flex items-center gap-1.5"><span class="w-3 h-1 bg-pink-500 border-t border-dashed rounded-sm"></span> Rekonstruktion (Autoencoder Output)</span>
+                        </div>
+                    </div>
+                    <div class="w-full aspect-[16/7] bg-slate-950/40 border border-slate-900 rounded-xl overflow-hidden relative">
+                        <canvas id="canvas-anom-reconstruct" class="absolute inset-0 w-full h-full"></canvas>
+                    </div>
+                </div>
+
+                <!-- Reconstruction Error Loss Chart -->
+                <div class="glass-card rounded-2xl p-5 space-y-4">
+                    <div class="border-b border-slate-900 pb-2 flex justify-between items-center">
+                        <h4 class="text-sm font-bold text-white">
+                            <span>📈</span> MAE Reconstruction Loss & Schwellenwert (Threshold)
+                        </h4>
+                        <span class="text-[10px] font-mono text-slate-500">Fehlerwert over time</span>
+                    </div>
+                    <div class="w-full aspect-[16/4] bg-slate-950/40 border border-slate-900 rounded-xl overflow-hidden relative">
+                        <canvas id="canvas-anom-loss" class="absolute inset-0 w-full h-full"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 3: TPU SYSTOLIC ARRAY -->
+        <div id="tab-tpu" class="grid grid-cols-1 lg:grid-cols-12 gap-6 hidden animate-fade-in">
+            <!-- Left controls -->
+            <div class="lg:col-span-4 space-y-4">
+                <div class="glass-card rounded-2xl p-5 space-y-4">
+                    <h3 class="text-base font-bold text-white border-b border-slate-900 pb-2">
+                        🚥 Matrix Multiply Unit (MXU)
+                    </h3>
+                    <p class="text-xs text-slate-300 leading-relaxed">
+                        TPUs nutzen ein **Systolisches Array**, um Matrix-Multiplikationen hardwareseitig zu beschleunigen.
+                    </p>
+                    <p class="text-xs text-slate-400 leading-relaxed">
+                        Statt für jede Operation Daten aus Registern zu lesen/schreiben, fließen die Aktivierungen (blau) rhythmisch von links durch ein Gitter von PEs, während Gewichte (pink) von oben geladen sind.
+                    </p>
+
+                    <!-- Interactive controls -->
+                    <div class="space-y-2.5 pt-2 border-t border-slate-900">
+                        <div class="flex gap-2">
+                            <button onclick="toggleTpuPlay()" id="btn-tpu-play" class="flex-1 py-2 rounded-xl font-bold font-mono text-xs bg-cyan-500/10 border border-cyan-500/40 text-cyan-400 hover:bg-cyan-500/20 transition-all select-none">
+                                ▶ Starten
+                            </button>
+                            <button onclick="stepTpuCycle()" class="py-2 px-4 rounded-xl font-bold font-mono text-xs bg-slate-900 border border-slate-800 text-slate-400 hover:border-slate-700 transition-all select-none">
+                                Schritt
+                            </button>
+                            <button onclick="resetTpu()" class="py-2 px-3 rounded-xl font-bold font-mono text-xs bg-slate-900 border border-slate-800 text-slate-400 hover:border-slate-700 transition-all select-none">
+                                🔄
+                            </button>
+                        </div>
+                        <div class="flex justify-between items-center text-[10px] font-mono text-slate-500">
+                            <span>Taktzyklus (Clock Cycle):</span>
+                            <span id="tpu-cycle-val" class="text-cyan-400 font-bold">0 / 12</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Systolic Array visual canvas -->
+            <div class="lg:col-span-8 glass-card rounded-2xl p-5 space-y-4 flex flex-col justify-between">
+                <div class="flex justify-between items-center border-b border-slate-900 pb-2">
+                    <h3 class="text-sm font-bold text-white">
+                        ⚡ Systolischer Datenfluss (\(4 \times 4\) Grid)
+                    </h3>
+                    <span class="text-[10px] font-mono text-slate-500">Weights preloaded | Inputs streaming</span>
+                </div>
+
+                <!-- Canvas -->
+                <div class="aspect-[16/10] w-full bg-slate-950/40 border border-slate-900 rounded-xl relative">
+                    <canvas id="canvas-systolic-array" class="absolute inset-0 w-full h-full"></canvas>
+                </div>
+
+                <div class="text-[10px] text-slate-500 font-mono text-center">
+                    Jedes PE (Processing Element) führt eine Multiply-Accumulate (MAC) Operation aus: \(C_{ij} \leftarrow C_{ij} + A_{ik} \cdot B_{kj}\)
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 4: JAX STATELESS PRNG KEY SPLITTING -->
+        <div id="tab-prng" class="grid grid-cols-1 lg:grid-cols-12 gap-6 hidden">
+            <!-- Left explanation -->
+            <div class="lg:col-span-4 space-y-4">
+                <div class="glass-card rounded-2xl p-5 space-y-4 flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-base font-bold text-white border-b border-slate-900 pb-2">
+                            🔑 Stateless PRNG Keys
+                        </h3>
+                        <p class="text-xs text-slate-300 leading-relaxed mt-3">
+                            In JAX ist die Generierung von Zufallszahlen **zustandslos**. Standard Python Random greift auf einen globalen State zu, was parallele Threads auf GPUs korrumpieren würde.
+                        </p>
+                        <p class="text-xs text-slate-400 leading-relaxed mt-2">
+                            Mit `jax.random.split` klonen wir Schlüssel explizit in neue Zweige. Klicke auf die Nodes rechts, um die Struktur weiter zu spalten.
+                        </p>
+                    </div>
+
+                    <button onclick="resetPrngTree()" class="w-full py-2.5 rounded-xl font-bold font-mono text-xs bg-slate-900 border border-slate-800 text-slate-400 hover:border-slate-700 active:scale-95 transition-all select-none mt-4">
+                        PRNG Baum zurücksetzen
+                    </button>
+                </div>
+            </div>
+
+            <!-- State Tree visualizer -->
+            <div class="lg:col-span-8 glass-card rounded-2xl p-5 space-y-4 flex flex-col justify-between min-h-[400px]">
+                <div class="flex justify-between items-center border-b border-slate-900 pb-2">
+                    <h3 class="text-sm font-bold text-white flex items-center gap-2">
+                        🌳 JAX PRNG Key-Baumstruktur (Klicke Nodes zum Splitten)
+                    </h3>
+                    <span class="text-[10px] font-mono text-slate-500">Threefry algorithm</span>
+                </div>
+
+                <!-- Key Visual representation -->
+                <div class="flex-1 bg-slate-950/40 rounded-xl border border-slate-900 relative p-4 flex items-center justify-center overflow-hidden aspect-[16/8]">
+                    <svg id="svg-prng-tree" class="w-full h-full" viewBox="0 0 700 350">
+                        <!-- Key tree drawn in JS -->
+                    </svg>
+                </div>
+
+                <div class="p-3 bg-slate-950 rounded-xl border border-slate-900 font-mono text-[10px] text-cyan-400 leading-relaxed overflow-x-auto">
+                    <span class="text-slate-500 block">Generierter JAX-Code:</span>
+                    <pre id="jax-prng-code-block" class="language-python"># Startschlüssel:
+key = jax.random.PRNGKey(42)</pre>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Core Javascript Code -->
+    <script>
+        function renderMath() {
+            if (window.renderMathInElement) {
+                window.renderMathInElement(document.body, {
+                    delimiters: [
+                        {left: '$$', right: '$$', display: true},
+                        {left: '$', right: '$', display: false},
+                        {left: '\\(', right: '\\)', display: false},
+                        {left: '\\[', right: '\\]', display: true}
+                    ],
+                    throwOnError: false
+                });
+            }
+        }
+
+        // Global States
+        let currentTab = 'filter';
+        let activeHarmonics = [1, 3, 5, 7, 9];
+        let R = 0.5; // kOhm
+        let C = 1000; // uF
+        let addNoise = false;
+        
+        let anomalyType = 'none'; // 'none', 'spike', 'sensor'
+        
+        // TPU systolic animation states
+        let tpuCycle = 0;
+        let tpuPlaying = false;
+        let tpuInterval = null;
+
+        // PRNG tree structure
+        let prngTree = {
+            id: "key_root",
+            label: "key",
+            val: "PRNGKey(42)",
+            x: 350, y: 50,
+            children: []
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initFilterCalculations();
+            drawFilterTime();
+            drawFilterFreq();
+            
+            initAnomalyCalculations();
+            drawAnomalyReconstruct();
+            drawAnomalyLoss();
+
+            initPRNGTree();
+            drawPRNGTree();
         });
+
+        // Tab selection
+        function switchTab(tabId) {
+            currentTab = tabId;
+            const tabs = ['filter', 'autoencoder', 'tpu', 'prng'];
+            tabs.forEach(t => {
+                document.getElementById(`tab-${t}`).classList.add('hidden');
+                document.getElementById(`btn-tab-${t}`).className = "tab-btn px-3.5 py-1.5 rounded-lg text-xs font-bold font-mono transition-all text-slate-400 hover:text-white";
+            });
+            document.getElementById(`tab-${tabId}`).classList.remove('hidden');
+            document.getElementById(`btn-tab-${tabId}`).className = "tab-btn active px-3.5 py-1.5 rounded-lg text-xs font-bold font-mono transition-all text-cyan-400";
+
+            if (tabId === 'filter') {
+                setTimeout(() => {
+                    initFilterCalculations();
+                    drawFilterTime();
+                    drawFilterFreq();
+                }, 50);
+            } else if (tabId === 'autoencoder') {
+                setTimeout(() => {
+                    initAnomalyCalculations();
+                    drawAnomalyReconstruct();
+                    drawAnomalyLoss();
+                }, 50);
+            } else if (tabId === 'tpu') {
+                setTimeout(() => {
+                    resetTpu();
+                    drawTpuMXU();
+                }, 50);
+            } else if (tabId === 'prng') {
+                setTimeout(() => {
+                    drawPRNGTree();
+                }, 50);
+            }
+        }
+
+        // ==========================================
+        // TAB 1: RC FILTER SIMULATOR
+        // ==========================================
+        let timeArray = [];
+        let vinArray = [];
+        let voutArray = [];
+        let noiseArray = [];
+
+        function toggleHarmonic(n) {
+            const index = activeHarmonics.indexOf(n);
+            if (index > -1) {
+                activeHarmonics.splice(index, 1);
+                document.getElementById(`btn-h-${n}`).className = "py-1.5 rounded bg-slate-900 border border-slate-800 text-[10px] font-mono font-bold text-slate-400 hover:border-slate-700 hover:text-white";
+            } else {
+                activeHarmonics.push(n);
+                document.getElementById(`btn-h-${n}`).className = "py-1.5 rounded bg-cyan-500/10 border border-cyan-500/40 text-[10px] font-mono font-bold text-cyan-400";
+            }
+            initFilterCalculations();
+            drawFilterTime();
+            drawFilterFreq();
+        }
+
+        function updateR(val) {
+            R = parseFloat(val);
+            document.getElementById('val-r').innerText = `${R.toFixed(2)} kΩ`;
+            initFilterCalculations();
+            drawFilterTime();
+            drawFilterFreq();
+        }
+
+        function updateC(val) {
+            C = parseInt(val);
+            document.getElementById('val-c').innerText = `${C} µF`;
+            initFilterCalculations();
+            drawFilterTime();
+            drawFilterFreq();
+        }
+
+        function toggleNoise(checked) {
+            addNoise = checked;
+            initFilterCalculations();
+            drawFilterTime();
+            drawFilterFreq();
+        }
+
+        function initFilterCalculations() {
+            timeArray = [];
+            vinArray = [];
+            voutArray = [];
+            noiseArray = [];
+            
+            const steps = 300;
+            const omega0 = 1.0; // Fundamental frequency
+            const RC = R * C * 1e-3; // kOhm * uF = seconds (since 1e3 * 1e-6 = 1e-3)
+            
+            // Generate normal distribution noise helper
+            const normalRandom = () => {
+                let u = 0, v = 0;
+                while(u === 0) u = Math.random();
+                while(v === 0) v = Math.random();
+                return Math.sqrt(-2.0 * Math.log(u)) * Math.cos(2.0 * Math.PI * v);
+            };
+
+            for (let i = 0; i <= steps; i++) {
+                const t = 15.0 * (i / steps);
+                timeArray.push(t);
+                
+                // 1. Input signal: sum of selected odd harmonics of Square Wave
+                let vin = 0.0;
+                activeHarmonics.forEach(n => {
+                    vin += (4.0 / (Math.PI * n)) * Math.sin(n * omega0 * t);
+                });
+                
+                // 2. Output signal: apply physical Transfer Function for each harmonic
+                let vout = 0.0;
+                activeHarmonics.forEach(n => {
+                    const w = n * omega0;
+                    const ampFactor = 1.0 / Math.sqrt(1.0 + w * w * RC * RC);
+                    const phaseShift = -Math.atan(w * RC);
+                    vout += (4.0 / (Math.PI * n)) * ampFactor * Math.sin(w * t + phaseShift);
+                });
+                
+                const noise = addNoise ? 0.08 * normalRandom() : 0.0;
+                noiseArray.push(noise);
+
+                vinArray.push(vin + noise);
+                voutArray.push(vout + noise);
+            }
+        }
+
+        function drawFilterTime() {
+            const canvas = document.getElementById('canvas-filter-time');
+            const ctx = canvas.getContext('2d');
+            
+            const rect = canvas.getBoundingClientRect();
+            canvas.width = rect.width * window.devicePixelRatio;
+            canvas.height = rect.height * window.devicePixelRatio;
+            ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+            
+            const w = rect.width;
+            const h = rect.height;
+            ctx.clearRect(0,0,w,h);
+
+            // Draw baseline grids
+            ctx.strokeStyle = 'rgba(255,255,255,0.03)';
+            ctx.lineWidth = 1;
+            for (let i = 1; i < 10; i++) {
+                ctx.beginPath();
+                ctx.moveTo(w * i / 10, 0); ctx.lineTo(w * i / 10, h);
+                ctx.moveTo(0, h * i / 10); ctx.lineTo(w, h * i / 10);
+                ctx.stroke();
+            }
+
+            // Zero line
+            ctx.strokeStyle = 'rgba(255,255,255,0.1)';
+            ctx.beginPath();
+            ctx.moveTo(0, h/2); ctx.lineTo(w, h/2);
+            ctx.stroke();
+
+            // Mapping: t in [0, 15] -> X in [40, w-40]
+            // v in [-1.5, 1.5] -> Y in [h-20, 20]
+            const tToPixel = (tVal) => 40 + tVal * (w - 80) / 15.0;
+            const VToPixel = (vVal) => h / 2 - vVal * (h - 40) / 3.0;
+
+            // Draw vin (Pink)
+            ctx.strokeStyle = 'rgba(236, 72, 153, 0.7)';
+            ctx.lineWidth = 2.0;
+            ctx.beginPath();
+            for (let i = 0; i < timeArray.length; i++) {
+                const px = tToPixel(timeArray[i]);
+                const py = VToPixel(vinArray[i]);
+                if (i === 0) ctx.moveTo(px, py);
+                else ctx.lineTo(px, py);
+            }
+            ctx.stroke();
+
+            // Draw vout (Cyan)
+            ctx.strokeStyle = '#06b6d4';
+            ctx.lineWidth = 2.5;
+            ctx.beginPath();
+            for (let i = 0; i < timeArray.length; i++) {
+                const px = tToPixel(timeArray[i]);
+                const py = VToPixel(voutArray[i]);
+                if (i === 0) ctx.moveTo(px, py);
+                else ctx.lineTo(px, py);
+            }
+            ctx.stroke();
+        }
+
+        function drawFilterFreq() {
+            const canvas = document.getElementById('canvas-filter-freq');
+            const ctx = canvas.getContext('2d');
+            
+            const rect = canvas.getBoundingClientRect();
+            canvas.width = rect.width * window.devicePixelRatio;
+            canvas.height = rect.height * window.devicePixelRatio;
+            ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+            
+            const w = rect.width;
+            const h = rect.height;
+            ctx.clearRect(0,0,w,h);
+
+            // Draw baseline grids
+            ctx.strokeStyle = 'rgba(255,255,255,0.03)';
+            ctx.beginPath();
+            ctx.moveTo(0, h - 15); ctx.lineTo(w, h - 15);
+            ctx.stroke();
+
+            const oddHarmonics = [1, 3, 5, 7, 9];
+            const maxAmp = 4.0 / Math.PI; // Amplitude of fundamental harmonic
+            const RC = R * C * 1e-3;
+            
+            oddHarmonics.forEach((n, idx) => {
+                const bx = 50 + idx * (w - 100) / oddHarmonics.length;
+                const barW = (w - 100) / oddHarmonics.length * 0.4;
+                
+                // Original amplitude
+                const isSelected = activeHarmonics.includes(n);
+                const originalAmp = isSelected ? (4.0 / (Math.PI * n)) : 0.0;
+                
+                // Filtered amplitude
+                const w_freq = n * 1.0;
+                const ampFactor = 1.0 / Math.sqrt(1.0 + w_freq * w_freq * RC * RC);
+                const filteredAmp = originalAmp * ampFactor;
+
+                // Draw Original bar (dashed/faded pink)
+                const origH = (originalAmp / maxAmp) * (h - 30);
+                ctx.fillStyle = 'rgba(236, 72, 153, 0.2)';
+                ctx.fillRect(bx, h - 15 - origH, barW, origH);
+                
+                // Draw Filtered bar (Solid cyan)
+                const filtH = (filteredAmp / maxAmp) * (h - 30);
+                ctx.fillStyle = '#06b6d4';
+                ctx.fillRect(bx, h - 15 - filtH, barW, filtH);
+
+                // Labels
+                ctx.fillStyle = '#94a3b8';
+                ctx.font = '9px JetBrains Mono';
+                ctx.fillText(`n = ${n}`, bx + 2, h - 3);
+            });
+        }
+
+        // ==========================================
+        // TAB 2: AUTOENCODER ANOMALY DETECTION
+        // ==========================================
+        let noisyInput = [];
+        let reconstructed = [];
+        let maeLoss = [];
+        const threshold = 0.35;
+
+        function initAnomalyCalculations() {
+            noisyInput = [];
+            reconstructed = [];
+            maeLoss = [];
+            
+            const steps = 250;
+            const omega0 = 1.0;
+            const RC = 0.5 * 1000 * 1e-3; // R = 0.5, C = 1000
+
+            // Baseline clean filtered wave
+            for (let i = 0; i <= steps; i++) {
+                const t = 15.0 * (i / steps);
+                
+                // Clean RC Filter response
+                let vout = 0.0;
+                [1, 3, 5, 7, 9].forEach(n => {
+                    const w = n * omega0;
+                    const ampFactor = 1.0 / Math.sqrt(1.0 + w * w * RC * RC);
+                    const phaseShift = -Math.atan(w * RC);
+                    vout += (4.0 / (Math.PI * n)) * ampFactor * Math.sin(w * t + phaseShift);
+                });
+
+                // Normal small noise
+                const noise = 0.05 * Math.sin(i * 1.5) + 0.02 * Math.cos(i * 3.8);
+                let inputVal = vout + noise;
+
+                // Injected anomalies
+                if (anomalyType === 'spike' && i >= 130 && i <= 145) {
+                    // Inject massive high frequency transient voltage spike
+                    inputVal += 1.4 * Math.sin((i - 130) * 1.2);
+                } else if (anomalyType === 'sensor' && i >= 120 && i <= 170) {
+                    // Total loss of signal sensor flatline anomaly
+                    inputVal = -0.5 + 0.02 * Math.random();
+                }
+
+                noisyInput.push(inputVal);
+
+                // Autoencoder reconstruction output:
+                // Since it only learned normal low-pass behaviors, it filters out noise and COMPLETELY fails
+                // to reconstruct anomalies, outputs smooth baseline response instead
+                const normalReconstruction = vout + 0.01 * Math.sin(i * 1.5);
+                reconstructed.push(normalReconstruction);
+
+                // MAE Loss
+                maeLoss.push(Math.abs(inputVal - normalReconstruction));
+            }
+        }
+
+        function injectAnomaly(type) {
+            anomalyType = type;
+            initAnomalyCalculations();
+            drawAnomalyReconstruct();
+            drawAnomalyLoss();
+
+            // Update Alert UI
+            const box = document.getElementById('anomaly-alert-box');
+            const dot = document.getElementById('anom-alert-dot');
+            const title = document.getElementById('anom-alert-title');
+            const desc = document.getElementById('anom-alert-desc');
+
+            box.className = "glass-card rounded-2xl p-5 bg-rose-950/10 border-rose-900/30 border-l-4 border-l-rose-500 text-xs flex flex-col justify-center gap-2 h-36";
+            dot.className = "w-3.5 h-3.5 rounded-full bg-rose-500 animate-ping";
+            
+            if (type === 'spike') {
+                title.innerText = "🚨 ANOMALIE ERKANNT";
+                title.className = "font-bold text-rose-400 font-mono uppercase tracking-widest";
+                desc.innerText = "Transiente Überspannung detektiert. Der MAE-Rekonstruktionsfehler schlägt heftig aus, da das Modell diesen Impuls nicht physikalisch rekonstruieren kann.";
+            } else if (type === 'sensor') {
+                title.innerText = "🚨 SENSORAUSFALL ERKANNT";
+                title.className = "font-bold text-amber-400 font-mono uppercase tracking-widest";
+                box.className = "glass-card rounded-2xl p-5 bg-amber-950/10 border-amber-900/30 border-l-4 border-l-amber-500 text-xs flex flex-col justify-center gap-2 h-36";
+                dot.className = "w-3.5 h-3.5 rounded-full bg-amber-500 animate-ping";
+                desc.innerText = "Sensor-Flatline registriert. Die Abweichung von der erwarteten Tiefpass-Wechselspannung erzeugt anhaltend hohen MAE Loss.";
+            }
+        }
+
+        function clearAnomaly() {
+            anomalyType = 'none';
+            initAnomalyCalculations();
+            drawAnomalyReconstruct();
+            drawAnomalyLoss();
+
+            const box = document.getElementById('anomaly-alert-box');
+            const dot = document.getElementById('anom-alert-dot');
+            const title = document.getElementById('anom-alert-title');
+            const desc = document.getElementById('anom-alert-desc');
+
+            box.className = "glass-card rounded-2xl p-5 bg-emerald-950/10 border-emerald-900/30 border-l-4 border-l-emerald-500 text-xs flex flex-col justify-center gap-2 h-36";
+            dot.className = "w-3.5 h-3.5 rounded-full bg-emerald-500";
+            title.innerText = "Normaler Betrieb";
+            title.className = "font-bold text-emerald-400 font-mono uppercase tracking-widest";
+            desc.innerText = "Der Reconstruction Loss (MAE) liegt unter dem Schwellenwert. Das Modell emuliert die Filter-Physik fehlerfrei.";
+        }
+
+        function drawAnomalyReconstruct() {
+            const canvas = document.getElementById('canvas-anom-reconstruct');
+            const ctx = canvas.getContext('2d');
+            
+            const rect = canvas.getBoundingClientRect();
+            canvas.width = rect.width * window.devicePixelRatio;
+            canvas.height = rect.height * window.devicePixelRatio;
+            ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+            
+            const w = rect.width;
+            const h = rect.height;
+            ctx.clearRect(0,0,w,h);
+
+            // Draw grids
+            ctx.strokeStyle = 'rgba(255,255,255,0.03)';
+            ctx.lineWidth = 1;
+            for (let i = 1; i < 10; i++) {
+                ctx.beginPath();
+                ctx.moveTo(w * i / 10, 0); ctx.lineTo(w * i / 10, h);
+                ctx.moveTo(0, h * i / 10); ctx.lineTo(w, h * i / 10);
+                ctx.stroke();
+            }
+
+            const valCount = noisyInput.length;
+            const tToPixel = (idx) => 40 + idx * (w - 80) / (valCount - 1);
+            // range v in [-2.0, 2.0]
+            const VToPixel = (vVal) => h / 2 - vVal * (h - 40) / 4.0;
+
+            // Draw Noisy Input (Cyan)
+            ctx.strokeStyle = '#06b6d4';
+            ctx.lineWidth = 2.0;
+            ctx.beginPath();
+            for (let i = 0; i < valCount; i++) {
+                const px = tToPixel(i);
+                const py = VToPixel(noisyInput[i]);
+                if (i === 0) ctx.moveTo(px, py);
+                else ctx.lineTo(px, py);
+            }
+            ctx.stroke();
+
+            // Draw Autoencoder Reconstruction (Pink dashed line)
+            ctx.strokeStyle = '#ec4899';
+            ctx.lineWidth = 2.0;
+            ctx.setLineDash([4, 4]);
+            ctx.beginPath();
+            for (let i = 0; i < valCount; i++) {
+                const px = tToPixel(i);
+                const py = VToPixel(reconstructed[i]);
+                if (i === 0) ctx.moveTo(px, py);
+                else ctx.lineTo(px, py);
+            }
+            ctx.stroke();
+            ctx.setLineDash([]); // reset
+        }
+
+        function drawAnomalyLoss() {
+            const canvas = document.getElementById('canvas-anom-loss');
+            const ctx = canvas.getContext('2d');
+            
+            const rect = canvas.getBoundingClientRect();
+            canvas.width = rect.width * window.devicePixelRatio;
+            canvas.height = rect.height * window.devicePixelRatio;
+            ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+            
+            const w = rect.width;
+            const h = rect.height;
+            ctx.clearRect(0,0,w,h);
+
+            const valCount = maeLoss.length;
+            const tToPixel = (idx) => 40 + idx * (w - 80) / (valCount - 1);
+            // error range from 0 to 1.5
+            const EToPixel = (eVal) => h - 15 - eVal * (h - 30) / 1.5;
+
+            // Draw threshold line (Neon red)
+            ctx.strokeStyle = 'rgba(239, 68, 68, 0.5)';
+            ctx.lineWidth = 1.5;
+            ctx.setLineDash([6, 3]);
+            ctx.beginPath();
+            ctx.moveTo(0, EToPixel(threshold));
+            ctx.lineTo(w, EToPixel(threshold));
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            // Label threshold
+            ctx.fillStyle = '#f87171';
+            ctx.font = '8px JetBrains Mono';
+            ctx.fillText('Schwellenwert (Threshold)', 10, EToPixel(threshold) - 5);
+
+            // Draw MAE Loss Curve
+            ctx.strokeStyle = '#eab308';
+            ctx.lineWidth = 2.0;
+            ctx.beginPath();
+            for (let i = 0; i < valCount; i++) {
+                const px = tToPixel(i);
+                const py = EToPixel(maeLoss[i]);
+                if (i === 0) ctx.moveTo(px, py);
+                else ctx.lineTo(px, py);
+            }
+            ctx.stroke();
+        }
+
+        // ==========================================
+        // TAB 3: TPU SYSTOLIC ARRAY
+        // ==========================================
+        let systolicCycle = 0;
+        let systolicMax = 12;
+        
+        // Setup initial matrix input data
+        // A (Activations) sliding from left, B (Weights) static inside PEs
+        const A_mat = [
+            [1, 2, 3, 4],
+            [5, 6, 7, 8],
+            [9, 1, 2, 3],
+            [4, 5, 6, 7]
+        ];
+        
+        const B_mat = [
+            [2, 0, 1, 3],
+            [1, 2, 0, 1],
+            [0, 1, 3, 2],
+            [3, 1, 2, 0]
+        ];
+
+        // PE accumulated registers
+        let C_accum = [
+            [0,0,0,0],
+            [0,0,0,0],
+            [0,0,0,0],
+            [0,0,0,0]
+        ];
+
+        function resetTpu() {
+            systolicCycle = 0;
+            C_accum = [
+                [0,0,0,0],
+                [0,0,0,0],
+                [0,0,0,0],
+                [0,0,0,0]
+            ];
+            document.getElementById('tpu-cycle-val').innerText = `${systolicCycle} / ${systolicMax}`;
+            
+            if (tpuPlaying) {
+                toggleTpuPlay();
+            }
+            drawTpuMXU();
+        }
+
+        function toggleTpuPlay() {
+            const btn = document.getElementById('btn-tpu-play');
+            if (tpuPlaying) {
+                clearInterval(tpuInterval);
+                btn.innerText = "▶ Starten";
+                tpuPlaying = false;
+            } else {
+                btn.innerText = "⏸ Stoppen";
+                tpuPlaying = true;
+                tpuInterval = setInterval(() => {
+                    stepTpuCycle();
+                    if (systolicCycle >= systolicMax) {
+                        toggleTpuPlay();
+                    }
+                }, 1000);
+            }
+        }
+
+        function stepTpuCycle() {
+            if (systolicCycle >= systolicMax) {
+                systolicCycle = 0;
+                C_accum = [
+                    [0,0,0,0],
+                    [0,0,0,0],
+                    [0,0,0,0],
+                    [0,0,0,0]
+                ];
+            }
+            
+            // Advance TPU calculations step-by-step
+            // In cycle `c`:
+            // Activations index meeting PEs depends on cycle delay:
+            // PE_ij multiplies elements that meet at cycle index
+            systolicCycle++;
+            document.getElementById('tpu-cycle-val').innerText = `${systolicCycle} / ${systolicMax}`;
+            
+            // Perform computation step for this cycle
+            // Accumulate values
+            for (let i = 0; i < 4; i++) {
+                for (let j = 0; j < 4; j++) {
+                    // Time offset for node i,j to receive values is i + j + k
+                    // So at cycle index `c`, the common multiplying dimension is k = c - 1 - i - j
+                    const k = systolicCycle - 1 - i - j;
+                    if (k >= 0 && k < 4) {
+                        C_accum[i][j] += A_mat[i][k] * B_mat[k][j];
+                    }
+                }
+            }
+            
+            drawTpuMXU();
+        }
+
+        function drawTpuMXU() {
+            const canvas = document.getElementById('canvas-systolic-array');
+            const ctx = canvas.getContext('2d');
+            
+            const rect = canvas.getBoundingClientRect();
+            canvas.width = rect.width * window.devicePixelRatio;
+            canvas.height = rect.height * window.devicePixelRatio;
+            ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+            
+            const w = rect.width;
+            const h = rect.height;
+            ctx.clearRect(0,0,w,h);
+
+            // Coordinates for PE grid
+            const gridStartX = w / 2 - 90;
+            const gridStartY = h / 2 - 90;
+            const stepDist = 60;
+
+            // 1. Draw PEs (4x4 Processing Elements)
+            for (let i = 0; i < 4; i++) {
+                for (let j = 0; j < 4; j++) {
+                    const cx = gridStartX + j * stepDist;
+                    const cy = gridStartY + i * stepDist;
+                    
+                    // Check if PE is active in current cycle
+                    // meets condition: cycle - 1 - i - j is in [0, 3]
+                    const k_active = systolicCycle - 1 - i - j;
+                    const isActive = k_active >= 0 && k_active < 4;
+
+                    // Fill color
+                    ctx.fillStyle = isActive ? 'rgba(139, 92, 246, 0.4)' : 'rgba(30, 41, 59, 0.5)';
+                    ctx.strokeStyle = isActive ? '#8b5cf6' : 'rgba(255, 255, 255, 0.15)';
+                    ctx.lineWidth = 1.5;
+                    
+                    ctx.beginPath();
+                    ctx.arc(cx, cy, 22, 0, 2*Math.PI);
+                    ctx.fill();
+                    ctx.stroke();
+
+                    // Print accumulated values inside PE
+                    ctx.fillStyle = '#f8fafc';
+                    ctx.font = '10px JetBrains Mono';
+                    ctx.textAlign = 'center';
+                    ctx.fillText(C_accum[i][j].toString(), cx, cy - 2);
+
+                    // Print local weight inside PE
+                    ctx.fillStyle = '#ec4899';
+                    ctx.font = '7px JetBrains Mono';
+                    // We print the active k weight meeting
+                    const currentK = isActive ? k_active : 0;
+                    ctx.fillText(`w:${B_mat[currentK][j]}`, cx, cy + 12);
+                }
+            }
+
+            // 2. Draw incoming Activation values from left
+            ctx.fillStyle = '#06b6d4';
+            ctx.font = '10px JetBrains Mono';
+            ctx.textAlign = 'right';
+
+            for (let i = 0; i < 4; i++) {
+                // At cycle `c`, the first input element A_i0 meets PE_i0 at cycle = i + 1
+                // Display remaining incoming elements left of grid
+                const cy = gridStartY + i * stepDist;
+                
+                // Show sliding inputs
+                for (let k = 0; k < 4; k++) {
+                    // Position depends on cycle:
+                    // element index `k` reaches PE_i0 at cycle = i + 1 + k
+                    const distOffset = (systolicCycle - (i + k + 1));
+                    const ax = gridStartX - 40 - distOffset * 30;
+                    
+                    if (distOffset < 0) { // Still traveling
+                        ctx.fillText(A_mat[i][k].toString(), ax, cy + 4);
+                    }
+                }
+            }
+
+            // 3. Draw Weight labels flowing from top
+            ctx.fillStyle = '#ec4899';
+            ctx.font = '10px JetBrains Mono';
+            ctx.textAlign = 'center';
+
+            for (let j = 0; j < 4; j++) {
+                const cx = gridStartX + j * stepDist;
+                // weights B_kj meet PE_0j at cycle = j + 1 + k
+                for (let k = 0; k < 4; k++) {
+                    const distOffset = (systolicCycle - (j + k + 1));
+                    const ay = gridStartY - 35 - distOffset * 30;
+                    if (distOffset < 0) {
+                        ctx.fillText(B_mat[k][j].toString(), cx, ay);
+                    }
+                }
+            }
+        }
+
+        // ==========================================
+        // TAB 4: JAX STATELESS PRNG SPLITTING
+        // ==========================================
+        let prngNodeIdCounter = 1;
+
+        function initPRNGTree() {
+            prngTree = {
+                id: "node_0",
+                label: "key",
+                val: "PRNGKey(42)",
+                x: 350, y: 55,
+                children: []
+            };
+            prngNodeIdCounter = 1;
+        }
+
+        function resetPrngTree() {
+            initPRNGTree();
+            drawPRNGTree();
+            document.getElementById('jax-prng-code-block').innerText = `# Startschlüssel:\nkey = jax.random.PRNGKey(42)`;
+        }
+
+        function handleNodeClick(nodeId) {
+            // Find target node in tree
+            const targetNode = findNodeInTree(prngTree, nodeId);
+            if (targetNode && targetNode.children.length === 0) {
+                // Max depth limit
+                if (targetNode.y >= 260) return;
+
+                // Split key
+                const leftId = `node_${prngNodeIdCounter++}`;
+                const rightId = `node_${prngNodeIdCounter++}`;
+                
+                const nextY = targetNode.y + 70;
+                // determine horizontal spacing depending on depth
+                const depthSpacing = (300 / (targetNode.y / 70 + 1));
+                
+                targetNode.children.push({
+                    id: leftId,
+                    label: "key",
+                    val: `split(${targetNode.label})[0]`,
+                    x: targetNode.x - depthSpacing / 2,
+                    y: nextY,
+                    children: []
+                });
+
+                targetNode.children.push({
+                    id: rightId,
+                    label: "subkey",
+                    val: `split(${targetNode.label})[1]`,
+                    x: targetNode.x + depthSpacing / 2,
+                    y: nextY,
+                    children: []
+                });
+
+                // Update Code display
+                document.getElementById('jax-prng-code-block').innerText = `# Klonen des Keys:\nkey, subkey = jax.random.split(${targetNode.label})\n\n# Neue Zufallszahlen generieren:\nx_rand = jax.random.normal(subkey, (100,))\ny_rand = jax.random.uniform(key, (100,))`;
+
+                drawPRNGTree();
+            }
+        }
+
+        function findNodeInTree(node, id) {
+            if (node.id === id) return node;
+            for (let child of node.children) {
+                const found = findNodeInTree(child, id);
+                if (found) return found;
+            }
+            return null;
+        }
+
+        function drawPRNGTree() {
+            const svg = document.getElementById('svg-prng-tree');
+            svg.innerHTML = ''; // Clear
+
+            // 1. Draw connecting lines
+            const drawLines = (node) => {
+                node.children.forEach(child => {
+                    const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+                    line.setAttribute("x1", node.x);
+                    line.setAttribute("y1", node.y);
+                    line.setAttribute("x2", child.x);
+                    line.setAttribute("y2", child.y);
+                    line.setAttribute("stroke", "rgba(6, 182, 212, 0.4)");
+                    line.setAttribute("stroke-width", "2");
+                    svg.appendChild(line);
+                    drawLines(child);
+                });
+            };
+            drawLines(prngTree);
+
+            // 2. Draw nodes
+            const drawNodes = (node) => {
+                const group = document.createElementNS("http://www.w3.org/2000/svg", "g");
+                group.setAttribute("class", "cursor-pointer");
+                group.onclick = () => handleNodeClick(node.id);
+
+                const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+                circle.setAttribute("cx", node.x);
+                circle.setAttribute("cy", node.y);
+                circle.setAttribute("r", "16");
+                circle.setAttribute("fill", node.children.length > 0 ? '#1e293b' : '#06b6d4');
+                circle.setAttribute("stroke", "rgba(255,255,255,0.2)");
+                circle.setAttribute("stroke-width", "2");
+                circle.setAttribute("class", "prng-node");
+                group.appendChild(circle);
+
+                const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
+                text.setAttribute("x", node.x);
+                text.setAttribute("y", node.y - 22);
+                text.setAttribute("text-anchor", "middle");
+                text.setAttribute("fill", "#f8fafc");
+                text.setAttribute("font-size", "9px");
+                text.setAttribute("font-family", "JetBrains Mono");
+                text.textContent = node.label;
+                group.appendChild(text);
+
+                // mini value print inside node
+                const valText = document.createElementNS("http://www.w3.org/2000/svg", "text");
+                valText.setAttribute("x", node.x);
+                valText.setAttribute("y", node.y + 4);
+                valText.setAttribute("text-anchor", "middle");
+                valText.setAttribute("fill", node.children.length > 0 ? '#94a3b8' : '#090d16');
+                valText.setAttribute("font-size", "8px");
+                valText.setAttribute("font-weight", "bold");
+                valText.setAttribute("font-family", "JetBrains Mono");
+                valText.textContent = node.id === 'node_0' ? '42' : node.label === 'key' ? 'key' : 'sub';
+                group.appendChild(valText);
+
+                svg.appendChild(group);
+                node.children.forEach(child => drawNodes(child));
+            };
+            drawNodes(prngTree);
+        }
     </script>
 </body>
 </html>
