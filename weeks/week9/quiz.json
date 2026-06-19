@@ -1,0 +1,123 @@
+[
+    {
+        "question": "Welche drei Säulen bilden das funktionale Fundament der agentischen Schleife (Agentic Loop) in autonomen Systemen?",
+        "options": [
+            "Input, Processing, Output",
+            "Wahrnehmung (Perception), Denken (Reasoning), Handeln (Action)",
+            "Datenbeschaffung, Modelltraining, Inferenz",
+            "Prompting, API-Call, JSON-Parsing"
+        ],
+        "answerIndex": 1,
+        "explanation": "Die klassische agentische Schleife basiert auf der Triade: Wahrnehmung (Erfassen von Umgebungsinformationen), Denken (Planen, Reflektieren und Entscheiden) und Handeln (Ausführen von Aktionen wie Funktionsaufrufen über Tools)."
+    },
+    {
+        "question": "Welche Vorteile bietet das ReAct-Pattern (Reasoning and Acting) im Vergleich zu isolierten Planungs- oder Aktionsansätzen? (Wähle alle korrekten Antworten)",
+        "options": [
+            "Es ermöglicht dem Modell, durch 'Thoughts' Zwischenschritte zu planen und Zwischenergebnisse zu analysieren.",
+            "Es reduziert die Inferenzkosten auf Null, da keine API-Aufrufe mehr nötig sind.",
+            "Es erlaubt dem Modell, Fehler in 'Observations' (z. B. fehlgeschlagene API-Calls) zu erkennen und dynamisch neue Pläne zu fassen.",
+            "Es verhindert Halluzinationen vollständig bei allen mathematischen Berechnungen."
+        ],
+        "answerIndex": [0, 3],
+        "explanation": "ReAct verwebt logische Zwischenschritte (Thoughts) mit konkreten Aktionen (Actions). Dadurch kann der Agent strukturierte Handlungspläne erstellen und flexibel auf unerwartete Ergebnisse oder Fehler reagieren. Es reduziert weder die Inferenzkosten noch eliminiert es Halluzinationen vollständig."
+    },
+    {
+        "question": "Wie teilt ein Large Language Model dem ausführenden System mit, dass es ein Tool aufrufen möchte?",
+        "options": [
+            "Es generiert ein strukturiertes JSON-Objekt, das den Funktionsnamen und die Argumente spezifiziert.",
+            "Es führt den Python-Code direkt in seinem eigenen latenten Raum aus.",
+            "Es sendet eine HTTP-Anfrage über ein integriertes TCP-Protokoll an das Internet.",
+            "Es gibt dem Benutzer eine Textanweisung, die Funktion manuell in der Konsole zu starten."
+        ],
+        "answerIndex": 0,
+        "explanation": "Beim Tool Calling gibt das LLM anstelle von natürlicher Sprache ein strukturiertes Format (meist JSON) aus, welches den Funktionsnamen und die Parameter enthält. Das ausführende System (die Applikation, nicht das Modell selbst!) fängt dies ab und führt die Funktion lokal oder remote aus."
+    },
+    {
+        "question": "Welche Elemente gehören typischerweise zu einer vollständigen Funktionsdeklaration (JSON Schema) für das Tool Calling? (Wähle alle korrekten Antworten)",
+        "options": [
+            "Ein eindeutiger Funktionsname.",
+            "Eine semantische Beschreibung der Funktion, damit das Modell versteht, wozu das Tool dient.",
+            "Die vollständige Python-Implementierung des Funktionskörpers.",
+            "Die Spezifikation der Parameter (Datentypen, Beschreibungen und Pflichtfelder)."
+        ],
+        "answerIndex": [0, 1, 3],
+        "explanation": "Ein JSON-Schema für Tools definiert die Schnittstelle: Name, Zweck/Beschreibung für das Modell und Parameterdetails. Die eigentliche Implementierung bleibt auf Systemebene verborgen und wird dem LLM nicht im Schema übermittelt."
+    },
+    {
+        "question": "Warum eignet sich JAX besonders gut für physikalische Simulationen (wie der Mandelbrot-Berechnung) im Kontext autonomer Agentenschleifen?",
+        "options": [
+            "JAX ermöglicht es, Python-Code in hardwarebeschleunigten XLA-Maschinencode zu kompilieren (via JIT) und parallelisiert auszuführen, wodurch Simulationen in wenigen Millisekunden laufen.",
+            "JAX enthält vortrainierte neuronale Netze zur Bilderkennung von Fraktalen.",
+            "JAX benötigt keinen Arbeitsspeicher und verhindert jegliche Latenz.",
+            "JAX wandelt die Mandelbrot-Menge automatisch in Text um, den das LLM direkt lesen kann."
+        ],
+        "answerIndex": 0,
+        "explanation": "Agentenschleifen erfordern schnelle Rückmeldungen aus der Simulation. JAX glänzt hier durch @jax.jit (Just-In-Time-Kompilierung) und vmap (Vektorisierung), die rechenintensive Schleifen wie die Mandelbrot-Menge in Millisekunden ausführen, was iterative Agenten-Suchprozesse überhaupt erst praktikabel macht."
+    },
+    {
+        "question": "Welche Aussagen über das Google Gemma-Skills-Ökosystem und die Dateistruktur eines Skills sind korrekt? (Wähle alle korrekten Antworten)",
+        "options": [
+            "Ein Skill ist ein modularer Ordner, der das Wissen und die Werkzeuge für eine bestimmte Fähigkeit kapselt.",
+            "Die SKILL.md enthält YAML-Metadaten (Name, Beschreibung) sowie die Kognitionsanweisungen (System-Prompts).",
+            "Ein Skill darf ausschließlich in C++ programmiert werden, um Latenzen zu minimieren.",
+            "Tools und JSON-Schemas werden im tools/-Unterverzeichnis abgelegt."
+        ],
+        "answerIndex": [0, 1, 3],
+        "explanation": "Gemma-Skills sind modulare Kapseln, die über eine SKILL.md gesteuert werden und deren Tool-Deklarationen im Ordner tools/ liegen. Sie sind plattformunabhängig und verwenden standardisierte Formate (wie JSON und Markdown/Python), nicht exklusiv C++."
+    },
+    {
+        "question": "Was passiert mit der Rückgabe (Observation) eines Funktionsaufrufs im ReAct-Pattern?",
+        "options": [
+            "Sie wird gelöscht, da das Modell den Zustand im Gedächtnis behält.",
+            "Sie wird als neue Nachricht mit einer speziellen Rolle (z. B. 'tool' oder 'user') in den Konversationsverlauf eingefügt, sodass das Modell sie im nächsten Reasoning-Schritt analysieren kann.",
+            "Sie wird automatisch in die Gewichte des Modells eintrainiert (Fine-Tuning in Echtzeit).",
+            "Sie wird dem Endbenutzer als Fehlermeldung angezeigt, um die Ausführung zu stoppen."
+        ],
+        "answerIndex": 1,
+        "explanation": "Die Rückgabe (Observation) wird dem Modell als historischer Kontext zur Verfügung gestellt. Das LLM liest diese Daten im nächsten Zyklus ein, reflektiert darüber in einem neuen Gedanken (Thought) und leitet die nächste Aktion ab."
+    },
+    {
+        "question": "Welche Probleme treten typischerweise auf, wenn ein reines Sprachmodell komplexe Simulationsaufgaben (wie die Berechnung einer Differentialgleichung) ohne Tools lösen soll? (Wähle alle korrekten Antworten)",
+        "options": [
+            "Das Modell neigt zu mathematischen Halluzinationen bei numerischen Schritten.",
+            "Das Modell kann keine deterministischen Berechnungen über viele Zeitschritte garantieren.",
+            "Das Modell verweigert sofort die Ausführung und gibt eine Fehlermeldung aus.",
+            "Das Modell ist auf sein statisches Wissen limitiert und kann nicht auf reale Laufzeitdaten reagieren."
+        ],
+        "answerIndex": [0, 1, 3],
+        "explanation": "LLMs sind statistische Textvorhersager. Bei komplexen mathematischen Prozessen wie Differentialgleichungen halluzinieren sie Zwischenschritte, können keinen mathematischen Determinismus garantieren und reagieren mangels Umgebungskopplung nicht auf dynamische Systemänderungen. Sie brechen jedoch nicht automatisch ab."
+    },
+    {
+        "question": "Auf welcher mathematischen Iterationsvorschrift basiert die Mandelbrot-Menge, die der Agent im Problem Set 9 simulieren und optimieren soll?",
+        "options": [
+            "z_{n+1} = z_n^2 + c",
+            "z_{n+1} = sin(z_n) * c",
+            "x_{n+1} = r * x_n * (1 - x_n)",
+            "f(x) = sigma(W * x + b)"
+        ],
+        "answerIndex": 0,
+        "explanation": "Die Mandelbrot-Menge basiert auf der Iteration z_{n+1} = z_n^2 + c mit z_0 = 0. Punkte, deren Betrag |z_n| unter dieser Iteration für alle n beschränkt bleibt (nie die Fluchtgrenze 2 überschreitet), gehören zur Menge."
+    },
+    {
+        "question": "Wenn ein Tool-Aufruf einen Fehler zurückgibt (z. B. ein Simulationsabsturz wegen ungültiger Parameter), wie reagiert ein robuster ReAct-Agent idealerweise?",
+        "options": [
+            "Er ignoriert die Fehlermeldung und wiederholt exakt dieselbe Aktion in einer Endlosschleife.",
+            "Er bricht die gesamte Ausführung ab und wirft eine unbehandelte Exception.",
+            "Er liest die Fehlermeldung in der 'Observation', analysiert den Grund im nächsten 'Thought' und korrigiert die Parameter für den nächsten Aufruf.",
+            "Er löscht den bisherigen Gesprächsverlauf, um den Fehler zu verbergen."
+        ],
+        "answerIndex": 2,
+        "explanation": "Eines der stärksten Features des ReAct-Patterns ist die Fehlertoleranz. Der Agent nutzt die Fehlermeldung als Beobachtung (Observation), plant im Gedanken (Thought) eine Korrekturmaßnahme und ruft das Tool mit angepassten Parametern erneut auf."
+    },
+    {
+        "question": "Welche der folgenden interessanten Fakten treffen auf den Begründer der fraktalen Geometrie, Benoît Mandelbrot, zu? (Wähle alle korrekten Antworten)",
+        "options": [
+            "Er prägte 1975 den Begriff 'Fraktal', abgeleitet vom lateinischen 'fractus' ('gebrochen').",
+            "Sein mittlerer Buchstabe 'B.' steht für keinen konkreten Namen; er fügte ihn selbst hinzu (oft als rekursiver Witz interpretiert: Benoît B. Mandelbrot).",
+            "Er arbeitete jahrzehntelang als Industrie-Forscher bei IBM, wo er Zugriff auf modernste Computer hatte, um die Mandelbrot-Menge erstmals grafisch zu visualisieren.",
+            "Er gewann den Nobelpreis für Physik für seine mathematische Beschreibung von Flüssigkeitsturbulenzen."
+        ],
+        "answerIndex": [0, 1, 2],
+        "explanation": "Benoît Mandelbrot prägte das Wort 'Fraktal' (A), wählte das Initial 'B.' als namenloses Schmuckelement (B) und verbrachte einen Großteil seiner Karriere bei IBM (C). Einen Nobelpreis erhielt er nicht, da es in der Mathematik keinen solchen gibt und seine Beiträge zur Chaostheorie/Geometrie nicht mit diesem ausgezeichnet wurden."
+    }
+]

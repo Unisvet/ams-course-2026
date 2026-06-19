@@ -1,0 +1,155 @@
+<div class="space-y-8">
+    <!-- Header Block -->
+    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-slate-900 pb-6">
+        <div>
+            <span class="px-2.5 py-0.5 rounded-full bg-slate-800 text-slate-400 text-xs font-mono font-bold uppercase tracking-wider border border-slate-750">Programming Assignment</span>
+            <h3 class="text-2xl font-black text-white mt-2">Problem Set 9: Project Genesis – The Autonomous Engineer</h3>
+            <p class="text-sm text-slate-400 mt-1">Deadline: TBA | Weight: 40% of Module 4 grade (4 Points) | Quiz: 1 Point</p>
+        </div>
+        <a href="assets/notebooks/ams-ps09-en.ipynb" download class="px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-800 hover:border-cyan-500/50 hover:bg-cyan-500/5 text-xs font-mono font-bold text-cyan-400 flex items-center gap-2 transition-all duration-200 hover:scale-105 active:scale-95 shadow-lg shadow-cyan-500/5">
+            <span>📥</span> Download Jupyter Notebook
+        </a>
+    </div>
+
+    <!-- Problem Set Header Image -->
+    <div class="glass-card p-1.5 rounded-3xl border border-cyan-500/15 shadow-xl relative overflow-hidden w-full aspect-[2752/1536] max-h-64 my-6">
+        <img 
+            src="assets/images/ams-ps-09.jpg" 
+            alt="Autonomous Engineer Simulation" 
+            class="w-full h-full object-cover rounded-2xl"
+            onerror="this.src='https://images.unsplash.com/photo-1614741118887-7a4ee193a5fa?auto=format&fit=crop&w=800&q=80'"
+        >
+        <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/25 to-transparent flex items-end p-6">
+            <div class="font-mono text-xs text-cyan-400 font-bold bg-slate-950/65 px-3 py-1.5 rounded-lg border border-white/10 backdrop-blur-md select-none">
+                🧠 AUTONOMOUS ENGINEER CORE v9.0
+            </div>
+        </div>
+    </div>
+
+    <!-- The Story -->
+    <div class="p-6 glass-card rounded-2xl border-l-4 border-cyan-500 bg-cyan-950/5 space-y-3 my-6">
+        <h4 class="text-cyan-400 font-bold text-lg flex items-center gap-2">
+            <span>📖</span> The Story: The Silicon Cartographer
+        </h4>
+        <p class="text-sm text-slate-300 leading-relaxed font-sans">
+            In Module 2, you unlocked the power of high-performance physics engines. In Module 3, you connected these simulators to cognitive models. But until now, the human has always been the bottleneck—analyzing the graphs, adjusting parameters, and clicking 'Run' again. 
+        </p>
+        <p class="text-sm text-slate-300 leading-relaxed font-sans">
+            Today, we cross the threshold of autonomy. You will build the <strong>Silicon Cartographer</strong>. Your mission is to delegate the entire exploration of a JAX-accelerated Mandelbrot simulation to an agentic loop. The agent will act as an experimental scientist: starting from a global view, it will dynamically zoom in, analyze boundaries, calculate entropy, and refine its search coordinates.
+        </p>
+        <p class="text-sm text-slate-300 leading-relaxed font-sans font-bold text-white">
+            We will implement this in three distinct phases: first, manual prompting to understand the bottleneck; second, native Tool Calling to automate the loops; and third, capsule packaging into a Gemma-Skill to build a reusable, modular agent.
+        </p>
+    </div>
+
+    <hr class="border-slate-900 my-8">
+
+    <!-- Exercise 1 -->
+    <h4 class="text-lg font-bold text-white border-b border-slate-850 pb-2 mt-8 mb-4 flex items-center gap-2">
+        <span class="text-cyan-400">⚡</span> Exercise 1: The Manual Cartographer (Pure Model)
+    </h4>
+    <p class="text-sm text-slate-300 leading-relaxed font-sans font-medium italic">
+        *Learning Objective: Experience the coordination overhead of manual human-in-the-loop parameter selection.*
+    </p>
+    <p class="text-sm text-slate-300 leading-relaxed font-sans">
+        We start by running a JAX-accelerated Mandelbrot simulator. In this exercise, the agent only reasons in natural language, and the human is responsible for copying coordinates and running the code.
+    </p>
+    <ol class="list-decimal pl-6 text-sm text-slate-300 space-y-4 font-sans">
+        <li class="leading-relaxed">
+            <strong class="text-white">Run Mandelbrot:</strong> Initialize the JAX Mandelbrot code provided in the starter notebook. Compute a global view at $c = -0.5, 0.0$ and zoom $1.5$.
+        </li>
+        <li class="leading-relaxed">
+            <strong class="text-white">Prompt the Model:</strong> Write a prompt to the Gemini API (or local Gemma). Feed it the simulation output parameters (zoom, center coordinates, fraction of boundary pixels) and ask it to suggest the next coordinates to locate the <strong>"Seahorse Valley"</strong> ($c \approx -0.7436, 0.1318i$).
+        </li>
+        <li class="leading-relaxed">
+            <strong class="text-white">Manual Feedback:</strong> Copy the model's suggested parameters, update your Python variables, execute the simulator, and feed the new metrics back to the model. Do this for 3 iterations.
+        </li>
+    </ol>
+    <div class="p-6 glass-card rounded-2xl border-l-4 border-amber-500 bg-amber-500/5 space-y-3 my-6">
+        <h5 class="text-amber-400 font-mono text-sm font-bold uppercase tracking-wider flex items-center gap-2">
+            <span>📥</span> Deliverable
+        </h5>
+        <p class="text-xs text-slate-300 leading-relaxed font-sans">
+            In your notebook, plot the final rendered region and document the coordinate history. Write a short paragraph explaining the structural limitations and latency bottle-necks of this manual parameter loop.
+        </p>
+    </div>
+
+    <!-- Exercise 2 -->
+    <h4 class="text-lg font-bold text-white border-b border-slate-850 pb-2 mt-8 mb-4 flex items-center gap-2">
+        <span class="text-cyan-400">⚡</span> Exercise 2: Closed-Loop Tool Calling (Model + Tools)
+    </h4>
+    <p class="text-sm text-slate-300 leading-relaxed font-sans font-medium italic">
+        *Learning Objective: Implement declarative Function Calling schemas and construct an automated execution pipeline.*
+    </p>
+    <p class="text-sm text-slate-300 leading-relaxed font-sans">
+        Now, automate the loop. You will declare the JAX Mandelbrot simulation as a tool that the model can invoke autonomously.
+    </p>
+    <ol class="list-decimal pl-6 text-sm text-slate-300 space-y-4 font-sans">
+        <li class="leading-relaxed">
+            <strong class="text-white">Tool Definition:</strong> Define the JSON schema for your `run_mandelbrot_simulation` function. Declare it to the Gemini API using the `google-genai` SDK's tool registration mechanism.
+        </li>
+        <li class="leading-relaxed">
+            <strong class="text-white">Execution Loop:</strong> Implement a ReAct runner in Python. Your script must:
+            <ul class="list-disc pl-6 mt-2 space-y-1 text-slate-400">
+                <li>Send the goal to the model: <em>"Find coordinates of maximum complexity inside Seahorse Valley. Zoom at least 15,000x."</em></li>
+                <li>Catch the model's structured `function_call` response.</li>
+                <li>Extract parameters, call the local JAX simulator, and return the metrics (`Observation`) back to the model.</li>
+                <li>Repeat until the model decides to stop.</li>
+            </ul>
+        </li>
+        <li class="leading-relaxed">
+            <strong class="text-white">Tracing:</strong> Print the model's Thoughts, Actions, and Observations to the terminal.
+        </li>
+    </ol>
+    <div class="p-6 glass-card rounded-2xl border-l-4 border-amber-500 bg-amber-500/5 space-y-3 my-6">
+        <h5 class="text-amber-400 font-mono text-sm font-bold uppercase tracking-wider flex items-center gap-2">
+            <span>📥</span> Deliverable
+        </h5>
+        <p class="text-xs text-slate-300 leading-relaxed font-sans">
+            Show the console output trace of your automated run (displaying Thoughts, Tool Calls, and Observations). Save and display the final zoomed fractal generated autonomously by the agent.
+        </p>
+    </div>
+
+    <!-- Exercise 3 -->
+    <h4 class="text-lg font-bold text-white border-b border-slate-850 pb-2 mt-8 mb-4 flex items-center gap-2">
+        <span class="text-cyan-400">⚡</span> Exercise 3: Capsule Packaging: The Gemma-Skill (Model + Tools + Skills)
+    </h4>
+    <p class="text-sm text-slate-300 leading-relaxed font-sans font-medium italic">
+        *Learning Objective: Structuring agent architectures into modular, shareable, and self-contained Gemma-Skill units.*
+    </p>
+    <p class="text-sm text-slate-300 leading-relaxed font-sans">
+        To make your autonomous engineer modular and reusable, package it into a standard **Gemma-Skill** capsule, conforming to the `google-gemma/gemma-skills` specification.
+    </p>
+    <ol class="list-decimal pl-6 text-sm text-slate-300 space-y-4 font-sans">
+        <li class="leading-relaxed">
+            <strong class="text-white">Create Directory Structure:</strong> Inside your project repository, create a directory called `skills/mandelbrot_explorer`. Populate it with the required subdirectories: `tools/`, `scripts/`, and the main instructions file.
+        </li>
+        <li class="leading-relaxed">
+            <strong class="text-white">Write SKILL.md:</strong> Author the `SKILL.md` file. It must include a YAML frontmatter declaring the skill's name and description (so the orchestrator can trigger it) followed by clear Markdown system instructions directing the model on how to analyze the boundary metrics.
+        </li>
+        <li class="leading-relaxed">
+            <strong class="text-white">Deploy the Schema and Scripts:</strong> Place your JSON schema under `tools/mandelbrot_schema.json` and your JAX calculation python code under `scripts/mandelbrot_jax.py`.
+        </li>
+        <li class="leading-relaxed">
+            <strong class="text-white">Bootstrap Loader:</strong> Write a Python bootstrap loader that dynamically registers this skill from the folder, parses the `SKILL.md` prompt, registers the tools, and initiates the autonomous loop.
+        </li>
+    </ol>
+    <div class="p-6 glass-card rounded-2xl border-l-4 border-amber-500 bg-amber-500/5 space-y-3 my-6">
+        <h5 class="text-amber-400 font-mono text-sm font-bold uppercase tracking-wider flex items-center gap-2">
+            <span>📥</span> Deliverable
+        </h5>
+        <p class="text-xs text-slate-300 leading-relaxed font-sans">
+            Submit your skill directory (`skills/mandelbrot_explorer/`) containing `SKILL.md`, the tool schemas, and the bootstrap loader. In your notebook, document how this encapsulation improves code maintainability and allows scaling to multi-agent architectures.
+        </p>
+    </div>
+
+    <!-- Submission instructions -->
+    <div class="p-6 glass-card rounded-2xl border-l-4 border-amber-500 bg-amber-500/5 space-y-3">
+        <h4 class="text-amber-400 font-mono text-sm font-bold uppercase tracking-wider flex items-center gap-2">
+            <span>💾</span> Submission Details
+        </h4>
+        <p class="text-xs text-slate-300 leading-relaxed">
+            Submit your solution as a Jupyter Notebook (`.ipynb`) and commit your created `skills/` directory to your team's GitHub vault. Ensure all code blocks compile, JAX functions are correctly `@jax.jit` decorated, and the final plots are clearly visible.
+        </p>
+    </div>
+</div>
