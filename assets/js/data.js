@@ -83,7 +83,7 @@ export const weeksData = {
         title: "KI-Agenten, Tool Calling & Agenten-Skills",
         module: "4",
         description: "Vom Sprachmodell zum autonomen Akteur (Perception, Reasoning, Action, Tool Calling). Der Agent ruft Simulationen autonom auf.",
-        active: false
+        active: true
     },
     "10": {
         id: "10",
