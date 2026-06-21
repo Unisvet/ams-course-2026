@@ -66,7 +66,7 @@ function initPortalPage() {
     }
 
     // Calculate completion progress
-    const activeWeeks = Object.values(weeksData).filter(w => w.active && w.id !== '14'); // Exclude presentation week for quiz calculation
+    const activeWeeks = Object.values(weeksData).filter(w => w.active && w.id !== '13' && w.id !== '14'); // Exclude project/presentation weeks for quiz calculation
     
     let totalPointsEarned = 0;
     const maxPointsPossible = activeWeeks.length * 5; // 1 pt for quiz, 4 pts for problem set
@@ -291,9 +291,29 @@ function setupTabs() {
         quiz: document.getElementById('tab-btn-quiz')
     };
 
+    const week = weeksData[currentWeekId];
+    const allowedTabs = week.tabs || ['intro', 'infographic', 'problemset', 'quiz'];
+
     Object.keys(tabButtons).forEach(tab => {
         const btn = tabButtons[tab];
         if (btn) {
+            if (allowedTabs.includes(tab)) {
+                btn.style.display = 'flex';
+                // Customize tab text for Week 13
+                if (tab === 'intro' && currentWeekId === '13') {
+                    btn.innerHTML = `<span>💡</span> Themenvorschläge & Pitches`;
+                } else if (tab === 'intro') {
+                    btn.innerHTML = `<span>📖</span> Theoretische Einführung`;
+                }
+            } else {
+                btn.style.display = 'none';
+            }
+        }
+    });
+
+    Object.keys(tabButtons).forEach(tab => {
+        const btn = tabButtons[tab];
+        if (btn && allowedTabs.includes(tab)) {
             btn.addEventListener('click', (e) => {
                 e.preventDefault();
                 loadTabContent(tab);
@@ -321,6 +341,11 @@ function updateActiveTabUI(selectedTab) {
 }
 
 function loadTabContent(tab) {
+    const week = weeksData[currentWeekId];
+    const allowedTabs = week.tabs || ['intro', 'infographic', 'problemset', 'quiz'];
+    if (!allowedTabs.includes(tab)) {
+        tab = allowedTabs[0] || 'intro';
+    }
     updateActiveTabUI(tab);
     const contentArea = document.getElementById('tab-viewport-content');
     if (!contentArea) return;

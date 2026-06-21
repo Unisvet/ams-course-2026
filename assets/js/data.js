@@ -111,7 +111,8 @@ export const weeksData = {
         title: "Projektarbeit, Hybride Architekturen & Debugging",
         module: "5",
         description: "Best Practices für hybride Systeme (Math-Engines + LLM-Schicht). Live-Debugging von KI-Halluzinationen.",
-        active: false
+        active: true,
+        tabs: ['intro']
     },
     "14": {
         id: "14",
