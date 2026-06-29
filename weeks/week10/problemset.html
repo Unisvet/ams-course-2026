@@ -1,0 +1,207 @@
+<div class="space-y-8">
+    <!-- Header Block -->
+    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-slate-900 pb-6">
+        <div>
+            <span class="px-2.5 py-0.5 rounded-full bg-slate-800 text-slate-400 text-xs font-mono font-bold uppercase tracking-wider border border-slate-750">Programming Assignment</span>
+            <h3 class="text-2xl font-black text-white mt-2">Problem Set 10: Project Genesis – The Cognitive Core</h3>
+            <p class="text-sm text-slate-400 mt-1">Deadline: TBA | Weight: 40% of Module 4 grade (4 Points) | Quiz: 1 Point</p>
+        </div>
+        <a href="assets/notebooks/ams-ps10-en.ipynb" download class="px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-800 hover:border-cyan-500/50 hover:bg-cyan-500/5 text-xs font-mono font-bold text-cyan-400 flex items-center gap-2 transition-all duration-200 hover:scale-105 active:scale-95 shadow-lg shadow-cyan-500/5">
+            <span>📥</span> Download Jupyter Notebook
+        </a>
+    </div>
+
+    <!-- Problem Set Header Image -->
+    <div class="glass-card p-1.5 rounded-3xl border border-cyan-500/15 shadow-xl relative overflow-hidden w-full aspect-[2752/1536] max-h-64 my-6">
+        <img 
+            src="assets/images/ams-ps10.jpg" 
+            alt="Cognitive Core Simulation" 
+            class="w-full h-full object-cover rounded-2xl"
+            onerror="this.src='https://images.unsplash.com/photo-1614741118887-7a4ee193a5fa?auto=format&fit=crop&w=800&q=80'"
+        >
+        <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/25 to-transparent flex items-end p-6">
+            <div class="font-mono text-xs text-cyan-400 font-bold bg-slate-950/65 px-3 py-1.5 rounded-lg border border-white/10 backdrop-blur-md select-none">
+                🧠 COGNITIVE CORE v10.0
+            </div>
+        </div>
+    </div>
+
+    <!-- The Story -->
+    <div class="p-6 glass-card rounded-2xl border-l-4 border-cyan-500 bg-cyan-950/5 space-y-3 my-6">
+        <h4 class="text-cyan-400 font-bold text-lg flex items-center gap-2">
+            <span>📖</span> The Story: Awakening the Architect
+        </h4>
+        <p class="text-sm text-slate-300 leading-relaxed font-sans">
+            Architects of the <em>Neo-Simulacrum</em>, you have reached a critical threshold. In Week 9, you built the <em>Silicon Cartographer</em>. You successfully mapped JAX simulations to tool schemas, but you were still the master orchestrator. You manually wrote the <code>while</code>-loops to force the model to think, execute, and remember. Your Python code was the rigid, fragile glue holding the agent's mind together. 
+        </p>
+        <p class="text-sm text-slate-300 leading-relaxed font-sans">
+            The era of manual orchestration ends today. Welcome to the <strong>Agent Development Kit (ADK)</strong>. 
+        </p>
+        <p class="text-sm text-slate-300 leading-relaxed font-sans font-bold text-white">
+            Today, you will instantiate <em>Observer-Prime</em> not just as a script, but as a persistent, stateful cognitive entity powered by the bleeding-edge <strong>Gemini 3.5 Flash</strong> architecture. Endowed with autonomous memory management and the native "Perceive-Think-Act-Check" loop, your agent will host itself on a local web interface, retain the history of your thermodynamic experiments, and autonomously call physics tools without you writing a single line of API boilerplate.
+        </p>
+    </div>
+
+    <hr class="border-slate-900 my-8">
+
+    <!-- Exercise 1 -->
+    <h4 class="text-lg font-bold text-white border-b border-slate-850 pb-2 mt-8 mb-4 flex items-center gap-2">
+        <span class="text-cyan-400">⚡</span> Exercise 1: Bootstrapping the Core (ADK Setup & `uv` Environment)
+    </h4>
+    <p class="text-sm text-slate-300 leading-relaxed font-sans font-medium italic">
+        *Learning Objective: Integrating the ADK into our modern `uv` workspace, safely managing environment variables, and utilizing the ADK CLI.*
+    </p>
+    <p class="text-sm text-slate-300 leading-relaxed font-sans">
+        Before an entity can think, it needs a sanctuary. The ADK requires a specific, modular file structure to auto-discover your agents. We will leverage our modern <code>uv</code> dependency manager to securely lock the ADK into our <code>pyproject.toml</code>.
+    </p>
+    <ol class="list-decimal pl-6 text-sm text-slate-300 space-y-4 font-sans">
+        <li class="leading-relaxed">
+            <strong class="text-white">The Installation:</strong> Ensure you are in your project directory in the terminal. Use <code>uv</code> to instantly resolve, install, and add the framework to your project configuration:
+            <pre class="bg-slate-950 p-3 rounded-lg border border-slate-850 overflow-x-auto text-xs font-mono text-cyan-400 mt-2"><code>uv add google-adk</code></pre>
+        </li>
+        <li class="leading-relaxed">
+            <strong class="text-white">The Vault of Secrets:</strong> Create a <code>.env</code> file in the root of your project directory. Add your Gemini API key:
+            <pre class="bg-slate-950 p-3 rounded-lg border border-slate-850 overflow-x-auto text-xs font-mono text-pink-400 mt-2"><code>GOOGLE_API_KEY="your_actual_key_here"</code></pre>
+            <em>(Crucial: Ensure <code>.env</code> is added to your <code>.gitignore</code>!)</em>
+        </li>
+        <li class="leading-relaxed">
+            <strong class="text-white">The Scaffold:</strong> Use the built-in ADK CLI to generate your agent workspace safely within your isolated <code>uv</code> environment:
+            <pre class="bg-slate-950 p-3 rounded-lg border border-slate-850 overflow-x-auto text-xs font-mono text-cyan-450 mt-2"><code>uv run adk create cognitive_core</code></pre>
+            Notice how the ADK auto-generates a folder named <code>cognitive_core</code> containing an <code>__init__.py</code> and an <code>agent.py</code>.
+        </li>
+    </ol>
+    <div class="p-6 glass-card rounded-2xl border-l-4 border-amber-500 bg-amber-500/5 space-y-3 my-6">
+        <h5 class="text-amber-400 font-mono text-sm font-bold uppercase tracking-wider flex items-center gap-2">
+            <span>📥</span> Deliverable
+        </h5>
+        <p class="text-xs text-slate-300 leading-relaxed font-sans">
+            Run a <code>tree</code> command (or similar directory listing) in your terminal showing the generated directory structure. Submit a screenshot.
+        </p>
+    </div>
+
+    <!-- Exercise 2 -->
+    <h4 class="text-lg font-bold text-white border-b border-slate-850 pb-2 mt-8 mb-4 flex items-center gap-2">
+        <span class="text-cyan-400">⚡</span> Exercise 2: The Four Pillars of Identity (`agent.py`)
+    </h4>
+    <p class="text-sm text-slate-300 leading-relaxed font-sans font-medium italic">
+        *Learning Objective: Defining Python-based agents using the four core parameters and upgrading the underlying model logic.*
+    </p>
+    <p class="text-sm text-slate-300 leading-relaxed font-sans">
+        Open <code>cognitive_core/agent.py</code>. You will find a default <code>root_agent</code>. Let's transform this generic assistant into our elite systems engineer, <strong>Observer-Prime</strong>.
+    </p>
+    <ol class="list-decimal pl-6 text-sm text-slate-300 space-y-4 font-sans">
+        <li class="leading-relaxed">
+            <strong class="text-white">Define the Parameters:</strong> Modify the <code>Agent</code> definition using the 4 core parameters:
+            <ul class="list-disc pl-6 mt-2 space-y-1 text-slate-400">
+                <li><code>model</code>: Set to the frontier model <code>'gemini-3.5-flash'</code>.</li>
+                <li><code>name</code>: <code>'observer_prime'</code> (Internal ADK routing name).</li>
+                <li><code>description</code>: Write a 1-sentence description (e.g., "A highly analytical agent specialized in managing physical reactor simulations.").</li>
+                <li><code>instruction</code>: Write a strict system prompt. Tell it to adopt the persona of a cold, highly logical AI overseeing a mathematical physics engine. Its primary goal is stabilization. It must always explain its reasoning clearly before taking action.</li>
+            </ul>
+        </li>
+    </ol>
+    <div class="p-6 glass-card rounded-2xl border-l-4 border-amber-500 bg-amber-500/5 space-y-3 my-6">
+        <h5 class="text-amber-400 font-mono text-sm font-bold uppercase tracking-wider flex items-center gap-2">
+            <span>📥</span> Deliverable
+        </h5>
+        <p class="text-xs text-slate-300 leading-relaxed font-sans font-mono bg-slate-950/40 p-3 rounded-lg border border-slate-800">
+            Submit your modified <code>agent.py</code> code.
+        </p>
+    </div>
+
+    <!-- Exercise 3 -->
+    <h4 class="text-lg font-bold text-white border-b border-slate-850 pb-2 mt-8 mb-4 flex items-center gap-2">
+        <span class="text-cyan-400">⚡</span> Exercise 3: The Memory Matrix (State-Tracking via Web UI)
+    </h4>
+    <p class="text-sm text-slate-300 leading-relaxed font-sans font-medium italic">
+        *Learning Objective: Utilizing the ADK Web Server through `uv` and validating autonomous Memory-Management.*
+    </p>
+    <p class="text-sm text-slate-300 leading-relaxed font-sans">
+        You no longer need to build your own frontend or append chat arrays to interact with your agents. The ADK ships with a native Web UI.
+    </p>
+    <ol class="list-decimal pl-6 text-sm text-slate-300 space-y-4 font-sans">
+        <li class="leading-relaxed">
+            <strong class="text-white">Ignition:</strong> From your parent directory, launch the ADK web interface via <code>uv</code>:
+            <pre class="bg-slate-950 p-3 rounded-lg border border-slate-850 overflow-x-auto text-xs font-mono text-cyan-400 mt-2"><code>uv run adk web</code></pre>
+        </li>
+        <li class="leading-relaxed">
+            <strong class="text-white">The Memory Test:</strong> Open your browser to <code>http://127.0.0.1:8000</code>. Select your agent from the dropdown. 
+        </li>
+        <li class="leading-relaxed">
+            Perform the following exact sequence in the chat to test its state-tracking:
+            <ul class="list-disc pl-6 mt-2 space-y-1 text-slate-400">
+                <li><strong>You:</strong> <em>"Observer-Prime, memorize this critical system parameter: The JAX thermal friction coefficient is set to 0.045."</em></li>
+                <li><strong>Agent:</strong> <em>(Should acknowledge based on your persona instructions).</em></li>
+                <li><strong>You:</strong> <em>"Write a haiku about the beauty of matrix multiplication."</em></li>
+                <li><strong>Agent:</strong> <em>(Outputs a haiku).</em></li>
+                <li><strong>You:</strong> <em>"What was the critical system parameter I told you to memorize earlier?"</em></li>
+            </ul>
+        </li>
+    </ol>
+    <div class="p-6 glass-card rounded-2xl border-l-4 border-amber-500 bg-amber-500/5 space-y-3 my-6">
+        <h5 class="text-amber-400 font-mono text-sm font-bold uppercase tracking-wider flex items-center gap-2">
+            <span>📥</span> Deliverable
+        </h5>
+        <p class="text-xs text-slate-300 leading-relaxed font-sans">
+            Take a screenshot of this web UI conversation demonstrating that Gemini 3.5 Flash perfectly remembered the parameter across context shifts without you writing any state-management code.
+        </p>
+    </div>
+
+    <!-- Exercise 4 -->
+    <h4 class="text-lg font-bold text-white border-b border-slate-850 pb-2 mt-8 mb-4 flex items-center gap-2">
+        <span class="text-cyan-400">⚡</span> Exercise 4: Arming the Architect (Tool Binding & The Autonomous Loop)
+    </h4>
+    <p class="text-sm text-slate-300 leading-relaxed font-sans font-medium italic">
+        *Learning Objective: Registering custom Python functions as tools within the ADK architecture to enable the autonomous Perceive-Think-Act loop.*
+    </p>
+    <p class="text-sm text-slate-300 leading-relaxed font-sans">
+        An agent without tools is just a philosopher. Let's give it the power to alter our simulated reality.
+    </p>
+    <ol class="list-decimal pl-6 text-sm text-slate-300 space-y-4 font-sans">
+        <li class="leading-relaxed">
+            <strong class="text-white">The Physics Tool:</strong> Above your <code>Agent</code> definition in <code>agent.py</code>, write a simple pure Python function (complete with accurate Type Hints and a Docstring—the ADK relies on these to teach the Gemini model exactly how to use the tool!):
+            <pre class="bg-slate-950 p-4 rounded-xl border border-slate-850 overflow-x-auto text-xs font-mono text-cyan-400 mt-2"><code class="language-python">def adjust_reactor_temperature(delta_t: float) -> str:
+    """
+    Adjusts the core temperature of the reactor.
+    Args:
+        delta_t: The amount to increase or decrease the temperature in Kelvin.
+    """
+    new_temp = 300.0 + delta_t
+    if new_temp > 350.0:
+        return f"WARNING: Reactor overheated at {new_temp}K! Core breach imminent."
+    return f"Success: Reactor stabilized at {new_temp}K."</code></pre>
+        </li>
+        <li class="leading-relaxed">
+            <strong class="text-white">The Binding:</strong> Pass your function to the agent using the <code>tools=[adjust_reactor_temperature]</code> parameter inside your <code>Agent</code> instantiation.
+        </li>
+        <li class="leading-relaxed">
+            <strong class="text-white">The Autonomous Loop:</strong> Restart the <code>adk web</code> server (stop it with <code>Ctrl+C</code> in the terminal, then run <code>uv run adk web</code> again). In the Web UI, command the agent: 
+            <p class="text-slate-400 italic mt-2">
+                "Observer-Prime, the reactor needs to be heated. Try increasing the temperature by 80 degrees. If a warning occurs, you must autonomously calculate a safer parameter and retry the tool until you achieve a 'Success' status."
+            </p>
+        </li>
+        <li class="leading-relaxed">
+            <strong class="text-white">Observe the Magic:</strong> Watch the UI as the ADK triggers the **Perceive ➔ Think ➔ Act ➔ Check** loop. The agent will call the tool with <code>80</code>, receive the WARNING, <em>think</em> about the failure, and autonomously call the tool again with a smaller number until it succeeds. 
+        </li>
+    </ol>
+    
+    <div class="p-6 glass-card rounded-2xl border-l-4 border-amber-500 bg-amber-500/5 space-y-4 my-6">
+        <h5 class="text-amber-400 font-mono text-sm font-bold uppercase tracking-wider flex items-center gap-2">
+            <span>📥</span> Deliverables
+        </h5>
+        <div class="text-xs text-slate-350 space-y-2">
+            <p>1. Submit a screenshot of the agent's "Chain of Thought" in the UI where it encounters the error and autonomously retries the tool.</p>
+            <p>2. Write a brief reflection (3 sentences) in your <code>docs/ADK_Report.md</code>: How does the ADK's native State-Tracking and Tool Calling compare to the manual <code>while</code>-loops and raw JSON parsing you had to write in Week 9?</p>
+        </div>
+    </div>
+
+    <!-- Submission instructions -->
+    <div class="p-6 glass-card rounded-2xl border-l-4 border-amber-500 bg-amber-500/5 space-y-3">
+        <h4 class="text-amber-400 font-mono text-sm font-bold uppercase tracking-wider flex items-center gap-2">
+            <span>💾</span> Submission Details
+        </h4>
+        <p class="text-xs text-slate-300 leading-relaxed">
+            Submit your solution as a Jupyter Notebook (<code>.ipynb</code>) and commit your created <code>cognitive_core/</code> directory to your team's GitHub vault. Ensure all code blocks compile, docstrings are accurate, and the reflection is properly saved under <code>docs/ADK_Report.md</code>.
+        </p>
+    </div>
+</div>

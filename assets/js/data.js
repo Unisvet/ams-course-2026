@@ -90,7 +90,7 @@ export const weeksData = {
         title: "Das Agent Development Kit (ADK)",
         module: "4",
         description: "Architektur und Konzepte des Agent Development Kits (ADK). State-Tracking und Memory-Management.",
-        active: false
+        active: true
     },
     "11": {
         id: "11",

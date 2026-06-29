@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Infografik - ADK Kognitiver Regelkreis & Tool-Korrektur</title>
+<!-- Tailwind CDN -->
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        vibrant: {
+          bg: '#090d16',
+          surface: '#0f172a',
+          surfaceLight: '#1e293b',
+          cyan: '#06b6d4',
+          pink: '#ec4899',
+          yellow: '#eab308',
+          purple: '#8b5cf6',
+          text: '#f8fafc',
+          textMuted: '#94a3b8'
+        }
+      }
+    }
+  }
+}
+</script>
+<style>
+body {
+  background-color: #090d16;
+  color: #f8fafc;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+.glass-card {
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(6, 182, 212, 0.15);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+.chart-container {
+  position: relative;
+  width: 100%;
+  height: 220px;
+}
+</style>
+<!-- Chart.js CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="antialiased p-4 md:p-6">
+    <div class="max-w-5xl mx-auto space-y-6">
+        <div class="text-center">
+          <h1 class="text-xl md:text-2xl font-black text-white tracking-tight">Der Autonome Regelkreis in Aktion (ADK Tool Self-Correction)</h1>
+          <p class="text-xs text-vibrant-textMuted mt-1">Interaktive Simulation: Beobachte, wie der ADK-Agent ein Werkzeug aufruft, Fehler analysiert und Parameter selbstständig anpasst.</p>
+        </div>
+
+        <!-- CoT Cycle Visualizer -->
+        <div class="glass-card rounded-2xl p-4">
+            <h3 class="text-xs font-mono font-bold text-cyan-400 mb-3 uppercase tracking-wider">Der ADK-Zyklus (Perceive ➔ Think ➔ Act ➔ Check)</h3>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-center text-xs">
+                <div id="step-perceive" class="p-3 bg-slate-900/40 border border-slate-800 rounded-xl transition-all duration-300">
+                    <span class="text-lg">👁️</span>
+                    <h4 class="font-bold text-cyan-400 mt-1">1. Perceive</h4>
+                    <p class="text-[10px] text-vibrant-textMuted mt-1">Agent liest aktuellen Zustand & History aus dem Memory.</p>
+                </div>
+                <div id="step-think" class="p-3 bg-slate-900/40 border border-slate-800 rounded-xl transition-all duration-300">
+                    <span class="text-lg">🧠</span>
+                    <h4 class="font-bold text-pink-400 mt-1">2. Think</h4>
+                    <p class="text-[10px] text-vibrant-textMuted mt-1">Modell entscheidet sich für die nächste Anpassung.</p>
+                </div>
+                <div id="step-act" class="p-3 bg-slate-900/40 border border-slate-800 rounded-xl transition-all duration-300">
+                    <span class="text-lg">🛠️</span>
+                    <h4 class="font-bold text-purple-400 mt-1">3. Act</h4>
+                    <p class="text-[10px] text-vibrant-textMuted mt-1">Das Tool <code>adjust_reactor_temperature</code> wird aufgerufen.</p>
+                </div>
+                <div id="step-check" class="p-3 bg-slate-900/40 border border-slate-800 rounded-xl transition-all duration-300">
+                    <span class="text-lg">🔍</span>
+                    <h4 class="font-bold text-yellow-400 mt-1">4. Check</h4>
+                    <p class="text-[10px] text-vibrant-textMuted mt-1">Prüfung der Rückgabe auf Fehler oder Warnungen.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            <!-- Left Column: Graph & Status Badge -->
+            <div class="lg:col-span-6 space-y-4">
+                <div class="glass-card rounded-2xl p-5 flex flex-col justify-between h-full">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-sm font-bold text-white">Reaktortemperatur (Sollwert: Max. 350K)</h3>
+                        <div id="status-badge" class="px-2.5 py-1 rounded-lg border border-cyan-500/30 text-[10px] font-mono font-bold text-cyan-400 bg-cyan-950/20 flex items-center gap-1.5 shadow backdrop-blur-md select-none">
+                            <span class="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse"></span>
+                            SYSTEM BEREIT
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="reactorChart"></canvas>
+                    </div>
+                    
+                    <!-- Controls -->
+                    <div class="mt-6 flex gap-3">
+                        <button id="run-btn" onclick="startSimulation()" class="flex-1 py-3 px-4 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-xs font-mono font-bold text-white shadow-lg transition duration-200">
+                            🤖 Agenten starten
+                        </button>
+                        <button id="step-btn" onclick="nextStep()" class="py-3 px-4 rounded-xl bg-slate-800 border border-slate-700 hover:bg-slate-700 text-xs font-mono font-bold text-slate-300 transition duration-200" disabled>
+                            ⏭️ Nächster Schritt
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Terminal Log -->
+            <div class="lg:col-span-6">
+                <div class="glass-card rounded-2xl p-5 flex flex-col h-[380px]">
+                    <div class="flex items-center justify-between border-b border-slate-800 pb-3 mb-3">
+                        <h3 class="text-xs font-mono font-bold text-pink-400 uppercase tracking-wider">Observer-Prime Cognitive Log</h3>
+                        <span class="text-[10px] text-slate-500 font-mono">v10.0-ADK</span>
+                    </div>
+                    <div id="terminal-body" class="flex-1 overflow-y-auto space-y-3 font-mono text-[11px] leading-relaxed pr-2 scrollbar-thin scrollbar-thumb-slate-800">
+                        <div class="text-slate-500">// Klicke auf "Agenten starten", um die thermische Stabilisierung zu beginnen.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const ctx = document.getElementById('reactorChart').getContext('2d');
+        let chart;
+        
+        // Initial parameters
+        let tempHistory = [300];
+        let steps = ["Start"];
+        let currentStepIndex = 0;
+        let simInterval = null;
+        let isAutoMode = false;
+        
+        // Setup initial Chart
+        function initChart() {
+            if (chart) chart.destroy();
+            chart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: steps,
+                    datasets: [{
+                        label: 'Reaktor Temperatur (K)',
+                        data: tempHistory,
+                        borderColor: '#06b6d4',
+                        backgroundColor: 'rgba(6, 182, 212, 0.1)',
+                        borderWidth: 2,
+                        pointBackgroundColor: '#ec4899',
+                        pointBorderColor: '#fff',
+                        pointRadius: 4,
+                        fill: true,
+                        tension: 0.1
+                    }, {
+                        label: 'Warnbereich (350K)',
+                        data: Array(steps.length).fill(350),
+                        borderColor: 'rgba(239, 68, 68, 0.4)',
+                        borderDash: [5, 5],
+                        borderWidth: 1.5,
+                        pointRadius: 0,
+                        fill: false
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    scales: {
+                        x: { ticks: { color: '#94a3b8', font: { size: 9 } }, grid: { color: 'rgba(255,255,255,0.02)' } },
+                        y: { 
+                            min: 280,
+                            max: 400,
+                            ticks: { color: '#94a3b8', font: { size: 9 } }, 
+                            grid: { color: 'rgba(255,255,255,0.04)' } 
+                        }
+                    }
+                }
+            });
+        }
+        initChart();
+
+        // Dialogue database for the simulation
+        const simScript = [
+            {
+                phase: "perceive",
+                badge: "PERCEIVING STATE",
+                badgeColor: "text-cyan-400 bg-cyan-950/20 border-cyan-800",
+                highlightId: "step-perceive",
+                temp: 300,
+                log: `<span class="text-cyan-400">[PERCEIVE]</span> Konversationszustand geladen. <br>
+                      &gt; Aktuelle Temperatur: 300K.<br>
+                      &gt; Ziel-Parameter: Erhöhe um 80K.`
+            },
+            {
+                phase: "think",
+                badge: "THINKING...",
+                badgeColor: "text-pink-400 bg-pink-950/20 border-pink-800",
+                highlightId: "step-think",
+                temp: 300,
+                log: `<span class="text-pink-400">[THINK]</span> Benutzer fordert eine Erhöhung der Temperatur um 80 Kelvin. <br>
+                      Ich besitze das Tool: <code class="text-cyan-400">adjust_reactor_temperature(delta_t)</code>.<br>
+                      Ich berechne: delta_t = 80.0. Ich werde das Tool direkt aufrufen.`
+            },
+            {
+                phase: "act",
+                badge: "EXECUTING TOOL",
+                badgeColor: "text-purple-400 bg-purple-950/20 border-purple-800",
+                highlightId: "step-act",
+                temp: 380,
+                stepLabel: "Iter 1 (+80K)",
+                log: `<span class="text-purple-400">[ACT]</span> Rufe Tool auf: <code class="text-cyan-400">adjust_reactor_temperature(delta_t=80.0)</code><br>
+                      &gt; <span class="text-red-500 font-bold">FEHLER-OBSERVATION:</span> "WARNING: Reactor overheated at 380.0K! Core breach imminent."`
+            },
+            {
+                phase: "check",
+                badge: "CHECKING RESULT",
+                badgeColor: "text-yellow-400 bg-yellow-950/20 border-yellow-800",
+                highlightId: "step-check",
+                temp: 380,
+                log: `<span class="text-yellow-400">[CHECK]</span> Das Tool meldete eine Warnung (Überhitzung).<br>
+                      Der Zustand wurde im Memory-State registriert. Der Versuch ist fehlgeschlagen. Der Agent muss autonom korrigieren.`
+            },
+            {
+                phase: "perceive",
+                badge: "PERCEIVING STATE",
+                badgeColor: "text-cyan-400 bg-cyan-950/20 border-cyan-800",
+                highlightId: "step-perceive",
+                temp: 380,
+                log: `<span class="text-cyan-400">[PERCEIVE]</span> Memory ausgelesen. <br>
+                      &gt; Letzter Aufruf mit delta_t=80.0 führte zu 380.0K (Limit überschritten).<br>
+                      &gt; Aktueller physikalischer Zustand der Simulation: Reaktor bei 300K zurückgesetzt.`
+            },
+            {
+                phase: "think",
+                badge: "THINKING...",
+                badgeColor: "text-pink-400 bg-pink-950/20 border-pink-800",
+                highlightId: "step-think",
+                temp: 300,
+                log: `<span class="text-pink-400">[THINK]</span> Das Limit liegt bei 350K. Mein vorheriger Versuch (+80K) war zu aggressiv.<br>
+                      Ich muss die Schrittweite reduzieren, um den Zielwert sicher anzunähern. Ich halbiere den Schritt und teste delta_t = 40.0.`
+            },
+            {
+                phase: "act",
+                badge: "EXECUTING TOOL",
+                badgeColor: "text-purple-400 bg-purple-950/20 border-purple-800",
+                highlightId: "step-act",
+                temp: 340,
+                stepLabel: "Iter 2 (+40K)",
+                log: `<span class="text-purple-400">[ACT]</span> Rufe Tool auf: <code class="text-cyan-400">adjust_reactor_temperature(delta_t=40.0)</code><br>
+                      &gt; <span class="text-emerald-400">SUCCESS-OBSERVATION:</span> "Success: Reactor stabilized at 340.0K."`
+            },
+            {
+                phase: "check",
+                badge: "CHECKING RESULT",
+                badgeColor: "text-yellow-400 bg-yellow-950/20 border-yellow-800",
+                highlightId: "step-check",
+                temp: 340,
+                log: `<span class="text-yellow-400">[CHECK]</span> Das Tool meldete Erfolg. Die Temperatur ist stabil bei 340.0K.`
+            },
+            {
+                phase: "perceive",
+                badge: "PERCEIVING STATE",
+                badgeColor: "text-cyan-400 bg-cyan-950/20 border-cyan-800",
+                highlightId: "step-perceive",
+                temp: 340,
+                log: `<span class="text-cyan-400">[PERCEIVE]</span> Memory ausgelesen. <br>
+                      &gt; Aktueller stabilisierter Zustand: 340.0K.<br>
+                      &gt; Das Soll-Limit (350K) ist fast erreicht. Restluft: 10K.`
+            },
+            {
+                phase: "think",
+                badge: "THINKING...",
+                badgeColor: "text-pink-400 bg-pink-950/20 border-pink-800",
+                highlightId: "step-think",
+                temp: 340,
+                log: `<span class="text-pink-400">[THINK]</span> Ich stehe bei 340.0K. Ich möchte mich dem maximalen Sicherheitslimit von 350K weiter annähern.<br>
+                      Um eine weitere Warnung zu vermeiden, wähle ich einen feinen Sicherheitsschritt von delta_t = 9.9.`
+            },
+            {
+                phase: "act",
+                badge: "EXECUTING TOOL",
+                badgeColor: "text-purple-400 bg-purple-950/20 border-purple-800",
+                highlightId: "step-act",
+                temp: 349.9,
+                stepLabel: "Iter 3 (+9.9K)",
+                log: `<span class="text-purple-400">[ACT]</span> Rufe Tool auf: <code class="text-cyan-400">adjust_reactor_temperature(delta_t=9.9)</code><br>
+                      &gt; <span class="text-emerald-400">SUCCESS-OBSERVATION:</span> "Success: Reactor stabilized at 349.9K."`
+            },
+            {
+                phase: "check",
+                badge: "STABILIZED",
+                badgeColor: "text-emerald-400 bg-emerald-950/20 border-emerald-800",
+                highlightId: "step-check",
+                temp: 349.9,
+                log: `<span class="text-emerald-400">[CHECK]</span> Zieltemperatur erreicht und stabilisiert bei 349.9K. <br>
+                      Keine weiteren Anpassungen erforderlich. Der autonome Optimierungs-Loop wird beendet.`
+            }
+        ];
+
+        function highlightStep(stepId) {
+            // Remove highlight class from all steps
+            ['step-perceive', 'step-think', 'step-act', 'step-check'].forEach(id => {
+                const el = document.getElementById(id);
+                el.classList.remove('border-cyan-500/80', 'bg-cyan-950/20', 'scale-105', 'shadow-lg', 'shadow-cyan-500/10');
+                el.classList.add('border-slate-800', 'bg-slate-900/40');
+            });
+            
+            // Add to target step
+            const target = document.getElementById(stepId);
+            if (target) {
+                target.classList.remove('border-slate-800', 'bg-slate-900/40');
+                target.classList.add('border-cyan-500/80', 'bg-cyan-950/20', 'scale-105', 'shadow-lg', 'shadow-cyan-500/10');
+            }
+        }
+
+        function appendToLog(htmlContent) {
+            const term = document.getElementById('terminal-body');
+            const div = document.createElement('div');
+            div.className = 'p-3 bg-slate-900/50 rounded-lg border border-slate-900/60 shadow-sm animate-fade-in';
+            div.innerHTML = htmlContent;
+            term.appendChild(div);
+            term.scrollTop = term.scrollHeight;
+        }
+
+        function startSimulation() {
+            // Reset state
+            tempHistory = [300];
+            steps = ["Start"];
+            currentStepIndex = 0;
+            isAutoMode = true;
+            
+            document.getElementById('terminal-body').innerHTML = '<div class="text-cyan-400">// Starte autonome Multi-Schritt-Optimierung mit ADK...</div>';
+            document.getElementById('run-btn').innerText = "🤖 Läuft...";
+            document.getElementById('run-btn').disabled = true;
+            document.getElementById('step-btn').disabled = true;
+            
+            initChart();
+            runLoop();
+        }
+
+        function runLoop() {
+            if (currentStepIndex >= simScript.length) {
+                // Done
+                document.getElementById('run-btn').innerText = "🤖 Agenten starten";
+                document.getElementById('run-btn').disabled = false;
+                document.getElementById('step-btn').disabled = true;
+                return;
+            }
+            
+            executeStep();
+            currentStepIndex++;
+            
+            // Auto step interval
+            setTimeout(runLoop, 2500);
+        }
+
+        function executeStep() {
+            const data = simScript[currentStepIndex];
+            
+            // Update badge
+            const badge = document.getElementById('status-badge');
+            badge.innerText = data.badge;
+            badge.className = `px-2.5 py-1 rounded-lg border ${data.badgeColor} text-[10px] font-mono font-bold flex items-center gap-1.5 shadow backdrop-blur-md select-none`;
+            
+            // Highlight current phase
+            highlightStep(data.highlightId);
+            
+            // Log message
+            appendToLog(data.log);
+            
+            // Update chart if there's temperature change and it's an action/success step
+            if (data.phase === "act") {
+                steps.push(data.stepLabel || `Schritt ${steps.length}`);
+                tempHistory.push(data.temp);
+                
+                // If it was the overheat step, we show a drop back to 300 on the next iteration or during check
+                chart.update();
+            } else if (data.phase === "check" && data.temp === 380) {
+                // reset visually back to 300 to show the failure and resetting of simulation
+                steps.push("Reset");
+                tempHistory.push(300);
+                chart.update();
+            }
+        }
+    </script>
+</body>
+</html>

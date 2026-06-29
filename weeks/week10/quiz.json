@@ -1,0 +1,112 @@
+[
+    {
+        "question": "Was ist das Kern-Paradigma von \"Agentic Engineering\" im Vergleich zur klassischen Programmierung?",
+        "options": [
+            "Diktat statt Delegation: Entwickler schreiben detailliertere while-Schleifen.",
+            "Delegation statt Diktat: Entwickler setzen Ziele, der Agent plant und korrigiert sich autonom.",
+            "Reines Code-Generieren ohne Ausführung oder Fehlertoleranz.",
+            "Verzicht auf jegliche High-Performance-Bibliotheken."
+        ],
+        "answerIndex": 1,
+        "explanation": "Agentic Engineering verschiebt die Aufgabe des Entwicklers von der detaillierten Ablaufsteuerung (Diktat) hin zur Formulierung von Zielen für ein autonomes System (Delegation)."
+    },
+    {
+        "question": "Mit welchem Befehl fügst du das ADK-Framework unter Verwendung des modernen Paketmanagers `uv` zu deinem Projekt hinzu?",
+        "options": [
+            "pip install google-adk",
+            "uv add google-adk",
+            "npm install google-adk",
+            "python -m pip install google-adk"
+        ],
+        "answerIndex": 1,
+        "explanation": "Mit `uv add google-adk` fügst du die Abhängigkeit dem aktuellen Projekt hinzu und stellst eine saubere, isolierte Umgebung sicher."
+    },
+    {
+        "question": "Welche vier Kernparameter werden bei der Instanziierung eines ADK-Agenten definiert? (Wähle alle korrekten Antworten)",
+        "options": [
+            "model (das zugrundeliegende LLM)",
+            "name (der interne Routing-Name)",
+            "description (die Fähigkeiten-Beschreibung für Multi-Agenten-Szenarien)",
+            "instruction (der System-Prompt, der Persona und Verhalten regelt)"
+        ],
+        "answerIndex": [0, 1, 2, 3],
+        "explanation": "Alle vier Parameter (model, name, description, instruction) sind essenziell, um die Identität, Logik und Kommunikationsfähigkeit eines ADK-Agenten festzulegen."
+    },
+    {
+        "question": "Warum ist die `description` eines Agenten im ADK so wichtig?",
+        "options": [
+            "Sie wird als Design-Element auf der Benutzeroberfläche angezeigt.",
+            "Sie dient als Lizenzschlüssel für die Gemini-API.",
+            "Sie ermöglicht in Multi-Agenten-Systemen (MAS) das autonome Routen von Aufgaben durch andere Agenten.",
+            "Sie schränkt die Dateigröße der ausgeführten Skripte ein."
+        ],
+        "answerIndex": 2,
+        "explanation": "In einem Multi-Agenten-System nutzen Orchestratoren und andere Agenten die description, um zu entscheiden, welcher Agent für eine spezifische Aufgabe am besten geeignet ist."
+    },
+    {
+        "question": "Wie löst das ADK das Problem der Zustandslosigkeit (statelessness) von Standard-LLM-API-Aufrufen?",
+        "options": [
+            "Es führt bei jedem Aufruf ein Fine-Tuning des Modells durch.",
+            "Es erzwingt, dass das Modell alle Informationen lokal in einer SQLite-Datenbank speichert.",
+            "Es bietet ein automatisches, implizites Memory-Management, das den Konversationsverlauf und Tool-Ergebnisse speichert.",
+            "Es gibt keine Lösung, da das ADK ebenfalls zustandslos arbeitet."
+        ],
+        "answerIndex": 2,
+        "explanation": "Das ADK nimmt dem Entwickler das manuelle Management der Chat-Historie ab, indem es Konversations- und Tool-Zustände automatisch speichert und verwaltet."
+    },
+    {
+        "question": "Welcher zyklische Ablauf (Loop) beschreibt die Arbeitsweise eines autonomen ADK-Agenten?",
+        "options": [
+            "Input ➔ Output ➔ Format ➔ Print",
+            "Perceive ➔ Think ➔ Act ➔ Check",
+            "Fetch ➔ Run ➔ Compile ➔ Exit",
+            "Read ➔ Write ➔ Execute ➔ Delete"
+        ],
+        "answerIndex": 1,
+        "explanation": "Der ADK-Loop läuft wie folgt ab: Wahrnehmen des States (Perceive), Planen des nächsten Schritts (Think), Ausführen von Aktionen/Tools (Act) und Prüfen des Ergebnisses bzw. der Fehler (Check)."
+    },
+    {
+        "question": "Wie teilt der Entwickler dem ADK-Agenten mit, wie er ein benutzerdefiniertes Python-Tool aufrufen muss?",
+        "options": [
+            "Durch das Schreiben einer separaten JSON-Datei für jede Python-Funktion.",
+            "Das ADK liest die präzisen Type Hints und den Docstring der Python-Funktion aus, um das Schema zu erstellen.",
+            "Der Agent rät die Parameter automatisch anhand des Funktionsnamens.",
+            "Tools müssen in C++ kompiliert werden, damit das Modell sie aufrufen kann."
+        ],
+        "answerIndex": 1,
+        "explanation": "Das ADK nutzt Python-Introspektion: Es parst die Type Hints (z. B. float, str) und die Docstrings der übergebenen Funktionen, um das Funktions-Schema für das LLM zu generieren."
+    },
+    {
+        "question": "Welcher CLI-Befehl startet die visuelle Web-UI des ADK zum Debuggen der Chain-of-Thought auf http://localhost:8000?",
+        "options": [
+            "uv run adk run",
+            "uv run adk web",
+            "python agent.py --web",
+            "adk start-server"
+        ],
+        "answerIndex": 1,
+        "explanation": "Mit `uv run adk web` wird der integrierte Entwicklungsserver gestartet, auf dem sich die Gedankenschritte und Tool-Aufrufe visuell im Web-Interface nachvollziehen lassen."
+    },
+    {
+        "question": "Was passiert standardmäßig, wenn ein Tool-Aufruf im ADK-Regelkreis eine Fehlermeldung oder eine Warnung zurückgibt?",
+        "options": [
+            "Das Python-Skript stürzt mit einer unbehandelte Exception ab.",
+            "Der Agent ignoriert den Fehler und wiederholt die Aktion identisch bis zum Timeout.",
+            "Der Agent erfasst die Fehlermeldung als Observation, reflektiert darüber (Think) und korrigiert die Argumente autonom.",
+            "Die API sperrt den Zugriffsschlüssel des Benutzers."
+        ],
+        "answerIndex": 2,
+        "explanation": "Der ADK-Agent erfasst Fehler im Check-Schritt und speichert sie als Beobachtung im Memory. Im nächsten Think-Schritt versucht das Modell, die Fehlerursache zu beheben und korrigierte Parameter anzuwenden."
+    },
+    {
+        "question": "Welches Frontier-Modell wird in Woche 10 standardmäßig als kognitiver Kern für den Agenten Observer-Prime eingesetzt?",
+        "options": [
+            "gemini-1.5-pro",
+            "gemma-2-2b",
+            "gemini-3.5-flash",
+            "gpt-4o"
+        ],
+        "answerIndex": 2,
+        "explanation": "Gemini 3.5 Flash wird aufgrund seiner hohen Geschwindigkeit und logischen Fähigkeiten als standardmäßige Engine im ADK-Setup für die simulationstechnischen Übungen genutzt."
+    }
+]
