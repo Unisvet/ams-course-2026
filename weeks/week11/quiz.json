@@ -1,0 +1,112 @@
+[
+    {
+        "question": "Was unterscheidet eine Agent Development Environment (ADE) von einer klassischen IDE?",
+        "options": [
+            "Eine ADE dient ausschließlich zum Schreiben von Python-Code.",
+            "Eine ADE bietet eine kontrollierte Laufzeitumgebung für kognitive Agenten mit Tracing, Sandboxing und Multi-Agenten-Orchestrierung.",
+            "Eine ADE ist ein Texteditor ohne jegliche Compiler-Unterstützung.",
+            "Es gibt keinen Unterschied, die Begriffe sind absolut synonym."
+        ],
+        "answerIndex": 1,
+        "explanation": "Eine ADE geht weit über das reine Schreiben von Code hinaus: Sie verwaltet kognitive Runtimes, isoliert Agenten in Sandboxes zum Schutz des Systems und trackt kognitive Schritte (Thoughts/Actions) im Detail."
+    },
+    {
+        "question": "In welcher Programmiersprache wurde die Benutzeroberfläche der Antigravity CLI geschrieben?",
+        "options": [
+            "Python",
+            "JavaScript",
+            "Go (Golang)",
+            "Rust"
+        ],
+        "answerIndex": 2,
+        "explanation": "Die Antigravity CLI ist ein in Go geschriebenes Terminal-Interface (TUI), das für extreme Latenzvorteile, Headless-Ausführung und Schnelligkeit konzipiert ist."
+    },
+    {
+        "question": "Welche vier Oberflächen bilden das funktionale Fundament von Google Antigravity 2.0? (Wähle alle korrekten Antworten)",
+        "options": [
+            "Antigravity Desktop App",
+            "Antigravity IDE",
+            "Antigravity CLI",
+            "Antigravity SDK"
+        ],
+        "answerIndex": [0, 1, 2, 3],
+        "explanation": "Google Antigravity 2.0 gliedert sich in diese vier primären Oberflächen, die alle auf das gemeinsame Core Agent Harness aufsetzen und für unterschiedliche Workflows optimiert sind."
+    },
+    {
+        "question": "Für welches Anwendungsszenario eignet sich das Antigravity SDK am besten?",
+        "options": [
+            "Zum Zeichnen von Diagrammen im Webbrowser.",
+            "Zur visuellen Ausführung von Voice-Commands auf dem Desktop.",
+            "Zum programmatischen Erstellen von Agenten und Einbetten von Agentic AI in eigene Software-Pipelines.",
+            "Als reiner Ersatz für git-Versionierungs-Befehle."
+        ],
+        "answerIndex": 2,
+        "explanation": "Das SDK (Python/TypeScript/Go) stellt die Programmier-Bibliotheken bereit, um Agenten-Logik und Tool-Bindungen direkt in Code-Strukturen und Server-Skripte einzubinden."
+    },
+    {
+        "question": "Was ist die Hauptaufgabe der Antigravity Desktop App?",
+        "options": [
+            "Als Texteditor für C++ Code zu dienen.",
+            "Die zentrale Orchestrierung, zeitgesteuerte Hintergrundausführung und das Monitoring paralleler Agenten-Prozesse.",
+            "Das Hosten lokaler LLM-Gewichte ohne API-Zugriff.",
+            "Die Bildverarbeitung und das Rendern von UI-Mockups."
+        ],
+        "answerIndex": 1,
+        "explanation": "Die Desktop-Anwendung dient als Command Center für Hintergrund-Agenten, parallele Tasks, Multi-Agenten-Swarms und zeitgesteuerte Automationen (Cron-Jobs)."
+    },
+    {
+        "question": "Welche wissenschaftlichen Datenbanken können über die DeepMind Science-Skills abgefragt werden? (Wähle alle korrekten Antworten)",
+        "options": [
+            "arXiv",
+            "OpenAlex",
+            "PubMed",
+            "Wikipedia"
+        ],
+        "answerIndex": [0, 1, 2],
+        "explanation": "Die Google DeepMind Science-Skills bieten spezialisierte CLI-Werkzeuge für arXiv, OpenAlex und PubMed. Wikipedia gehört nicht zu diesen akademisch referenzierten Forschungs-Datenbanken im Repository."
+    },
+    {
+        "question": "Welche Rolle spielt das 'Core Agent Harness' in Antigravity 2.0?",
+        "options": [
+            "Es dient zur Hardware-Beschleunigung von Grafikkarten.",
+            "Es ist das gemeinsame kognitive Kern-System (Harness), auf dem alle vier Oberflächen (App, IDE, CLI, SDK) aufsetzen.",
+            "Es sperrt unautorisierte API-Schlüssel für externe Datenbanken.",
+            "Es dient ausschließlich dem Backup von lokalen Dateisystemen."
+        ],
+        "answerIndex": 1,
+        "explanation": "Das Core Agent Harness bildet das einheitliche Fundament. Egal welche Oberfläche (CLI, SDK, IDE, App) genutzt wird, die zugrundeliegende Agenten-Logik und -Ausführung teilen sich dieselbe Engine."
+    },
+    {
+        "question": "Was ist ein wesentlicher Sicherheitsaspekt beim Ausführen von autonomen KI-Agenten in einer ADE?",
+        "options": [
+            "Dass Agenten keine Umlaute schreiben können.",
+            "Die Verwendung isolierter Sandboxes, um das Host-System vor unerwünschten Dateizugriffen oder Code-Ausführungen zu schützen.",
+            "Dass der Agent bei jedem Schritt ein Passwort abfragen muss.",
+            "Die Deaktivierung jeglicher Internetverbindung."
+        ],
+        "answerIndex": 1,
+        "explanation": "Da autonome Agenten über Tools Systemcode ausführen und verändern können, ist die Kapselung in einer isolierten virtuellen Sandbox der wichtigste Sicherheitsaspekt zum Schutz des Host-Systems."
+    },
+    {
+        "question": "Wie parst das ADK das Schema von Python-Funktionen, um sie dem Agenten als Werkzeuge (Tools) bereitzustellen?",
+        "options": [
+            "Der Entwickler muss jedes Mal manuell eine XML-Datei erstellen.",
+            "Das ADK liest die Typ-Hinweise (Type Hints) und Docstrings der Python-Funktion aus und generiert daraus das JSON-Schema für das LLM.",
+            "Das ADK rät die Parameter basierend auf der Dateigröße.",
+            "Es findet kein Parsing statt; Tools werden direkt als unstrukturierter Text an das LLM übergeben."
+        ],
+        "answerIndex": 1,
+        "explanation": "Das ADK nutzt Python-Introspektion. Es liest die Type Hints der Argumente (z. B. float) sowie die textuelle Beschreibung aus dem Funktions-Docstring aus, um die JSON-Tool-Deklaration zu bauen."
+    },
+    {
+        "question": "Welches Tool aus den DeepMind Science-Skills eignet sich besonders gut, um Zitationsnetzwerke zu analysieren und DOIs aufzulösen?",
+        "options": [
+            "literature-search-arxiv",
+            "pubmed-database",
+            "literature-search-openalex",
+            "google-scholar-search"
+        ],
+        "answerIndex": 2,
+        "explanation": "Das OpenAlex-Tool (`literature-search-openalex`) ist speziell für die Abfrage des offenen globalen Zitationskatalogs OpenAlex optimiert und eignet sich hervorragend für DOI-Lookups und Zitations-Metriken."
+    }
+]

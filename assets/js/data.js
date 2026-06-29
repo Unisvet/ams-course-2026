@@ -97,7 +97,7 @@ export const weeksData = {
         title: "Agent Development Environments (ADE) & Antigravity",
         module: "4",
         description: "Betrieb von Agentensystemen unter Produktionsbedingungen in der Agent Development Environment (ADE) Antigravity.",
-        active: false
+        active: true
     },
     "12": {
         id: "12",

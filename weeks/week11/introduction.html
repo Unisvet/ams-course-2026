@@ -1,0 +1,191 @@
+<div class="space-y-8 animate-fade-in">
+    <!-- Intro Banner -->
+    <div class="p-6 glass-card rounded-2xl border-l-4 border-cyan-500 bg-gradient-to-r from-cyan-950/20 to-transparent">
+        <h3 class="text-xl md:text-2xl font-bold text-white mb-2">Woche 11: Agent Development Environments (ADE) & Antigravity</h3>
+        <p class="text-slate-300 text-sm leading-relaxed mt-3 font-sans">
+            In den vergangenen Wochen haben wir gelernt, wie wir mit dem <strong>Agent Development Kit (ADK)</strong> autonome, zustandsbehaftete Agenten programmieren und deren kognitiven Kreislauf steuern. Bisher liefen diese Agenten jedoch lokal in einem einfachen Skript oder einer Web-UI.
+        </p>
+        <p class="text-slate-300 text-sm leading-relaxed mt-2 font-sans">
+            In der professionellen Softwareentwicklung reicht das nicht aus. Wenn mehrere Agenten zusammenarbeiten, Code auf einem System verändern oder parallel Hintergrundaufgaben ausführen, benötigt man eine kontrollierte, sichere und optimierte Umgebung. Eine **Agent Development Environment (ADE)** wie **Google Antigravity** stellt diese Schnittstellen, Sandboxes, Multi-Agenten-Orchestrierungen und Tracing-Werkzeuge zur Verfügung, um kognitive Agenten unter Produktionsbedingungen zu betreiben.
+        </p>
+    </div>
+
+    <!-- Core Objectives -->
+    <div class="space-y-4">
+        <h3 class="text-2xl font-bold text-white flex items-center gap-2">
+            <span>🎯</span> Lernziele der Woche
+        </h3>
+        <ul class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <li class="p-4 bg-slate-900/40 border border-slate-800 rounded-xl flex gap-3">
+                <span class="text-cyan-400 font-bold">1.</span>
+                <span class="text-sm text-slate-300"><strong>ADE Konzepte verstehen:</strong> Sinn und Zweck von Agent Development Environments (Sandbox, Tracing, Orchestrierung) im Gegensatz zu klassischen IDEs lernen.</span>
+            </li>
+            <li class="p-4 bg-slate-900/40 border border-slate-800 rounded-xl flex gap-3">
+                <span class="text-pink-400 font-bold">2.</span>
+                <span class="text-sm text-slate-300"><strong>Das Antigravity 2.0-Ökosystem beherrschen:</strong> Die Trennung und Einsatzszenarien von Desktop App, IDE, CLI und SDK verstehen.</span>
+            </li>
+            <li class="p-4 bg-slate-900/40 border border-slate-800 rounded-xl flex gap-3">
+                <span class="text-yellow-400 font-bold">3.</span>
+                <span class="text-sm text-slate-300"><strong>Scientific Literature Search:</strong> Integration der Google DeepMind Science-Skills (arXiv und OpenAlex) in das Agenten-Tooling zur autonomen Wissensbeschaffung.</span>
+            </li>
+            <li class="p-4 bg-slate-900/40 border border-slate-800 rounded-xl flex gap-3">
+                <span class="text-purple-400 font-bold">4.</span>
+                <span class="text-sm text-slate-300"><strong>Parameter-Extraktion:</strong> Entwicklung strukturierter Pipelines, mit denen Agenten physikalische Konstanten aus wissenschaftlichen Publikationen lesen und für Simulationen abspeichern.</span>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Section 1 -->
+    <h3 class="text-xl md:text-2xl font-extrabold text-white mt-12 mb-4 border-b border-slate-900 pb-2 flex items-center gap-2">
+        <span>⚙️</span> 1. Was ist eine Agent Development Environment (ADE)?
+    </h3>
+    <p class="text-sm text-slate-300 leading-relaxed font-sans">
+        Eine ADE erweitert die traditionelle integrierte Entwicklungsumgebung um agenten-spezifische Runtimes. Da Agenten kontinuierlich Entscheidungen treffen, Tools ausführen und Code schreiben, stellt eine ADE die notwendige Infrastruktur bereit:
+    </p>
+    <ul class="list-disc pl-6 text-sm text-slate-350 space-y-2 mt-3 font-sans">
+        <li><strong class="text-white">Isolierte Sandboxes:</strong> Verhindert, dass fehlerhafter oder bösartiger Agenten-Code das Host-System beschädigt.</li>
+        <li><strong class="text-white">Kognitives Tracing:</strong> Protokolliert jeden Thought, jede Action (Tool Call) und jede Observation, damit Entwickler logische Fehlentscheidungen der Agenten analysieren können.</li>
+        <li><strong class="text-white">Multi-Agenten-Routing:</strong> Regelt die Kommunikation und Task-Delegation zwischen verschiedenen Subagenten.</li>
+    </ul>
+
+    <!-- Section 2 -->
+    <h3 class="text-xl md:text-2xl font-extrabold text-white mt-12 mb-4 border-b border-slate-900 pb-2 flex items-center gap-2">
+        <span>🚀</span> 2. Die 4 Oberflächen von Google Antigravity 2.0
+    </h3>
+    <p class="text-sm text-slate-300 leading-relaxed font-sans mb-6">
+        Das im Mai 2026 veröffentlichte <strong>Antigravity 2.0</strong> ist modular aufgebaut und verteilt sich auf vier spezialisierte Oberflächen, die alle auf demselben Core Agent Harness aufsetzen:
+    </p>
+
+    <!-- Grid of 4 surfaces -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-6">
+        <div class="glass-card rounded-2xl p-5 border-t-2 border-t-cyan-500/50 bg-slate-900/10 space-y-2">
+            <h5 class="text-white font-bold text-base flex items-center gap-2">
+                <span>🖥️</span> Antigravity 2.0 Desktop App
+            </h5>
+            <p class="text-xs text-slate-400 leading-relaxed">
+                Das eigenständige, agenten-zentrierte Kontrollzentrum. Entwickelt für parallele Task-Ausführung, Zeitplanung von Hintergrundprozessen und Multi-Agenten-Orchestrierung. Sie ist vom klassischen Code-Editor entkoppelt und ermöglicht die Steuerung ganzer Agenten-Swarms.
+            </p>
+        </div>
+        <div class="glass-card rounded-2xl p-5 border-t-2 border-t-pink-500/50 bg-slate-900/10 space-y-2">
+            <h5 class="text-white font-bold text-base flex items-center gap-2">
+                <span>💻</span> Antigravity IDE
+            </h5>
+            <p class="text-xs text-slate-400 leading-relaxed">
+                Ein hochoptimierter VS-Code-Fork. Hier arbeiten Entwickler direkt Code-Editierungen ab. Der Agent analysiert die Codebase und schlägt interaktive Änderungen über visuelle Diffs und Artifacts vor, die der Entwickler direkt übernehmen kann.
+            </p>
+        </div>
+        <div class="glass-card rounded-2xl p-5 border-t-2 border-t-yellow-500/50 bg-slate-900/10 space-y-2">
+            <h5 class="text-white font-bold text-base flex items-center gap-2">
+                <span>📟</span> Antigravity CLI
+            </h5>
+            <p class="text-xs text-slate-400 leading-relaxed">
+                Ein leichtgewichtiges, in Go geschriebenes Terminal-Interface (TUI). Konzipiert für Entwickler, die Tastatur-zentrierte Workflows bevorzugen, sowie für Headless-Umgebungen über SSH auf Remote-Servern. Ersetzt die ältere Gemini CLI.
+            </p>
+        </div>
+        <div class="glass-card rounded-2xl p-5 border-t-2 border-t-purple-500/50 bg-slate-900/10 space-y-2">
+            <h5 class="text-white font-bold text-base flex items-center gap-2">
+                <span>⚙️</span> Antigravity SDK
+            </h5>
+            <p class="text-xs text-slate-400 leading-relaxed">
+                Das Programmier-Framework (Python, TypeScript, Go). Es entkoppelt die Kognitions- und Tool-Logik vom Frontend. Entwickler nutzen das SDK, um Agenten direkt in ihre eigenen Apps einzubetten oder komplexe Automatisierungs-Pipelines aufzusetzen.
+            </p>
+        </div>
+    </div>
+
+    <!-- Clickable Mermaid Flowchart (Modal Zoomable) -->
+    <div class="relative group cursor-pointer" onclick="(function(){
+        let modal = document.getElementById('diagram-modal');
+        if (!modal) {
+            modal = document.createElement('div');
+            modal.id = 'diagram-modal';
+            modal.className = 'fixed inset-0 bg-black/85 backdrop-blur-md z-[100] flex items-center justify-center p-4';
+            modal.onclick = function() { modal.style.display = 'none'; document.body.style.overflow = ''; };
+            
+            const card = document.createElement('div');
+            card.className = 'glass-card max-w-2xl w-full p-6 rounded-3xl border border-cyan-500/30 bg-[#090d16]/95 space-y-4 relative';
+            card.onclick = function(e) { e.stopPropagation(); };
+            
+            const closeBtn = document.createElement('button');
+            closeBtn.innerHTML = '&times;';
+            closeBtn.className = 'absolute top-4 right-4 text-slate-450 hover:text-white text-2xl focus:outline-none leading-none';
+            closeBtn.onclick = function() { modal.style.display = 'none'; document.body.style.overflow = ''; };
+            
+            const title = document.createElement('h3');
+            title.className = 'text-xs font-bold text-white font-mono flex items-center gap-2';
+            title.innerText = '🔍 Antigravity 2.0 Architektur (Vergrößerte Ansicht)';
+            
+            const content = document.createElement('div');
+            content.id = 'modal-diagram-content';
+            content.className = 'p-6 bg-slate-950/80 rounded-2xl border border-slate-900 flex justify-center items-center min-h-[350px]';
+            
+            const footer = document.createElement('p');
+            footer.className = 'text-[10px] text-slate-500 text-center font-mono';
+            footer.innerText = 'Klicke auf das \'x\' oder außerhalb, um zu schließen.';
+            
+            card.appendChild(closeBtn);
+            card.appendChild(title);
+            card.appendChild(content);
+            card.appendChild(footer);
+            modal.appendChild(card);
+            document.body.appendChild(modal);
+        }
+        
+        const content = document.getElementById('modal-diagram-content');
+        content.innerHTML = '';
+        const svg = document.querySelector('.mermaid svg');
+        if (svg) {
+            const clone = svg.cloneNode(true);
+            clone.removeAttribute('height');
+            clone.style.width = '100%';
+            clone.style.height = 'auto';
+            clone.style.maxHeight = '420px';
+            content.appendChild(clone);
+        } else {
+            content.innerHTML = '<p class=\'text-slate-400 text-xs font-mono\'>Lade Diagramm...</p>';
+        }
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+    })()" title="Klicke zum Vergrößern">
+        <pre class="mermaid bg-slate-950/40 p-6 rounded-xl border border-slate-900/60 my-6 flex justify-center hover:border-cyan-500/50 hover:shadow-lg hover:shadow-cyan-500/5 transition-all duration-300 min-h-[300px]">
+        graph TD
+            App["🖥️ Desktop App (Command Center / Swarms)"] --> Harness["🧠 Core Agent Harness"]
+            IDE["💻 Antigravity IDE (VS Code Fork / Diffs)"] --> Harness
+            CLI["📟 Antigravity CLI (Go TUI / Remote)"] --> Harness
+            SDK["⚙️ Antigravity SDK (Python / Programmatic)"] --> Harness
+            
+            Harness --> API["🌐 Gemini Enterprise API (Cognitive Engine)"]
+            Harness --> Sandbox["🔒 Isolierte Sandbox (Execution Runtime)"]
+            
+            style App fill:#0f172a,stroke:#06b6d4,color:#f8fafc
+            style IDE fill:#0f172a,stroke:#ec4899,color:#f8fafc
+            style CLI fill:#0f172a,stroke:#eab308,color:#f8fafc
+            style SDK fill:#0f172a,stroke:#8b5cf6,color:#f8fafc
+            style Harness fill:#0f172a,stroke:#8b5cf6,stroke-width:2px,color:#f8fafc
+            style Sandbox fill:#0f172a,stroke:#10b981,color:#f8fafc
+        </pre>
+        <div class="absolute top-3 right-3 px-2 py-1 rounded bg-slate-950/80 border border-slate-800 text-[10px] font-mono text-slate-500 group-hover:text-cyan-400 transition-colors pointer-events-none">
+            🔍 Diagramm vergrößern
+        </div>
+    </div>
+
+    <!-- Section 3 -->
+    <h3 class="text-xl md:text-2xl font-extrabold text-white mt-12 mb-4 border-b border-slate-900 pb-2 flex items-center gap-2">
+        <span>🔬</span> 3. Literature Search mit DeepMind Science-Skills
+    </h3>
+    <p class="text-sm text-slate-300 leading-relaxed font-sans mb-4">
+        KI-Agenten benötigen Zugriff auf vertrauenswürdiges, aktuelles Fachwissen, um Simulationen korrekt zu konfigurieren. Google DeepMind stellt dafür das <strong>Science-Skills</strong> Ökosystem bereit. Dies sind modular aufgebaute Werkzeuge zur Abfrage akademischer Datenbanken:
+    </p>
+    <div class="p-6 glass-card rounded-2xl border-l-4 border-cyan-500 bg-cyan-950/5 space-y-3">
+        <h4 class="text-cyan-400 font-bold text-base flex items-center gap-2">
+            <span>📚</span> Akademische Anbindungen
+        </h4>
+        <ul class="list-disc pl-6 text-sm text-slate-300 space-y-2">
+            <li><strong>arXiv:</strong> Zugriff auf über 2 Millionen Preprints aus Physik, Mathematik und Informatik. Agenten können Abstracts analysieren und Volltext-PDFs abrufen.</li>
+            <li><strong>OpenAlex:</strong> Ein globaler Katalog wissenschaftlicher Arbeiten, Autoren und Institutionen. Optimal für Zitationsanalysen und DOI-Abfragen.</li>
+            <li><strong>PubMed:</strong> Fokus auf biomedizinische Daten und klinische Studien.</li>
+        </ul>
+    </div>
+    <p class="text-sm text-slate-300 leading-relaxed font-sans mt-4">
+        Im <strong>Problem Set 11</strong> bauen Sie einen <strong>Scholar-Prime</strong> Agenten, der diese Skills nutzt, um autonom thermodynamische Simulationsparameter für Reaktoren aus echten wissenschaftlichen Publikationen zu recherchieren, zu parsen und als strukturierte Daten zu speichern.
+    </p>
+</div>

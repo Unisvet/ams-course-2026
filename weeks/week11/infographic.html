@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Infografik - Antigravity 2.0 Workspace Surfaces</title>
+<!-- Tailwind CDN -->
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        vibrant: {
+          bg: '#090d16',
+          surface: '#0f172a',
+          surfaceLight: '#1e293b',
+          cyan: '#06b6d4',
+          pink: '#ec4899',
+          yellow: '#eab308',
+          purple: '#8b5cf6',
+          text: '#f8fafc',
+          textMuted: '#94a3b8'
+        }
+      }
+    }
+  }
+}
+</script>
+<style>
+body {
+  background-color: #090d16;
+  color: #f8fafc;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+.glass-card {
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(6, 182, 212, 0.15);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+.tab-active {
+  border-color: #06b6d4;
+  color: #06b6d4;
+  background: rgba(6, 182, 212, 0.05);
+}
+</style>
+</head>
+<body class="antialiased p-4 md:p-6">
+    <div class="max-w-5xl mx-auto space-y-6">
+        <div class="text-center">
+          <h1 class="text-xl md:text-2xl font-black text-white tracking-tight">Antigravity 2.0 Workspace Surfaces</h1>
+          <p class="text-xs text-vibrant-textMuted mt-1">Interaktive Visualisierung: Klicke auf die Tabs, um die verschiedenen Entwicklungsoberflächen von Antigravity 2.0 kennenzulernen.</p>
+        </div>
+
+        <!-- Tab Selector Grid -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
+            <button id="btn-app" onclick="switchSurface('app')" class="py-3 px-4 rounded-xl border border-slate-800 text-slate-400 font-mono text-xs font-bold transition duration-200 flex items-center justify-center gap-2 tab-active">
+                <span>🖥️</span> App (Desktop)
+            </button>
+            <button id="btn-ide" onclick="switchSurface('ide')" class="py-3 px-4 rounded-xl border border-slate-800 text-slate-400 font-mono text-xs font-bold transition duration-200 flex items-center justify-center gap-2">
+                <span>💻</span> IDE (VS Code Fork)
+            </button>
+            <button id="btn-cli" onclick="switchSurface('cli')" class="py-3 px-4 rounded-xl border border-slate-800 text-slate-400 font-mono text-xs font-bold transition duration-200 flex items-center justify-center gap-2">
+                <span>📟</span> CLI (Go TUI)
+            </button>
+            <button id="btn-sdk" onclick="switchSurface('sdk')" class="py-3 px-4 rounded-xl border border-slate-800 text-slate-400 font-mono text-xs font-bold transition duration-200 flex items-center justify-center gap-2">
+                <span>⚙️</span> SDK (Python)
+            </button>
+        </div>
+
+        <!-- Dynamic Content Box -->
+        <div class="glass-card rounded-2xl p-6 min-h-[420px] flex flex-col justify-between">
+            <!-- App Surface View -->
+            <div id="view-app" class="space-y-6">
+                <div class="flex justify-between items-start border-b border-slate-800 pb-3">
+                    <div>
+                        <h3 class="text-base font-bold text-white">Antigravity Desktop Command Center</h3>
+                        <p class="text-[11px] text-vibrant-textMuted">Zentrale Orchestrierung und Parallelausführung von Hintergrund-Agenten</p>
+                    </div>
+                    <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 font-bold uppercase">Desktop App</span>
+                </div>
+                
+                <!-- Mock Dashboard Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="p-4 bg-slate-950/40 border border-slate-850 rounded-xl space-y-1">
+                        <div class="text-[10px] text-slate-500 font-mono">AKTIVE AGENTEN</div>
+                        <div class="text-2xl font-black text-white">3 / 8</div>
+                        <div class="text-[10px] text-emerald-400 flex items-center gap-1">
+                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> observer_prime, scholar_prime, manager
+                        </div>
+                    </div>
+                    <div class="p-4 bg-slate-950/40 border border-slate-850 rounded-xl space-y-1">
+                        <div class="text-[10px] text-slate-500 font-mono">SANDBOX SPEICHER</div>
+                        <div class="text-2xl font-black text-white">412 MB</div>
+                        <div class="text-[10px] text-slate-400">Maximallimit: 4096 MB</div>
+                    </div>
+                    <div class="p-4 bg-slate-950/40 border border-slate-850 rounded-xl space-y-1">
+                        <div class="text-[10px] text-slate-500 font-mono">HINTERGRUND-TASKS</div>
+                        <div class="text-2xl font-black text-white">12 Läufe</div>
+                        <div class="text-[10px] text-cyan-400">Nächster Cron-Job: in 4 Min.</div>
+                    </div>
+                </div>
+
+                <!-- Simulation Output -->
+                <div class="p-4 bg-slate-950/90 rounded-xl border border-slate-900 font-mono text-[11px] h-[140px] overflow-y-auto space-y-1.5 text-slate-350 pr-2">
+                    <div class="text-slate-500">// Klicke auf den Button unten, um eine parallele Multi-Agenten-Ausführung zu simulieren.</div>
+                    <div id="app-output"></div>
+                </div>
+                <button onclick="runAppSimulation()" class="py-2.5 px-4 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-xs font-mono font-bold text-white transition duration-200 self-start">
+                    ▶️ Multi-Agenten Task starten
+                </button>
+            </div>
+
+            <!-- IDE Surface View -->
+            <div id="view-ide" class="hidden space-y-6">
+                <div class="flex justify-between items-start border-b border-slate-800 pb-3">
+                    <div>
+                        <h3 class="text-base font-bold text-white">Antigravity IDE</h3>
+                        <p class="text-[11px] text-vibrant-textMuted">Direktes Pair-Programming und Code-Visualisierung (VS Code Fork)</p>
+                    </div>
+                    <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-pink-500/10 text-pink-400 border border-pink-500/20 font-bold uppercase">IDE</span>
+                </div>
+                
+                <!-- Mock IDE Screen -->
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-4 h-[260px]">
+                    <!-- File Explorer mock -->
+                    <div class="md:col-span-3 bg-slate-950/40 border border-slate-900 rounded-xl p-3 font-mono text-[10px] space-y-2 text-slate-400">
+                        <div class="text-white font-bold border-b border-slate-900 pb-1 flex items-center gap-1">📁 WORKSPACE</div>
+                        <div class="pl-2">📁 cognitive_core</div>
+                        <div class="pl-4 text-cyan-400">📄 agent.py</div>
+                        <div class="pl-4">📄 __init__.py</div>
+                        <div class="pl-2">📁 docs</div>
+                        <div class="pl-4">📄 ADK_Report.md</div>
+                        <div class="pl-2">📄 .env</div>
+                        <div class="pl-2">📄 pyproject.toml</div>
+                    </div>
+                    
+                    <!-- Editor Diff mock -->
+                    <div class="md:col-span-5 bg-slate-950/80 border border-slate-900 rounded-xl p-3 font-mono text-[10px] overflow-auto flex flex-col justify-between">
+                        <div class="text-slate-500 border-b border-slate-900 pb-1">📄 agent.py (Diff View)</div>
+                        <div class="space-y-1 mt-2 flex-1">
+                            <div><span class="text-slate-600">1</span>  from google.adk.agents import Agent</div>
+                            <div class="bg-red-950/40 border-l-2 border-red-500 text-red-300"><span class="text-slate-600">2</span> -agent = Agent(model='gemini-1.5-flash')</div>
+                            <div class="bg-emerald-950/40 border-l-2 border-emerald-500 text-emerald-300"><span class="text-slate-600">2</span> +agent = Agent(</div>
+                            <div class="bg-emerald-950/40 border-l-2 border-emerald-500 text-emerald-300"><span class="text-slate-600">3</span> +    model='gemini-3.5-flash',</div>
+                            <div class="bg-emerald-950/40 border-l-2 border-emerald-500 text-emerald-300"><span class="text-slate-600">4</span> +    name='scholar_prime'</div>
+                            <div class="bg-emerald-950/40 border-l-2 border-emerald-500 text-emerald-300"><span class="text-slate-600">5</span> +)</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Agent Panel mock -->
+                    <div class="md:col-span-4 bg-slate-900/40 border border-slate-900 rounded-xl p-3 flex flex-col justify-between">
+                        <div class="text-pink-400 font-mono text-[10px] border-b border-slate-800 pb-1 flex items-center gap-1.5">
+                            <span class="w-1.5 h-1.5 rounded-full bg-pink-500 animate-pulse"></span> Antigravity Agent
+                        </div>
+                        <div class="text-[10px] text-slate-300 mt-2 flex-1 leading-relaxed" id="ide-chat-bubble">
+                            "Ich habe analysiert, dass wir das Modell auf 'gemini-3.5-flash' upgraden sollten, um schnellere kognitive Schleifen auszuführen."
+                        </div>
+                        <button onclick="runIdeSimulation()" class="w-full py-2 bg-pink-600 hover:bg-pink-500 text-xs font-mono font-bold text-white rounded-lg transition duration-200">
+                            Apply Diff (Code übernehmen)
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CLI Surface View -->
+            <div id="view-cli" class="hidden space-y-6">
+                <div class="flex justify-between items-start border-b border-slate-800 pb-3">
+                    <div>
+                        <h3 class="text-base font-bold text-white">Antigravity CLI (Go TUI)</h3>
+                        <p class="text-[11px] text-vibrant-textMuted">Tastatur-zentriertes, schnelles Terminal User Interface für SSH & Headless Runtimes</p>
+                    </div>
+                    <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-yellow-500/10 text-yellow-400 border border-yellow-500/20 font-bold uppercase">CLI</span>
+                </div>
+                
+                <!-- Mock Terminal -->
+                <div class="p-4 bg-slate-950 rounded-xl border border-slate-900 font-mono text-[11px] h-[240px] flex flex-col justify-between text-slate-300">
+                    <div id="cli-output" class="space-y-1 overflow-y-auto flex-1 pr-2">
+                        <div>$ <span class="text-yellow-400">antigravity --help</span></div>
+                        <div class="text-slate-500">Antigravity Agent Management Tool (Go CLI v2.0.4)</div>
+                        <div class="text-slate-500">Commands:</div>
+                        <div class="text-slate-500">  run &lt;agent&gt;     Start an agent session in terminal</div>
+                        <div class="text-slate-500">  list             List all registered agents in workspace</div>
+                        <div class="text-slate-500">  status           Show sandbox runtimes and CPU load</div>
+                    </div>
+                    
+                    <!-- Pre-built commands to click -->
+                    <div class="border-t border-slate-900 pt-3 flex gap-2 flex-wrap">
+                        <span class="text-slate-500 self-center text-[10px]">Schnell-Befehle:</span>
+                        <button onclick="runCliCmd('antigravity list')" class="px-2.5 py-1 rounded bg-slate-900 hover:bg-slate-800 border border-slate-800 text-[10px] text-yellow-400 transition">
+                            antigravity list
+                        </button>
+                        <button onclick="runCliCmd('antigravity run scholar_prime')" class="px-2.5 py-1 rounded bg-slate-900 hover:bg-slate-800 border border-slate-800 text-[10px] text-yellow-400 transition">
+                            antigravity run scholar_prime
+                        </button>
+                        <button onclick="runCliCmd('antigravity status')" class="px-2.5 py-1 rounded bg-slate-900 hover:bg-slate-800 border border-slate-800 text-[10px] text-yellow-400 transition">
+                            antigravity status
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SDK Surface View -->
+            <div id="view-sdk" class="hidden space-y-6">
+                <div class="flex justify-between items-start border-b border-slate-800 pb-3">
+                    <div>
+                        <h3 class="text-base font-bold text-white">Antigravity SDK</h3>
+                        <p class="text-[11px] text-vibrant-textMuted">Programmatisches Framework für Custom-Agents und Daten-Pipelines</p>
+                    </div>
+                    <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-purple-500/10 text-purple-400 border border-purple-500/20 font-bold uppercase">SDK</span>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Python Snippet -->
+                    <div class="bg-slate-950 p-4 rounded-xl border border-slate-850 overflow-x-auto text-[10px] font-mono text-cyan-400 space-y-1 h-[220px]">
+                        <div class="text-slate-500">// Programmatic Python agent run</div>
+                        <div><span class="text-pink-400">from</span> antigravity.sdk <span class="text-pink-400">import</span> Runtime</div>
+                        <div><span class="text-pink-400">from</span> cognitive_core.agent <span class="text-pink-400">import</span> scholar_prime</div>
+                        <br>
+                        <div>runtime = Runtime()</div>
+                        <div>session = runtime.create_session(agent=scholar_prime)</div>
+                        <br>
+                        <div>response = session.send_message(</div>
+                        <div>    <span class="text-yellow-400">"Search arXiv for JAX simulations"</span></div>
+                        <div>)</div>
+                        <div>print(response.content)</div>
+                    </div>
+                    
+                    <!-- Output Console -->
+                    <div class="bg-slate-950 p-4 rounded-xl border border-slate-850 font-mono text-[10px] text-slate-300 flex flex-col justify-between h-[220px]">
+                        <div class="text-slate-500 border-b border-slate-900 pb-1">console output stdout</div>
+                        <div id="sdk-output" class="flex-1 mt-2 space-y-1.5 overflow-y-auto">
+                            <div class="text-slate-500">// Klicke unten, um das Python-Skript im SDK auszuführen.</div>
+                        </div>
+                        <button onclick="runSdkSimulation()" class="py-2 px-3 rounded-lg bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs font-mono transition duration-200">
+                            python run_agent.py
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function switchSurface(surface) {
+            // Hide all views
+            ['view-app', 'view-ide', 'view-cli', 'view-sdk'].forEach(v => {
+                document.getElementById(v).classList.add('hidden');
+            });
+            
+            // Deactivate all tab styling
+            ['btn-app', 'btn-ide', 'btn-cli', 'btn-sdk'].forEach(btn => {
+                const el = document.getElementById(btn);
+                el.classList.remove('tab-active', 'border-cyan-500', 'text-cyan-400', 'bg-cyan-500/5');
+                el.classList.add('border-slate-800', 'text-slate-400');
+            });
+            
+            // Show target view
+            document.getElementById(`view-${surface}`).classList.remove('hidden');
+            
+            // Activate target tab
+            const targetBtn = document.getElementById(`btn-${surface}`);
+            targetBtn.classList.remove('border-slate-800', 'text-slate-400');
+            targetBtn.classList.add('tab-active', 'border-cyan-500', 'text-cyan-400', 'bg-cyan-500/5');
+        }
+
+        // Sim logic for Desktop App
+        function runAppSimulation() {
+            const out = document.getElementById('app-output');
+            out.innerHTML = '<div class="text-cyan-400">&gt; Starting Multi-Agent Pipeline...</div>';
+            
+            const logs = [
+                "&gt; [0.2s] Spawning Agent: scholar_prime (Literature search)",
+                "&gt; [0.4s] Spawning Agent: observer_prime (Code compiler & sandbox)",
+                "&gt; [0.7s] Agent scholar_prime found 3 papers on OpenAlex.",
+                "&gt; [0.9s] Passing parameters to observer_prime for compilation...",
+                "&gt; [1.2s] Compilation successful in Sandbox #A21. Outputs generated.",
+                "<span class='text-emerald-400'>&gt; [1.5s] TASK COMPLETED. Parameters saved to docs/simulation_parameters.json</span>"
+            ];
+            
+            logs.forEach((log, index) => {
+                setTimeout(() => {
+                    out.innerHTML += `<div>${log}</div>`;
+                    out.scrollTop = out.scrollHeight;
+                }, (index + 1) * 400);
+            });
+        }
+
+        // Sim logic for IDE
+        function runIdeSimulation() {
+            const bubble = document.getElementById('ide-chat-bubble');
+            const fileDiff = document.querySelector('#view-ide .bg-emerald-950\\/40');
+            
+            bubble.innerHTML = "<span class='text-emerald-400'>✔ Code Diff erfolgreich übernommen!</span> Die Datei <code>agent.py</code> wurde aktualisiert. Das Modell arbeitet nun mit Gemini 3.5 Flash.";
+            
+            setTimeout(() => {
+                bubble.innerHTML = '"Diff angewendet. Die Sandbox führt einen automatischen Test aus... Alles grün!"';
+            }, 3000);
+        }
+
+        // Sim logic for CLI
+        function runCliCmd(cmd) {
+            const out = document.getElementById('cli-output');
+            out.innerHTML += `<div class="mt-3">$ <span class="text-yellow-400">${cmd}</span></div>`;
+            
+            if (cmd === 'antigravity list') {
+                setTimeout(() => {
+                    out.innerHTML += `<div>Registered agents:</div>
+                                      <div>  - observer_prime   [active]</div>
+                                      <div>  - scholar_prime    [idle]</div>
+                                      <div>  - manager          [active]</div>`;
+                    out.scrollTop = out.scrollHeight;
+                }, 300);
+            } else if (cmd === 'antigravity run scholar_prime') {
+                setTimeout(() => {
+                    out.innerHTML += `<div class="text-cyan-400">Starting TUI Session for scholar_prime...</div>
+                                      <div class="text-slate-500">// Connected to Gemini-3.5-Flash. Entering chat mode.</div>
+                                      <div>scholar_prime &gt; Ready for research instructions.</div>`;
+                    out.scrollTop = out.scrollHeight;
+                }, 400);
+            } else if (cmd === 'antigravity status') {
+                setTimeout(() => {
+                    out.innerHTML += `<div>Sandbox status:</div>
+                                      <div>  ID: sandbox-4819 | CPU: 12% | RAM: 180MB | State: RUNNING</div>
+                                      <div>  ID: sandbox-9821 | CPU: 0%  | RAM: 32MB  | State: IDLE</div>`;
+                    out.scrollTop = out.scrollHeight;
+                }, 300);
+            }
+        }
+
+        // Sim logic for SDK
+        function runSdkSimulation() {
+            const out = document.getElementById('sdk-output');
+            out.innerHTML = '<div class="text-purple-400">&gt; python run_agent.py</div>';
+            
+            setTimeout(() => {
+                out.innerHTML += `<div class="text-slate-500">[INFO] Connecting to Antigravity Local Engine daemon...</div>`;
+            }, 300);
+            setTimeout(() => {
+                out.innerHTML += `<div class="text-slate-500">[INFO] Session established. Prompt: "Search arXiv for JAX simulations"</div>`;
+            }, 700);
+            setTimeout(() => {
+                out.innerHTML += `<div class="text-emerald-400">[SUCCESS] Results retrieved: "Found 2 matching papers in arXiv. Most cited: 'High-Performance Physics simulations in JAX' (arXiv:2308.12921)"</div>`;
+            }, 1400);
+        }
+    </script>
+</body>
+</html>

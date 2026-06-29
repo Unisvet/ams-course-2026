@@ -1,0 +1,171 @@
+<div class="space-y-8">
+    <!-- Header Block -->
+    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-slate-900 pb-6">
+        <div>
+            <span class="px-2.5 py-0.5 rounded-full bg-slate-800 text-slate-400 text-xs font-mono font-bold uppercase tracking-wider border border-slate-750">Programming Assignment</span>
+            <h3 class="text-2xl font-black text-white mt-2">Problem Set 11: Project Genesis – The Scholar-Prime</h3>
+            <p class="text-sm text-slate-400 mt-1">Deadline: TBA | Weight: 40% of Module 4 grade (4 Points) | Quiz: 1 Point</p>
+        </div>
+        <a href="assets/notebooks/ams-ps11-en.ipynb" download class="px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-800 hover:border-cyan-500/50 hover:bg-cyan-500/5 text-xs font-mono font-bold text-cyan-400 flex items-center gap-2 transition-all duration-200 hover:scale-105 active:scale-95 shadow-lg shadow-cyan-500/5">
+            <span>📥</span> Download Jupyter Notebook
+        </a>
+    </div>
+
+    <!-- Problem Set Header Image -->
+    <div class="glass-card p-1.5 rounded-3xl border border-cyan-500/15 shadow-xl relative overflow-hidden w-full aspect-[2752/1536] max-h-64 my-6">
+        <img 
+            src="assets/images/ams-ps11.jpg" 
+            alt="Scholar Core Simulation" 
+            class="w-full h-full object-cover rounded-2xl"
+            onerror="this.src='https://images.unsplash.com/photo-1614741118887-7a4ee193a5fa?auto=format&fit=crop&w=800&q=80'"
+        >
+        <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/25 to-transparent flex items-end p-6">
+            <div class="font-mono text-xs text-cyan-400 font-bold bg-slate-950/65 px-3 py-1.5 rounded-lg border border-white/10 backdrop-blur-md select-none">
+                🧠 SCHOLAR CORE v11.0
+            </div>
+        </div>
+    </div>
+
+    <!-- The Story -->
+    <div class="p-6 glass-card rounded-2xl border-l-4 border-cyan-500 bg-cyan-950/5 space-y-3 my-6">
+        <h4 class="text-cyan-400 font-bold text-lg flex items-center gap-2">
+            <span>📖</span> The Story: Awakening the Scholar
+        </h4>
+        <p class="text-sm text-slate-300 leading-relaxed font-sans">
+            Architects of the <em>Neo-Simulacrum</em>, your engineering agent <em>Observer-Prime</em> is now autonomous in its control loops, but it lacks external knowledge. It only knows what is in its pre-trained weights or what you pass to it manually. To model complex physical systems, it must acquire knowledge from the frontier of human science.
+        </p>
+        <p class="text-sm text-slate-300 leading-relaxed font-sans font-bold text-white">
+            Today, you will build <strong>Scholar-Prime</strong>—a specialized literature retrieval and parameter extraction agent. Using the newly released Google DeepMind <strong>Science-Skills</strong>, your agent will connect to global academic databases, search for papers on reactor materials, download the publications, and programmatically parse them to extract thermal conductivity matrices.
+        </p>
+    </div>
+
+    <hr class="border-slate-900 my-8">
+
+    <!-- Exercise 1 -->
+    <h4 class="text-lg font-bold text-white border-b border-slate-850 pb-2 mt-8 mb-4 flex items-center gap-2">
+        <span class="text-cyan-400">⚡</span> Exercise 1: Setting up the Science Skills
+    </h4>
+    <p class="text-sm text-slate-300 leading-relaxed font-sans font-medium italic">
+        *Learning Objective: Cloning the science-skills repository, installing dependencies, and verifying the CLI tools.*
+    </p>
+    <p class="text-sm text-slate-300 leading-relaxed font-sans">
+        Before an agent can search databases, it must have the appropriate adapters. DeepMind's science-skills repository contains standardized schemas and CLI handlers for major archives.
+    </p>
+    <ol class="list-decimal pl-6 text-sm text-slate-300 space-y-4 font-sans">
+        <li class="leading-relaxed">
+            <strong class="text-white">Clone the Repository:</strong> Clone the official Google DeepMind repository into your project directory:
+            <pre class="bg-slate-950 p-3 rounded-lg border border-slate-850 overflow-x-auto text-xs font-mono text-cyan-400 mt-2"><code>git clone https://github.com/google-deepmind/science-skills.git</code></pre>
+        </li>
+        <li class="leading-relaxed">
+            <strong class="text-white">Sync the Environment:</strong> Navigate to the <code>science-skills/skills/literature-search-openalex</code> folder and use <code>uv</code> to lock and sync the dependencies:
+            <pre class="bg-slate-950 p-3 rounded-lg border border-slate-850 overflow-x-auto text-xs font-mono text-pink-400 mt-2"><code>uv sync</code></pre>
+        </li>
+        <li class="leading-relaxed">
+            <strong class="text-white">Execute a Test Query:</strong> Run the OpenAlex CLI tool to resolve a researcher's identity (e.g., Geoffrey Hinton) and fetch their ID details:
+            <pre class="bg-slate-950 p-3 rounded-lg border border-slate-850 overflow-x-auto text-xs font-mono text-cyan-450 mt-2"><code>uv run scripts/openalex_cli.py resolve authors "Geoffrey Hinton"</code></pre>
+        </li>
+    </ol>
+    <div class="p-6 glass-card rounded-2xl border-l-4 border-amber-500 bg-amber-500/5 space-y-3 my-6">
+        <h5 class="text-amber-400 font-mono text-sm font-bold uppercase tracking-wider flex items-center gap-2">
+            <span>📥</span> Deliverable
+        </h5>
+        <p class="text-xs text-slate-300 leading-relaxed font-sans">
+            Submit the console output of the <code>resolve authors</code> command, showing the resolved OpenAlex author ID.
+        </p>
+    </div>
+
+    <!-- Exercise 2 -->
+    <h4 class="text-lg font-bold text-white border-b border-slate-850 pb-2 mt-8 mb-4 flex items-center gap-2">
+        <span class="text-cyan-400">⚡</span> Exercise 2: Building the Literature Retrieval Agent (`agent.py`)
+    </h4>
+    <p class="text-sm text-slate-300 leading-relaxed font-sans font-medium italic">
+        *Learning Objective: Defining the Scholar-Prime agent using the ADK SDK and configuring its system instruction.*
+    </p>
+    <p class="text-sm text-slate-300 leading-relaxed font-sans">
+        Now, instantiate a new agent named <code>scholar_prime</code>.
+    </p>
+    <ol class="list-decimal pl-6 text-sm text-slate-300 space-y-4 font-sans">
+        <li class="leading-relaxed">
+            <strong class="text-white">Configure Parameters:</strong> Under your project, create the agent files and define:
+            <ul class="list-disc pl-6 mt-2 space-y-1 text-slate-400">
+                <li><code>model</code>: <code>'gemini-3.5-flash'</code></li>
+                <li><code>name</code>: <code>'scholar_prime'</code></li>
+                <li><code>description</code>: <code>"An academic research agent specialized in querying scientific databases and extracting material parameters."</code></li>
+                <li><code>instruction</code>: Set a professional research persona. Command it to search for papers, evaluate abstract relevance, extract formulas, and always state DOIs.</li>
+            </ul>
+        </li>
+    </ol>
+    <div class="p-6 glass-card rounded-2xl border-l-4 border-amber-500 bg-amber-500/5 space-y-3 my-6">
+        <h5 class="text-amber-400 font-mono text-sm font-bold uppercase tracking-wider flex items-center gap-2">
+            <span>📥</span> Deliverable
+        </h5>
+        <p class="text-xs text-slate-300 leading-relaxed font-sans font-mono bg-slate-950/40 p-3 rounded-lg border border-slate-800">
+            Submit the Python code of your <code>agent.py</code> configuration.
+        </p>
+    </div>
+
+    <!-- Exercise 3 -->
+    <h4 class="text-lg font-bold text-white border-b border-slate-850 pb-2 mt-8 mb-4 flex items-center gap-2">
+        <span class="text-cyan-400">⚡</span> Exercise 3: Automated Search & Downloader (Tool Binding)
+    </h4>
+    <p class="text-sm text-slate-300 leading-relaxed font-sans font-medium italic">
+        *Learning Objective: Exposing literature search CLI scripts as python tools to the agent.*
+    </p>
+    <ol class="list-decimal pl-6 text-sm text-slate-300 space-y-4 font-sans">
+        <li class="leading-relaxed">
+            <strong class="text-white">Write the Wrapper:</strong> Create a Python function <code>search_arxiv(query: str, max_results: int = 5) -> str</code>. Inside, execute the arXiv search script from the cloned science-skills repository and capture its output.
+        </li>
+        <li class="leading-relaxed">
+            <strong class="text-white">Bind the Tool:</strong> Expose this function to <code>scholar_prime</code> in its <code>tools</code> list.
+        </li>
+        <li class="leading-relaxed">
+            <strong class="text-white">Test the Run:</strong> Restart your ADK web UI and prompt the agent:
+            <p class="text-slate-400 italic mt-2">
+                "Scholar-Prime, search arXiv for papers on 'thermodynamic simulation parameters for advanced fission reactors'. Identify the most relevant paper and summarize its abstract."
+            </p>
+        </li>
+    </ol>
+    <div class="p-6 glass-card rounded-2xl border-l-4 border-amber-500 bg-amber-500/5 space-y-3 my-6">
+        <h5 class="text-amber-400 font-mono text-sm font-bold uppercase tracking-wider flex items-center gap-2">
+            <span>📥</span> Deliverable
+        </h5>
+        <p class="text-xs text-slate-300 leading-relaxed font-sans font-medium">
+            Take a screenshot of the agent's Web UI chat showing the successful tool invocation of <code>search_arxiv</code>, its CoT thought process, and the final abstract summary.
+        </p>
+    </div>
+
+    <!-- Exercise 4 -->
+    <h4 class="text-lg font-bold text-white border-b border-slate-850 pb-2 mt-8 mb-4 flex items-center gap-2">
+        <span class="text-cyan-400">⚡</span> Exercise 4: Parameter Extraction & Verification
+    </h4>
+    <p class="text-sm text-slate-300 leading-relaxed font-sans font-medium italic">
+        *Learning Objective: Programmatically parsing research papers and outputting structured data.*
+    </p>
+    <ol class="list-decimal pl-6 text-sm text-slate-300 space-y-4 font-sans">
+        <li class="leading-relaxed">
+            <strong class="text-white">Write the Extractor:</strong> Write a Python function <code>extract_parameters_from_text(text: str) -> dict</code>. Define it with precise type hints and docstrings.
+        </li>
+        <li class="leading-relaxed">
+            <strong class="text-white">Build the Chain:</strong> Write a short python script that initializes the agent, runs the literature search, feeds the text of the most relevant paper's abstract to the extractor tool, and writes the resulting JSON object to a file.
+        </li>
+    </ol>
+    <div class="p-6 glass-card rounded-2xl border-l-4 border-amber-500 bg-amber-500/5 space-y-4 my-6">
+        <h5 class="text-amber-400 font-mono text-sm font-bold uppercase tracking-wider flex items-center gap-2">
+            <span>📥</span> Deliverables
+        </h5>
+        <div class="text-xs text-slate-350 space-y-2">
+            <p>1. Submit the code of your extraction execution script.</p>
+            <p>2. Submit the generated <code>simulation_parameters.json</code> file showing the extracted parameters (e.g. thermal conductivity) along with the source paper's DOI reference.</p>
+        </div>
+    </div>
+
+    <!-- Submission instructions -->
+    <div class="p-6 glass-card rounded-2xl border-l-4 border-amber-500 bg-amber-500/5 space-y-3">
+        <h4 class="text-amber-400 font-mono text-sm font-bold uppercase tracking-wider flex items-center gap-2">
+            <span>💾</span> Submission Details
+        </h4>
+        <p class="text-xs text-slate-300 leading-relaxed">
+            Submit your solution as a Jupyter Notebook (<code>.ipynb</code>) containing all code outputs. Ensure that the cloned <code>science-skills/</code> directory is placed correctly in your workspace and the generated JSON data compiles correctly.
+        </p>
+    </div>
+</div>
