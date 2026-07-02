@@ -23,6 +23,29 @@
 
         .terminal-scroll::-webkit-scrollbar { width: 4px; }
         .terminal-scroll::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 2px; }
+
+        /* Hologram Animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0) scale(1); filter: brightness(1); }
+            50% { transform: translateY(-15px) scale(1.05); filter: brightness(1.3); }
+        }
+        .animate-float { animation: float 6s ease-in-out infinite; }
+        
+        @keyframes spin-slow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .animate-spin-slow { animation: spin-slow 12s linear infinite; }
+        
+        @keyframes spin-reverse {
+            from { transform: rotate(360deg); }
+            to { transform: rotate(0deg); }
+        }
+        .animate-spin-reverse-slower { animation: spin-reverse 20s linear infinite; }
+        
+        .hologram-glow {
+            filter: drop-shadow(0 0 15px currentColor);
+        }
     </style>
 
     <!-- Header / Intro Banner -->
@@ -127,7 +150,21 @@
         <!-- Right Side: Details -->
         <div class="lg:col-span-7">
             <div id="detail-panel" class="glass-card rounded-2xl p-6 border-t-2 border-t-cyan-500 shadow-xl space-y-6 relative overflow-hidden transition-all duration-300">
-                <div class="space-y-6">
+                <!-- Holographic Visual -->
+                <div id="hologram-viewport" class="absolute -top-16 -right-16 w-80 h-80 pointer-events-none opacity-40 transition-all duration-1000">
+                    <div class="relative w-full h-full flex items-center justify-center">
+                        <img src="assets/img/ai_hologram_core.png" id="hologram-core" class="w-56 h-56 object-contain animate-float transition-all duration-700" style="filter: hue-rotate(0deg) brightness(1.2);">
+                        
+                        <svg class="absolute inset-0 w-full h-full animate-spin-slow opacity-60" viewBox="0 0 100 100">
+                            <circle id="hologram-ring-1" cx="50" cy="50" r="38" fill="none" stroke="currentColor" stroke-width="0.4" stroke-dasharray="8 12" class="text-cyan-500/40"></circle>
+                        </svg>
+                        <svg class="absolute inset-0 w-full h-full animate-spin-reverse-slower opacity-30" viewBox="0 0 100 100">
+                            <circle id="hologram-ring-2" cx="50" cy="50" r="44" fill="none" stroke="currentColor" stroke-width="0.3" stroke-dasharray="2 8" class="text-purple-500/30"></circle>
+                        </svg>
+                    </div>
+                </div>
+
+                <div class="space-y-6 relative z-10">
                     <div>
                         <div class="flex items-center justify-between gap-2 mb-2">
                             <span id="detail-topic-num" class="text-xs font-mono text-cyan-400 tracking-wider">THEMA 1</span>
@@ -199,24 +236,45 @@
             document.getElementById('detail-demo').innerText = t.demo;
             
             // UI styles
-            var badge = document.getElementById('detail-badge');
-            badge.className = 'px-2.5 py-0.5 rounded-full bg-slate-900 border text-[10px] font-mono theme-border-' + t.color + ' theme-text-' + t.color;
-            
             var panel = document.getElementById('detail-panel');
-            panel.className = 'glass-card rounded-2xl p-6 border-t-2 shadow-xl space-y-6 relative overflow-hidden transition-all duration-300 theme-border-' + t.color + ' theme-shadow-' + t.color;
+            var core = document.getElementById('hologram-core');
+            var ring1 = document.getElementById('hologram-ring-1');
+            var ring2 = document.getElementById('hologram-ring-2');
+            var badge = document.getElementById('detail-badge');
             
-            document.getElementById('terminal-screen').innerHTML = '<div class="theme-text-' + t.color + '">' + t.terminalSteps[0].text + '</div>';
+            var hue = 0;
+            var ringColor = 'text-cyan-500/40';
+            var borderTClass = 'border-t-cyan-500';
             
-            for(var i=0; i<8; i++) {
-                var c = document.getElementById('topic-card-' + i);
-                if (c) {
-                    c.classList.remove('theme-bg-cyan', 'theme-bg-pink', 'theme-bg-purple', 'theme-bg-yellow');
-                    c.classList.remove('theme-border-cyan', 'theme-border-pink', 'theme-border-purple', 'theme-border-yellow');
+            if(t.color === 'pink') { hue = 300; ringColor = 'text-pink-500/40'; borderTClass = 'border-t-pink-500'; }
+            else if(t.color === 'purple') { hue = 260; ringColor = 'text-purple-500/40'; borderTClass = 'border-t-purple-500'; }
+            else if(t.color === 'yellow') { hue = 45; ringColor = 'text-yellow-500/40'; borderTClass = 'border-t-yellow-500'; }
+            
+            // Apply Panel Styles
+            panel.className = `glass-card rounded-2xl p-6 border-t-2 ${borderTClass} shadow-xl space-y-6 relative overflow-hidden transition-all duration-300 theme-border-${t.color} theme-shadow-${t.color}`;
+            
+            // Apply Badge Styles
+            badge.className = `px-2.5 py-0.5 rounded-full bg-slate-900 border text-[10px] font-mono theme-border-${t.color} theme-text-${t.color}`;
+            
+            // Update Hologram
+            core.style.filter = 'hue-rotate(' + hue + 'deg) brightness(1.2) contrast(1.1)';
+            ring1.className.baseVal = ringColor;
+            ring2.className.baseVal = ringColor.replace('40', '30');
+
+            // Update Active Card Styling
+            for (var i = 0; i < topics.length; i++) {
+                var card = document.getElementById('topic-card-' + i);
+                if (card) {
                     if (i === idx) {
-                        c.classList.add('theme-bg-' + t.color, 'theme-border-' + t.color);
+                        card.className = `w-full text-left p-4 rounded-xl glass-card border-l-4 border-${t.color}-500/60 bg-slate-900/40 flex gap-4 transition-all duration-200 focus:outline-none`;
+                    } else {
+                        card.className = `w-full text-left p-4 rounded-xl glass-card border-l-4 border-slate-800 hover:border-cyan-500/40 hover:bg-slate-900/20 flex gap-4 transition-all duration-200 focus:outline-none`;
                     }
                 }
             }
+            
+            // Reset Terminal
+            document.getElementById('terminal-screen').innerHTML = '';
         };
 
         window.runTerminalSimulation = function() {
@@ -252,27 +310,92 @@
         setTimeout(function() { window.selectTopic(0); }, 50);
     </script>
     <!-- Project Resources Section -->
-    <div class="mt-12 space-y-6">
+    <div class="mt-12 space-y-6 relative">
+        <!-- Interactive Neural Background -->
+        <div class="absolute inset-0 -z-10 opacity-20 overflow-hidden rounded-3xl pointer-events-none">
+            <canvas id="neural-bg-canvas" class="w-full h-full"></canvas>
+        </div>
+
         <h3 class="text-2xl font-bold text-white flex items-center gap-3">
             <span class="w-10 h-10 rounded-xl bg-cyan-500/10 flex items-center justify-center text-xl">📚</span>
             Projekt-Ressourcen & Dokumentation
         </h3>
         
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <a href="https://github.com/google/antigravity-sdk" target="_blank" class="p-5 glass-card rounded-2xl border border-slate-800 hover:border-cyan-500/50 transition-all group">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 relative z-10">
+            <a href="https://github.com/google/antigravity-sdk" target="_blank" class="p-5 glass-card rounded-2xl border border-slate-800 hover:border-cyan-500/50 transition-all group backdrop-blur-sm">
                 <h5 class="text-white font-bold mb-2 group-hover:text-cyan-400">Google ADK SDK</h5>
                 <p class="text-[11px] text-slate-400 leading-relaxed">Offizielle Dokumentation für das Agent Development Kit und Tool-Calling-Muster.</p>
             </a>
-            <a href="https://ai.google.dev/gemini-api/docs" target="_blank" class="p-5 glass-card rounded-2xl border border-slate-800 hover:border-purple-500/50 transition-all group">
+            <a href="https://ai.google.dev/gemini-api/docs" target="_blank" class="p-5 glass-card rounded-2xl border border-slate-800 hover:border-purple-500/50 transition-all group backdrop-blur-sm">
                 <h5 class="text-white font-bold mb-2 group-hover:text-purple-400">Gemini API Docs</h5>
                 <p class="text-[11px] text-slate-400 leading-relaxed">Parameter-Guide für Reasoning-Modelle, Context-Caching und System-Instructions.</p>
             </a>
-            <a href="https://github.com/modelcontextprotocol/servers" target="_blank" class="p-5 glass-card rounded-2xl border border-slate-800 hover:border-pink-500/50 transition-all group">
+            <a href="https://github.com/modelcontextprotocol/servers" target="_blank" class="p-5 glass-card rounded-2xl border border-slate-800 hover:border-pink-500/50 transition-all group backdrop-blur-sm">
                 <h5 class="text-white font-bold mb-2 group-hover:text-pink-400">MCP Server Registry</h5>
                 <p class="text-[11px] text-slate-400 leading-relaxed">Liste von verfügbaren Model Context Protocol Servern für Datenbanken und APIs.</p>
             </a>
         </div>
     </div>
+
+    <script>
+        // Neural Background Logic
+        (function() {
+            const canvas = document.getElementById('neural-bg-canvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            let particles = [];
+            
+            function init() {
+                canvas.width = canvas.parentElement.offsetWidth;
+                canvas.height = canvas.parentElement.offsetHeight;
+                particles = [];
+                for (let i = 0; i < 40; i++) {
+                    particles.push({
+                        x: Math.random() * canvas.width,
+                        y: Math.random() * canvas.height,
+                        vx: (Math.random() - 0.5) * 0.5,
+                        vy: (Math.random() - 0.5) * 0.5,
+                        size: Math.random() * 2 + 1
+                    });
+                }
+            }
+
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.strokeStyle = 'rgba(6, 182, 212, 0.15)';
+                ctx.fillStyle = 'rgba(6, 182, 212, 0.3)';
+                
+                particles.forEach((p, i) => {
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+                    if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+                    
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                    ctx.fill();
+                    
+                    for (let j = i + 1; j < particles.length; j++) {
+                        const p2 = particles[j];
+                        const dx = p.x - p2.x;
+                        const dy = p.y - p2.y;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+                        if (dist < 100) {
+                            ctx.beginPath();
+                            ctx.moveTo(p.x, p.y);
+                            ctx.lineTo(p2.x, p2.y);
+                            ctx.stroke();
+                        }
+                    }
+                });
+                requestAnimationFrame(animate);
+            }
+            
+            init();
+            animate();
+            window.addEventListener('resize', init);
+        })();
+    </script>
 
     <div class="text-center py-12">
         <p class="text-slate-500 font-mono text-xs uppercase tracking-[0.2em]">Starten Sie jetzt mit Ihrem Pitch!</p>

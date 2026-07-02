@@ -10,6 +10,22 @@
         </p>
     </div>
 
+    <!-- Showcase Hero Visual -->
+    <div class="relative rounded-3xl overflow-hidden border border-emerald-500/30 shadow-2xl shadow-emerald-500/10 group">
+        <img src="assets/img/ams_grand_showcase.png" alt="AMS Grand Showcase 2026" class="w-full h-auto object-cover transition-transform duration-1000 group-hover:scale-105">
+        <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent opacity-60"></div>
+        <div class="absolute bottom-6 left-8 right-8 flex justify-between items-end">
+            <div>
+                <span class="text-[10px] font-mono text-emerald-400 uppercase tracking-[0.3em]">Showcase Mode</span>
+                <h4 class="text-2xl font-black text-white">The Stage is Yours</h4>
+            </div>
+            <div class="hidden sm:block text-right">
+                <span class="text-[10px] font-mono text-slate-400 uppercase tracking-widest block">Location</span>
+                <span class="text-xs font-bold text-white">BTU Virtual Campus • July 2026</span>
+            </div>
+        </div>
+    </div>
+
     <!-- Presentation Schedule -->
     <div class="space-y-4">
         <h3 class="text-2xl font-bold text-white flex items-center gap-2">
@@ -56,28 +72,50 @@
     </div>
 
     <!-- Final Checklist -->
-    <div class="p-6 glass-card rounded-2xl border-l-4 border-amber-500 bg-amber-500/5 space-y-4">
-        <h4 class="text-amber-400 font-bold text-lg flex items-center gap-2">
-            <span>✅</span> Letzte Checkliste für die Präsentation
-        </h4>
-        <ul class="space-y-2 text-sm text-slate-300">
-            <li class="flex gap-3">
-                <span class="text-amber-500">✔</span>
-                <span>Läuft der lokale Server (<code>uv run adk web</code>) für die Demo?</span>
-            </li>
-            <li class="flex gap-3">
-                <span class="text-amber-500">✔</span>
-                <span>Sind alle API-Keys in der <code>.env</code> Datei korrekt hinterlegt?</span>
-            </li>
-            <li class="flex gap-3">
-                <span class="text-amber-500">✔</span>
-                <span>Ist der GitHub-Repository-Link für die Abgabe bereit?</span>
-            </li>
-            <li class="flex gap-3">
-                <span class="text-amber-500">✔</span>
-                <span>Haben Sie ein Backup-Video Ihrer Demo (falls der "Demo-Gott" zuschlägt)?</span>
-            </li>
-        </ul>
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div class="p-6 glass-card rounded-2xl border-l-4 border-amber-500 bg-amber-500/5 space-y-4">
+            <h4 class="text-amber-400 font-bold text-lg flex items-center gap-2">
+                <span>✅</span> Letzte Checkliste
+            </h4>
+            <ul class="space-y-3 text-sm text-slate-300">
+                <li class="flex gap-3">
+                    <span class="text-amber-500">✔</span>
+                    <span>Läuft Ihr lokaler Server (<code>uv run adk</code>) für die Live-Demo?</span>
+                </li>
+                <li class="flex gap-3">
+                    <span class="text-amber-500">✔</span>
+                    <span>Sind alle API-Keys (Gemini/Gemma) sicher in der <code>.env</code>?</span>
+                </li>
+                <li class="flex gap-3">
+                    <span class="text-amber-500">✔</span>
+                    <span>Ist der GitHub-Link in der "Problem Set" Abgabe eingetragen?</span>
+                </li>
+                <li class="flex gap-3">
+                    <span class="text-amber-500">✔</span>
+                    <span>Haben Sie ein Backup-Video Ihrer Simulation bereit?</span>
+                </li>
+            </ul>
+        </div>
+
+        <div class="p-6 glass-card rounded-2xl border-l-4 border-cyan-500 bg-cyan-500/5 space-y-4">
+            <h4 class="text-cyan-400 font-bold text-lg flex items-center gap-2">
+                <span>✨</span> Beautiful Presentations
+            </h4>
+            <div class="space-y-4">
+                <div class="space-y-1">
+                    <h5 class="text-xs font-bold text-white uppercase tracking-wider">The "Live" Factor</h5>
+                    <p class="text-[11px] text-slate-400 leading-relaxed">Zeigen Sie nicht nur Code. Zeigen Sie, wie der Agent <strong>denkt</strong>. Nutzen Sie den <code>verbose</code> Mode, um das Reasoning live zu visualisieren.</p>
+                </div>
+                <div class="space-y-1">
+                    <h5 class="text-xs font-bold text-white uppercase tracking-wider">Visual Storytelling</h5>
+                    <p class="text-[11px] text-slate-400 leading-relaxed">Nutzen Sie klare Architektur-Diagramme (Mermaid/Excalidraw). Weniger Text, mehr System-Graphik.</p>
+                </div>
+                <div class="space-y-1">
+                    <h5 class="text-xs font-bold text-white uppercase tracking-wider">The "Aha" Moment</h5>
+                    <p class="text-[11px] text-slate-400 leading-relaxed">Heben Sie eine spezifische Situation hervor, in der Ihr Agent eine komplexe Entscheidung autonom getroffen hat.</p>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="text-center py-12">
