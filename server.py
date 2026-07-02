@@ -8,6 +8,15 @@ DIRECTORY = "."
 
 class Handler(http.server.SimpleHTTPRequestHandler):
     def __init__(self, *args, **kwargs):
+        # Ensure correct MIME types for static assets
+        self.extensions_map.update({
+            '.js': 'text/javascript',
+            '.css': 'text/css',
+            '.json': 'application/json',
+            '.html': 'text/html',
+            '.jpg': 'image/jpeg',
+            '.png': 'image/png',
+        })
         super().__init__(*args, directory=DIRECTORY, **kwargs)
 
 def open_browser():

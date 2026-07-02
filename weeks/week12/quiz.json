@@ -1,0 +1,35 @@
+[
+    {
+        "question": "Was ist der Hauptvorteil einer Multi-Agenten-Architektur (MAS) gegenüber einem einzelnen großen Agenten?",
+        "options": [
+            "MAS benötigen weniger Rechenleistung.",
+            "MAS erlauben die Trennung von Kompetenzen (Separation of Concerns) und parallele Aufgabenverarbeitung.",
+            "MAS eliminieren Halluzinationen vollständig.",
+            "MAS funktionieren ohne Internetverbindung."
+        ],
+        "answerIndex": 1,
+        "explanation": "Durch die Spezialisierung (z.B. ein Research-Agent und ein Code-Agent) können komplexe Aufgaben effizienter und zuverlässiger gelöst werden als durch einen Generalisten."
+    },
+    {
+        "question": "Welcher Begriff beschreibt das Phänomen, bei dem einfache Regeln einzelner Agenten zu komplexem Verhalten des Gesamtsystems führen?",
+        "options": [
+            "Linearität",
+            "Emergenz",
+            "Determinismus",
+            "Rekursion"
+        ],
+        "answerIndex": 1,
+        "explanation": "Emergenz beschreibt, wie aus lokalen Interaktionen (z.B. Gebote in einem Markt) globale Muster (z.B. ein stabiler Marktpreis) entstehen."
+    },
+    {
+        "question": "Wie wird im ADK ein Team von Agenten bezeichnet, das gemeinsam an einem Ziel arbeitet?",
+        "options": [
+            "Group",
+            "Cluster",
+            "Swarm",
+            "Flock"
+        ],
+        "answerIndex": 2,
+        "explanation": "In der Antigravity/ADK Terminologie werden koordinierte Agenten-Teams als Swarms bezeichnet."
+    }
+]

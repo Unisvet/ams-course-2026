@@ -14,6 +14,12 @@ export class QuizEngine {
         this.init();
     }
 
+    formatMarkdown(text) {
+        if (!text) return '';
+        // Bold: **text** -> <strong class="text-white">text</strong>
+        return text.replace(/\*\*(.*?)\*\*/g, '<strong class="text-white">$1</strong>');
+    }
+
     init() {
         if (!this.questions || this.questions.length === 0) {
             this.container.innerHTML = `
@@ -51,9 +57,9 @@ export class QuizEngine {
                     <span class="text-[10px] font-mono px-2 py-0.5 rounded ${isMultiCorrect ? 'bg-purple-500/20 text-purple-400 border border-purple-500/30' : 'bg-cyan-500/20 text-cyan-400 border border-cyan-500/30'} mb-3 inline-block font-bold uppercase tracking-wider">
                         ${isMultiCorrect ? 'Mehrfachauswahl (Wähle alle richtigen Antworten)' : 'Einfachauswahl (Wähle eine richtige Antwort)'}
                     </span>
-                    <h3 class="text-xl font-bold text-white leading-relaxed">${q.question}</h3>
+                    <h3 class="text-xl font-bold text-white leading-relaxed">${this.formatMarkdown(q.question)}</h3>
                 </div>
-
+ 
                 <!-- Options Grid -->
                 <div class="grid grid-cols-1 gap-4" id="quiz-options-container">
                     ${q.options.map((opt, idx) => `
@@ -63,17 +69,17 @@ export class QuizEngine {
                         >
                             <span class="flex items-center">
                                 <span class="inline-block w-8 h-8 mr-3 rounded-full bg-slate-800 text-center leading-8 text-sm text-cyan-400 font-mono option-prefix">${String.fromCharCode(65 + idx)}</span>
-                                <span class="option-text">${opt}</span>
+                                <span class="option-text">${this.formatMarkdown(opt)}</span>
                             </span>
                             <span class="checkbox-box w-5 h-5 rounded border ${isMultiCorrect ? 'border-purple-800/60' : 'border-cyan-800/60'} flex items-center justify-center text-[10px] text-white opacity-0 transition-opacity">✓</span>
                         </button>
                     `).join('')}
                 </div>
-
+ 
                 <!-- Explanation Area (hidden initially) -->
                 <div id="quiz-explanation-box" class="hidden glass-card rounded-xl p-5 bg-slate-900/40 border-l-4 border-amber-500">
                     <h4 class="text-amber-400 font-mono text-sm font-bold mb-1">Erklärung:</h4>
-                    <p class="text-slate-300 text-sm leading-relaxed">${q.explanation || 'Keine Erklärung verfügbar.'}</p>
+                    <p class="text-slate-300 text-sm leading-relaxed">${this.formatMarkdown(q.explanation) || 'Keine Erklärung verfügbar.'}</p>
                 </div>
 
                 <!-- Action Buttons -->

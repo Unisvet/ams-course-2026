@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Infografik - Multi-Agenten Marktkonvergenz</title>
+<!-- Tailwind CDN -->
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        vibrant: {
+          bg: '#090d16',
+          surface: '#0f172a',
+          surfaceLight: '#1e293b',
+          cyan: '#06b6d4',
+          pink: '#ec4899',
+          yellow: '#eab308',
+          purple: '#8b5cf6',
+          text: '#f8fafc',
+          textMuted: '#94a3b8'
+        }
+      }
+    }
+  }
+}
+</script>
+<style>
+body {
+  background-color: #090d16;
+  color: #f8fafc;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+.glass-card {
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(6, 182, 212, 0.15);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+.chart-container {
+  position: relative;
+  width: 100%;
+  height: 250px;
+}
+</style>
+<!-- Chart.js CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="antialiased p-4">
+    <div class="max-w-5xl mx-auto space-y-6">
+        <div class="text-center">
+          <h1 class="text-xl md:text-2xl font-black text-white tracking-tight">MAS Markt-Simulation: Preisfindung</h1>
+          <p class="text-xs text-vibrant-textMuted mt-1">Drei Agenten verhandeln live den Strompreis. Beobachte die Konvergenz zum Gleichgewichtspreis.</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            <!-- Left: Agent Status Cards -->
+            <div class="lg:col-span-4 space-y-3">
+                <div id="agent-solar" class="glass-card rounded-xl p-4 border-l-4 border-yellow-500 transition-all duration-300">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-xs font-bold text-white">☀️ Solar-Erzeuger</span>
+                        <span id="solar-bid" class="text-xs font-mono text-yellow-400">---</span>
+                    </div>
+                    <div class="text-[10px] text-slate-400 italic" id="solar-thought">Bereit...</div>
+                </div>
+                <div id="agent-factory" class="glass-card rounded-xl p-4 border-l-4 border-cyan-500 transition-all duration-300">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-xs font-bold text-white">🏭 Fabrik-Konsument</span>
+                        <span id="factory-bid" class="text-xs font-mono text-cyan-400">---</span>
+                    </div>
+                    <div class="text-[10px] text-slate-400 italic" id="factory-thought">Bereit...</div>
+                </div>
+                <div id="agent-battery" class="glass-card rounded-xl p-4 border-l-4 border-pink-500 transition-all duration-300">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-xs font-bold text-white">🔋 Speicher-Arbitrage</span>
+                        <span id="battery-bid" class="text-xs font-mono text-pink-400">---</span>
+                    </div>
+                    <div class="text-[10px] text-slate-400 italic" id="battery-thought">Bereit...</div>
+                </div>
+                
+                <button id="start-sim" class="w-full py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-purple-500 text-xs font-mono font-bold text-white shadow-lg active:scale-95 transition-all">
+                    Verhandlung starten ⚡
+                </button>
+            </div>
+
+            <!-- Right: Price Chart -->
+            <div class="lg:col-span-8">
+                <div class="glass-card rounded-2xl p-5 h-full">
+                    <h3 class="text-xs font-mono font-bold text-white mb-4 uppercase">Preis-Konvergenz (ct/kWh)</h3>
+                    <div class="chart-container">
+                        <canvas id="marketChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const ctx = document.getElementById('marketChart').getContext('2d');
+        let marketChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Start', 'Runde 1', 'Runde 2', 'Runde 3', 'Runde 4', 'Runde 5'],
+                datasets: [
+                    { label: 'Erzeuger Gebot', data: [50, null, null, null, null, null], borderColor: '#eab308', tension: 0.3 },
+                    { label: 'Konsument Gebot', data: [30, null, null, null, null, null], borderColor: '#06b6d4', tension: 0.3 },
+                    { label: 'Speicher Gebot', data: [40, null, null, null, null, null], borderColor: '#ec4899', tension: 0.3 }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { labels: { color: '#f8fafc', font: { size: 9 } } } },
+                scales: {
+                    x: { ticks: { color: '#64748b' }, grid: { color: 'rgba(255,255,255,0.02)' } },
+                    y: { min: 25, max: 55, ticks: { color: '#64748b' }, grid: { color: 'rgba(255,255,255,0.05)' } }
+                }
+            }
+        });
+
+        const simulation = [
+            { solar: 48, factory: 32, battery: 42, s_t: "Will Maximalgewinn. Biete 48ct.", f_t: "Suche Schnäppchen. Maximal 32ct.", b_t: "Warte auf Spreizung. Biete 42ct." },
+            { solar: 46, factory: 34, battery: 41, s_t: "Gehe leicht runter auf 46ct.", f_t: "Bedarf steigt. Gehe hoch auf 34ct.", b_t: "Passe an auf 41ct." },
+            { solar: 44, factory: 37, battery: 39, s_t: "Letztes Angebot: 44ct.", f_t: "Muss kaufen. Biete 37ct.", b_t: "Mittlerer Preis 39ct scheint fair." },
+            { solar: 41, factory: 39, battery: 40, s_t: "Ok, 41ct für alles.", f_t: "Akzeptiere 39ct.", b_t: "Biete 40ct als Puffer." },
+            { solar: 40, factory: 40, battery: 40, s_t: "Deal bei 40ct.", f_t: "Deal bei 40ct.", b_t: "Deal bei 40ct." }
+        ];
+
+        let step = 0;
+        document.getElementById('start-sim').addEventListener('click', function() {
+            if (step >= simulation.length) {
+                step = 0;
+                marketChart.data.datasets.forEach(ds => ds.data = [ds.data[0], null, null, null, null, null]);
+                marketChart.update();
+            }
+            
+            this.disabled = true;
+            this.innerText = "Verhandlung läuft...";
+
+            const interval = setInterval(() => {
+                const data = simulation[step];
+                
+                document.getElementById('solar-bid').innerText = data.solar + " ct";
+                document.getElementById('factory-bid').innerText = data.factory + " ct";
+                document.getElementById('battery-bid').innerText = data.battery + " ct";
+                
+                document.getElementById('solar-thought').innerText = data.s_t;
+                document.getElementById('factory-thought').innerText = data.f_t;
+                document.getElementById('battery-thought').innerText = data.b_t;
+
+                marketChart.data.datasets[0].data[step+1] = data.solar;
+                marketChart.data.datasets[1].data[step+1] = data.factory;
+                marketChart.data.datasets[2].data[step+1] = data.battery;
+                marketChart.update();
+
+                step++;
+                if (step >= simulation.length) {
+                    clearInterval(interval);
+                    this.disabled = false;
+                    this.innerText = "Simulation wiederholen 🔄";
+                }
+            }, 1200);
+        });
+    </script>
+</body>
+</html>

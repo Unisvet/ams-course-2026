@@ -340,6 +340,13 @@ function updateActiveTabUI(selectedTab) {
     });
 }
 
+
+function formatMarkdown(text) {
+    if (!text) return '';
+    // Bold: **text** -> <strong class="text-white">text</strong>
+    return text.replace(/\*\*(.*?)\*\*/g, '<strong class="text-white">$1</strong>');
+}
+
 function loadTabContent(tab) {
     const week = weeksData[currentWeekId];
     const allowedTabs = week.tabs || ['intro', 'infographic', 'problemset', 'quiz'];
@@ -367,7 +374,8 @@ function loadTabContent(tab) {
                 return res.text();
             })
             .then(html => {
-                contentArea.innerHTML = `<div class="animate-slide-up space-y-6">${html}</div>`;
+                const formattedHtml = formatMarkdown(html);
+                contentArea.innerHTML = `<div class="animate-slide-up space-y-6">${formattedHtml}</div>`;
                 highlightCodeSnippets(contentArea);
                 setupImageLightbox(contentArea);
                 renderMath(contentArea);
@@ -378,7 +386,7 @@ function loadTabContent(tab) {
             });
             
     } else if (tab === 'infographic') {
-        // Infographic is loaded in iframe to sand-box scripts (Tailwind configuration & Chart.js instances)
+        // ... (existing infographic logic)
         contentArea.innerHTML = `
             <div class="animate-slide-up space-y-4">
                 <div class="flex justify-between items-center text-xs text-slate-400 font-mono mb-2">
@@ -411,6 +419,7 @@ function loadTabContent(tab) {
             })
             .then(html => {
                 const psDone = localStorage.getItem(`problemset_completed_week_${currentWeekId}`) === 'true';
+                const formattedHtml = formatMarkdown(html);
                 
                 const statusCardHtml = `
                     <div id="problemset-status-card" class="glass-card rounded-2xl p-6 border flex flex-col sm:flex-row justify-between items-center gap-4 mb-6 transition-all duration-300 ${
@@ -444,7 +453,7 @@ function loadTabContent(tab) {
                     </div>
                 `;
                 
-                contentArea.innerHTML = `<div class="animate-slide-up space-y-6">${statusCardHtml}${html}</div>`;
+                contentArea.innerHTML = `<div class="animate-slide-up space-y-6">${statusCardHtml}${formattedHtml}</div>`;
                 
                 // Add event listener to toggle button
                 const toggleBtn = document.getElementById('problemset-toggle-complete-btn');

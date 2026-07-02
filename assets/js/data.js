@@ -104,7 +104,7 @@ export const weeksData = {
         title: "Multi-Agenten-Systeme (MAS) & Komplexe Dynamiken",
         module: "4",
         description: "Kommunikation, Konfliktlösung und Koordination zwischen mehreren Agenten (z. B. Simulation eines Marktes).",
-        active: false
+        active: true
     },
     "13": {
         id: "13",
@@ -119,6 +119,7 @@ export const weeksData = {
         title: "Projektpräsentationen (Showcase)",
         module: "5",
         description: "Die Studierenden präsentieren ihre lauffähigen, hybriden Systemsimulationen. Live-Demos und Code-Reviews.",
-        active: false
+        active: true,
+        tabs: ['intro']
     }
 };

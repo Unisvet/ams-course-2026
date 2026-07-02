@@ -1,0 +1,102 @@
+<div class="space-y-8 animate-fade-in">
+    <!-- Intro Banner -->
+    <div class="p-6 glass-card rounded-2xl border-l-4 border-cyan-500 bg-gradient-to-r from-cyan-950/20 to-transparent">
+        <h3 class="text-xl md:text-2xl font-bold text-white mb-2">Woche 12: Multi-Agenten-Systeme (MAS) & Komplexe Dynamiken</h3>
+        <p class="text-slate-300 text-sm leading-relaxed mt-3 font-sans">
+            In den vergangenen Wochen haben wir uns auf die Entwicklung einzelner, hochspezialisierter Agenten konzentriert. Doch in realen industriellen Szenarien – wie der Steuerung eines Smart Grids oder der Logistik eines Hafens – reicht ein einzelner Agent oft nicht aus. Hier treten <strong>Multi-Agenten-Systeme (MAS)</strong> auf den Plan.
+        </p>
+        <p class="text-slate-300 text-sm leading-relaxed mt-2 font-sans">
+            MAS bestehen aus einer Vielzahl interagierender Agenten, die jeweils eigene Ziele verfolgen, aber kooperieren oder konkurrieren müssen, um komplexe Systemziele zu erreichen. Diese Woche untersuchen wir, wie wir mit dem <strong>ADK</strong> und <strong>Antigravity Swarms</strong> Agenten-Kollektive orchestrieren, Kommunikationsprotokolle definieren und emergente Phänomene in dezentralen Märkten simulieren.
+        </p>
+    </div>
+
+    <!-- Core Objectives -->
+    <div class="space-y-4">
+        <h3 class="text-2xl font-bold text-white flex items-center gap-2">
+            <span>🎯</span> Lernziele der Woche
+        </h3>
+        <ul class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <li class="p-4 bg-slate-900/40 border border-slate-800 rounded-xl flex gap-3">
+                <span class="text-cyan-400 font-bold">1.</span>
+                <span class="text-sm text-slate-300"><strong>MAS-Architekturen verstehen:</strong> Konzepte von zentralisierter Orchestrierung (Swarm/Manager) vs. dezentraler Kooperation (Peer-to-Peer).</span>
+            </li>
+            <li class="p-4 bg-slate-900/40 border border-slate-800 rounded-xl flex gap-3">
+                <span class="text-pink-400 font-bold">2.</span>
+                <span class="text-sm text-slate-300"><strong>Agenten-Kommunikation:</strong> Implementierung von Verhandlungsprotokollen und Task-Handoffs zwischen spezialisierten Subagenten.</span>
+            </li>
+            <li class="p-4 bg-slate-900/40 border border-slate-800 rounded-xl flex gap-3">
+                <span class="text-yellow-400 font-bold">3.</span>
+                <span class="text-sm text-slate-300"><strong>Emergenz simulieren:</strong> Beobachtung komplexen Systemverhaltens (z.B. Preisbildung in einem Energiemarkt) durch einfache agentenbasierte Regeln.</span>
+            </li>
+            <li class="p-4 bg-slate-900/40 border border-slate-800 rounded-xl flex gap-3">
+                <span class="text-purple-400 font-bold">4.</span>
+                <span class="text-sm text-slate-300"><strong>Swarm Debugging:</strong> Nutzung von Tracing-Tools zur Analyse von Interaktionsketten über mehrere Agenten-Instanzen hinweg.</span>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Section 1 -->
+    <h3 class="text-xl md:text-2xl font-extrabold text-white mt-12 mb-4 border-b border-slate-900 pb-2 flex items-center gap-2">
+        <span>🐝</span> 1. Swarm-Architekturen und Team-Orchestrierung
+    </h3>
+    <p class="text-sm text-slate-300 leading-relaxed font-sans">
+        Das ADK ermöglicht die Definition von Agenten-Teams (Swarms). Ein typisches Muster ist die <strong>Manager-Worker-Architektur</strong>. Ein "Manager"-Agent nimmt komplexe Aufgaben entgegen, zerlegt sie in Teilaufgaben und delegiert diese an spezialisierte "Worker"-Agenten (z.B. einen Research-Agenten und einen Simulation-Agenten).
+    </p>
+
+    <div class="p-6 glass-card rounded-2xl border-l-4 border-purple-500 bg-purple-950/5 space-y-3 my-6">
+        <h4 class="text-purple-400 font-bold text-base flex items-center gap-2">
+            <span>🤝</span> Koordination im Team
+        </h4>
+        <p class="text-xs text-slate-300 leading-relaxed">
+            Im Gegensatz zu einem monolithischen Agenten, der alles können muss, erlaubt MAS die Trennung von Kompetenzen. Dies erhöht die Zuverlässigkeit und ermöglicht das parallele Arbeiten an verschiedenen Aspekten einer Systemsimulation.
+        </p>
+    </div>
+
+    <!-- Section 2 -->
+    <h3 class="text-xl md:text-2xl font-extrabold text-white mt-12 mb-4 border-b border-slate-900 pb-2 flex items-center gap-2">
+        <span>📉</span> 2. Case Study: Der autonome Energiemarkt
+    </h3>
+    <p class="text-sm text-slate-300 leading-relaxed font-sans mb-6">
+        Ein klassisches Beispiel für MAS in der Systemsimulation ist der dezentrale Energiemarkt. Hier interagieren Hunderte von Agenten mit unterschiedlichen Interessen:
+    </p>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 my-6">
+        <div class="glass-card rounded-2xl p-5 border-t-2 border-t-yellow-500/50 bg-slate-900/10">
+            <h5 class="text-white font-bold text-sm">☀️ Erzeuger-Agenten</h5>
+            <p class="text-xs text-slate-400 mt-2 leading-relaxed">
+                Wollen produzierten Strom (z.B. Solaranlage) zum höchstmöglichen Preis verkaufen. Strategie: Gewinnmaximierung.
+            </p>
+        </div>
+        <div class="glass-card rounded-2xl p-5 border-t-2 border-t-cyan-500/50 bg-slate-900/10">
+            <h5 class="text-white font-bold text-sm">🏭 Konsument-Agenten</h5>
+            <p class="text-xs text-slate-400 mt-2 leading-relaxed">
+                Benötigen Strom für Produktion. Strategie: Kostenminimierung und Sicherstellung der Grundlast.
+            </p>
+        </div>
+        <div class="glass-card rounded-2xl p-5 border-t-2 border-t-pink-500/50 bg-slate-900/10">
+            <h5 class="text-white font-bold text-sm">🔋 Speicher-Agenten</h5>
+            <p class="text-xs text-slate-400 mt-2 leading-relaxed">
+                Kaufen bei Überangebot günstig ein und verkaufen bei Knappheit teuer. Strategie: Arbitrage.
+            </p>
+        </div>
+    </div>
+
+    <pre class="mermaid bg-slate-950/40 p-6 rounded-xl border border-slate-900/60 my-6 flex justify-center">
+    graph LR
+        A[Erzeuger] -- Gebot --> M[Markt-Protokoll]
+        B[Konsument] -- Nachfrage --> M
+        C[Speicher] -- Arbitrage --> M
+        M -- Preisfindung --> A
+        M -- Preisfindung --> B
+        M -- Preisfindung --> C
+        
+        style M fill:#1e1b4b,stroke:#8b5cf6,stroke-width:2px,color:#f8fafc
+        style A fill:#0f172a,stroke:#eab308,color:#f8fafc
+        style B fill:#0f172a,stroke:#06b6d4,color:#f8fafc
+        style C fill:#0f172a,stroke:#ec4899,color:#f8fafc
+    </pre>
+
+    <p class="text-sm text-slate-300 leading-relaxed font-sans">
+        Im <strong>Problem Set 12</strong> werden Sie eine solche Markt-Simulation implementieren und untersuchen, wie sich unterschiedliche Agenten-Prompts (z.B. "aggressiv" vs. "kooperativ") auf die Stabilität des Gesamtnetzes auswirken.
+    </p>
+</div>
