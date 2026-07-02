@@ -120,6 +120,6 @@ export const weeksData = {
         module: "5",
         description: "Die Studierenden präsentieren ihre lauffähigen, hybriden Systemsimulationen. Live-Demos und Code-Reviews.",
         active: true,
-        tabs: ['intro']
+        tabs: ['intro', 'problemset']
     }
 };
