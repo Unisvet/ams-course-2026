@@ -97,25 +97,70 @@ body {
         </div>
     </div>
 
+        <!-- Game Section -->
+        <div class="glass-card rounded-2xl p-6 border-t-2 border-t-yellow-500/30">
+            <div class="flex justify-between items-center mb-6">
+                <div>
+                    <h2 class="text-sm font-black text-white uppercase tracking-widest flex items-center gap-2">
+                        <span>🎮</span> Protocol Orchestrator Challenge
+                    </h2>
+                    <p class="text-[10px] text-vibrant-textMuted mt-1">Wähle das richtige Protokoll für die jeweilige Logistik-Herausforderung.</p>
+                </div>
+                <div class="text-right">
+                    <div class="text-[10px] font-mono text-yellow-400">SCORE</div>
+                    <div id="game-score" class="text-xl font-black text-white font-mono">0</div>
+                </div>
+            </div>
+
+            <div id="game-container" class="space-y-6">
+                <!-- Question Card -->
+                <div class="bg-slate-900/50 rounded-xl p-5 border border-slate-800 text-center relative overflow-hidden">
+                    <div id="game-question" class="text-sm md:text-base font-medium text-slate-200">Klicke auf "Spiel starten", um deine Kenntnisse zu testen!</div>
+                    <div id="game-feedback" class="absolute inset-0 flex items-center justify-center bg-slate-900/90 transform translate-y-full transition-transform duration-300 pointer-events-none">
+                        <span id="feedback-text" class="text-lg font-black uppercase italic"></span>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div id="game-controls" class="flex justify-center">
+                    <button id="btn-start-game" class="px-8 py-3 rounded-xl bg-yellow-500 hover:bg-yellow-400 text-slate-950 font-bold text-xs uppercase tracking-widest transition-all">
+                        Spiel starten
+                    </button>
+                </div>
+
+                <!-- Protocol Tokens (Hidden until start) -->
+                <div id="protocol-tokens" class="grid grid-cols-2 md:grid-cols-3 gap-3 hidden">
+                    <button data-protocol="MCP" class="protocol-btn p-3 rounded-lg border border-blue-500/30 bg-blue-500/5 text-blue-400 font-mono text-[10px] font-bold hover:bg-blue-500/20 transition-all">MCP</button>
+                    <button data-protocol="A2A" class="protocol-btn p-3 rounded-lg border border-green-500/30 bg-green-500/5 text-green-400 font-mono text-[10px] font-bold hover:bg-green-500/20 transition-all">A2A</button>
+                    <button data-protocol="UCP" class="protocol-btn p-3 rounded-lg border border-amber-500/30 bg-amber-500/5 text-amber-400 font-mono text-[10px] font-bold hover:bg-amber-500/20 transition-all">UCP</button>
+                    <button data-protocol="AP2" class="protocol-btn p-3 rounded-lg border border-rose-500/30 bg-rose-500/5 text-rose-400 font-mono text-[10px] font-bold hover:bg-rose-500/20 transition-all">AP2</button>
+                    <button data-protocol="A2UI" class="protocol-btn p-3 rounded-lg border border-pink-500/30 bg-pink-500/5 text-pink-400 font-mono text-[10px] font-bold hover:bg-pink-500/20 transition-all">A2UI</button>
+                    <button data-protocol="AG-UI" class="protocol-btn p-3 rounded-lg border border-indigo-500/30 bg-indigo-500/5 text-indigo-400 font-mono text-[10px] font-bold hover:bg-indigo-500/20 transition-all">AG-UI</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
+        // Simulation Logic
         const ctx = document.getElementById('logisticsChart').getContext('2d');
         let logisticsChart = new Chart(ctx, {
             type: 'line',
             data: {
                 labels: ['Start', 'Phase 1', 'Phase 2', 'Phase 3', 'Phase 4', 'Phase 5'],
                 datasets: [
-                    { label: 'Farmer Preisvorstellung', data: [50, null, null, null, null, null], borderColor: '#22c55e', tension: 0.3 },
-                    { label: 'Händler Budget', data: [30, null, null, null, null, null], borderColor: '#06b6d4', tension: 0.3 },
-                    { label: 'Transport-Kosten (MCP)', data: [10, null, null, null, null, null], borderColor: '#3b82f6', tension: 0.3, fill: true, backgroundColor: 'rgba(59, 130, 246, 0.1)' }
+                    { label: 'Farmer Preisvorstellung', data: [50, null, null, null, null, null], borderColor: '#22c55e', borderWidth: 2, pointRadius: 2, tension: 0.3 },
+                    { label: 'Händler Budget', data: [30, null, null, null, null, null], borderColor: '#06b6d4', borderWidth: 2, pointRadius: 2, tension: 0.3 },
+                    { label: 'Transport-Kosten (MCP)', data: [10, null, null, null, null, null], borderColor: '#3b82f6', borderWidth: 1, pointRadius: 0, tension: 0.3, fill: true, backgroundColor: 'rgba(59, 130, 246, 0.05)' }
                 ]
             },
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
-                plugins: { legend: { labels: { color: '#f8fafc', font: { size: 9 } } } },
+                plugins: { legend: { labels: { color: '#94a3b8', font: { size: 9, family: 'monospace' } }, position: 'top' } },
                 scales: {
-                    x: { ticks: { color: '#64748b' }, grid: { color: 'rgba(255,255,255,0.02)' } },
-                    y: { min: 0, max: 60, ticks: { color: '#64748b' }, grid: { color: 'rgba(255,255,255,0.05)' } }
+                    x: { ticks: { color: '#475569', font: { size: 8 } }, grid: { display: false } },
+                    y: { min: 0, max: 60, ticks: { color: '#475569', font: { size: 8 } }, grid: { color: 'rgba(255,255,255,0.03)' } }
                 }
             }
         });
@@ -137,6 +182,7 @@ body {
             }
             
             this.disabled = true;
+            this.classList.add('opacity-50', 'scale-95');
             this.innerText = "Synchronisation läuft...";
 
             const interval = setInterval(() => {
@@ -153,16 +199,84 @@ body {
                 logisticsChart.data.datasets[0].data[step+1] = data.farmer;
                 logisticsChart.data.datasets[1].data[step+1] = data.retailer;
                 logisticsChart.data.datasets[2].data[step+1] = data.bridge;
-                logisticsChart.update();
+                logisticsChart.update('none');
 
                 step++;
                 if (step >= simulation.length) {
                     clearInterval(interval);
                     this.disabled = false;
+                    this.classList.remove('opacity-50', 'scale-95');
                     this.innerText = "Simulation wiederholen 🔄";
                 }
-            }, 1200);
+            }, 1000);
+        });
+
+        // Game Logic
+        const challenges = [
+            { q: "Wie prüfst du den Brückenstatus in Burg über die Live-Sensoren der Stadt?", a: "MCP" },
+            { q: "Wie verhandelst du automatisch die Lieferpreise mit 5 verschiedenen Farmer-Agenten?", a: "A2A" },
+            { q: "Wie autorisierst du ein Budget-Limit von 500€ für einen autonomen Liefer-LKW?", a: "AP2" },
+            { q: "Wie durchsuchst du einen Großhandels-Katalog nach den günstigsten Gürkchen?", a: "UCP" },
+            { q: "Wie renderst du eine Live-Map für den User, ohne React-Komponenten hardcoden zu müssen?", a: "A2UI" },
+            { q: "Wie streamst du die Echtzeit-GPS-Daten vom Agenten zum Web-Dashboard?", a: "AG-UI" }
+        ];
+
+        let currentChallenge = 0;
+        let score = 0;
+        const gameQuestion = document.getElementById('game-question');
+        const gameScore = document.getElementById('game-score');
+        const protocolTokens = document.getElementById('protocol-tokens');
+        const startBtn = document.getElementById('btn-start-game');
+        const feedback = document.getElementById('game-feedback');
+        const feedbackText = document.getElementById('feedback-text');
+
+        function showChallenge() {
+            if (currentChallenge < challenges.length) {
+                gameQuestion.innerText = challenges[currentChallenge].q;
+            } else {
+                gameQuestion.innerHTML = `<span class="text-yellow-400 font-bold">Gratulation!</span> Du hast alle Herausforderungen gemeistert.`;
+                protocolTokens.classList.add('hidden');
+                startBtn.classList.remove('hidden');
+                startBtn.innerText = "Nochmal spielen";
+                currentChallenge = 0;
+            }
+        }
+
+        startBtn.addEventListener('click', () => {
+            score = 0;
+            currentChallenge = 0;
+            gameScore.innerText = score;
+            startBtn.classList.add('hidden');
+            protocolTokens.classList.remove('hidden');
+            showChallenge();
+        });
+
+        document.querySelectorAll('.protocol-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const selected = this.getAttribute('data-protocol');
+                const correct = challenges[currentChallenge].a;
+
+                feedback.classList.remove('translate-y-full');
+                if (selected === correct) {
+                    score += 100;
+                    feedbackText.innerText = "Korrekt! +100";
+                    feedbackText.className = "text-lg font-black uppercase italic text-green-400";
+                    currentChallenge++;
+                } else {
+                    score = Math.max(0, score - 50);
+                    feedbackText.innerText = "Falsch! -50";
+                    feedbackText.className = "text-lg font-black uppercase italic text-rose-500";
+                }
+                gameScore.innerText = score;
+
+                setTimeout(() => {
+                    feedback.classList.add('translate-y-full');
+                    showChallenge();
+                }, 800);
+            });
         });
     </script>
+</body>
+</html>
 </body>
 </html>

@@ -64,5 +64,38 @@
         ],
         "answerIndex": 2,
         "explanation": "AG-UI (Agent-User Interaction Protocol) standardizes the SSE (Server-Sent Events) stream between agent frameworks and user interfaces, handling tool calls and incremental text delivery."
+    },
+    {
+        "question": "Ein Agent möchte in Cottbus eine Party schmeißen und muss 100 Kästen Spreewälder Gürkchen-Limo bestellen. Welches Protokoll verhindert, dass er versehentlich das gesamte Forschungsbudget der BTU Cottbus ausgibt?",
+        "options": [
+            "A2A (Agenten-Dating-Service)",
+            "AP2 (mit Budget-Mandaten)",
+            "MCP (Gürkchen-Datenbank-Anschluss)",
+            "A2UI (Party-Interface-Design)"
+        ],
+        "answerIndex": 1,
+        "explanation": "AP2 (Agent Payments Protocol) nutzt kryptografische Mandate und Ausgabenlimits, um sicherzustellen, dass Agenten nur so viel ausgeben, wie ihnen der Mensch erlaubt hat."
+    },
+    {
+        "question": "Zwei Agenten treffen sich in einem digitalen Café. Wie tauschen sie ihre 'Visitenkarten' aus, um festzustellen, ob sie zusammenarbeiten können?",
+        "options": [
+            "Sie schicken sich gegenseitig ihren gesamten Sourcecode.",
+            "Sie nutzen A2A 'Agent Cards'.",
+            "Sie hoffen, dass der User sie vorstellt.",
+            "Sie pingen sich so lange an, bis einer aufgibt."
+        ],
+        "answerIndex": 1,
+        "explanation": "Der A2A-Standard (Agent2Agent) nutzt 'Agent Cards', um Capabilities, Verschlüsselungs-Keys und Protokoll-Versionen automatisiert auszutauschen."
+    },
+    {
+        "question": "Dein Agent hat ein neues Hobby: Er möchte eine interaktive 3D-Karte der Cottbuser Innenstadt rendern, aber du hast keine Lust, JavaScript zu schreiben. Was ist deine Rettung?",
+        "options": [
+            "Du kündigst deinen Job.",
+            "Du nutzt A2UI für deklarative Interfaces.",
+            "Du bittest den Agenten, dir ein Bild zu malen.",
+            "Du nutzt MCP, um eine echte Karte per Post zu schicken."
+        ],
+        "answerIndex": 1,
+        "explanation": "A2UI ermöglicht es Agenten, komplexe UIs aus vordefinierten Komponenten zusammenzusetzen, ohne dass der Entwickler manuell CSS oder JS für jede neue Ansicht schreiben muss."
     }
 ]
