@@ -376,6 +376,16 @@ function loadTabContent(tab) {
             .then(html => {
                 const formattedHtml = formatMarkdown(html);
                 contentArea.innerHTML = `<div class="animate-slide-up space-y-6">${formattedHtml}</div>`;
+                
+                // Execute scripts manually
+                const scripts = contentArea.querySelectorAll('script');
+                scripts.forEach(oldScript => {
+                    const newScript = document.createElement('script');
+                    Array.from(oldScript.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value));
+                    newScript.appendChild(document.createTextNode(oldScript.innerHTML));
+                    oldScript.parentNode.replaceChild(newScript, oldScript);
+                });
+
                 highlightCodeSnippets(contentArea);
                 setupImageLightbox(contentArea);
                 renderMath(contentArea);

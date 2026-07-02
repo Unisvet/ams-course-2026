@@ -22,6 +22,10 @@ tailwind.config = {
           text: '#f8fafc',
           textMuted: '#94a3b8'
         }
+      },
+      animation: {
+        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+        'bounce-subtle': 'bounce 2s infinite',
       }
     }
   }
@@ -32,6 +36,7 @@ body {
   background-color: #090d16;
   color: #f8fafc;
   font-family: 'Inter', system-ui, sans-serif;
+  overflow-x: hidden;
 }
 .glass-card {
   background: rgba(15, 23, 42, 0.65);
@@ -39,244 +44,264 @@ body {
   border: 1px solid rgba(6, 182, 212, 0.15);
   box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
 }
-.chart-container {
-  position: relative;
-  width: 100%;
-  height: 250px;
+.truck-lane {
+  background: repeating-linear-gradient(90deg, #1e293b 0px, #1e293b 40px, transparent 40px, transparent 80px);
+  height: 4px;
+}
+.progress-glow {
+  box-shadow: 0 0 15px rgba(6, 182, 212, 0.5);
 }
 </style>
-<!-- Chart.js CDN -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body class="antialiased p-4">
     <div class="max-w-5xl mx-auto space-y-6">
-        <div class="text-center">
-            <h1 class="text-xl md:text-2xl font-black text-white tracking-tight">MAS Logistik-Sync: Spreeland 2026</h1>
-            <p class="text-xs text-vibrant-textMuted mt-1">Drei Agenten koordinieren die Gürkchen-Lieferung nach Cottbus unter wechselnden Bedingungen.</p>
+        <!-- Header -->
+        <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="text-center md:text-left">
+                <h1 class="text-xl md:text-2xl font-black text-white tracking-tight flex items-center gap-2">
+                    <span class="text-cyan-400">⚡</span> Protocol Mission: Spreeland 2026
+                </h1>
+                <p class="text-xs text-vibrant-textMuted mt-1">Sichere die Gürkchen-Lieferung durch den Einsatz der richtigen Agenten-Protokolle.</p>
+            </div>
+            <div class="flex gap-4">
+                <div class="glass-card px-4 py-2 rounded-xl text-center min-w-[80px]">
+                    <div class="text-[10px] font-mono text-cyan-400 uppercase">Score</div>
+                    <div id="ui-score" class="text-lg font-black text-white font-mono">0</div>
+                </div>
+                <div class="glass-card px-4 py-2 rounded-xl text-center min-w-[100px]">
+                    <div class="text-[10px] font-mono text-pink-400 uppercase">Freshness</div>
+                    <div class="w-20 h-1.5 bg-slate-800 rounded-full mt-1.5 overflow-hidden">
+                        <div id="freshness-bar" class="h-full bg-pink-500 transition-all duration-500" style="width: 100%"></div>
+                    </div>
+                </div>
+            </div>
         </div>
 
+        <!-- Main Game Area -->
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-            <!-- Left: Agent Status Cards -->
-            <div class="lg:col-span-4 space-y-3">
-                <div id="agent-farmer" class="glass-card rounded-xl p-4 border-l-4 border-green-500 transition-all duration-300">
-                    <div class="flex justify-between items-center mb-2">
-                        <span class="text-xs font-bold text-white">🚜 Spreewald-Farmer (A2A)</span>
-                        <span id="farmer-bid" class="text-xs font-mono text-green-400">---</span>
+            
+            <!-- Left: Visual Map / Status -->
+            <div class="lg:col-span-7 space-y-4">
+                <div class="glass-card rounded-2xl p-6 relative overflow-hidden h-[340px] flex flex-col justify-between border-t-2 border-t-cyan-500/30">
+                    <!-- Visual Background -->
+                    <div class="absolute inset-0 opacity-10 pointer-events-none">
+                        <div class="grid grid-cols-6 h-full w-full">
+                            <div class="border-r border-slate-700"></div>
+                            <div class="border-r border-slate-700"></div>
+                            <div class="border-r border-slate-700"></div>
+                            <div class="border-r border-slate-700"></div>
+                            <div class="border-r border-slate-700"></div>
+                        </div>
                     </div>
-                    <div class="text-[10px] text-slate-400 italic" id="farmer-thought">Bereit...</div>
-                </div>
-                <div id="agent-retailer" class="glass-card rounded-xl p-4 border-l-4 border-cyan-500 transition-all duration-300">
-                    <div class="flex justify-between items-center mb-2">
-                        <span class="text-xs font-bold text-white">🏬 Cottbus-Händler (UCP)</span>
-                        <span id="retailer-bid" class="text-xs font-mono text-cyan-400">---</span>
-                    </div>
-                    <div class="text-[10px] text-slate-400 italic" id="retailer-thought">Bereit...</div>
-                </div>
-                <div id="agent-bridge" class="glass-card rounded-xl p-4 border-l-4 border-blue-500 transition-all duration-300">
-                    <div class="flex justify-between items-center mb-2">
-                        <span class="text-xs font-bold text-white">🌉 Brücken-Monitor (MCP)</span>
-                        <span id="bridge-status" class="text-xs font-mono text-blue-400">AKTIV</span>
-                    </div>
-                    <div class="text-[10px] text-slate-400 italic" id="bridge-thought">Status stabil.</div>
-                </div>
-                
-                <button id="start-sim" class="w-full py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-green-500 text-xs font-mono font-bold text-white shadow-lg active:scale-95 transition-all">
-                    Logistik-Sync starten 🚛
-                </button>
-            </div>
 
-            <!-- Right: Efficiency Chart -->
-            <div class="lg:col-span-8">
-                <div class="glass-card rounded-2xl p-5 h-full">
-                    <h3 class="text-xs font-mono font-bold text-white mb-4 uppercase">Liefer-Effizienz & Preisstabilität</h3>
-                    <div class="chart-container">
-                        <canvas id="logisticsChart"></canvas>
+                    <!-- Delivery Track -->
+                    <div class="relative pt-12">
+                        <div class="flex justify-between items-end mb-2">
+                            <span class="text-[10px] font-bold text-green-500 uppercase">Spreewald Farmer</span>
+                            <span class="text-[10px] font-bold text-cyan-500 uppercase">Cottbus Retailer</span>
+                        </div>
+                        <div class="truck-lane w-full rounded-full opacity-30 mb-8"></div>
+                        
+                        <!-- Truck Icon -->
+                        <div id="truck-container" class="absolute left-0 bottom-6 transition-all duration-1000 ease-linear transform translate-x-0">
+                            <div class="text-3xl animate-bounce-subtle">🚛</div>
+                            <div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-slate-900 border border-slate-700 px-2 py-1 rounded text-[9px] font-mono whitespace-nowrap opacity-0 transition-opacity" id="truck-bubble">
+                                Scanning...
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
-        <!-- Game Section -->
-        <div class="glass-card rounded-2xl p-6 border-t-2 border-t-yellow-500/30">
-            <div class="flex justify-between items-center mb-6">
-                <div>
-                    <h2 class="text-sm font-black text-white uppercase tracking-widest flex items-center gap-2">
-                        <span>🎮</span> Protocol Orchestrator Challenge
-                    </h2>
-                    <p class="text-[10px] text-vibrant-textMuted mt-1">Wähle das richtige Protokoll für die jeweilige Logistik-Herausforderung.</p>
-                </div>
-                <div class="text-right">
-                    <div class="text-[10px] font-mono text-yellow-400">SCORE</div>
-                    <div id="game-score" class="text-xl font-black text-white font-mono">0</div>
+                    <!-- Event Feed -->
+                    <div id="event-feed" class="bg-slate-950/80 rounded-xl p-4 border border-slate-800 h-32 overflow-y-auto font-mono text-[11px] leading-relaxed">
+                        <div class="text-cyan-400"> [SYSTEM] Mission gestartet. Warte auf Ereignisse...</div>
+                    </div>
                 </div>
             </div>
 
-            <div id="game-container" class="space-y-6">
-                <!-- Question Card -->
-                <div class="bg-slate-900/50 rounded-xl p-5 border border-slate-800 text-center relative overflow-hidden">
-                    <div id="game-question" class="text-sm md:text-base font-medium text-slate-200">Klicke auf "Spiel starten", um deine Kenntnisse zu testen!</div>
-                    <div id="game-feedback" class="absolute inset-0 flex items-center justify-center bg-slate-900/90 transform translate-y-full transition-transform duration-300 pointer-events-none">
-                        <span id="feedback-text" class="text-lg font-black uppercase italic"></span>
+            <!-- Right: Crisis Management & Controls -->
+            <div class="lg:col-span-5 space-y-4">
+                <div class="glass-card rounded-2xl p-6 h-full flex flex-col border-t-2 border-t-yellow-500/30">
+                    <h3 class="text-xs font-mono font-bold text-white mb-4 uppercase tracking-widest flex items-center gap-2">
+                        <span>🚨</span> Crisis Management
+                    </h3>
+                    
+                    <div id="crisis-container" class="flex-1 flex flex-col justify-center items-center text-center space-y-4 py-8">
+                        <div id="start-screen" class="space-y-4">
+                            <div class="text-4xl">🥬</div>
+                            <h4 class="text-lg font-bold text-white">Bereit für den Gürkchen-Run?</h4>
+                            <p class="text-xs text-slate-400 max-w-[200px] mx-auto">Wähle das richtige Protokoll, wenn Probleme auftreten. Zeit ist Geld!</p>
+                            <button id="btn-start" class="px-8 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-purple-500 text-xs font-bold text-white shadow-lg hover:scale-105 transition-all">MISSION STARTEN</button>
+                        </div>
+
+                        <div id="active-crisis" class="hidden space-y-4 animate-in fade-in zoom-in duration-300">
+                            <div id="crisis-icon" class="text-5xl animate-pulse">🚧</div>
+                            <h4 id="crisis-title" class="text-base font-black text-white uppercase">Brücke gesperrt!</h4>
+                            <p id="crisis-desc" class="text-xs text-slate-300 leading-relaxed"></p>
+                            <div class="text-[10px] font-mono text-pink-500 animate-pulse" id="timer-display">Zeit läuft: 5s</div>
+                        </div>
+
+                        <div id="success-screen" class="hidden space-y-4">
+                            <div class="text-5xl">🏆</div>
+                            <h4 class="text-lg font-black text-white">LIEFERUNG ERFOLGT!</h4>
+                            <p id="final-stats" class="text-xs text-slate-400"></p>
+                            <button onclick="location.reload()" class="px-8 py-3 rounded-xl bg-slate-800 border border-slate-700 text-xs font-bold text-white shadow-lg hover:bg-slate-700 transition-all">NOCHMAL SPIELEN</button>
+                        </div>
                     </div>
-                </div>
 
-                <!-- Action Buttons -->
-                <div id="game-controls" class="flex justify-center">
-                    <button id="btn-start-game" class="px-8 py-3 rounded-xl bg-yellow-500 hover:bg-yellow-400 text-slate-950 font-bold text-xs uppercase tracking-widest transition-all">
-                        Spiel starten
-                    </button>
-                </div>
-
-                <!-- Protocol Tokens (Hidden until start) -->
-                <div id="protocol-tokens" class="grid grid-cols-2 md:grid-cols-3 gap-3 hidden">
-                    <button data-protocol="MCP" class="protocol-btn p-3 rounded-lg border border-blue-500/30 bg-blue-500/5 text-blue-400 font-mono text-[10px] font-bold hover:bg-blue-500/20 transition-all">MCP</button>
-                    <button data-protocol="A2A" class="protocol-btn p-3 rounded-lg border border-green-500/30 bg-green-500/5 text-green-400 font-mono text-[10px] font-bold hover:bg-green-500/20 transition-all">A2A</button>
-                    <button data-protocol="UCP" class="protocol-btn p-3 rounded-lg border border-amber-500/30 bg-amber-500/5 text-amber-400 font-mono text-[10px] font-bold hover:bg-amber-500/20 transition-all">UCP</button>
-                    <button data-protocol="AP2" class="protocol-btn p-3 rounded-lg border border-rose-500/30 bg-rose-500/5 text-rose-400 font-mono text-[10px] font-bold hover:bg-rose-500/20 transition-all">AP2</button>
-                    <button data-protocol="A2UI" class="protocol-btn p-3 rounded-lg border border-pink-500/30 bg-pink-500/5 text-pink-400 font-mono text-[10px] font-bold hover:bg-pink-500/20 transition-all">A2UI</button>
-                    <button data-protocol="AG-UI" class="protocol-btn p-3 rounded-lg border border-indigo-500/30 bg-indigo-500/5 text-indigo-400 font-mono text-[10px] font-bold hover:bg-indigo-500/20 transition-all">AG-UI</button>
+                    <!-- Protocol Selection -->
+                    <div id="protocol-grid" class="grid grid-cols-3 gap-2 mt-4 opacity-50 pointer-events-none transition-opacity">
+                        <button onclick="handleProtocol('MCP')" class="p-2.5 rounded-lg border border-blue-500/30 bg-blue-500/5 text-blue-400 font-mono text-[9px] font-bold hover:bg-blue-500/20 transition-all">MCP</button>
+                        <button onclick="handleProtocol('A2A')" class="p-2.5 rounded-lg border border-green-500/30 bg-green-500/5 text-green-400 font-mono text-[9px] font-bold hover:bg-green-500/20 transition-all">A2A</button>
+                        <button onclick="handleProtocol('UCP')" class="p-2.5 rounded-lg border border-amber-500/30 bg-amber-500/5 text-amber-400 font-mono text-[9px] font-bold hover:bg-amber-500/20 transition-all">UCP</button>
+                        <button onclick="handleProtocol('AP2')" class="p-2.5 rounded-lg border border-rose-500/30 bg-rose-500/5 text-rose-400 font-mono text-[9px] font-bold hover:bg-rose-500/20 transition-all">AP2</button>
+                        <button onclick="handleProtocol('A2UI')" class="p-2.5 rounded-lg border border-pink-500/30 bg-pink-500/5 text-pink-400 font-mono text-[9px] font-bold hover:bg-pink-500/20 transition-all">A2UI</button>
+                        <button onclick="handleProtocol('AG-UI')" class="p-2.5 rounded-lg border border-indigo-500/30 bg-indigo-500/5 text-indigo-400 font-mono text-[9px] font-bold hover:bg-indigo-500/20 transition-all">AG-UI</button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        // Simulation Logic
-        const ctx = document.getElementById('logisticsChart').getContext('2d');
-        let logisticsChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: ['Start', 'Phase 1', 'Phase 2', 'Phase 3', 'Phase 4', 'Phase 5'],
-                datasets: [
-                    { label: 'Farmer Preisvorstellung', data: [50, null, null, null, null, null], borderColor: '#22c55e', borderWidth: 2, pointRadius: 2, tension: 0.3 },
-                    { label: 'Händler Budget', data: [30, null, null, null, null, null], borderColor: '#06b6d4', borderWidth: 2, pointRadius: 2, tension: 0.3 },
-                    { label: 'Transport-Kosten (MCP)', data: [10, null, null, null, null, null], borderColor: '#3b82f6', borderWidth: 1, pointRadius: 0, tension: 0.3, fill: true, backgroundColor: 'rgba(59, 130, 246, 0.05)' }
-                ]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: { legend: { labels: { color: '#94a3b8', font: { size: 9, family: 'monospace' } }, position: 'top' } },
-                scales: {
-                    x: { ticks: { color: '#475569', font: { size: 8 } }, grid: { display: false } },
-                    y: { min: 0, max: 60, ticks: { color: '#475569', font: { size: 8 } }, grid: { color: 'rgba(255,255,255,0.03)' } }
-                }
-            }
-        });
-
-        const simulation = [
-            { farmer: 48, retailer: 32, bridge: 12, f_t: "Gute Ernte, aber Transport ist teuer.", r_t: "Suche fairen Preis für 1 Tonne.", b_t: "MCP: Wartung an Brücke A beginnt." },
-            { farmer: 45, retailer: 35, bridge: 25, f_t: "A2A: Verhandle mit Fahrer-Agenten.", r_t: "UCP: Erhöhe Budget leicht.", b_t: "MCP: Brücke A gesperrt. Umleitung aktiv." },
-            { farmer: 42, retailer: 38, bridge: 15, f_t: "Ok, 42ct/kg bei Sammeltransport.", r_t: "Akzeptiere bei garantierter Lieferung.", b_t: "MCP: Brücke B wieder frei." },
-            { farmer: 40, retailer: 40, bridge: 10, f_t: "Deal. AG-UI: Übertrage Lieferstatus.", r_t: "AP2: Zahlung autorisiert (Limit 40).", b_t: "Status: Normalbetrieb." },
-            { farmer: 40, retailer: 40, bridge: 8, f_t: "Lieferung in Cottbus angekommen.", r_t: "Wareneingang bestätigt.", b_t: "Prozess abgeschlossen." }
+        const events = [
+            { icon: '🌉', title: 'Brücke blockiert!', desc: 'Sensoren melden Hochwasser in Burg. Wie findest du eine alternative Route?', answer: 'MCP' },
+            { icon: '💰', title: 'Preis-Krieg!', desc: 'Ein Konkurrent bietet Gürkchen 10% günstiger an. Verhandle sofort mit den Lieferanten-Agenten.', answer: 'A2A' },
+            { icon: '💳', title: 'Zahlungs-Stopp!', desc: 'Der LKW-Fahrer benötigt eine Autorisierung für Mautgebühren. Setze ein Budget-Limit.', answer: 'AP2' },
+            { icon: '📦', title: 'Katalog-Update!', desc: 'Der Händler hat seine Gürkchen-Sorten geändert. Synchronisiere den Warenkorb.', answer: 'UCP' },
+            { icon: '📱', title: 'UI-Crash!', desc: 'Das Fahrer-Dashboard zeigt nur wirre Zeichen. Sende ein neues deklaratives Interface.', answer: 'A2UI' },
+            { icon: '📡', title: 'Daten-Lag!', desc: 'Der Standort-Stream bricht ab. Nutze das Event-Streaming-Protokoll.', answer: 'AG-UI' }
         ];
 
-        let step = 0;
-        document.getElementById('start-sim').addEventListener('click', function() {
-            if (step >= simulation.length) {
-                step = 0;
-                logisticsChart.data.datasets.forEach(ds => ds.data = [ds.data[0], null, null, null, null, null]);
-                logisticsChart.update();
-            }
-            
-            this.disabled = true;
-            this.classList.add('opacity-50', 'scale-95');
-            this.innerText = "Synchronisation läuft...";
-
-            const interval = setInterval(() => {
-                const data = simulation[step];
-                
-                document.getElementById('farmer-bid').innerText = data.farmer + " ct";
-                document.getElementById('retailer-bid').innerText = data.retailer + " ct";
-                document.getElementById('bridge-status').innerText = data.bridge > 15 ? "GESPERRT" : "PASSABEL";
-                
-                document.getElementById('farmer-thought').innerText = data.f_t;
-                document.getElementById('retailer-thought').innerText = data.r_t;
-                document.getElementById('bridge-thought').innerText = data.b_t;
-
-                logisticsChart.data.datasets[0].data[step+1] = data.farmer;
-                logisticsChart.data.datasets[1].data[step+1] = data.retailer;
-                logisticsChart.data.datasets[2].data[step+1] = data.bridge;
-                logisticsChart.update('none');
-
-                step++;
-                if (step >= simulation.length) {
-                    clearInterval(interval);
-                    this.disabled = false;
-                    this.classList.remove('opacity-50', 'scale-95');
-                    this.innerText = "Simulation wiederholen 🔄";
-                }
-            }, 1000);
-        });
-
-        // Game Logic
-        const challenges = [
-            { q: "Wie prüfst du den Brückenstatus in Burg über die Live-Sensoren der Stadt?", a: "MCP" },
-            { q: "Wie verhandelst du automatisch die Lieferpreise mit 5 verschiedenen Farmer-Agenten?", a: "A2A" },
-            { q: "Wie autorisierst du ein Budget-Limit von 500€ für einen autonomen Liefer-LKW?", a: "AP2" },
-            { q: "Wie durchsuchst du einen Großhandels-Katalog nach den günstigsten Gürkchen?", a: "UCP" },
-            { q: "Wie renderst du eine Live-Map für den User, ohne React-Komponenten hardcoden zu müssen?", a: "A2UI" },
-            { q: "Wie streamst du die Echtzeit-GPS-Daten vom Agenten zum Web-Dashboard?", a: "AG-UI" }
-        ];
-
-        let currentChallenge = 0;
         let score = 0;
-        const gameQuestion = document.getElementById('game-question');
-        const gameScore = document.getElementById('game-score');
-        const protocolTokens = document.getElementById('protocol-tokens');
-        const startBtn = document.getElementById('btn-start-game');
-        const feedback = document.getElementById('game-feedback');
-        const feedbackText = document.getElementById('feedback-text');
+        let freshness = 100;
+        let gameActive = false;
+        let currentCrisis = null;
+        let crisisTimer = null;
+        let progress = 0;
+        let gameLoop = null;
 
-        function showChallenge() {
-            if (currentChallenge < challenges.length) {
-                gameQuestion.innerText = challenges[currentChallenge].q;
-            } else {
-                gameQuestion.innerHTML = `<span class="text-yellow-400 font-bold">Gratulation!</span> Du hast alle Herausforderungen gemeistert.`;
-                protocolTokens.classList.add('hidden');
-                startBtn.classList.remove('hidden');
-                startBtn.innerText = "Nochmal spielen";
-                currentChallenge = 0;
-            }
+        const uiScore = document.getElementById('ui-score');
+        const freshnessBar = document.getElementById('freshness-bar');
+        const eventFeed = document.getElementById('event-feed');
+        const truck = document.getElementById('truck-container');
+        const startScreen = document.getElementById('start-screen');
+        const activeCrisis = document.getElementById('active-crisis');
+        const successScreen = document.getElementById('success-screen');
+        const protocolGrid = document.getElementById('protocol-grid');
+        const truckBubble = document.getElementById('truck-bubble');
+
+        function addLog(msg, color = 'slate-400') {
+            const line = document.createElement('div');
+            line.className = `text-${color}`;
+            line.innerText = `[${new Date().toLocaleTimeString()}] ${msg}`;
+            eventFeed.prepend(line);
         }
 
-        startBtn.addEventListener('click', () => {
+        document.getElementById('btn-start').addEventListener('click', startGame);
+
+        function startGame() {
+            gameActive = true;
             score = 0;
-            currentChallenge = 0;
-            gameScore.innerText = score;
-            startBtn.classList.add('hidden');
-            protocolTokens.classList.remove('hidden');
-            showChallenge();
-        });
-
-        document.querySelectorAll('.protocol-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
-                const selected = this.getAttribute('data-protocol');
-                const correct = challenges[currentChallenge].a;
-
-                feedback.classList.remove('translate-y-full');
-                if (selected === correct) {
-                    score += 100;
-                    feedbackText.innerText = "Korrekt! +100";
-                    feedbackText.className = "text-lg font-black uppercase italic text-green-400";
-                    currentChallenge++;
-                } else {
-                    score = Math.max(0, score - 50);
-                    feedbackText.innerText = "Falsch! -50";
-                    feedbackText.className = "text-lg font-black uppercase italic text-rose-500";
+            freshness = 100;
+            progress = 0;
+            startScreen.classList.add('hidden');
+            protocolGrid.classList.remove('opacity-50', 'pointer-events-none');
+            uiScore.innerText = score;
+            addLog("LKW verlässt den Spreewald-Hof.", "green-400");
+            
+            gameLoop = setInterval(() => {
+                if (!currentCrisis) {
+                    progress += 1.5;
+                    truck.style.left = `${progress}%`;
+                    
+                    if (progress >= 90) {
+                        endGame(true);
+                    } else if (Math.random() < 0.03) {
+                        triggerCrisis();
+                    }
                 }
-                gameScore.innerText = score;
+                
+                // Slowly drop freshness
+                freshness -= 0.05;
+                updateUI();
+                
+                if (freshness <= 0) endGame(false);
+            }, 100);
+        }
 
-                setTimeout(() => {
-                    feedback.classList.add('translate-y-full');
-                    showChallenge();
-                }, 800);
-            });
-        });
+        function triggerCrisis() {
+            currentCrisis = events[Math.floor(Math.random() * events.length)];
+            activeCrisis.classList.remove('hidden');
+            document.getElementById('crisis-icon').innerText = currentCrisis.icon;
+            document.getElementById('crisis-title').innerText = currentCrisis.title;
+            document.getElementById('crisis-desc').innerText = currentCrisis.desc;
+            
+            truckBubble.innerText = "CRISIS DETECTED!";
+            truckBubble.classList.remove('opacity-0');
+            truckBubble.classList.add('text-rose-500');
+
+            addLog(`KRITIKALITÄT: ${currentCrisis.title}`, "rose-500");
+
+            let timeLeft = 6;
+            const timerDisplay = document.getElementById('timer-display');
+            
+            crisisTimer = setInterval(() => {
+                timeLeft--;
+                timerDisplay.innerText = `Zeit läuft: ${timeLeft}s`;
+                if (timeLeft <= 0) {
+                    addLog("Zeit abgelaufen! Freshness sinkt massiv.", "rose-600");
+                    freshness -= 15;
+                    resolveCrisis();
+                }
+            }, 1000);
+        }
+
+        window.handleProtocol = function(proto) {
+            if (!currentCrisis) return;
+
+            if (proto === currentCrisis.answer) {
+                score += 200;
+                addLog(`Erfolg! ${proto} eingesetzt. +200 Pkt`, "cyan-400");
+                truckBubble.innerText = "FIXED!";
+                truckBubble.classList.replace('text-rose-500', 'text-cyan-400');
+                setTimeout(() => truckBubble.classList.add('opacity-0'), 1000);
+                resolveCrisis();
+            } else {
+                score = Math.max(0, score - 50);
+                freshness -= 10;
+                addLog(`Falsches Protokoll (${proto})! -50 Pkt`, "rose-400");
+            }
+            updateUI();
+        }
+
+        function resolveCrisis() {
+            clearInterval(crisisTimer);
+            currentCrisis = null;
+            activeCrisis.classList.add('hidden');
+        }
+
+        function updateUI() {
+            uiScore.innerText = score;
+            freshnessBar.style.width = `${freshness}%`;
+            if (freshness < 30) freshnessBar.classList.replace('bg-pink-500', 'bg-rose-600');
+        }
+
+        function endGame(success) {
+            clearInterval(gameLoop);
+            gameActive = false;
+            activeCrisis.classList.add('hidden');
+            successScreen.classList.remove('hidden');
+            protocolGrid.classList.add('opacity-50', 'pointer-events-none');
+            
+            if (success) {
+                addLog("Mission erfolgreich! Ware in Cottbus entladen.", "emerald-400");
+                document.getElementById('final-stats').innerText = `Score: ${score} | Freshness: ${Math.round(freshness)}%`;
+            } else {
+                addLog("Mission gescheitert! Die Gürkchen sind nicht mehr genießbar.", "rose-600");
+                document.getElementById('success-screen').querySelector('h4').innerText = "MISSION GESCHEITERT!";
+                document.getElementById('success-screen').querySelector('div').innerText = "🥀";
+            }
+        }
     </script>
-</body>
-</html>
 </body>
 </html>

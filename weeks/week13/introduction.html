@@ -21,13 +21,8 @@
         .theme-shadow-purple { box-shadow: 0 0 25px rgba(139, 92, 246, 0.15); }
         .theme-shadow-yellow { box-shadow: 0 0 25px rgba(234, 179, 8, 0.15); }
 
-        .terminal-scroll::-webkit-scrollbar {
-            width: 4px;
-        }
-        .terminal-scroll::-webkit-scrollbar-thumb {
-            background: #1e293b;
-            border-radius: 2px;
-        }
+        .terminal-scroll::-webkit-scrollbar { width: 4px; }
+        .terminal-scroll::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 2px; }
     </style>
 
     <!-- Header / Intro Banner -->
@@ -35,20 +30,17 @@
         <h3 class="text-xl md:text-2xl font-bold text-white mb-2">Woche 13: Projektarbeit – Themenvorschläge & Pitches</h3>
         <p class="text-slate-300 text-sm leading-relaxed">
             Als krönender Abschluss des Semesters arbeiten Sie in Teams an einer hybriden Systemsimulation. 
-            Jedes Team wählt eines der folgenden <strong>8 Themen</strong>. Die Präsentation der Konzepte und Architekturen erfolgt in einem knackigen <strong>5-Minuten-Pitch</strong> mit integrierter Live-Demo.
+            Jedes Team wählt eines der folgenden <strong>8 Themen</strong>.
         </p>
     </div>
 
     <!-- Master-Detail Grid Container -->
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-        
-        <!-- Left Side: Topics List (Master) -->
+        <!-- Left Side: Topics List -->
         <div class="lg:col-span-5 space-y-3">
             <h4 class="text-xs font-mono text-cyan-400 uppercase tracking-widest px-1 mb-2">Verfügbare Themen</h4>
             <div id="topics-list-container" class="space-y-3">
-                <!-- Topic cards injected dynamically or defined statically for fast SEO rendering -->
-                
-                <!-- Card 1 -->
+                <!-- Topic cards defined statically -->
                 <button id="topic-card-0" onclick="window.selectTopic(0)" class="w-full text-left p-4 rounded-xl glass-card border-l-4 border-slate-800 hover:border-cyan-500/40 hover:bg-slate-900/20 flex gap-4 transition-all duration-200 focus:outline-none">
                     <div class="text-2xl pt-1">👁️</div>
                     <div class="flex-1 min-w-0">
@@ -57,11 +49,8 @@
                             <span class="px-2 py-0.5 rounded bg-slate-900 text-[9px] font-mono text-slate-400 border border-slate-800">Woche 7</span>
                         </div>
                         <h5 class="text-sm font-bold text-white truncate mt-1">Das sehende Auge</h5>
-                        <p class="text-[11px] text-slate-400 truncate mt-0.5">Multimodale Fehlerdiagnose</p>
                     </div>
                 </button>
-
-                <!-- Card 2 -->
                 <button id="topic-card-1" onclick="window.selectTopic(1)" class="w-full text-left p-4 rounded-xl glass-card border-l-4 border-slate-800 hover:border-pink-500/40 hover:bg-slate-900/20 flex gap-4 transition-all duration-200 focus:outline-none">
                     <div class="text-2xl pt-1">🤖</div>
                     <div class="flex-1 min-w-0">
@@ -70,37 +59,28 @@
                             <span class="px-2 py-0.5 rounded bg-slate-900 text-[9px] font-mono text-slate-400 border border-slate-800">Woche 9</span>
                         </div>
                         <h5 class="text-sm font-bold text-white truncate mt-1">Die Geisterhand</h5>
-                        <p class="text-[11px] text-slate-400 truncate mt-0.5">Autonome Regelung & Tool Calling</p>
                     </div>
                 </button>
-
-                <!-- Card 3 -->
                 <button id="topic-card-2" onclick="window.selectTopic(2)" class="w-full text-left p-4 rounded-xl glass-card border-l-4 border-slate-800 hover:border-purple-500/40 hover:bg-slate-900/20 flex gap-4 transition-all duration-200 focus:outline-none">
                     <div class="text-2xl pt-1">⚡</div>
                     <div class="flex-1 min-w-0">
                         <div class="flex items-center justify-between gap-2">
                             <span class="text-[10px] font-mono text-purple-400">Thema 3</span>
-                            <span class="px-2 py-0.5 rounded bg-slate-900 text-[9px] font-mono text-slate-400 border border-slate-800">Woche 4 & 5</span>
+                            <span class="px-2 py-0.5 rounded bg-slate-900 text-[9px] font-mono text-slate-400 border border-slate-800">Woche 4/5</span>
                         </div>
                         <h5 class="text-sm font-bold text-white truncate mt-1">Schnell wie das Licht</h5>
-                        <p class="text-[11px] text-slate-400 truncate mt-0.5">Differenzierbare Physik in JAX</p>
                     </div>
                 </button>
-
-                <!-- Card 4 -->
                 <button id="topic-card-3" onclick="window.selectTopic(3)" class="w-full text-left p-4 rounded-xl glass-card border-l-4 border-slate-800 hover:border-yellow-500/40 hover:bg-slate-900/20 flex gap-4 transition-all duration-200 focus:outline-none">
                     <div class="text-2xl pt-1">🚗</div>
                     <div class="flex-1 min-w-0">
                         <div class="flex items-center justify-between gap-2">
                             <span class="text-[10px] font-mono text-yellow-400">Thema 4</span>
-                            <span class="px-2 py-0.5 rounded bg-slate-900 text-[9px] font-mono text-slate-400 border border-slate-800">Woche 3 & 6</span>
+                            <span class="px-2 py-0.5 rounded bg-slate-900 text-[9px] font-mono text-slate-400 border border-slate-800">Woche 3/6</span>
                         </div>
                         <h5 class="text-sm font-bold text-white truncate mt-1">Stochastischer Stau</h5>
-                        <p class="text-[11px] text-slate-400 truncate mt-0.5">Monte-Carlo-Verkehrsoptimierung</p>
                     </div>
                 </button>
-
-                <!-- Card 5 -->
                 <button id="topic-card-4" onclick="window.selectTopic(4)" class="w-full text-left p-4 rounded-xl glass-card border-l-4 border-slate-800 hover:border-cyan-500/40 hover:bg-slate-900/20 flex gap-4 transition-all duration-200 focus:outline-none">
                     <div class="text-2xl pt-1">🧠</div>
                     <div class="flex-1 min-w-0">
@@ -109,11 +89,8 @@
                             <span class="px-2 py-0.5 rounded bg-slate-900 text-[9px] font-mono text-slate-400 border border-slate-800">Woche 8</span>
                         </div>
                         <h5 class="text-sm font-bold text-white truncate mt-1">Das Edge-Gehirn</h5>
-                        <p class="text-[11px] text-slate-400 truncate mt-0.5">Lokale Simulation mit Gemma</p>
                     </div>
                 </button>
-
-                <!-- Card 6 -->
                 <button id="topic-card-5" onclick="window.selectTopic(5)" class="w-full text-left p-4 rounded-xl glass-card border-l-4 border-slate-800 hover:border-pink-500/40 hover:bg-slate-900/20 flex gap-4 transition-all duration-200 focus:outline-none">
                     <div class="text-2xl pt-1">🐝</div>
                     <div class="flex-1 min-w-0">
@@ -122,11 +99,8 @@
                             <span class="px-2 py-0.5 rounded bg-slate-900 text-[9px] font-mono text-slate-400 border border-slate-800">Woche 12</span>
                         </div>
                         <h5 class="text-sm font-bold text-white truncate mt-1">Kollektive Intelligenz</h5>
-                        <p class="text-[11px] text-slate-400 truncate mt-0.5">Dezentraler Multi-Agenten-Markt</p>
                     </div>
                 </button>
-
-                <!-- Card 7 -->
                 <button id="topic-card-6" onclick="window.selectTopic(6)" class="w-full text-left p-4 rounded-xl glass-card border-l-4 border-slate-800 hover:border-purple-500/40 hover:bg-slate-900/20 flex gap-4 transition-all duration-200 focus:outline-none">
                     <div class="text-2xl pt-1">🛡️</div>
                     <div class="flex-1 min-w-0">
@@ -134,427 +108,147 @@
                             <span class="text-[10px] font-mono text-purple-400">Thema 7</span>
                             <span class="px-2 py-0.5 rounded bg-slate-900 text-[9px] font-mono text-slate-400 border border-slate-800">Woche 13</span>
                         </div>
-                        <h5 class="text-sm font-bold text-white truncate mt-1">Der kritische Beobachter</h5>
-                        <p class="text-[11px] text-slate-400 truncate mt-0.5">Hybride Guardrail-Architektur</p>
+                        <h5 class="text-sm font-bold text-white truncate mt-1">Der Beobachter</h5>
                     </div>
                 </button>
-
-                <!-- Card 8 -->
                 <button id="topic-card-7" onclick="window.selectTopic(7)" class="w-full text-left p-4 rounded-xl glass-card border-l-4 border-slate-800 hover:border-yellow-500/40 hover:bg-slate-900/20 flex gap-4 transition-all duration-200 focus:outline-none">
                     <div class="text-2xl pt-1">✈️</div>
                     <div class="flex-1 min-w-0">
                         <div class="flex items-center justify-between gap-2">
                             <span class="text-[10px] font-mono text-yellow-400">Thema 8</span>
-                            <span class="px-2 py-0.5 rounded bg-slate-900 text-[9px] font-mono text-slate-400 border border-slate-800">Woche 2 & 7</span>
+                            <span class="px-2 py-0.5 rounded bg-slate-900 text-[9px] font-mono text-slate-400 border border-slate-800">W2/W7</span>
                         </div>
-                        <h5 class="text-sm font-bold text-white truncate mt-1">Das flüsternde Triebwerk</h5>
-                        <p class="text-[11px] text-slate-400 truncate mt-0.5">Synthetische Prädiktive Wartung</p>
+                        <h5 class="text-sm font-bold text-white truncate mt-1">Das Triebwerk</h5>
                     </div>
                 </button>
-
             </div>
         </div>
 
-        <!-- Right Side: Topic Details (Detail) -->
+        <!-- Right Side: Details -->
         <div class="lg:col-span-7">
-            <div id="detail-panel" class="glass-card rounded-2xl p-6 border-t-2 border-t-cyan-500/40 shadow-xl space-y-6 relative overflow-hidden transition-all duration-300">
-                
-                <!-- Topic details injected dynamically here -->
+            <div id="detail-panel" class="glass-card rounded-2xl p-6 border-t-2 border-t-cyan-500 shadow-xl space-y-6 relative overflow-hidden transition-all duration-300">
                 <div class="space-y-6">
-                    <!-- Title block -->
                     <div>
-                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2">
+                        <div class="flex items-center justify-between gap-2 mb-2">
                             <span id="detail-topic-num" class="text-xs font-mono text-cyan-400 tracking-wider">THEMA 1</span>
-                            <span id="detail-badge" class="px-2.5 py-0.5 rounded-full bg-cyan-950/40 border border-cyan-800/40 text-[10px] font-mono text-cyan-400 w-fit">Woche 7: Vision & API</span>
+                            <span id="detail-badge" class="px-2.5 py-0.5 rounded-full bg-slate-900 border text-[10px] font-mono">Woche 7: Vision & API</span>
                         </div>
                         <h3 id="detail-title" class="text-2xl font-black text-white">Das sehende Auge</h3>
-                        <p id="detail-subtitle" class="text-sm text-slate-400 font-mono mt-0.5">Multimodale Fehlerdiagnose</p>
                     </div>
 
-                    <!-- Story section -->
                     <div class="space-y-2">
                         <h5 class="text-xs font-mono text-slate-400 uppercase tracking-widest flex items-center gap-1.5">
                             <span>📖</span> Die Story
                         </h5>
-                        <div class="p-4 bg-slate-900/30 border-l-4 border-cyan-500 rounded-r-xl relative">
-                            <p id="detail-story" class="text-slate-300 text-sm leading-relaxed italic">
-                                Jahrelang haben Ingenieure komplexe Fouriertransformationen und Schwellenwert-Filter geschrieben, um Anomalien in Sensordaten zu finden. Was wäre, wenn unser System den Fehler einfach sehen kann?
-                            </p>
+                        <div class="p-4 bg-slate-900/30 border-l-4 border-cyan-500 rounded-r-xl">
+                            <p id="detail-story" class="text-slate-300 text-sm leading-relaxed italic"></p>
                         </div>
                     </div>
 
-                    <!-- Pitch section -->
                     <div class="space-y-1.5">
                         <h5 class="text-xs font-mono text-slate-400 uppercase tracking-widest flex items-center gap-1.5">
                             <span>📢</span> Der Pitch
                         </h5>
-                        <p id="detail-pitch" class="text-slate-300 text-sm leading-relaxed">
-                            Erklärt kurz, warum es oft effizienter ist, einen visualisierten Graphen direkt an eine Vision-API (wie Gemini) zu übergeben, anstatt Millionen von Rohdatenpunkten mühsam zu parsen. Diskutiert, wo die Stärken (Mustererkennung) und wo die Schwächen (mathematische Präzision) der multimodalen Vision-Modelle im Engineering liegen.
-                        </p>
+                        <p id="detail-pitch" class="text-slate-300 text-sm leading-relaxed"></p>
                     </div>
 
-                    <!-- Live Demo section -->
                     <div class="space-y-1.5">
                         <h5 class="text-xs font-mono text-slate-400 uppercase tracking-widest flex items-center gap-1.5">
                             <span>💻</span> Die Live-Demo
                         </h5>
-                        <p id="detail-demo" class="text-slate-300 text-sm leading-relaxed">
-                            Generiert über euer Python-Skript live den sauberen Plot einer harmonischen Schwingung. Injiziert per Tastendruck einen "hässlichen" Clipping-Fehler (Hochfrequenz-Rauschen) in den Graphen. Jagt das defekte Bild per API durch euren Agenten. Das Terminal spuckt live ein sauberes Pydantic-JSON aus, in dem die KI die ungefähre X-Achsen-Koordinate des Crashs benennt – gerne garniert mit einem sarkastischen Haiku der KI über schlampiges Engineering.
-                        </p>
+                        <p id="detail-demo" class="text-slate-300 text-sm leading-relaxed"></p>
                     </div>
 
-                    <!-- Interactive CLI Terminal Simulator -->
                     <div class="space-y-3 pt-2">
-                        <h5 class="text-xs font-mono text-slate-400 uppercase tracking-widest flex items-center justify-between gap-1.5">
-                            <span>💻</span> Live-Demo Terminal Simulator
-                            <span class="text-[9px] text-slate-500 font-normal">SIMULATOR ACTIVE</span>
-                        </h5>
-                        <div class="rounded-xl border border-slate-900 overflow-hidden shadow-2xl bg-slate-950">
-                            <!-- Terminal top header bar -->
-                            <div class="bg-slate-900/60 px-4 py-2 flex items-center justify-between border-b border-slate-950">
-                                <div class="flex items-center gap-1.5">
-                                    <span class="w-3 h-3 rounded-full bg-rose-500/80 inline-block"></span>
-                                    <span class="w-3 h-3 rounded-full bg-amber-500/80 inline-block"></span>
-                                    <span class="w-3 h-3 rounded-full bg-emerald-500/80 inline-block"></span>
-                                </div>
-                                <div class="text-[10px] font-mono text-slate-500 tracking-wide select-none">bash - ams-simulation-engine</div>
-                                <div class="w-12"></div> <!-- Spacer -->
-                            </div>
-                            
-                            <!-- Terminal Screen -->
-                            <div id="terminal-screen" class="p-4 font-mono text-[11px] leading-relaxed text-slate-300 h-48 overflow-y-auto terminal-scroll space-y-1.5 bg-slate-950/80 select-text">
-                                <div class="text-cyan-400 font-bold">$ python check_wave.py --simulate</div>
-                                <div class="text-slate-500">[KLICKE UNTEN AUF "SIMULATION STARTEN" UM LIVE-OUTPUT ZU SEHEN]</div>
-                            </div>
+                        <div id="terminal-screen" class="p-4 font-mono text-[11px] leading-relaxed text-slate-300 h-48 overflow-y-auto bg-slate-950 rounded-xl border border-slate-900">
                         </div>
-                        
-                        <!-- Control button -->
-                        <button id="terminal-sim-btn" onclick="window.runTerminalSimulation()" class="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-cyan-500 to-purple-500 hover:from-cyan-400 hover:to-purple-400 text-xs font-mono font-bold text-white shadow-lg flex items-center justify-center gap-2 border border-white/10 active:scale-[0.98] transition-all duration-200">
+                        <button id="terminal-sim-btn" onclick="window.runTerminalSimulation()" class="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-cyan-500 to-purple-500 text-xs font-mono font-bold text-white shadow-lg flex items-center justify-center gap-2 transition-all">
                             <span>Live-Demo simulieren</span> ⚡
                         </button>
                     </div>
                 </div>
-
             </div>
         </div>
-
     </div>
 
-    <!-- Hidden image with onload to bootstrap our interactive JS runtime -->
-    <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onload="
-        if (!window.week13BootstrapRun) {
-            window.week13BootstrapRun = true;
-            const script = document.createElement('script');
-            script.textContent = `
-                (function() {
-                    console.log('Week 13 JavaScript initialized');
-                    
-                    const topics = [
-                        {
-                            id: 1,
-                            title: 'Das sehende Auge',
-                            subtitle: 'Multimodale Fehlerdiagnose',
-                            badge: 'Woche 7: Vision & API',
-                            icon: '👁️',
-                            color: 'cyan',
-                            story: 'Jahrelang haben Ingenieure komplexe Fouriertransformationen und Schwellenwert-Filter geschrieben, um Anomalien in Sensordaten zu finden. Was wäre, wenn unser System den Fehler einfach sehen kann?',
-                            pitch: 'Erklärt kurz, warum es oft effizienter ist, einen visualisierten Graphen (Plot) direkt an eine Vision-API (wie Gemini) zu übergeben, anstatt Millionen von Rohdatenpunkten mühsam zu parsen. Diskutiert, wo die Stärken (robuste Mustererkennung) und wo die Schwächen (mathematische Präzision) der multimodalen Vision-Modelle im Engineering liegen.',
-                            demo: 'Generiert über euer Python-Skript live den sauberen Plot einer harmonischen Schwingung. Injiziert per Tastendruck einen \\'hässlichen\\' Clipping-Fehler (Hochfrequenz-Rauschen) in den Graphen. Jagt das defekte Bild per API durch euren Agenten. Das Terminal spuckt live ein sauberes Pydantic-JSON aus, in dem die KI die ungefähre X-Achsen-Koordinate des Crashs benennt – gerne garniert mit einem sarkastischen Haiku der KI über schlampiges Engineering.',
-                            terminalSteps: [
-                                { text: '$ python check_wave.py --simulate', type: 'input' },
-                                { text: '[INFO] Generiere harmonische Schwingung mit f=50Hz...', type: 'system' },
-                                { text: '[INFO] Injiziere Clipping-Fehler (Hochfrequenz-Rauschen) bei t=0.72s...', type: 'system' },
-                                { text: '[INFO] Speichere Plot als temp_wave_plot.png...', type: 'system' },
-                                { text: '[API] Sende Bild an Gemini-1.5-Pro API (Größe: 42KB)...', type: 'system' },
-                                { text: '[API] Analyse abgeschlossen in 480ms. Dekodiere Antwort...', type: 'system' },
-                                { text: '{\\n  &quot;anomaly_detected&quot;: true,\\n  &quot;approx_x_coordinate&quot;: 0.724,\\n  &quot;severity&quot;: &quot;critical&quot;,\\n  &quot;haiku&quot;: &quot;Rauschen frisst den Sinus,\\\\nIngenieure weinen leise,\\\\nSilizium hält Wacht.&quot;\\n}', type: 'code' }
-                            ]
-                        },
-                        {
-                            id: 2,
-                            title: 'Die Geisterhand',
-                            subtitle: 'Autonome Regelung & Tool Calling',
-                            badge: 'Woche 9: Agenten & Tools',
-                            icon: '🤖',
-                            color: 'pink',
-                            story: 'Ein industrieller Rührkesselreaktor gerät thermisch außer Kontrolle. Klassische PID-Regler reagieren zu starr, menschliche Bediener sind im Krisenmoment zu langsam. Ein autonomer LLM-Agent übernimmt die Steuerung über Tool Calling.',
-                            pitch: 'Analysiert, wie generative Agenten physikalische Prozesse steuern können. Diskutiert das Schließen von Feedback-Loops, Latenzzeiten, Zuverlässigkeit von Tool Calling und Absicherungsmöglichkeiten (Guardrails) in zeitkritischen Regelkreisen.',
-                            demo: 'Der Agent liest kontinuierlich die Sensordaten des Reaktors. Steigt die Temperatur über die kritische Schwelle von 120°C, entscheidet er sich autonom für das Öffnen des Kühlventils, indem er die registrierte Funktion \\'adjust_valve(valve_id=&quot;cooling_01&quot;, position=1.0)\\' aufruft. Der Regelkreis schließt sich live im Terminal.',
-                            terminalSteps: [
-                                { text: '$ python run_reactor_agent.py', type: 'input' },
-                                { text: '[REACTOR] Temp: 92.4°C | Druck: 2.1 bar | Kühlung: 20%', type: 'system' },
-                                { text: '[REACTOR] Temp: 118.9°C | Druck: 2.7 bar | Warnung: Exothermer Runaway detektiert!', type: 'system' },
-                                { text: '[AGENT] Zustand analysiert. Temperaturanstieg kritisch. Auslösen Notfallkühlung.', type: 'agent' },
-                                { text: '[AGENT] Rufe Funktion auf: adjust_valve(valve_id=&quot;cooling_01&quot;, position=1.0)', type: 'call' },
-                                { text: '[REACTOR] Ventil cooling_01 auf Position 1.0 (100%) gesetzt. Flussrate: 250 L/min.', type: 'system' },
-                                { text: '[REACTOR] Temp: 104.2°C | Druck: 2.3 bar | System stabilisiert.', type: 'system' }
-                            ]
-                        },
-                        {
-                            id: 3,
-                            title: 'Schnell wie das Licht',
-                            subtitle: 'Differenzierbare Physik in JAX',
-                            badge: 'Woche 4 & 5: PINNs & JAX',
-                            icon: '⚡',
-                            color: 'purple',
-                            story: 'Traditionelle Finite-Elemente-Methoden (FEM) zur Wärmeleitungssimulation auf Turbinenschaufeln dauern Stunden. Ein in JAX geschriebenes Physics-Informed Neural Network (PINN) löst die Differentialgleichung in Millisekunden direkt auf der GPU.',
-                            pitch: 'Demonstriert die Verschmelzung von Physik und Deep Learning. Zeigt, wie physikalische Randbedingungen als Loss-Terme definiert werden und wie JAX mit automatischen Ableitungen (grad) und JIT-Kompilierung FEM-Solver um Größenordnungen beschleunigt.',
-                            demo: 'Definition der 1D-Wärmeleitungsgleichung als Loss-Funktion. Das PINN lernt die Lösung unter strikter Einhaltung der Randbedingungen. Die Terminal-Simulation zeigt live die Epochen, das Sinken des Physik-Loss und die massive Beschleunigung durch den XLA-Compiler.',
-                            terminalSteps: [
-                                { text: '$ python train_heat_pinn.py --use-gpu', type: 'input' },
-                                { text: '[JAX] Initialisiere Gewichtsmatrizen auf GPU (CUDA:0)...', type: 'system' },
-                                { text: '[JAX] JIT-Kompiliere \\'loss_fn\\' und \\'grad_fn\\' via XLA... (dauerte 1.62s)', type: 'system' },
-                                { text: 'Epoch    100 | Loss: 14.520 (Daten-Loss: 6.200, Physik-PDE-Loss: 8.320)', type: 'system' },
-                                { text: 'Epoch    500 | Loss:  0.084 (Daten-Loss: 0.011, Physik-PDE-Loss: 0.073)', type: 'system' },
-                                { text: 'Epoch   1000 | Loss:  0.002 (Daten-Loss: 0.0003, Physik-PDE-Loss: 0.0017)', type: 'system' },
-                                { text: '[SUCCESS] Training abgeschlossen. PINN-Inferenzzeit: 0.85 ms (Klassischer FEM-Löser: 42.1 s)', type: 'system' }
-                            ]
-                        },
-                        {
-                            id: 4,
-                            title: 'Der digitale Zwilling des Staus',
-                            subtitle: 'Stochastische Optimierung im Smart-City-Grid',
-                            badge: 'Woche 3 & 6: MC & Queue',
-                            icon: '🚗',
-                            color: 'yellow',
-                            story: 'Verkehrsknotenpunkte in Innenstädten verhalten sich stochastisch – feste Ampelphasen erzeugen Staus, sobald eine Baustelle hinzukommt. Eine Monte-Carlo-Simulation prognostiziert Stauwellen, bevor sie entstehen.',
-                            pitch: 'Kombination stochastischer Monte-Carlo-Simulationen (Woche 6) mit klassischen Warteschlangensystemen (Woche 3). Untersuchung der Sensitivität von stochastischen Variablen wie Ankunftsraten und Servicezeiten auf die Gesamtstabilität von Infrastrukturen.',
-                            demo: 'Simuliert den Durchfluss von Fahrzeugen an einer Kreuzung unter Rauschen. Eine stochastische Störung wird simuliert. Die Simulation berechnet das Value-at-Risk der Staulänge (95%-Quantil) und schlägt dynamisch optimierte Ampel-Schaltzeiten vor.',
-                            terminalSteps: [
-                                { text: '$ python city_grid_mc.py --simulations 10000', type: 'input' },
-                                { text: '[SIM] Initialisiere Kreuzung \\'Knoten_Nord\\' (3 Zuflüsse, Ankunftsrate λ ~ Poisson(15/min))...', type: 'system' },
-                                { text: '[SIM] Starte Monte-Carlo-Schleife (N=10.000 Pfade) via JAX vmap...', type: 'system' },
-                                { text: '[SIM] Störung injiziert: Spurblockierung auf Zufluss A (Wahrscheinlichkeit: 12%).', type: 'system' },
-                                { text: '[STATS] Erwartete Staulänge: 14 Fahrzeuge | Max Staulänge: 85 Fahrzeuge', type: 'system' },
-                                { text: '[STATS] Value-at-Risk (95%-Sicherheit): 42 Fahrzeuge blockieren Kreuzung.', type: 'system' },
-                                { text: '[OPTIMIZER] Berechne adaptive Ampelphase: Erhöhe Grünzeit Zufluss A um +12s.', type: 'system' },
-                                { text: '[SUCCESS] Neues VaR(95%): 12 Fahrzeuge. Kritischer Rückstau verhindert.', type: 'system' }
-                            ]
-                        },
-                        {
-                            id: 5,
-                            title: 'Das Edge-Gehirn',
-                            subtitle: 'Lokale Edge-Simulation mit Gemma',
-                            badge: 'Woche 8: Lokales Gemma',
-                            icon: '🧠',
-                            color: 'cyan',
-                            story: 'Ein Offshore-Windrad hat keine stabile Internetverbindung zu Cloud-APIs, muss aber vor Ort Vibrationsdaten auswerten und präzise Reparaturanweisungen generieren. Eine lokale Gemma-Instanz übernimmt das Reasoning direkt auf dem Industrie-PC.',
-                            pitch: 'Untersucht den lokalen Betrieb von Open-Weights Modellen (Gemma-2B/7B) auf ressourcenbeschränkten Embedded-Geräten. Analysiert den Einfluss von 4-Bit-Quantisierung auf Latenz, Speicherverbrauch und die Genauigkeit technischer Analysen.',
-                            demo: 'Ein lokaler Python-Wrapper lädt ein quantisiertes Gemma-2B-Modell via llama.cpp. Es analysiert live anomale Frequenzspektren von Turbinenvibrationen und generiert eine strukturierte mechanische Wartungsanweisung – komplett offline im Terminal.',
-                            terminalSteps: [
-                                { text: '$ python local_gemma.py --model gemma-2b-it-int4 --sensor-data=vibration.csv', type: 'input' },
-                                { text: '[LLAMA.CPP] Lade quantisiertes GGUF-Modell \\'gemma-2b-it-q4_K_M.gguf\\'...', type: 'system' },
-                                { text: '[LLAMA.CPP] Modell geladen in 0.88s. Benötigter RAM: 1.45 GB.', type: 'system' },
-                                { text: '[INPUT] Frequenzanalyse: Peak bei 140Hz (Rotorunwucht vermutet). RMS-Beschleunigung: 5.2m/s².', type: 'system' },
-                                { text: '[API] Generiere Offline-Analysebericht via Gemma...', type: 'system' },
-                                { text: '[GEMMA] **OFFLINE DIAGNOSE & EMPFEHLUNG**\\\\n1. ANOMALIE: Frequenzpeak bei 140Hz deutet auf mechanische Unwucht in Rotorblatt A hin.\\\\n2. GEFAHR: Erhöhte Lagerabnutzung. RMS-Wert überschreitet Warnschwelle (3.0m/s²).\\\\n3. MASSNAHME: Rotorblatt-Pitchwinkel anpassen. Unwucht-Ausgleichsgewicht an Flansch A prüfen.', type: 'agent' }
-                            ]
-                        },
-                        {
-                            id: 6,
-                            title: 'Kollektive Intelligenz',
-                            subtitle: 'Multi-Agenten Markt-Simulation',
-                            badge: 'Woche 12: Multi-Agenten',
-                            icon: '🐝',
-                            color: 'pink',
-                            story: 'Eine Energiekrise droht und Strompreise explodieren. Wie verhalten sich Hunderte Smart Grids, Industrieabnehmer und Solaranlagen, wenn sie autonom über Preise verhandeln und Verträge schließen?',
-                            pitch: 'Modellierung emergenter ökonomischer Phänomene und Preisbildungsmechanismen durch interagierende LLM-Agenten. Diskutiert spieltheoretische Strategien (Kooperation vs. Eigennutz) und Verhandlungsprotokolle im dezentralen Energiemarkt.',
-                            demo: 'Drei Agenten (Erzeuger, Konsument, Batteriespeicher) verhandeln in einem Auktionsprotokoll live den Strompreis für die nächste Stunde. Ihre Prompts steuern ihre Gebotsstrategien. Verhandlungen und Preisfindung laufen live ab.',
-                            terminalSteps: [
-                                { text: '$ python market_negotiation.py --agents=3', type: 'input' },
-                                { text: '[MARKET] Starte Auktionsrunde 1. Strombedarf: 500 kWh | Solarproduktion: 250 kWh.', type: 'system' },
-                                { text: '[AGENT_SOLAR] (Strategie: Gewinnmaximierung): Biete 250 kWh für 48 ct/kWh.', type: 'agent' },
-                                { text: '[AGENT_FACTORY] (Strategie: Kostenminimierung): Suche 500 kWh. Gebot: max 32 ct/kWh.', type: 'agent' },
-                                { text: '[AGENT_BATTERY] (Strategie: Arbitrage): Biete 100 kWh aus Speicher. Mindestpreis: 38 ct/kWh.', type: 'agent' },
-                                { text: '[MARKET] Verhandlung gestartet. Angebote weichen ab. Starte Runde 2...', type: 'system' },
-                                { text: '[AGENT_SOLAR] Reduziere auf 42 ct/kWh bei Abnahme der gesamten 250 kWh.', type: 'agent' },
-                                { text: '[AGENT_FACTORY] Akzeptiere 250 kWh von Solar zu 40 ct/kWh. Kaufe 100 kWh von Batterie zu 38 ct/kWh.', type: 'agent' },
-                                { text: '[SUCCESS] Markt geräumt. Durchschnittspreis: 39.4 ct/kWh. Verhandlung erfolgreich abgeschlossen.', type: 'system' }
-                            ]
-                        },
-                        {
-                            id: 7,
-                            title: 'Der kritische Beobachter',
-                            subtitle: 'Hybride KI-Mathe-Architektur & Guardrails',
-                            badge: 'Woche 13: Hybrid & Debug',
-                            icon: '🛡️',
-                            color: 'purple',
-                            story: 'Eine mathematische Simulations-Engine läuft durch numerische Instabilitäten Amok und gibt physikalisch unmögliche Werte aus (z.B. negative Massen). Ein LLM-Agent überwacht den Solver und kalibriert ihn live.',
-                            pitch: 'Präsentiert Architekturmuster für hybride Systeme (deterministische Math-Engine + LLM-Schicht). Zeigt, wie man Datenströme überwacht, Laufzeitfehler (z.B. NaN-Werte) detektiert, interpretiert und Korrekturen in die Simulation einspeist.',
-                            demo: 'Ein mechanisches Pendel wird simuliert. Durch zu große Zeitschritte explodiert die Energie. Das LLM-Guardrail erkennt die anomale Beschleunigung, stoppt die Simulation, berechnet eine stabilere Schrittweite und setzt die Simulation fort.',
-                            terminalSteps: [
-                                { text: '$ python hybrid_pendulum.py --step-size 0.05', type: 'input' },
-                                { text: '[SIM] Schritt 100 | Winkel: 0.45 rad | Energie: 9.81 J', type: 'system' },
-                                { text: '[SIM] Schritt 200 | Winkel: 1.82 rad | Energie: 9.83 J', type: 'system' },
-                                { text: '[SIM] Schritt 250 | Winkel: NaN rad | Energie: Inf J | CRASH: Singularität!', type: 'system' },
-                                { text: '[GUARDRAIL] Detektiere numerische Divergenz (Inf/NaN) bei Schritt 248.', type: 'system' },
-                                { text: '[GUARDRAIL] Sende Fehler-Zustand an Analyse-LLM...', type: 'system' },
-                                { text: '[LLM] Diagnose: Explodierende Energie durch Euler-Integrationsfehler bei dt=0.05. Empfehlung: Schrittweite dt auf 0.005 reduzieren und Zustand ab Schritt 240 neu berechnen.', type: 'agent' },
-                                { text: '[SIM] Rekalibriere dt = 0.005. Lade Checkpoint 240... Simuliere neu...', type: 'system' },
-                                { text: '[SIM] Schritt 250 (neu) | Winkel: 2.12 rad | Energie: 9.81 J. Simulation stabil.', type: 'system' }
-                            ]
-                        },
-                        {
-                            id: 8,
-                            title: 'Das flüsternde Triebwerk',
-                            subtitle: 'Prädiktive Wartung & Sensor-Synthese',
-                            badge: 'Woche 2 & 7: Predictive ML',
-                            icon: '✈️',
-                            color: 'yellow',
-                            story: 'Ein Flugzeugtriebwerk sendet stündlich hunderte Telemetriedaten. Ein klassisches LSTM-Modell sagt den Ausfall in 15 Stunden voraus, kann aber dem wartenden Techniker nicht erklären, *warum* es ausfällt.',
-                            pitch: 'Kombiniert prädiktive Deep-Learning-Modelle (Woche 2) mit generativer KI zur automatischen Übersetzung numerischer Anomalien in menschlich verständliche Wartungsprotokolle. Zeigt die Synergie aus Mustererkennung und Reasoning.',
-                            demo: 'Ein Keras Autoencoder meldet eine Rekord-Anomalie in den Vibrationsdaten. Gemini wertet das neuronale Aktivierungsmuster aus und generiert einen konkreten Reparaturleitfaden für das Triebwerk.',
-                            terminalSteps: [
-                                { text: '$ python predict_engine.py --turbine-id CF6-80C2', type: 'input' },
-                                { text: '[KERAS] Lade LSTM-Autoencoder Modell...', type: 'system' },
-                                { text: '[KERAS] Berechne Rekonstruktions-Fehler auf Live-Datenstrom...', type: 'system' },
-                                { text: '[KERAS] Anomalie-Score: 9.12 (Schwellenwert: 4.00) -> KRITISCHER ZUSTAND DETEKTIERT!', type: 'system' },
-                                { text: '[INFO] Extrahiere anomale Sensoren: Sensor_13 (Temperatur Niederdruckturbine) & Sensor_21 (Vibration)', type: 'system' },
-                                { text: '[API] Sende numerische Anomalie-Signatur an Gemini API zur Befundung...', type: 'system' },
-                                { text: '[GEMINI] **DIAGNOSE & REPARATUR-GUIDE**\\\\n- URSACHE: Der synchrone Anstieg von Vibrationen und Abgastemperatur deutet auf eine Beschädigung der Schaufelkanten (Blade Tip Rubbing) in der Stufe 2 der Niederdruckturbine hin.\\\\n- DRINGLICHKEIT: Hoch. Verbleibende Lebensdauer (RUL): ~12 Betriebsstunden.\\\\n- AKTION: Turbine außer Dienst stellen. Boreskop-Inspektion der Stufe 2 durchführen. Schaufelspalt kontrollieren.', type: 'agent' }
-                            ]
-                        }
-                    ];
+    <script>
+        var topics = [
+            { id: 1, title: 'Das sehende Auge', color: 'cyan', badge: 'Woche 7: Vision & API', story: 'Jahrelang haben Ingenieure komplexe Fouriertransformationen geschrieben, um Anomalien zu finden. Was wäre, wenn unser System den Fehler einfach sehen kann?', pitch: 'Erklärt kurz, warum es oft effizienter ist, einen visualisierten Graphen direkt an eine Vision-API zu übergeben. Diskutiert Stärken und Schwächen.', demo: 'Generiert live den Plot einer Schwingung, injiziert Rauschen und lässt die KI die Koordinaten des Fehlers benennen.', terminalSteps: [{text: '$ python check_wave.py --simulate', type: 'input'}, {text: '[INFO] Generiere Schwingung...', type: 'system'}, {text: '[INFO] Injiziere Fehler...', type: 'system'}, {text: '{"anomaly": true, "x": 0.72}', type: 'code'}] },
+            { id: 2, title: 'Die Geisterhand', color: 'pink', badge: 'Woche 9: Agenten & Tools', story: 'Ein Rührkesselreaktor gerät thermisch außer Kontrolle. Ein autonomer LLM-Agent übernimmt die Steuerung über Tool Calling.', pitch: 'Analysiert, wie generative Agenten physikalische Prozesse steuern können. Diskutiert Feedback-Loops und Guardrails.', demo: 'Der Agent liest Sensordaten und entscheidet sich autonom für das Öffnen des Kühlventils.', terminalSteps: [{text: '$ python reactor_agent.py', type: 'input'}, {text: '[ALERT] Temp: 118.9°C!', type: 'system'}, {text: 'Calling adjust_valve(pos=1.0)...', type: 'call'}] },
+            { id: 3, title: 'Schnell wie das Licht', color: 'purple', badge: 'Woche 4/5: PINNs & JAX', story: 'FEM-Simulationen dauern Stunden. Ein PINN in JAX löst die Differentialgleichung in Millisekunden direkt auf der GPU.', pitch: 'Verschmelzung von Physik und Deep Learning. Zeigt, wie physikalische Randbedingungen als Loss-Terme definiert werden.', demo: 'Definition der Wärmeleitung als Loss-Funktion. Das PINN lernt die Lösung live.', terminalSteps: [{text: '$ python train_heat_pinn.py', type: 'input'}, {text: '[JAX] Training on GPU...', type: 'system'}, {text: 'Epoch 1000 | Loss: 0.002', type: 'system'}] },
+            { id: 4, title: 'Stochastischer Stau', color: 'yellow', badge: 'Woche 3/6: MC & Queue', story: 'Verkehrsknotenpunkte verhalten sich stochastisch. Eine Monte-Carlo-Simulation prognostiziert Stauwellen.', pitch: 'Kombination stochastischer MC-Simulationen mit Warteschlangensystemen. Untersuchung der Sensitivität.', demo: 'Simuliert Durchfluss an einer Kreuzung. Berechnet das Value-at-Risk und schlägt Ampel-Schaltzeiten vor.', terminalSteps: [{text: '$ python traffic_mc.py', type: 'input'}, {text: '[SIM] Running 10k paths...', type: 'system'}, {text: 'VaR(95%): 42 vehicles.', type: 'system'}] },
+            { id: 5, title: 'Das Edge-Gehirn', color: 'cyan', badge: 'Woche 8: Lokales Gemma', story: 'Ein Offshore-Windrad ohne Internet muss Vibrationsdaten auswerten. Eine lokale Gemma-Instanz übernimmt das Reasoning.', pitch: 'Untersucht Betrieb von Open-Weights Modellen auf ressourcenbeschränkten Geräten. Einfluss von Quantisierung.', demo: 'Lokale Gemma analysiert anomale Frequenzspektren und generiert Wartungsanweisungen.', terminalSteps: [{text: '$ python local_gemma.py', type: 'input'}, {text: '[GEMMA] Analysebericht: Unwucht in Rotorblatt A detektiert. RMS überschritten.', type: 'agent'}] },
+            { id: 6, title: 'Kollektive Intelligenz', color: 'pink', badge: 'Woche 12: Multi-Agenten', story: 'Eine Energiekrise droht. Wie verhalten sich Hunderte Smart Grids, wenn sie autonom über Preise verhandeln?', pitch: 'Modellierung emergenter ökonomischer Phänomene durch interagierende Agenten. Spieltheoretische Strategien.', demo: 'Drei Agenten (Erzeuger, Konsument, Speicher) verhandeln in einem Auktionsprotokoll live den Strompreis.', terminalSteps: [{text: '$ python energy_market.py', type: 'input'}, {text: '[AGENT] Bid: 42 ct/kWh', type: 'agent'}, {text: '[SUCCESS] Price settled at 39.4 ct.', type: 'system'}] },
+            { id: 7, title: 'Der Beobachter', color: 'purple', badge: 'Woche 13: Hybrid & Debug', story: 'Eine Math-Engine läuft durch numerische Instabilitäten Amok. Ein Agent überwacht den Solver und kalibriert ihn live.', pitch: 'Architekturmuster für hybride Systeme. Detektion von Laufzeitfehlern und Korrektureinspeisung.', demo: 'Ein Pendel explodiert energetisch. Das Guardrail erkennt die Anomalie und setzt die Schrittweite neu.', terminalSteps: [{text: '$ python guardrail_pendulum.py', type: 'input'}, {text: '[GUARDRAIL] Energy divergence found!', type: 'system'}, {text: '[LLM] Reducing dt to 0.005.', type: 'agent'}] },
+            { id: 8, title: 'Das Triebwerk', color: 'yellow', badge: 'Woche 2/7: Predictive ML', story: 'Ein Triebwerk sendet Telemetriedaten. Ein LSTM sagt den Ausfall voraus, kann aber das "Warum" nicht erklären.', pitch: 'Kombiniert prädiktive DL-Modelle mit generativer KI zur Übersetzung numerischer Anomalien.', demo: 'Autoencoder meldet Rekord-Anomalie. Gemini wertet Muster aus und generiert Reparaturleitfaden.', terminalSteps: [{text: '$ python engine_ai.py', type: 'input'}, {text: '[DL] Anomaly detected!', type: 'system'}, {text: '[GEMINI] Blade Tip Rubbing suspected.', type: 'agent'}] }
+        ];
 
-                    let currentSelectedIndex = 0;
-                    let simRunning = false;
-                    let currentSimTimeout = null;
+        var selectedIndex = 0;
+        var simRunning = false;
 
-                    window.selectTopic = function(index) {
-                        if (simRunning) {
-                            clearTimeout(currentSimTimeout);
-                            simRunning = false;
-                        }
+        window.selectTopic = function(idx) {
+            if (simRunning) return;
+            selectedIndex = idx;
+            var t = topics[idx];
+            
+            document.getElementById('detail-title').innerText = t.title;
+            document.getElementById('detail-topic-num').innerText = 'THEMA ' + t.id;
+            document.getElementById('detail-badge').innerText = t.badge;
+            document.getElementById('detail-story').innerText = t.story;
+            document.getElementById('detail-pitch').innerText = t.pitch;
+            document.getElementById('detail-demo').innerText = t.demo;
+            
+            // UI styles
+            var badge = document.getElementById('detail-badge');
+            badge.className = 'px-2.5 py-0.5 rounded-full bg-slate-900 border text-[10px] font-mono theme-border-' + t.color + ' theme-text-' + t.color;
+            
+            var panel = document.getElementById('detail-panel');
+            panel.className = 'glass-card rounded-2xl p-6 border-t-2 shadow-xl space-y-6 relative overflow-hidden transition-all duration-300 theme-border-' + t.color + ' theme-shadow-' + t.color;
+            
+            document.getElementById('terminal-screen').innerHTML = '<div class="theme-text-' + t.color + '">' + t.terminalSteps[0].text + '</div>';
+            
+            for(var i=0; i<8; i++) {
+                var c = document.getElementById('topic-card-' + i);
+                if (c) {
+                    c.classList.remove('theme-bg-cyan', 'theme-bg-pink', 'theme-bg-purple', 'theme-bg-yellow');
+                    c.classList.remove('theme-border-cyan', 'theme-border-pink', 'theme-border-purple', 'theme-border-yellow');
+                    if (i === idx) {
+                        c.classList.add('theme-bg-' + t.color, 'theme-border-' + t.color);
+                    }
+                }
+            }
+        };
 
-                        currentSelectedIndex = index;
-                        const t = topics[index];
+        window.runTerminalSimulation = function() {
+            if (simRunning) return;
+            simRunning = true;
+            var t = topics[selectedIndex];
+            var screen = document.getElementById('terminal-screen');
+            var btn = document.getElementById('terminal-sim-btn');
+            btn.disabled = true;
+            btn.innerText = 'Läuft...';
+            screen.innerHTML = '';
+            var step = 0;
 
-                        // Update Active Classes in left panel cards
-                        for (let i = 0; i < topics.length; i++) {
-                            const card = document.getElementById('topic-card-' + i);
-                            if (card) {
-                                if (i === index) {
-                                    card.className = card.className.replace(/border-l-4 border-slate-800/g, '');
-                                    card.className = card.className.replace(/border-l-4 theme-border-\\w+/g, '');
-                                    card.classList.add('border-l-4', 'theme-border-' + t.color, 'theme-bg-' + t.color);
-                                } else {
-                                    card.classList.remove('theme-bg-cyan', 'theme-bg-pink', 'theme-bg-purple', 'theme-bg-yellow');
-                                    card.classList.remove('theme-border-cyan', 'theme-border-pink', 'theme-border-purple', 'theme-border-yellow');
-                                    card.classList.add('border-l-4', 'border-slate-800');
-                                }
-                            }
-                        }
+            function next() {
+                if (step >= t.terminalSteps.length) {
+                    simRunning = false;
+                    btn.disabled = false;
+                    btn.innerText = 'Simulation wiederholen';
+                    return;
+                }
+                var line = document.createElement('div');
+                var s = t.terminalSteps[step];
+                line.className = (s.type === 'input') ? 'theme-text-' + t.color : (s.type === 'agent' ? 'text-emerald-400' : 'text-slate-300');
+                line.textContent = s.text;
+                screen.appendChild(line);
+                step++;
+                setTimeout(next, 800);
+            }
+            next();
+        };
 
-                        // Update Right Detail Panel Content
-                        document.getElementById('detail-topic-num').innerText = 'THEMA ' + t.id;
-                        document.getElementById('detail-topic-num').className = 'text-xs font-mono tracking-wider theme-text-' + t.color;
-                        
-                        const badge = document.getElementById('detail-badge');
-                        badge.innerText = t.badge;
-                        badge.className = 'px-2.5 py-0.5 rounded-full bg-slate-900 border text-[10px] font-mono w-fit theme-border-' + t.color + ' theme-text-' + t.color;
-
-                        document.getElementById('detail-title').innerText = t.title;
-                        document.getElementById('detail-subtitle').innerText = t.subtitle;
-                        document.getElementById('detail-story').innerText = t.story;
-                        document.getElementById('detail-pitch').innerText = t.pitch;
-                        document.getElementById('detail-demo').innerText = t.demo;
-
-                        // Update Detail Panel Accent Border
-                        const panel = document.getElementById('detail-panel');
-                        panel.className = panel.className.replace(/border-t-2 border-t-\\w+-500\\/\\d+/g, '');
-                        panel.className = panel.className.replace(/border-t-2 theme-border-\\w+/g, '');
-                        panel.className = panel.className.replace(/theme-shadow-\\w+/g, '');
-                        panel.classList.add('border-t-2', 'theme-border-' + t.color, 'theme-shadow-' + t.color);
-
-                        // Reset Terminal Screen
-                        const term = document.getElementById('terminal-screen');
-                        term.innerHTML = '<div class=&quot;theme-text-' + t.color + ' font-bold&quot;>' + t.terminalSteps[0].text + '</div>' + 
-                                         '<div class=&quot;text-slate-500&quot;>[KLICKE UNTEN AUF &quot;SIMULATION STARTEN&quot; UM LIVE-OUTPUT ZU SEHEN]</div>';
-
-                        // Reset Button
-                        const btn = document.getElementById('terminal-sim-btn');
-                        btn.className = btn.className.replace(/from-\\w+-500 to-\\w+-500/g, '');
-                        btn.className = btn.className.replace(/hover:from-\\w+-400 hover:to-\\w+-400/g, '');
-                        btn.classList.add('from-' + t.color + '-500', 'to-purple-500', 'hover:from-' + t.color + '-400', 'hover:to-purple-400');
-                        btn.innerHTML = '<span>Live-Demo simulieren</span> ⚡';
-                        btn.disabled = false;
-                    };
-
-                    window.runTerminalSimulation = function() {
-                        if (simRunning) return;
-
-                        simRunning = true;
-                        const t = topics[currentSelectedIndex];
-                        const term = document.getElementById('terminal-screen');
-                        const btn = document.getElementById('terminal-sim-btn');
-
-                        btn.disabled = true;
-                        btn.innerHTML = '<span>Simulation läuft...</span> <span class=&quot;inline-block animate-spin&quot;>⏳</span>';
-
-                        term.innerHTML = '';
-                        let stepIdx = 0;
-
-                        function renderNextStep() {
-                            if (stepIdx >= t.terminalSteps.length) {
-                                btn.disabled = false;
-                                btn.innerHTML = '<span>Simulation wiederholen</span> 🔄';
-                                simRunning = false;
-                                return;
-                            }
-
-                            const step = t.terminalSteps[stepIdx];
-                            const lineEl = document.createElement('div');
-
-                            if (step.type === 'input') {
-                                lineEl.className = 'theme-text-' + t.color + ' font-bold';
-                                term.appendChild(lineEl);
-                                
-                                // Animate typing effect for input commands
-                                let charIdx = 0;
-                                function typeChar() {
-                                    if (charIdx < step.text.length) {
-                                        lineEl.textContent += step.text[charIdx];
-                                        charIdx++;
-                                        currentSimTimeout = setTimeout(typeChar, 30);
-                                    } else {
-                                        stepIdx++;
-                                        term.scrollTop = term.scrollHeight;
-                                        currentSimTimeout = setTimeout(renderNextStep, 600);
-                                    }
-                                }
-                                typeChar();
-                            } else {
-                                if (step.type === 'system') {
-                                    lineEl.className = 'text-slate-300';
-                                } else if (step.type === 'agent') {
-                                    lineEl.className = 'text-emerald-400';
-                                } else if (step.type === 'call') {
-                                    lineEl.className = 'text-amber-400 font-bold';
-                                } else if (step.type === 'code') {
-                                    lineEl.className = 'p-3 rounded-lg bg-slate-900 border border-slate-850 text-indigo-300 whitespace-pre font-mono mt-1 mb-1 block overflow-x-auto';
-                                }
-                                
-                                lineEl.innerHTML = step.text.replace(/\\\\n/g, '<br>');
-                                term.appendChild(lineEl);
-                                stepIdx++;
-                                term.scrollTop = term.scrollHeight;
-                                
-                                const nextDelay = step.type === 'code' ? 1200 : 700;
-                                currentSimTimeout = setTimeout(renderNextStep, nextDelay);
-                            }
-                        }
-
-                        renderNextStep();
-                    };
-
-                    // Execute initial selection on load
-                    setTimeout(function() {
-                        window.selectTopic(0);
-                    }, 50);
-                })();
-            `;
-            document.body.appendChild(script);
-            script.remove();
-        }
-    ">
+        // Initialize
+        setTimeout(function() { window.selectTopic(0); }, 50);
+    </script>
 </div>

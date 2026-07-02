@@ -97,5 +97,27 @@
         ],
         "answerIndex": 1,
         "explanation": "A2UI ermöglicht es Agenten, komplexe UIs aus vordefinierten Komponenten zusammenzusetzen, ohne dass der Entwickler manuell CSS oder JS für jede neue Ansicht schreiben muss."
+    },
+    {
+        "question": "Dein Agent versucht, 500 Pizzen für die gesamte Fakultät zu bestellen, hat aber nur ein Budget von 50€. Welches Protokoll ist der 'Türsteher', der die Transaktion stoppt?",
+        "options": [
+            "UCP (Universal Pizza Protocol)",
+            "AP2 (mit Budget-Mandat)",
+            "A2A (Pizzabäcker-Discovery)",
+            "AG-UI (Hunger-Stream)"
+        ],
+        "answerIndex": 1,
+        "explanation": "AP2 (Agent Payments Protocol) nutzt Mandate, um sicherzustellen, dass Agenten nur innerhalb ihrer autorisierten finanziellen Leitplanken handeln."
+    },
+    {
+        "question": "Warum ist es eine schlechte Idee, Agenten ohne standardisierte Protokolle (wie A2A) 'wild' miteinander reden zu lassen?",
+        "options": [
+            "Sie könnten sich ineinander verlieben.",
+            "Es entsteht ein babylonisches Sprachgewirr aus inkompatiblen JSON-Strukturen.",
+            "Die Internetverbindung wird dadurch lila.",
+            "Agenten weigern sich, ohne Protokoll Überstunden zu machen."
+        ],
+        "answerIndex": 1,
+        "explanation": "Ohne Protokolle wie A2A müssten wir für jede Agenten-Kombination eigenen Code schreiben. Standards sorgen für 'Plug-and-Play' Interoperabilität."
     }
 ]
