@@ -1,102 +1,287 @@
-<div class="space-y-8 animate-fade-in">
+<div class="space-y-12 animate-fade-in">
     <!-- Intro Banner -->
-    <div class="p-6 glass-card rounded-2xl border-l-4 border-cyan-500 bg-gradient-to-r from-cyan-950/20 to-transparent">
-        <h3 class="text-xl md:text-2xl font-bold text-white mb-2">Woche 12: Multi-Agenten-Systeme (MAS) & Komplexe Dynamiken</h3>
-        <p class="text-slate-300 text-sm leading-relaxed mt-3 font-sans">
-            In den vergangenen Wochen haben wir uns auf die Entwicklung einzelner, hochspezialisierter Agenten konzentriert. Doch in realen industriellen Szenarien – wie der Steuerung eines Smart Grids oder der Logistik eines Hafens – reicht ein einzelner Agent oft nicht aus. Hier treten <strong>Multi-Agenten-Systeme (MAS)</strong> auf den Plan.
-        </p>
-        <p class="text-slate-300 text-sm leading-relaxed mt-2 font-sans">
-            MAS bestehen aus einer Vielzahl interagierender Agenten, die jeweils eigene Ziele verfolgen, aber kooperieren oder konkurrieren müssen, um komplexe Systemziele zu erreichen. Diese Woche untersuchen wir, wie wir mit dem <strong>ADK</strong> und <strong>Antigravity Swarms</strong> Agenten-Kollektive orchestrieren, Kommunikationsprotokolle definieren und emergente Phänomene in dezentralen Märkten simulieren.
+    <div class="p-8 glass-card rounded-3xl border-l-4 border-cyan-500 bg-gradient-to-r from-cyan-950/20 to-transparent relative overflow-hidden">
+        <div class="absolute -top-24 -right-24 w-64 h-64 bg-cyan-500/5 rounded-full blur-3xl"></div>
+        <h3 class="text-2xl md:text-3xl font-black text-white mb-4 tracking-tight">Woche 12: Die Zukunft der Agentik – Protokolle & Interoperabilität</h3>
+        <p class="text-slate-300 text-sm md:text-base leading-relaxed font-sans max-w-3xl">
+            Bisher haben wir Agenten als isolierte Experten betrachtet. Doch die wahre Stärke von <strong>Multi-Agenten-Systemen (MAS)</strong> im Jahr 2026 liegt in der <strong>Interoperabilität</strong>. Wir verlassen das Zeitalter der "Custom Integrations" und betreten die Ära des <strong>Agentic Protocol Stack</strong>.
         </p>
     </div>
 
-    <!-- Core Objectives -->
-    <div class="space-y-4">
-        <h3 class="text-2xl font-bold text-white flex items-center gap-2">
-            <span>🎯</span> Lernziele der Woche
+    <!-- 1. Theorie: MAS & Komplexe Dynamik -->
+    <section class="space-y-6">
+        <h3 class="text-xl md:text-2xl font-bold text-white flex items-center gap-3 border-b border-slate-900 pb-3">
+            <span class="w-8 h-8 rounded-lg bg-purple-500/20 flex items-center justify-center text-purple-400 text-base">🧬</span>
+            Theorie: Komplexe Dynamik & Emergenz
         </h3>
-        <ul class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <li class="p-4 bg-slate-900/40 border border-slate-800 rounded-xl flex gap-3">
-                <span class="text-cyan-400 font-bold">1.</span>
-                <span class="text-sm text-slate-300"><strong>MAS-Architekturen verstehen:</strong> Konzepte von zentralisierter Orchestrierung (Swarm/Manager) vs. dezentraler Kooperation (Peer-to-Peer).</span>
-            </li>
-            <li class="p-4 bg-slate-900/40 border border-slate-800 rounded-xl flex gap-3">
-                <span class="text-pink-400 font-bold">2.</span>
-                <span class="text-sm text-slate-300"><strong>Agenten-Kommunikation:</strong> Implementierung von Verhandlungsprotokollen und Task-Handoffs zwischen spezialisierten Subagenten.</span>
-            </li>
-            <li class="p-4 bg-slate-900/40 border border-slate-800 rounded-xl flex gap-3">
-                <span class="text-yellow-400 font-bold">3.</span>
-                <span class="text-sm text-slate-300"><strong>Emergenz simulieren:</strong> Beobachtung komplexen Systemverhaltens (z.B. Preisbildung in einem Energiemarkt) durch einfache agentenbasierte Regeln.</span>
-            </li>
-            <li class="p-4 bg-slate-900/40 border border-slate-800 rounded-xl flex gap-3">
-                <span class="text-purple-400 font-bold">4.</span>
-                <span class="text-sm text-slate-300"><strong>Swarm Debugging:</strong> Nutzung von Tracing-Tools zur Analyse von Interaktionsketten über mehrere Agenten-Instanzen hinweg.</span>
-            </li>
-        </ul>
-    </div>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div class="space-y-4">
+                <p class="text-sm text-slate-300 leading-relaxed">
+                    In einem MAS entstehen <strong>komplexe Dynamiken</strong> durch die Interaktion autonomer Einheiten. Ein zentrales Phänomen ist die <strong>Emergenz</strong>: Kollektive Verhaltensmuster entstehen, die nicht explizit in den Einzelagenten programmiert wurden.
+                </p>
+                <div class="p-4 rounded-xl bg-slate-900/60 border border-slate-800">
+                    <h5 class="text-xs font-mono text-purple-400 uppercase tracking-widest mb-2 font-bold">Kernkonzepte</h5>
+                    <ul class="space-y-2">
+                        <li class="text-xs text-slate-400 flex items-start gap-2">
+                            <span class="text-purple-500 mt-0.5">•</span>
+                            <span><strong>Selbstorganisation:</strong> Koordination ohne zentrale Kontrolle.</span>
+                        </li>
+                        <li class="text-xs text-slate-400 flex items-start gap-2">
+                            <span class="text-purple-500 mt-0.5">•</span>
+                            <span><strong>Feedback-Loops:</strong> Verstärkung oder Dämpfung von Systemzuständen.</span>
+                        </li>
+                        <li class="text-xs text-slate-400 flex items-start gap-2">
+                            <span class="text-purple-500 mt-0.5">•</span>
+                            <span><strong>Zustandsraum-Explosion:</strong> Mit steigender Agentenzahl wächst die Komplexität der Interaktionen exponentiell.</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="glass-card rounded-2xl p-6 border-slate-800 flex flex-col justify-center bg-slate-950/20">
+                <blockquote class="text-sm italic text-slate-400 border-l-2 border-slate-700 pl-4 py-2">
+                    "Standardisierte Protokolle sind die 'Leitplanken' der Emergenz. Sie erlauben Chaos innerhalb geregelter Bahnen, um skalierbare Intelligenz zu ermöglichen."
+                </blockquote>
+                <div class="mt-4 text-[10px] font-mono text-slate-500 text-right">— Agentic Engineering Manifesto (2025)</div>
+            </div>
+        </div>
+    </section>
 
-    <!-- Section 1 -->
-    <h3 class="text-xl md:text-2xl font-extrabold text-white mt-12 mb-4 border-b border-slate-900 pb-2 flex items-center gap-2">
-        <span>🐝</span> 1. Swarm-Architekturen und Team-Orchestrierung
-    </h3>
-    <p class="text-sm text-slate-300 leading-relaxed font-sans">
-        Das ADK ermöglicht die Definition von Agenten-Teams (Swarms). Ein typisches Muster ist die <strong>Manager-Worker-Architektur</strong>. Ein "Manager"-Agent nimmt komplexe Aufgaben entgegen, zerlegt sie in Teilaufgaben und delegiert diese an spezialisierte "Worker"-Agenten (z.B. einen Research-Agenten und einen Simulation-Agenten).
-    </p>
-
-    <div class="p-6 glass-card rounded-2xl border-l-4 border-purple-500 bg-purple-950/5 space-y-3 my-6">
-        <h4 class="text-purple-400 font-bold text-base flex items-center gap-2">
-            <span>🤝</span> Koordination im Team
-        </h4>
-        <p class="text-xs text-slate-300 leading-relaxed">
-            Im Gegensatz zu einem monolithischen Agenten, der alles können muss, erlaubt MAS die Trennung von Kompetenzen. Dies erhöht die Zuverlässigkeit und ermöglicht das parallele Arbeiten an verschiedenen Aspekten einer Systemsimulation.
+    <!-- 2. Der Agentic Protocol Stack -->
+    <section class="space-y-6">
+        <h3 class="text-xl md:text-2xl font-bold text-white flex items-center gap-3 border-b border-slate-900 pb-3">
+            <span class="w-8 h-8 rounded-lg bg-cyan-500/20 flex items-center justify-center text-cyan-400 text-base">📚</span>
+            Deep Dive: Der Protocol Stack
+        </h3>
+        <p class="text-sm text-slate-300 leading-relaxed max-w-3xl">
+            Um diese Dynamiken zu bändigen, nutzen wir sechs komplementäre Protokolle, die den gesamten Lebenszyklus einer agentischen Interaktion abdecken.
         </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+            <!-- MCP -->
+            <div class="glass-card p-6 rounded-2xl border-t-2 border-t-blue-500/50 group hover:bg-blue-500/5 transition-all">
+                <div class="flex justify-between items-start mb-4">
+                    <span class="text-2xl">🛠️</span>
+                    <span class="text-[10px] font-mono bg-blue-500/10 text-blue-400 px-2 py-0.5 rounded border border-blue-500/20">INFRASTRUCTURE</span>
+                </div>
+                <h4 class="text-white font-bold mb-2">MCP (Model Context Protocol)</h4>
+                <p class="text-xs text-slate-400 leading-relaxed">
+                    Der "USB-C" Standard für KI. Verbindet Agenten sicher mit Tools, Datensätzen und lokalen Ressourcen, ohne dass für jede API neuer Code geschrieben werden muss.
+                </p>
+            </div>
+            <!-- A2A -->
+            <div class="glass-card p-6 rounded-2xl border-t-2 border-t-green-500/50 group hover:bg-green-500/5 transition-all">
+                <div class="flex justify-between items-start mb-4">
+                    <span class="text-2xl">🤝</span>
+                    <span class="text-[10px] font-mono bg-green-500/10 text-green-400 px-2 py-0.5 rounded border border-green-500/20">COLLABORATION</span>
+                </div>
+                <h4 class="text-white font-bold mb-2">A2A (Agent-to-Agent)</h4>
+                <p class="text-xs text-slate-400 leading-relaxed">
+                    Ermöglicht horizontale Discovery. Agenten tauschen "Agent Cards" aus, um Kompetenzen zu prüfen und Aufgaben über Systemgrenzen hinweg zu delegieren.
+                </p>
+            </div>
+            <!-- UCP -->
+            <div class="glass-card p-6 rounded-2xl border-t-2 border-t-amber-500/50 group hover:bg-amber-500/5 transition-all">
+                <div class="flex justify-between items-start mb-4">
+                    <span class="text-2xl">🛒</span>
+                    <span class="text-[10px] font-mono bg-amber-500/10 text-amber-400 px-2 py-0.5 rounded border border-amber-500/20">COMMERCE</span>
+                </div>
+                <h4 class="text-white font-bold mb-2">UCP (Universal Commerce)</h4>
+                <p class="text-xs text-slate-400 leading-relaxed">
+                    Standardisiert den Einkaufsprozess. Agenten können Kataloge abfragen, Warenkörbe verwalten und Checkouts auf beliebigen Plattformen durchführen.
+                </p>
+            </div>
+            <!-- AP2 -->
+            <div class="glass-card p-6 rounded-2xl border-t-2 border-t-rose-500/50 group hover:bg-rose-500/5 transition-all">
+                <div class="flex justify-between items-start mb-4">
+                    <span class="text-2xl">💳</span>
+                    <span class="text-[10px] font-mono bg-rose-500/10 text-rose-400 px-2 py-0.5 rounded border border-rose-500/20">PAYMENT</span>
+                </div>
+                <h4 class="text-white font-bold mb-2">AP2 (Agent Payment)</h4>
+                <p class="text-xs text-slate-400 leading-relaxed">
+                    Die Sicherheitsschicht. Nutzt kryptografische Mandate, um Agenten autorisierte Budgets zuzuweisen und jeden Cent revisionssicher zu tracken.
+                </p>
+            </div>
+            <!-- A2UI -->
+            <div class="glass-card p-6 rounded-2xl border-t-2 border-t-pink-500/50 group hover:bg-pink-500/5 transition-all">
+                <div class="flex justify-between items-start mb-4">
+                    <span class="text-2xl">🎨</span>
+                    <span class="text-[10px] font-mono bg-pink-500/10 text-pink-400 px-2 py-0.5 rounded border border-pink-500/20">INTERFACE</span>
+                </div>
+                <h4 class="text-white font-bold mb-2">A2UI (Generative UI)</h4>
+                <p class="text-xs text-slate-400 leading-relaxed">
+                    Deklarative UI-Definition. Der Agent sendet ein Schema der benötigten Interaktionselemente, und das Frontend rendert diese nativ und dynamisch.
+                </p>
+            </div>
+            <!-- AG-UI -->
+            <div class="glass-card p-6 rounded-2xl border-t-2 border-t-indigo-500/50 group hover:bg-indigo-500/5 transition-all">
+                <div class="flex justify-between items-start mb-4">
+                    <span class="text-2xl">⚡</span>
+                    <span class="text-[10px] font-mono bg-indigo-500/10 text-indigo-400 px-2 py-0.5 rounded border border-indigo-500/20">STREAMING</span>
+                </div>
+                <h4 class="text-white font-bold mb-2">AG-UI (Interaction Flow)</h4>
+                <p class="text-xs text-slate-400 leading-relaxed">
+                    Der Transport-Layer. Ein ereignisbasiertes Protokoll für bidirektionales Streaming zwischen Agenten-Backend und Frontend-Anwendung.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. Lernkarten / Flashcards -->
+    <section class="space-y-6">
+        <h3 class="text-xl md:text-2xl font-bold text-white flex items-center gap-3 border-b border-slate-900 pb-3">
+            <span class="w-8 h-8 rounded-lg bg-yellow-500/20 flex items-center justify-center text-yellow-400 text-base">🗂️</span>
+            Interaktive Lernkarten
+        </h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <!-- Card 1 -->
+            <div class="glass-card p-5 rounded-xl border border-slate-800 group cursor-help hover:scale-105 transition-transform duration-300">
+                <div class="text-[10px] font-mono text-cyan-400 mb-2">FRAGE 1</div>
+                <p class="text-xs font-bold text-white mb-4">Welches Protokoll fungiert als universeller 'Stecker' für Tools?</p>
+                <div class="opacity-0 group-hover:opacity-100 transition-opacity bg-cyan-500/10 p-3 rounded-lg border border-cyan-500/20">
+                    <p class="text-[10px] text-cyan-400 font-mono">ANTWORT: <strong>MCP</strong> (Model Context Protocol)</p>
+                </div>
+            </div>
+            <!-- Card 2 -->
+            <div class="glass-card p-5 rounded-xl border border-slate-800 group cursor-help hover:scale-105 transition-transform duration-300">
+                <div class="text-[10px] font-mono text-purple-400 mb-2">FRAGE 2</div>
+                <p class="text-xs font-bold text-white mb-4">Was versteht man unter 'Emergenz' in einem MAS?</p>
+                <div class="opacity-0 group-hover:opacity-100 transition-opacity bg-purple-500/10 p-3 rounded-lg border border-purple-500/20">
+                    <p class="text-[10px] text-purple-400 font-mono">ANTWORT: Kollektives Verhalten, das über die Summe der Einzelteile hinausgeht.</p>
+                </div>
+            </div>
+            <!-- Card 3 -->
+            <div class="glass-card p-5 rounded-xl border border-slate-800 group cursor-help hover:scale-105 transition-transform duration-300">
+                <div class="text-[10px] font-mono text-rose-400 mb-2">FRAGE 3</div>
+                <p class="text-xs font-bold text-white mb-4">Wie autorisiert ein Nutzer Zahlungen für autonome Agenten?</p>
+                <div class="opacity-0 group-hover:opacity-100 transition-opacity bg-rose-500/10 p-3 rounded-lg border border-rose-500/20">
+                    <p class="text-[10px] text-rose-400 font-mono">ANTWORT: Via <strong>AP2 Mandaten</strong> (kryptografisch signierte Budgets).</p>
+                </div>
+            </div>
+            <!-- Card 4 -->
+            <div class="glass-card p-5 rounded-xl border border-slate-800 group cursor-help hover:scale-105 transition-transform duration-300">
+                <div class="text-[10px] font-mono text-green-400 mb-2">FRAGE 4</div>
+                <p class="text-xs font-bold text-white mb-4">Was ist eine 'Agent Card' im A2A-Protokoll?</p>
+                <div class="opacity-0 group-hover:opacity-100 transition-opacity bg-green-500/10 p-3 rounded-lg border border-green-500/20">
+                    <p class="text-[10px] text-green-400 font-mono">ANTWORT: Ein Metadaten-Objekt zur Beschreibung von Kompetenzen und Endpunkten.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. Weiterführende Literatur & Quellen -->
+    <section class="space-y-6 pt-4">
+        <h3 class="text-xl md:text-2xl font-bold text-white flex items-center gap-3 border-b border-slate-900 pb-3">
+            <span class="w-8 h-8 rounded-lg bg-slate-800 flex items-center justify-center text-slate-400 text-base">📖</span>
+            Literatur & Ressourcen
+        </h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <a href="https://developers.googleblog.com/developers-guide-to-ai-agent-protocols/" target="_blank" class="p-4 rounded-xl border border-slate-800 bg-slate-900/20 hover:bg-slate-900/40 transition-colors flex items-center justify-between group">
+                <div class="flex items-center gap-3">
+                    <span class="text-xl">🌐</span>
+                    <div>
+                        <h5 class="text-sm font-bold text-white">Google Developers Guide</h5>
+                        <p class="text-[10px] text-slate-500">Primäre Quelle für A2A, AP2 & UCP Standards</p>
+                    </div>
+                </div>
+                <span class="text-slate-600 group-hover:text-cyan-400 transition-colors">&nearr;</span>
+            </a>
+            <a href="https://modelcontextprotocol.io" target="_blank" class="p-4 rounded-xl border border-slate-800 bg-slate-900/20 hover:bg-slate-900/40 transition-colors flex items-center justify-between group">
+                <div class="flex items-center gap-3">
+                    <span class="text-xl">🛠️</span>
+                    <div>
+                        <h5 class="text-sm font-bold text-white">MCP Documentation</h5>
+                        <p class="text-[10px] text-slate-500">Offizielle Spezifikation des Model Context Protocols</p>
+                    </div>
+                </div>
+                <span class="text-slate-600 group-hover:text-blue-400 transition-colors">&nearr;</span>
+            </a>
+            <a href="https://archive.org/details/introductiontomu0000wool" target="_blank" class="p-4 rounded-xl border border-slate-800 bg-slate-900/20 hover:bg-slate-900/40 transition-colors flex items-center justify-between group">
+                <div class="flex items-center gap-3">
+                    <span class="text-xl">📖</span>
+                    <div>
+                        <h5 class="text-sm font-bold text-white">Wooldridge: MAS Foundations</h5>
+                        <p class="text-[10px] text-slate-500">Klassisches Lehrbuch (Volltext-Leihe via Archive.org)</p>
+                    </div>
+                </div>
+                <span class="text-slate-600 group-hover:text-cyan-400 transition-colors">&nearr;</span>
+            </a>
+            <a href="https://arxiv.org/abs/2602.21404" target="_blank" class="p-4 rounded-xl border border-slate-800 bg-slate-900/20 hover:bg-slate-900/40 transition-colors flex items-center justify-between group">
+                <div class="flex items-center gap-3">
+                    <span class="text-xl">📉</span>
+                    <div>
+                        <h5 class="text-sm font-bold text-white">Dynamics of Emergence (ArXiv)</h5>
+                        <p class="text-[10px] text-slate-500">A Study of Dynamics of Hierarchy Emergence (2026)</p>
+                    </div>
+                </div>
+                <span class="text-slate-600 group-hover:text-cyan-400 transition-colors">&nearr;</span>
+            </a>
+        </div>
+    </section>
+
+    <!-- 5. Historische Meilensteine -->
+    <section class="space-y-6">
+        <h3 class="text-xl md:text-2xl font-bold text-white flex items-center gap-3 border-b border-slate-900 pb-3">
+            <span class="w-8 h-8 rounded-lg bg-amber-500/20 flex items-center justify-center text-amber-400 text-base">⏳</span>
+            Geschichte der MAS
+        </h3>
+        <p class="text-sm text-slate-300 leading-relaxed font-sans">
+            Die Entwicklung von Multi-Agenten-Systemen begann lange vor den heutigen LLMs. Hier sind drei wesentliche Meilensteine der "Distributed AI":
+        </p>
+        <div class="space-y-4">
+            <a href="https://arxiv.org/abs/1008.1459" target="_blank" class="p-4 rounded-xl border border-slate-800 bg-slate-900/10 flex gap-4 hover:bg-slate-900/20 transition-colors group">
+                <div class="text-amber-500 font-mono font-bold">1973</div>
+                <div class="flex-1">
+                    <h5 class="text-xs font-bold text-white uppercase group-hover:text-amber-400 transition-colors">The Actor Model (Carl Hewitt) &nearr;</h5>
+                    <p class="text-[10px] text-slate-500">Scalable Robust Information Systems: Die Einführung autonomer Einheiten, die ausschließlich über Nachrichten kommunizieren.</p>
+                </div>
+            </a>
+            <a href="https://www.reidgsmith.com/The_Contract_Net_Protocol_Dec-1980.pdf" target="_blank" class="p-4 rounded-xl border border-slate-800 bg-slate-900/10 flex gap-4 hover:bg-slate-900/20 transition-colors group">
+                <div class="text-amber-500 font-mono font-bold">1980</div>
+                <div class="flex-1">
+                    <h5 class="text-xs font-bold text-white uppercase group-hover:text-amber-400 transition-colors">Contract Net Protocol (Reid Smith) &nearr;</h5>
+                    <p class="text-[10px] text-slate-500">Das erste formale Framework für die Verhandlung und Aufgabenverteilung in Agenten-Netzwerken (Original PDF).</p>
+                </div>
+            </a>
+            <a href="https://fullhoffman.com/2026/03/12/agents-are-agents-reading-list/" target="_blank" class="p-4 rounded-xl border border-amber-500/20 bg-amber-500/5 flex gap-4 hover:bg-amber-500/10 transition-colors group">
+                <div class="text-amber-500 font-mono font-bold">2026</div>
+                <div class="flex-1">
+                    <h5 class="text-xs font-bold text-white uppercase group-hover:text-amber-400 transition-colors">53 Years in the Making &nearr;</h5>
+                    <p class="text-[10px] text-slate-500">"Agents are Agents" Reading List: Eine umfassende Chronologie von den DAI-Anfängen bis zur heutigen "Agentic Era".</p>
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <!-- Navigation Prompt -->
+    <section class="space-y-6">
+        <h3 class="text-xl md:text-2xl font-bold text-white flex items-center gap-3 border-b border-slate-900 pb-3">
+            <span class="w-8 h-8 rounded-lg bg-emerald-500/20 flex items-center justify-center text-emerald-400 text-base">🥕</span>
+            Case Study: Spreeland Logistics Sync
+        </h3>
+        <p class="text-sm text-slate-300 leading-relaxed font-sans mb-6">
+            In der dieswöchigen Case Study simulieren wir eine Lieferkette im Spreewald. Ein "Dispatcher-Agent" muss die verschiedenen Protokolle orchestrieren:
+        </p>
+
+        <pre class="mermaid bg-slate-950/40 p-6 rounded-xl border border-slate-900/60 my-6 flex justify-center">
+        graph TD
+            D[Dispatcher Agent] -->|MCP| DB[(Bridge & River Data)]
+            D -->|A2A| F[Farmer Agents]
+            D -->|UCP/AP2| P[Payment System]
+            D -->|A2UI| U[User Dashboard]
+            D -->|AG-UI| S[Stream Middleware]
+            
+            style D fill:#1e1b4b,stroke:#06b6d4,stroke-width:2px,color:#f8fafc
+            style DB fill:#0f172a,stroke:#3b82f6,color:#f8fafc
+            style F fill:#0f172a,stroke:#22c55e,color:#f8fafc
+            style P fill:#0f172a,stroke:#f59e0b,color:#f8fafc
+            style U fill:#0f172a,stroke:#ec4899,color:#f8fafc
+            style S fill:#0f172a,stroke:#8b5cf6,color:#f8fafc
+        </pre>
+    </section>
+
+    <!-- Navigation Prompt -->
+    <div class="p-6 glass-card rounded-2xl border border-cyan-500/20 flex flex-col items-center text-center space-y-3 bg-cyan-950/5">
+        <div class="text-cyan-400 text-sm font-mono">BEREIT FÜR DIE ANWENDUNG?</div>
+        <p class="text-xs text-slate-400 max-w-lg">Wechsle zum Tab <strong>"Problem Set"</strong>, um den Dispatcher-Agenten für den Spreewald zu entwerfen.</p>
     </div>
-
-    <!-- Section 2 -->
-    <h3 class="text-xl md:text-2xl font-extrabold text-white mt-12 mb-4 border-b border-slate-900 pb-2 flex items-center gap-2">
-        <span>📉</span> 2. Case Study: Der autonome Energiemarkt
-    </h3>
-    <p class="text-sm text-slate-300 leading-relaxed font-sans mb-6">
-        Ein klassisches Beispiel für MAS in der Systemsimulation ist der dezentrale Energiemarkt. Hier interagieren Hunderte von Agenten mit unterschiedlichen Interessen:
-    </p>
-
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 my-6">
-        <div class="glass-card rounded-2xl p-5 border-t-2 border-t-yellow-500/50 bg-slate-900/10">
-            <h5 class="text-white font-bold text-sm">☀️ Erzeuger-Agenten</h5>
-            <p class="text-xs text-slate-400 mt-2 leading-relaxed">
-                Wollen produzierten Strom (z.B. Solaranlage) zum höchstmöglichen Preis verkaufen. Strategie: Gewinnmaximierung.
-            </p>
-        </div>
-        <div class="glass-card rounded-2xl p-5 border-t-2 border-t-cyan-500/50 bg-slate-900/10">
-            <h5 class="text-white font-bold text-sm">🏭 Konsument-Agenten</h5>
-            <p class="text-xs text-slate-400 mt-2 leading-relaxed">
-                Benötigen Strom für Produktion. Strategie: Kostenminimierung und Sicherstellung der Grundlast.
-            </p>
-        </div>
-        <div class="glass-card rounded-2xl p-5 border-t-2 border-t-pink-500/50 bg-slate-900/10">
-            <h5 class="text-white font-bold text-sm">🔋 Speicher-Agenten</h5>
-            <p class="text-xs text-slate-400 mt-2 leading-relaxed">
-                Kaufen bei Überangebot günstig ein und verkaufen bei Knappheit teuer. Strategie: Arbitrage.
-            </p>
-        </div>
-    </div>
-
-    <pre class="mermaid bg-slate-950/40 p-6 rounded-xl border border-slate-900/60 my-6 flex justify-center">
-    graph LR
-        A[Erzeuger] -- Gebot --> M[Markt-Protokoll]
-        B[Konsument] -- Nachfrage --> M
-        C[Speicher] -- Arbitrage --> M
-        M -- Preisfindung --> A
-        M -- Preisfindung --> B
-        M -- Preisfindung --> C
-        
-        style M fill:#1e1b4b,stroke:#8b5cf6,stroke-width:2px,color:#f8fafc
-        style A fill:#0f172a,stroke:#eab308,color:#f8fafc
-        style B fill:#0f172a,stroke:#06b6d4,color:#f8fafc
-        style C fill:#0f172a,stroke:#ec4899,color:#f8fafc
-    </pre>
-
-    <p class="text-sm text-slate-300 leading-relaxed font-sans">
-        Im <strong>Problem Set 12</strong> werden Sie eine solche Markt-Simulation implementieren und untersuchen, wie sich unterschiedliche Agenten-Prompts (z.B. "aggressiv" vs. "kooperativ") auf die Stabilität des Gesamtnetzes auswirken.
-    </p>
 </div>

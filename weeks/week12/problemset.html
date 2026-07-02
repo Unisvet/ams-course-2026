@@ -1,57 +1,81 @@
 <div class="space-y-8">
     <div>
-        <span class="px-2.5 py-0.5 rounded-full bg-slate-800 text-slate-400 text-xs font-mono font-bold uppercase tracking-wider border border-slate-750">Programming Assignment</span>
-        <h3 class="text-2xl font-black text-white mt-2">Problem Set 12: The Autonomous Energy Market</h3>
-        <p class="text-sm text-slate-400 mt-1">Deadline: July 12, 2026 at 23:59 | Weight: 5% of module grade</p>
+        <span class="px-2.5 py-0.5 rounded-full bg-slate-800 text-slate-400 text-xs font-mono font-bold uppercase tracking-wider border border-slate-750">Protocol Engineering</span>
+        <h3 class="text-2xl font-black text-white mt-2">Problem Set 12: The Great Spreeland Logistics Sync</h3>
+        <p class="text-sm text-slate-400 mt-1">Deadline: July 19, 2026 at 23:59 | Weight: 10% of module grade</p>
     </div>
 
-    <!-- Task Description -->
+    <!-- Scenario Introduction -->
+    <div class="p-6 glass-card rounded-2xl bg-cyan-500/5 border border-cyan-500/20 space-y-3">
+        <h4 class="text-cyan-400 font-bold flex items-center gap-2">
+            <span>🚛</span> The Scenario
+        </h4>
+        <p class="text-sm text-slate-300 leading-relaxed">
+            In 2026, the Spreeland region is facing a massive logistics bottleneck. Local organic farmers need to get their harvest to Cottbus, but river levels are fluctuating, and several bridges are under automated maintenance. Your task is to design a <strong>Multi-Agent System</strong> that uses the new <strong>Agentic Protocol Stack</strong> to orchestrate a resilient supply chain.
+        </p>
+    </div>
+
+    <!-- Tasks -->
     <div class="space-y-6">
-        <h4 class="text-lg font-bold text-cyan-400 border-b border-slate-800 pb-2">1. Task Description</h4>
-        <p class="text-sm text-slate-300 leading-relaxed">
-            In this assignment, you will build a multi-agent simulation of a decentralized electricity market. You need to create three types of agents using the <strong>google-adk</strong>: Producers, Consumers, and Storage Providers. These agents will negotiate energy prices in a multi-round auction protocol.
-        </p>
-        <p class="text-sm text-slate-300 leading-relaxed">
-            Your task is to implement the negotiation logic where agents adjust their bids based on the market feedback (observation) from previous rounds. Analyze how the "greediness" parameter in your agent instructions affects the time until the market clears (supply matches demand).
-        </p>
+        <div>
+            <h4 class="text-lg font-bold text-white border-b border-slate-800 pb-2">Task 1: Protocol Architecture Design</h4>
+            <p class="text-sm text-slate-400 mt-2 italic">Which tool for which job?</p>
+            <p class="text-sm text-slate-300 leading-relaxed mt-2">
+                Describe how you would implement the following interactions using <strong>MCP, A2A, UCP, AP2, A2UI,</strong> and <strong>AG-UI</strong>:
+            </p>
+            <ul class="list-disc pl-6 text-sm text-slate-300 space-y-2 mt-2">
+                <li><strong>Infrastructure Discovery:</strong> How does your "Dispatch Agent" check real-time bridge status from the City's PostgreSQL database?</li>
+                <li><strong>Expert Consultation:</strong> How does your agent find and query a specialized "Weather-Predictor Agent" built by a different team?</li>
+                <li><strong>Secure Fulfillment:</strong> How do you ensure the agent's wholesale purchase of 2 tons of gherkins is both authorized by the owner and cryptographically verifiable?</li>
+                <li><strong>Dynamic Visualization:</strong> How do you present a live delivery dashboard to the user without writing custom React/Flutter code?</li>
+            </ul>
+        </div>
 
-        <!-- Code Snippet -->
-        <div class="space-y-2">
-            <h5 class="text-sm font-bold text-white font-mono">Starter Code template:</h5>
-            <pre class="bg-slate-950 p-4 rounded-xl border border-slate-850 overflow-x-auto text-xs font-mono text-cyan-400"><code class="language-python">from google.adk.agents import Agent
-from google.adk.swarms import Swarm
+        <div>
+            <h4 class="text-lg font-bold text-white border-b border-slate-800 pb-2">Task 2: Implementing the Dispatcher Swarm</h4>
+            <p class="text-sm text-slate-300 leading-relaxed mt-2">
+                Using the <strong>google-adk</strong>, implement a starter script for the <code>SpreelandDispatcher</code>. Your agent must discover tools via MCP and communicate its reasoning to the user via a streaming interaction.
+            </p>
 
-# Define your agents
-producer = Agent(
-    name="solar_producer",
-    instruction="You are a solar energy producer. Sell your 250kWh at the highest possible price."
+            <div class="space-y-2 mt-4">
+                <h5 class="text-xs font-bold text-slate-500 font-mono uppercase">Reference Snippet:</h5>
+                <pre class="bg-slate-950 p-4 rounded-xl border border-slate-850 overflow-x-auto text-xs font-mono text-cyan-400"><code class="language-python">from google.adk.agents import Agent
+from google.adk.tools.mcp_tool import McpToolset
+from google.adk.tools.mcp_tool.mcp_session_manager import StdioConnectionParams
+from mcp import StdioServerParameters
+
+# 1. Connect to Infrastructure Data via MCP
+infra_tools = McpToolset(connection_params=StdioConnectionParams(
+    server_params=StdioServerParameters(
+        command="npx", args=["-y", "@spreeland/bridge-mcp-server"],
+        env={"API_KEY": "SPREE_2026_SECRET"})
+))
+
+# 2. Define the Dispatcher Agent
+dispatcher = Agent(
+    name="Spreeland_Dispatcher",
+    instruction="""You coordinate logistics in Spreeland. 
+    1. Check bridge status. 
+    2. Negotiate with A2A supplier agents. 
+    3. Output status via A2UI cards.""",
+    tools=[infra_tools]
 )
 
-consumer = Agent(
-    name="factory_consumer",
-    instruction="You are a factory. You need 500kWh at the lowest possible price."
-)
-
-# Initialize the swarm
-market_swarm = Swarm(agents=[producer, consumer])
-
-# Run negotiation
-# ... implementation needed</code></pre>
+# 3. Handle Interactive Streaming (AG-UI pattern)
+# ... Implementation required for task submission</code></pre>
+            </div>
         </div>
     </div>
 
-    <!-- Submission instructions -->
+    <!-- Submission Details -->
     <div class="p-6 glass-card rounded-2xl border-l-4 border-amber-500 bg-amber-500/5 space-y-3">
         <h4 class="text-amber-400 font-mono text-sm font-bold uppercase tracking-wider flex items-center gap-2">
-            <span>💾</span> Submission Details
+            <span>💾</span> Submission Requirements
         </h4>
-        <p class="text-xs text-slate-300 leading-relaxed">
-            Submit your solution as a Jupyter Notebook (.ipynb). Your notebook must include:
-        </p>
         <ul class="list-disc pl-6 text-xs text-slate-300 space-y-1">
-            <li>The full Python code for the agents and the auction loop.</li>
-            <li>A plot showing price convergence over the rounds.</li>
-            <li>A short reflection on the emergent behavior observed.</li>
+            <li><strong>Design Document:</strong> A PDF explaining the choice of protocols for each sub-task.</li>
+            <li><strong>Python Source:</strong> A working script demonstrating MCP tool discovery and A2A negotiation logic.</li>
+            <li><strong>UI Schema:</strong> A JSON file containing a sample <code>A2UI</code> message that renders a delivery status card.</li>
         </ul>
     </div>
 </div>

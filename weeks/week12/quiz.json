@@ -1,35 +1,68 @@
 [
     {
-        "question": "Was ist der Hauptvorteil einer Multi-Agenten-Architektur (MAS) gegenüber einem einzelnen großen Agenten?",
+        "question": "Which protocol is designed to standardize the discovery and communication between independent agents built on different frameworks?",
         "options": [
-            "MAS benötigen weniger Rechenleistung.",
-            "MAS erlauben die Trennung von Kompetenzen (Separation of Concerns) und parallele Aufgabenverarbeitung.",
-            "MAS eliminieren Halluzinationen vollständig.",
-            "MAS funktionieren ohne Internetverbindung."
+            "MCP",
+            "A2A (Agent2Agent)",
+            "UCP",
+            "AG-UI"
         ],
         "answerIndex": 1,
-        "explanation": "Durch die Spezialisierung (z.B. ein Research-Agent und ein Code-Agent) können komplexe Aufgaben effizienter und zuverlässiger gelöst werden als durch einen Generalisten."
+        "explanation": "The A2A protocol (Agent2Agent) allows agents to discover each other via Agent Cards and communicate using a standardized message format, regardless of their underlying implementation."
     },
     {
-        "question": "Welcher Begriff beschreibt das Phänomen, bei dem einfache Regeln einzelner Agenten zu komplexem Verhalten des Gesamtsystems führen?",
+        "question": "What is the primary purpose of the Model Context Protocol (MCP)?",
         "options": [
-            "Linearität",
-            "Emergenz",
-            "Determinismus",
-            "Rekursion"
-        ],
-        "answerIndex": 1,
-        "explanation": "Emergenz beschreibt, wie aus lokalen Interaktionen (z.B. Gebote in einem Markt) globale Muster (z.B. ein stabiler Marktpreis) entstehen."
-    },
-    {
-        "question": "Wie wird im ADK ein Team von Agenten bezeichnet, das gemeinsam an einem Ziel arbeitet?",
-        "options": [
-            "Group",
-            "Cluster",
-            "Swarm",
-            "Flock"
+            "To define how agents render UI components.",
+            "To authorize financial transactions between agents.",
+            "To provide a universal connection pattern for agents to access data and tools.",
+            "To stream text incrementally from an LLM."
         ],
         "answerIndex": 2,
-        "explanation": "In der Antigravity/ADK Terminologie werden koordinierte Agenten-Teams als Swarms bezeichnet."
+        "explanation": "MCP (Model Context Protocol) eliminates the need for custom integration code by providing a standard way for agents to connect to hundreds of different servers and databases."
+    },
+    {
+        "question": "Welches Protokoll wird verwendet, um den gesamten Shopping-Lebenszyklus (Katalogsuche, Checkout) für Agenten zu vereinheitlichen?",
+        "options": [
+            "AP2",
+            "UCP (Universal Commerce Protocol)",
+            "AG-UI",
+            "A2UI"
+        ],
+        "answerIndex": 1,
+        "explanation": "UCP (Universal Commerce Protocol) bietet standardisierte Schemas für Warenkörbe und Bestellvorgänge, sodass Agenten mit verschiedenen Händlern kommunizieren können, ohne herstellerspezifischen Code zu benötigen."
+    },
+    {
+        "question": "Wofür steht das AP2-Protokoll im Kontext von Agenten-Zahlungen?",
+        "options": [
+            "Agent Pricing Protocol",
+            "Agent Payments Protocol",
+            "Automated Purchase Protocol",
+            "Agentic Privacy Protocol"
+        ],
+        "answerIndex": 1,
+        "explanation": "Das Agent Payments Protocol (AP2) fügt eine Sicherheitsebene für Zahlungen hinzu, indem es kryptografische Mandate und Ausgabenlimits (Guardrails) verwendet."
+    },
+    {
+        "question": "How does A2UI differ from traditional web development for agents?",
+        "options": [
+            "It requires agents to write HTML/CSS code directly.",
+            "It uses a declarative JSON format with safe component primitives, separating structure from data.",
+            "It only works with Python-based frontends.",
+            "It is used for backend-to-backend communication only."
+        ],
+        "answerIndex": 1,
+        "explanation": "A2UI (Agent-to-User Interface) allows agents to compose dynamic UIs from a fixed set of components, ensuring safety and reducing the need for custom frontend development."
+    },
+    {
+        "question": "Which protocol acts as middleware to stream agent events (like tool calls and reasoning) to a frontend?",
+        "options": [
+            "A2A",
+            "MCP",
+            "AG-UI (Agent-User Interaction)",
+            "UCP"
+        ],
+        "answerIndex": 2,
+        "explanation": "AG-UI (Agent-User Interaction Protocol) standardizes the SSE (Server-Sent Events) stream between agent frameworks and user interfaces, handling tool calls and incremental text delivery."
     }
 ]
