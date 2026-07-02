@@ -11,14 +11,20 @@
             <span>🚛</span> The Scenario
         </h4>
         <p class="text-sm text-slate-300 leading-relaxed">
-            In 2026, the Spreeland region is facing a massive logistics bottleneck. Local organic farmers need to get their harvest to Cottbus, but river levels are fluctuating, and several bridges are under automated maintenance. Your task is to design a <strong>Multi-Agent System</strong> that uses the new <strong>Agentic Protocol Stack</strong> to orchestrate a resilient supply chain.
+            In 2026, the Spreeland region is facing a massive logistics bottleneck. Local organic farmers need to get their harvest to Cottbus, but river levels are fluctuating, and several bridges are under automated maintenance. Your <strong>objective</strong> is to design a <strong>Multi-Agent System</strong> that uses the new <strong>Agentic Protocol Stack</strong> to orchestrate a resilient supply chain.
         </p>
+        <div class="mt-4 rounded-xl overflow-hidden border border-cyan-500/30 shadow-2xl shadow-cyan-500/5">
+            <img src="assets/img/week12_logistics.png" alt="Spreeland Logistics Hub 2026" class="w-full h-auto object-cover">
+            <div class="p-2 bg-slate-900/80 text-[10px] font-mono text-cyan-400 text-center uppercase tracking-widest">
+                Concept Visual: Automated Logistics Hub - Burg/Spreewald
+            </div>
+        </div>
     </div>
 
-    <!-- Tasks -->
+    <!-- Exercises -->
     <div class="space-y-6">
         <div>
-            <h4 class="text-lg font-bold text-white border-b border-slate-800 pb-2">Task 1: Protocol Architecture Design</h4>
+            <h4 class="text-lg font-bold text-white border-b border-slate-800 pb-2">Exercise 1: Protocol Architecture Design</h4>
             <p class="text-sm text-slate-400 mt-2 italic">Which tool for which job?</p>
             <p class="text-sm text-slate-300 leading-relaxed mt-2">
                 Describe how you would implement the following interactions using <strong>MCP, A2A, UCP, AP2, A2UI,</strong> and <strong>AG-UI</strong>:
@@ -32,7 +38,7 @@
         </div>
 
         <div>
-            <h4 class="text-lg font-bold text-white border-b border-slate-800 pb-2">Task 2: Implementing the Dispatcher Swarm</h4>
+            <h4 class="text-lg font-bold text-white border-b border-slate-800 pb-2">Exercise 2: Implementing the Dispatcher Swarm</h4>
             <p class="text-sm text-slate-300 leading-relaxed mt-2">
                 Using the <strong>google-adk</strong>, implement a starter script for the <code>SpreelandDispatcher</code>. Your agent must discover tools via MCP and communicate its reasoning to the user via a streaming interaction.
             </p>
@@ -62,7 +68,7 @@ dispatcher = Agent(
 )
 
 # 3. Handle Interactive Streaming (AG-UI pattern)
-# ... Implementation required for task submission</code></pre>
+# ... Implementation required for exercise submission</code></pre>
             </div>
         </div>
     </div>
@@ -73,7 +79,7 @@ dispatcher = Agent(
             <span>💾</span> Submission Requirements
         </h4>
         <ul class="list-disc pl-6 text-xs text-slate-300 space-y-1">
-            <li><strong>Design Document:</strong> A PDF explaining the choice of protocols for each sub-task.</li>
+            <li><strong>Design Document:</strong> A PDF explaining the choice of protocols for each sub-exercise.</li>
             <li><strong>Python Source:</strong> A working script demonstrating MCP tool discovery and A2A negotiation logic.</li>
             <li><strong>UI Schema:</strong> A JSON file containing a sample <code>A2UI</code> message that renders a delivery status card.</li>
         </ul>
