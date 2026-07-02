@@ -112,7 +112,7 @@ export const weeksData = {
         module: "5",
         description: "Best Practices für hybride Systeme (Math-Engines + LLM-Schicht). Live-Debugging von KI-Halluzinationen.",
         active: true,
-        tabs: ['intro']
+        tabs: ['intro', 'stories', 'problemset']
     },
     "14": {
         id: "14",

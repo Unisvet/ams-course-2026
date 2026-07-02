@@ -288,11 +288,12 @@ function setupTabs() {
         intro: document.getElementById('tab-btn-intro'),
         infographic: document.getElementById('tab-btn-infographic'),
         problemset: document.getElementById('tab-btn-problemset'),
-        quiz: document.getElementById('tab-btn-quiz')
+        quiz: document.getElementById('tab-btn-quiz'),
+        stories: document.getElementById('tab-btn-stories')
     };
 
     const week = weeksData[currentWeekId];
-    const allowedTabs = week.tabs || ['intro', 'infographic', 'problemset', 'quiz'];
+    const allowedTabs = week.tabs || ['intro', 'infographic', 'problemset', 'quiz', 'stories'];
 
     Object.keys(tabButtons).forEach(tab => {
         const btn = tabButtons[tab];
@@ -324,7 +325,7 @@ function setupTabs() {
 
 function updateActiveTabUI(selectedTab) {
     activeTab = selectedTab;
-    const tabs = ['intro', 'infographic', 'problemset', 'quiz'];
+    const tabs = ['intro', 'infographic', 'problemset', 'quiz', 'stories'];
     
     tabs.forEach(tab => {
         const btn = document.getElementById(`tab-btn-${tab}`);
@@ -349,7 +350,7 @@ function formatMarkdown(text) {
 
 function loadTabContent(tab) {
     const week = weeksData[currentWeekId];
-    const allowedTabs = week.tabs || ['intro', 'infographic', 'problemset', 'quiz'];
+    const allowedTabs = week.tabs || ['intro', 'infographic', 'problemset', 'quiz', 'stories'];
     if (!allowedTabs.includes(tab)) {
         tab = allowedTabs[0] || 'intro';
     }
@@ -525,6 +526,33 @@ function loadTabContent(tab) {
             })
             .catch(err => {
                 contentArea.innerHTML = renderErrorState("Quiz konnte nicht initialisiert werden.", err.message);
+            });
+    } else if (tab === 'stories') {
+        fetch(`${weekPath}/stories.html?v=${Date.now()}`)
+            .then(res => {
+                if (!res.ok) throw new Error("Stories nicht gefunden");
+                return res.text();
+            })
+            .then(html => {
+                const formattedHtml = formatMarkdown(html);
+                contentArea.innerHTML = `<div class="animate-slide-up space-y-6">${formattedHtml}</div>`;
+                
+                // Manually execute scripts
+                const scripts = contentArea.querySelectorAll('script');
+                scripts.forEach(oldScript => {
+                    const newScript = document.createElement('script');
+                    Array.from(oldScript.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value));
+                    newScript.appendChild(document.createTextNode(oldScript.innerHTML));
+                    oldScript.parentNode.replaceChild(newScript, oldScript);
+                });
+
+                highlightCodeSnippets(contentArea);
+                setupImageLightbox(contentArea);
+                renderMath(contentArea);
+                renderMermaid(contentArea);
+            })
+            .catch(err => {
+                contentArea.innerHTML = renderErrorState("Stories konnten nicht geladen werden.", err.message);
             });
     }
 }
