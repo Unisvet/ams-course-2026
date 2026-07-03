@@ -1,0 +1,216 @@
+<div class="stories-container-w4 animate-fade-in">
+    <div class="overlay"></div>
+
+    <!-- Floating Chips/Stars -->
+    <div class="floating-chip" style="top: 25%; left: 20%; animation-delay: 0s;" onclick="openStory('challenger')">
+        <div class="chip-icon">
+            <span class="star-symbol">⚡</span>
+        </div>
+        <div class="chip-label">CHALLENGER DEBUG</div>
+    </div>
+
+    <div class="floating-chip" style="top: 45%; right: 25%; animation-delay: -2s;" onclick="openStory('nanotech')">
+        <div class="chip-icon" style="background: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%);">
+            <span class="star-symbol">🔬</span>
+        </div>
+        <div class="chip-label">NANOTECH VISION</div>
+    </div>
+
+    <div class="floating-chip" style="bottom: 30%; left: 40%; animation-delay: -4s;" onclick="openStory('quantum')">
+        <div class="chip-icon" style="background: linear-gradient(135deg, #ec4899 0%, #eab308 100%);">
+            <span class="star-symbol">⚛️</span>
+        </div>
+        <div class="chip-label">QUANTUM SIMULATION</div>
+    </div>
+
+    <!-- Hero Text (Non-clickable) -->
+    <div class="absolute bottom-12 left-12 max-w-lg space-y-2 pointer-events-none z-20">
+        <h2 class="text-3xl font-black text-white leading-tight">Richard Feynman:<br><span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-500">The Silicon Prophet</span></h2>
+        <p class="text-slate-300 text-xs leading-relaxed font-medium backdrop-blur-sm bg-slate-950/40 p-3 rounded-xl border border-white/5">
+            "Was ich nicht erschaffen kann, verstehe ich nicht." Entdecke die physikalische Simulation auf atomarer Ebene.
+        </p>
+    </div>
+
+    <!-- Modals -->
+    <div id="modal-challenger" class="story-modal-w4">
+        <button class="modal-close" onclick="closeStory()">×</button>
+        <h3 class="story-title">Die Challenger-Katastrophe</h3>
+        <div class="story-text">
+            <p>Als die Raumfähre Challenger 1986 explodierte, war Richard Feynman Teil der Untersuchungskommission. Während andere sich in Bergen von Dokumenten verloren, demonstrierte Feynman die Ursache – das Versagen der O-Ringe bei Kälte – einfach mit einem Glas Eiswasser vor laufenden Kameras. Seine Botschaft war klar: Komplexe Simulationen sind wertlos, wenn wir die zugrunde liegende Physik nicht intuitiv verstehen. JAX erlaubt uns heute, diese physikalische Intuition direkt in differenzierbaren Code zu gießen.</p>
+        </div>
+    </div>
+
+    <div id="modal-nanotech" class="story-modal-w4">
+        <button class="modal-close" onclick="closeStory()">×</button>
+        <h3 class="story-title">Room at the Bottom</h3>
+        <div class="story-text">
+            <p>1959 hielt Feynman seinen legendären Vortrag über Nanotechnologie. Er sagte voraus, dass wir eines Tages Information auf atomarer Ebene manipulieren würden. 'Silicon Ascension' ist die moderne Umsetzung dieser Vision: Wir nutzen JAX und GPUs, um Millionen von Partikeln gleichzeitig zu simulieren, als wären wir selbst die Architekten auf der Quantenebene.</p>
+        </div>
+    </div>
+
+    <div id="modal-quantum" class="story-modal-w4">
+        <button class="modal-close" onclick="closeStory()">×</button>
+        <h3 class="story-title">Quanten-Simulation</h3>
+        <div class="story-text">
+            <p>Feynman war der erste, der erkannte: Wenn man die Natur simulieren will, muss man Computer bauen, die wie die Natur funktionieren – also quantenmechanisch und massiv parallel. Sein Vortrag von 1981 legte den Grundstein für das, was wir heute tun: Mit JAX und TPUs bilden wir die parallele Struktur der Realität ab.</p>
+        </div>
+    </div>
+</div>
+
+<style>
+    .stories-container-w4 {
+        position: relative;
+        width: 100%;
+        height: 600px;
+        background: url('assets/images/week4_stories_bg.png') no-repeat center center;
+        background-size: cover;
+        border-radius: 24px;
+        overflow: hidden;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    }
+
+    .overlay {
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(circle at center, rgba(9, 13, 22, 0.1) 0%, rgba(9, 13, 22, 0.7) 100%);
+        pointer-events: none;
+        z-index: 5;
+    }
+
+    .floating-chip {
+        position: absolute;
+        cursor: pointer;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        filter: drop-shadow(0 0 15px rgba(6, 182, 212, 0.5));
+        animation: float-w4 6s ease-in-out infinite;
+        z-index: 30;
+    }
+
+    .floating-chip:hover {
+        transform: scale(1.2) rotate(15deg);
+        filter: drop-shadow(0 0 25px rgba(6, 182, 212, 0.8));
+    }
+
+    .chip-icon {
+        width: 64px;
+        height: 64px;
+        background: linear-gradient(135deg, #06b6d4 0%, #8b5cf6 100%);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.2);
+        position: relative;
+    }
+
+    .star-symbol {
+        font-size: 32px;
+        color: white;
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+    }
+
+    @keyframes float-w4 {
+        0%, 100% { transform: translateY(0) rotate(0deg); }
+        50% { transform: translateY(-20px) rotate(5deg); }
+    }
+
+    .story-modal-w4 {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(0.9);
+        width: 85%;
+        max-width: 500px;
+        background: rgba(15, 23, 42, 0.95);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        border-radius: 24px;
+        padding: 32px;
+        color: white;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+        z-index: 100;
+        box-shadow: 0 0 50px rgba(0, 0, 0, 0.5), 0 0 20px rgba(6, 182, 212, 0.2);
+    }
+
+    .story-modal-w4.active {
+        opacity: 1;
+        visibility: visible;
+        transform: translate(-50%, -50%) scale(1);
+    }
+
+    .modal-close {
+        position: absolute;
+        top: 16px;
+        right: 16px;
+        background: rgba(255, 255, 255, 0.1);
+        border: none;
+        color: white;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        transition: background 0.2s;
+    }
+
+    .story-title {
+        font-size: 24px;
+        font-weight: 800;
+        margin-bottom: 16px;
+        background: linear-gradient(to right, #06b6d4, #8b5cf6);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .story-text {
+        font-size: 14px;
+        line-height: 1.6;
+        color: #cbd5e1;
+    }
+
+    .chip-label {
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        margin-top: 8px;
+        background: rgba(0, 0, 0, 0.6);
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 10px;
+        font-family: 'JetBrains Mono', monospace;
+        white-space: nowrap;
+        color: #22d3ee;
+        border: 1px solid rgba(34, 211, 238, 0.3);
+        backdrop-blur: 4px;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+</style>
+
+<script>
+    window.openStory = function(id) {
+        document.querySelectorAll('.story-modal-w4').forEach(function(m) { m.classList.remove('active'); });
+        var modal = document.getElementById('modal-' + id);
+        if (modal) modal.classList.add('active');
+    };
+
+    window.closeStory = function() {
+        document.querySelectorAll('.story-modal-w4').forEach(function(m) { m.classList.remove('active'); });
+    };
+
+    // Close on escape
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') closeStory();
+    });
+</script>

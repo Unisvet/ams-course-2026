@@ -47,6 +47,10 @@
     
     <!-- Mermaid for flowcharts and architecture rendering -->
     <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <!-- KaTeX for LaTeX Support -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
 </head>
 <body class="bg-vibrant-bg text-vibrant-text antialiased min-h-screen flex flex-col md:flex-row">
 
@@ -111,9 +115,16 @@
                 <h2 id="header-week-title" class="text-xl md:text-2xl font-black text-white"></h2>
             </div>
             
-            <a href="index.html" class="hidden sm:inline-flex items-center text-xs text-slate-400 hover:text-cyan-400 font-mono transition-colors">
-                🏠 Dashboard-Home
-            </a>
+            <div class="flex items-center gap-4">
+                <!-- Language Switcher -->
+                <div class="flex bg-slate-900/60 rounded-xl p-1 border border-slate-800/40">
+                    <button id="lang-de" class="px-3 py-1.5 rounded-lg text-[10px] font-mono font-bold transition-all">DE</button>
+                    <button id="lang-en" class="px-3 py-1.5 rounded-lg text-[10px] font-mono font-bold transition-all">EN</button>
+                </div>
+                <a href="index.html" class="hidden sm:inline-flex items-center text-xs text-slate-400 hover:text-cyan-400 font-mono transition-colors" id="back-to-dashboard">
+                    🏠 Dashboard-Home
+                </a>
+            </div>
         </header>
 
         <!-- Tabbed Menu Selection -->

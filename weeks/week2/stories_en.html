@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        .stories-container {
+            position: relative;
+            width: 100%;
+            height: 600px;
+            background: url('assets/images/week2_stories_bg.png') no-repeat center center;
+            background-size: cover;
+            border-radius: 24px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        .overlay {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at center, rgba(9, 13, 22, 0.1) 0%, rgba(9, 13, 22, 0.8) 100%);
+            pointer-events: none;
+        }
+
+        .floating-chip {
+            position: absolute;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            filter: drop-shadow(0 0 15px rgba(234, 179, 8, 0.5));
+            animation: float 7s ease-in-out infinite;
+            z-index: 10;
+        }
+
+        .floating-chip:hover {
+            transform: scale(1.2) rotate(-10deg);
+            filter: drop-shadow(0 0 25px rgba(234, 179, 8, 0.8));
+        }
+
+        .chip-icon {
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, #eab308 0%, #f97316 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.2);
+            position: relative;
+        }
+
+        .star-symbol {
+            font-size: 32px;
+            color: white;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-25px) rotate(-5deg); }
+        }
+
+        .story-modal {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.9);
+            width: 85%;
+            max-width: 500px;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 24px;
+            padding: 32px;
+            color: white;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+            z-index: 50;
+        }
+
+        .story-modal.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .story-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 24px;
+            font-weight: 800;
+            margin-bottom: 16px;
+            background: linear-gradient(to right, #eab308, #f97316);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .story-text {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #cbd5e1;
+        }
+
+        .chip-label {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            margin-top: 8px;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 10px;
+            font-family: 'JetBrains Mono', monospace;
+            white-space: nowrap;
+            color: #fbbf24;
+            border: 1px solid rgba(251, 191, 36, 0.3);
+            backdrop-blur: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="stories-container">
+        <div class="overlay"></div>
+
+        <div class="floating-chip" style="top: 20%; left: 15%; animation-delay: 0s;" onclick="openStory('hopper')">
+            <div class="chip-icon">
+                <span class="star-symbol">⚙️</span>
+            </div>
+            <div class="chip-label">Grace Hopper</div>
+        </div>
+
+        <div class="floating-chip" style="top: 55%; left: 65%; animation-delay: -1.5s;" onclick="openStory('samuel')">
+            <div class="chip-icon" style="background: linear-gradient(135deg, #3b82f6 0%, #10b981 100%); filter: drop-shadow(0 0 15px rgba(59, 130, 246, 0.5));">
+                <span class="star-symbol">♟️</span>
+            </div>
+            <div class="chip-label">Arthur Samuel</div>
+        </div>
+
+        <div class="floating-chip" style="top: 10%; left: 75%; animation-delay: -3s;" onclick="openStory('dean')">
+            <div class="chip-icon" style="background: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%); filter: drop-shadow(0 0 15px rgba(139, 92, 246, 0.5));">
+                <span class="star-symbol">⚡</span>
+            </div>
+            <div class="chip-label">Jeff Dean</div>
+        </div>
+
+        <!-- Modals -->
+        <div id="modal-hopper" class="story-modal">
+            <button class="modal-close" onclick="closeStory()">×</button>
+            <h3 class="story-title">The Queen of Code</h3>
+            <div class="story-text">
+                <p>Grace Hopper invented the first compiler because she believed computers should be more understandable to humans. When she found a moth in a relay of the Harvard Mark II in 1947, she taped it into her logbook and called it the "first actual case of bug being found." She proved that details are crucial.</p>
+                <p class="mt-4 italic text-xs">"It's easier to ask for forgiveness than to get permission."</p>
+            </div>
+        </div>
+
+        <div id="modal-samuel" class="story-modal">
+            <button class="modal-close" onclick="closeStory()">×</button>
+            <h3 class="story-title">The Father of Learning</h3>
+            <div class="story-text">
+                <p>Arthur Samuel coined the term "Machine Learning" in 1959. He programmed a computer to play checkers against itself and learn from its mistakes. Soon, the program beat its own creator. He understood that we must not just command machines, but enable them to grow.</p>
+                <p class="mt-4 italic text-xs">"Machines can do things that we cannot explain in detail."</p>
+            </div>
+        </div>
+
+        <div id="modal-dean" class="story-modal">
+            <button class="modal-close" onclick="closeStory()">×</button>
+            <h3 class="story-title">The Architect of Giants</h3>
+            <div class="story-text">
+                <p>Jeff Dean is the driving force behind Google Brain and systems like TensorFlow. He helped design the TPUs that today perform millions of matrix multiplications per second. In the tech world, there are countless jokes about his efficiency, similar to Chuck Norris.</p>
+                <p class="mt-4 italic text-xs">"Jeff Dean's code optimizes itself before it's even compiled."</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        window.openStory = function(id) {
+            // Close all first
+            document.querySelectorAll('.story-modal').forEach(function(m) { m.classList.remove('active'); });
+            // Open target
+            var modal = document.getElementById('modal-' + id);
+            if (modal) modal.classList.add('active');
+        };
+
+        window.closeStory = function() {
+            document.querySelectorAll('.story-modal').forEach(function(m) { m.classList.remove('active'); });
+        };
+
+        // Close on escape
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeStory();
+        });
+    </script>
+</body>
+</html>

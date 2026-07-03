@@ -1,0 +1,79 @@
+[
+    {
+        "question": "What is the main component of a TPU v2 core for matrix multiplications?",
+        "options": [
+            "Vector Processing Unit (VPU)",
+            "Matrix Multiply Unit (MXU)",
+            "Tensor Core",
+            "CUDA Core"
+        ],
+        "answerIndex": 1,
+        "explanation": "The MXU is the heart of the TPU, optimized for extremely fast matrix multiplications."
+    },
+    {
+        "question": "Which framework allows Keras 3 to seamlessly switch between JAX, TensorFlow, and PyTorch?",
+        "options": [
+            "Multi-backend approach",
+            "TensorFlow only",
+            "PyTorch only",
+            "Keras 2 API"
+        ],
+        "answerIndex": 0,
+        "explanation": "Keras 3 is designed to be backend-agnostic, so models can run in JAX, TF, or PyTorch without code changes."
+    },
+    {
+        "question": "Which format does the MXU on TPUs use for matrix multiplications?",
+        "options": [
+            "float64",
+            "int8",
+            "Mixed Precision (bfloat16 inputs, float32 outputs)",
+            "float16 only"
+        ],
+        "answerIndex": 2,
+        "explanation": "Mixed Precision combines the speed of bfloat16 with the accuracy of float32 accumulators."
+    },
+    {
+        "question": "What is the name of the MXU architecture where data flows through an array of processing units?",
+        "options": [
+            "Von Neumann architecture",
+            "Systolic Array",
+            "Harvard architecture",
+            "RISC architecture"
+        ],
+        "answerIndex": 1,
+        "explanation": "In a systolic array, data is passed from one processing unit to the next with every clock cycle."
+    },
+    {
+        "question": "Which compiler transforms TensorFlow graphs into TPU machine code?",
+        "options": [
+            "GCC",
+            "LLVM",
+            "XLA (Accelerated Linear Algebra)",
+            "NVCC"
+        ],
+        "answerIndex": 2,
+        "explanation": "XLA optimizes calculations by fusing operations, which saves memory bandwidth and maximizes TPU utilization."
+    },
+    {
+        "question": "What is the main advantage of Separable Convolutions compared to regular Convolutions?",
+        "options": [
+            "They are more expensive",
+            "They use more weights",
+            "They are more computationally efficient and have fewer weights",
+            "They only work on CPUs"
+        ],
+        "answerIndex": 2,
+        "explanation": "By separating into depthwise and pointwise convolutions, the number of parameters is drastically reduced."
+    },
+    {
+        "question": "Which Keras method is used to train a model?",
+        "options": [
+            "model.predict()",
+            "model.fit()",
+            "model.evaluate()",
+            "model.compile()"
+        ],
+        "answerIndex": 1,
+        "explanation": "model.fit() starts the training loop, where weights are optimized over epochs."
+    }
+]

@@ -35,6 +35,11 @@
     
     <!-- Global Custom Styles -->
     <link rel="stylesheet" href="assets/css/style.css">
+
+    <!-- KaTeX for LaTeX Support -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
 </head>
 <body class="bg-vibrant-bg text-vibrant-text antialiased min-h-screen">
     <!-- Portal Particle Background -->
@@ -80,11 +85,11 @@
                                     onerror="this.src='https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=800&q=80'; this.alt='Futuristic Neural Mesh';"
                                 >
                                 <!-- Glass gloss reflection sweep animation -->
-                                <div class="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 ease-out"></div>
+                                <div class="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 ease-out pointer-events-none"></div>
                                 <!-- Subtle bottom overlay vignette -->
                                 <div class="absolute inset-0 bg-gradient-to-t from-slate-950/45 via-transparent to-transparent pointer-events-none"></div>
                                 <!-- Floating Status Badge -->
-                                <div class="absolute bottom-3 right-3 glass-card px-2.5 py-1 rounded-lg border border-white/10 text-[10px] font-mono font-bold text-cyan-400 bg-slate-950/65 flex items-center gap-1.5 shadow-lg backdrop-blur-md select-none">
+                                <div class="absolute bottom-3 right-3 glass-card px-2.5 py-1 rounded-lg border border-white/10 text-[10px] font-mono font-bold text-cyan-400 bg-slate-950/65 flex items-center gap-1.5 shadow-lg backdrop-blur-md select-none pointer-events-none">
                                     <span class="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse"></span>
                                     SIM ACTIVE
                                 </div>
@@ -111,7 +116,7 @@
                         Du lernst, rechenintensive deterministische und stochastische Simulationen mit Hardware-Beschleunigung durch <span class="text-vibrant-pink font-semibold font-mono text-xs px-1.5 py-0.5 rounded bg-pink-500/10">JAX</span> und <span class="text-vibrant-pink font-semibold font-mono text-xs px-1.5 py-0.5 rounded bg-pink-500/10">Flax</span> zu implementieren und prädiktive Modelle mit <span class="text-vibrant-yellow font-semibold font-mono text-xs px-1.5 py-0.5 rounded bg-yellow-500/10">TensorFlow</span> und <span class="text-vibrant-yellow font-semibold font-mono text-xs px-1.5 py-0.5 rounded bg-yellow-500/10">Keras</span> zu trainieren.
                     </p>
                     <p class="text-sm md:text-base text-vibrant-textMuted leading-relaxed">
-                        Im zweiten Teil des Kurses tauchen wir tief in die Welt der Foundation Models ein. Du wirst praxisnah mit Open-Weights-Modellen wie <strong class="text-white">Gemma</strong> und State-of-the-Art-Tools wie der <strong class="text-white">Gemini API</strong> sowie der <strong class="text-white">Gemini CLI</strong> arbeiten, um effiziente Workflows aufzubauen. 
+                        Im zweiten Teil des Kurses tauchen wir tief in die Welt der Foundation Models ein. Du wirst praxisnah mit Open-Weights-Modellen wie <strong class="text-white">Gemma</strong> und State-of-the-Art-Tools wie der <strong class="text-white">Gemini API</strong> sowie der <strong class="text-white">Antigravity CLI</strong> arbeiten, um effiziente Workflows aufzubauen. 
                         Ein besonderer Schwerpunkt liegt auf dem <strong>"Agentic Engineering"</strong>: Mithilfe des <strong class="text-white">Agent Development Kits (ADK)</strong> und professionellen Agent Development Environments (ADE) wie <strong class="text-vibrant-purple">Antigravity</strong> entwickelst, testest und orchestrierst du autonome Multi-Agenten-Systeme.
                     </p>
                 </div>
@@ -136,7 +141,7 @@
                         </div>
                         <div class="p-4 rounded-xl bg-slate-900/40 border border-slate-800 space-y-1">
                             <h4 class="text-sm font-bold text-yellow-400">🧠 Agentic AI</h4>
-                            <p class="text-xs text-vibrant-textMuted leading-relaxed">Integration von Gemini & Gemma; Automatisierung mit Gemini CLI & Multi-Agenten-Orchestrierung in ADE Antigravity.</p>
+                            <p class="text-xs text-vibrant-textMuted leading-relaxed">Integration von Gemini & Gemma; Automatisierung mit Antigravity CLI & Multi-Agenten-Orchestrierung in ADE Antigravity.</p>
                         </div>
                     </div>
                 </div>
@@ -153,12 +158,19 @@
                         <h2 class="text-2xl md:text-3xl font-extrabold text-white">Semester-Roadmap (14 Wochen)</h2>
                         <p class="text-sm text-vibrant-textMuted mt-1">Klicke auf eine aktive Woche, um die theoretische Einführung, interaktive Infografiken, Programmieraufgaben und Quizzes zu öffnen.</p>
                     </div>
-                    <button 
-                        id="toggle-grades-drawer-btn" 
-                        class="px-4 py-2.5 rounded-xl bg-gradient-to-r from-vibrant-cyan to-vibrant-purple hover:from-cyan-500 hover:to-purple-600 text-xs font-mono font-bold text-white shadow-lg shadow-cyan-500/10 flex items-center gap-2 focus:outline-none transition-all duration-200 hover:scale-105 active:scale-95 self-start sm:self-center border border-cyan-500/20"
-                    >
-                        <span>📊</span> Noten & Fortschritt
-                    </button>
+                    <div class="flex flex-col sm:flex-row items-center gap-4">
+                        <!-- Language Switcher -->
+                        <div class="flex bg-slate-900 rounded-xl p-1 border border-slate-800">
+                            <button id="lang-de" class="px-3 py-1.5 rounded-lg text-xs font-mono font-bold transition-all">DE</button>
+                            <button id="lang-en" class="px-3 py-1.5 rounded-lg text-xs font-mono font-bold transition-all">EN</button>
+                        </div>
+                        <button 
+                            id="toggle-grades-drawer-btn" 
+                            class="px-4 py-2.5 rounded-xl bg-gradient-to-r from-vibrant-cyan to-vibrant-purple hover:from-cyan-500 hover:to-purple-600 text-xs font-mono font-bold text-white shadow-lg shadow-cyan-500/10 flex items-center gap-2 focus:outline-none transition-all duration-200 hover:scale-105 active:scale-95 border border-cyan-500/20"
+                        >
+                            <span id="grades-btn-text">📊 Noten & Fortschritt</span>
+                        </button>
+                    </div>
                 </div>
 
                 <!-- Weekly Cards Grid -->

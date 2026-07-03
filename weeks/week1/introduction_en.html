@@ -1,0 +1,78 @@
+<div class="space-y-8">
+    <!-- Intro Banner -->
+    <div class="p-6 glass-card rounded-2xl border-l-4 border-cyan-500 bg-gradient-to-r from-cyan-950/20 to-transparent">
+        <h3 class="text-xl font-bold text-white mb-2">Week 1: The Neo-Simulacrum and the Agentic Stack</h3>
+        <p class="text-slate-300 text-sm leading-relaxed">
+            In this first week, we lay the foundation of the Neo-Simulacrum. We undergo the paradigm shift from static scripts to autonomous cognitive agents, examine continuous physical systems, and analyze the limits of time-discrete computations.
+        </p>
+    </div>
+
+    <!-- Core Objectives -->
+    <div class="space-y-4">
+        <h3 class="text-xl md:text-2xl font-extrabold text-white flex items-center gap-2">
+            <span class="text-cyan-400">🎯</span> Learning Objectives of the Week
+        </h3>
+        <ul class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <li class="p-4 bg-slate-900/40 border border-slate-800/60 rounded-xl flex gap-3">
+                <span class="text-cyan-400 font-bold">1.</span>
+                <span class="text-sm text-slate-300">Understand the transition from classical GUIs (Simulink) to agent-based ReAct workflows.</span>
+            </li>
+            <li class="p-4 bg-slate-900/40 border border-slate-800/60 rounded-xl flex gap-3">
+                <span class="text-pink-400 font-bold">2.</span>
+                <span class="text-sm text-slate-300">Grasp mathematical modeling of continuous systems and their numerical discretization (scipy.integrate.solve_ivp).</span>
+            </li>
+            <li class="p-4 bg-slate-900/40 border border-slate-800/60 rounded-xl flex gap-3">
+                <span class="text-cyan-400 font-bold">3.</span>
+                <span class="text-sm text-slate-300">Comprehend the importance of dimensionless variables for dimensionality reduction and PINN training.</span>
+            </li>
+            <li class="p-4 bg-slate-900/40 border border-slate-800/60 rounded-xl flex gap-3">
+                <span class="text-pink-400 font-bold">4.</span>
+                <span class="text-sm text-slate-300">Internalize the architecture of the two-stage Agentic Stack (Layer 1: Deterministic Engine, Layer 2: Cognitive Orchestration).</span>
+            </li>
+        </ul>
+    </div>
+
+    <!-- PDF Viewer Section -->
+    <div class="space-y-4">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800 pb-2">
+            <h3 class="text-xl md:text-2xl font-extrabold text-white flex items-center gap-2">
+                <span class="text-cyan-400">📚</span> Theoretical Manual (PDF)
+            </h3>
+            <a 
+                href="weeks/week1/woche-01-theory.pdf" 
+                download="woche-01-theory.pdf"
+                class="inline-flex items-center gap-2 bg-cyan-600 hover:bg-cyan-500 text-white font-semibold text-xs px-4 py-2 rounded-xl transition duration-200 shadow-md shadow-cyan-900/30"
+            >
+                <!-- Download SVG Icon -->
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                </svg>
+                Download PDF
+            </a>
+        </div>
+        
+        <!-- Embedded PDF Frame -->
+        <div class="relative w-full h-[600px] rounded-2xl overflow-hidden border border-slate-850 bg-slate-950 shadow-2xl">
+            <object 
+                data="weeks/week1/woche-01-theory.pdf" 
+                type="application/pdf" 
+                class="w-full h-full"
+            >
+                <div class="absolute inset-0 flex flex-col items-center justify-center p-6 text-center bg-slate-900/80 backdrop-blur-md">
+                    <span class="text-4xl mb-4">⚠️</span>
+                    <h4 class="text-lg font-bold text-white mb-2">PDF Preview Not Available</h4>
+                    <p class="text-sm text-slate-400 max-w-md mb-6">
+                        Your browser does not support viewing PDF files directly on the page. Please download the manual using the button above to read it.
+                    </p>
+                    <a 
+                        href="weeks/week1/woche-01-theory.pdf" 
+                        download="woche-01-theory.pdf"
+                        class="bg-cyan-600 hover:bg-cyan-500 text-white font-bold text-sm px-6 py-2.5 rounded-xl transition duration-200"
+                    >
+                        Download Manual
+                    </a>
+                </div>
+            </object>
+        </div>
+    </div>
+</div>

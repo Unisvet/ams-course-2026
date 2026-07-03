@@ -1,4 +1,4 @@
-import { courseInfo, modules, weeksData } from './data.js';
+import { courseInfo, modules, weeksData, ui, currentLang, translations } from './data.js';
 import { QuizEngine } from './quiz.js';
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -6,8 +6,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const path = window.location.pathname;
     const page = path.substring(path.lastIndexOf('/') + 1);
     
+    // Setup language switcher first
+    setupLanguageSwitcher();
+    
     if (page === '' || page === 'index.html') {
         initPortalPage();
+        setupPortalEventListeners();
     } else if (page === 'week.html') {
         initWeekPage();
     }
@@ -16,20 +20,134 @@ document.addEventListener('DOMContentLoaded', () => {
     setupImageLightbox(document);
 });
 
+function setupLanguageSwitcher() {
+    const btnDe = document.getElementById('lang-de');
+    const btnEn = document.getElementById('lang-en');
+    
+    if (!btnDe || !btnEn) return;
+    
+    const updateButtons = (lang) => {
+        if (lang === 'de') {
+            btnDe.classList.add('bg-cyan-500', 'text-white');
+            btnDe.classList.remove('text-slate-500');
+            btnEn.classList.add('text-slate-500');
+            btnEn.classList.remove('bg-cyan-500', 'text-white');
+        } else {
+            btnEn.classList.add('bg-cyan-500', 'text-white');
+            btnEn.classList.remove('text-slate-500');
+            btnDe.classList.add('text-slate-500');
+            btnDe.classList.remove('bg-cyan-500', 'text-white');
+        }
+    };
+    
+    updateButtons(currentLang);
+    
+    btnDe.addEventListener('click', () => {
+        if (currentLang !== 'de') {
+            localStorage.setItem('ams_lang', 'de');
+            window.location.reload();
+        }
+    });
+    
+    btnEn.addEventListener('click', () => {
+        if (currentLang !== 'en') {
+            localStorage.setItem('ams_lang', 'en');
+            window.location.reload();
+        }
+    });
+}
+
 /* ==========================================
    1. PORTAL PAGE LOGIC (index.html)
    ========================================== */
 function initPortalPage() {
+    try {
+        // Localize static UI elements - more robustly
+        const allH2s = document.querySelectorAll('main h2');
+        
+        // Goals Section
+        const goalsTitle = Array.from(allH2s).find(h => h.innerText.includes('Lernziele') || h.innerText.includes('Learning Objectives'));
+        if (goalsTitle) {
+            goalsTitle.innerHTML = `<span>🎓</span> ${ui.goalsTitle}`;
+            const parent = goalsTitle.parentElement;
+            if (parent) {
+                const paragraphs = parent.querySelectorAll('p');
+                if (paragraphs.length >= 1) paragraphs[0].innerHTML = formatMarkdown(ui.goalsContent1);
+                if (paragraphs.length >= 2) paragraphs[1].innerHTML = formatMarkdown(ui.goalsContent2);
+            }
+        }
+        
+        // Core Contents Section
+        const coreTitle = Array.from(allH2s).find(h => h.innerText.includes('Kerninhalte') || h.innerText.includes('Core Curriculum'));
+        if (coreTitle) {
+            coreTitle.innerHTML = `<span>🔬</span> ${ui.coreContents}`;
+            const parent = coreTitle.parentElement;
+            if (parent) {
+                const grid = parent.querySelector('.grid');
+                if (grid) {
+                    const cards = grid.children;
+                    if (cards.length >= 4) {
+                        cards[0].querySelector('h4').innerText = `⚙️ ${ui.theory}`;
+                        cards[0].querySelector('p').innerText = ui.theoryDesc;
+                        cards[1].querySelector('h4').innerText = `🤖 ${ui.predictive}`;
+                        cards[1].querySelector('p').innerText = ui.predictiveDesc;
+                        cards[2].querySelector('h4').innerText = `⚡ ${ui.hpc}`;
+                        cards[2].querySelector('p').innerText = ui.hpcDesc;
+                        cards[3].querySelector('h4').innerText = `🧠 ${ui.agentic}`;
+                        cards[3].querySelector('p').innerText = ui.agenticDesc;
+                    }
+                }
+            }
+        }
+        
+        // Roadmap Title
+        const roadmapTitleElement = Array.from(allH2s).find(h => h.innerText.includes('Roadmap'));
+        if (roadmapTitleElement) {
+            roadmapTitleElement.innerText = ui.roadmapTitle;
+            if (roadmapTitleElement.nextElementSibling) {
+                roadmapTitleElement.nextElementSibling.innerText = ui.roadmapDesc;
+            }
+        }
+    } catch (e) {
+        console.error("Error localizing static elements:", e);
+    }
+    
+    const gradesBtnText = document.getElementById('grades-btn-text');
+    if (gradesBtnText) gradesBtnText.innerText = `📊 ${ui.gradesBtn}`;
+    
+    const footerP1 = document.querySelector('footer p:nth-of-type(1)');
+    const footerP2 = document.querySelector('footer p:nth-of-type(2)');
+    if (footerP1) footerP1.innerText = `© 2026 ${courseInfo.title} | ${courseInfo.institution}`;
+    if (footerP2) footerP2.innerText = ui.footerText;
+    
+    const drawerHeader = document.querySelector('#grades-drawer h3');
+    if (drawerHeader) drawerHeader.innerHTML = `<span>📊</span> ${ui.points}`;
+    
+    const gradingWeightHeader = document.querySelector('#grades-drawer h4:nth-of-type(1)');
+    if (gradingWeightHeader) gradingWeightHeader.innerText = ui.gradingWeight;
+    
+    const yourPointsHeader = document.querySelector('#grades-drawer h4:nth-of-type(2)');
+    if (yourPointsHeader) yourPointsHeader.innerText = ui.yourPoints;
+    
+    const progressHeader = document.querySelector('#grades-drawer h4:nth-of-type(3)');
+    if (progressHeader) progressHeader.innerText = ui.yourProgress;
+
     // Populate course titles
-    document.getElementById('course-title').innerText = courseInfo.title;
-    document.getElementById('course-subtitle').innerText = courseInfo.subtitle;
-    document.getElementById('course-semester').innerText = courseInfo.semester;
-    document.getElementById('course-department').innerText = courseInfo.department;
-    document.getElementById('course-institution').innerText = courseInfo.institution;
+    const titleEl = document.getElementById('course-title');
+    const subtitleEl = document.getElementById('course-subtitle');
+    const semesterEl = document.getElementById('course-semester');
+    const deptEl = document.getElementById('course-department');
+    const instEl = document.getElementById('course-institution');
+
+    if (titleEl) titleEl.innerText = courseInfo.title;
+    if (subtitleEl) subtitleEl.innerText = courseInfo.subtitle;
+    if (semesterEl) semesterEl.innerText = courseInfo.semester;
+    if (deptEl) deptEl.innerText = courseInfo.department;
+    if (instEl) instEl.innerText = courseInfo.institution;
     
     // Populate grading breakdown
     const gradingContainer = document.getElementById('grading-container');
-    if (gradingContainer) {
+    if (gradingContainer && courseInfo.grading) {
         gradingContainer.innerHTML = courseInfo.grading.map(item => `
             <div class="flex justify-between items-center py-2.5 border-b border-slate-800 text-sm">
                 <span class="text-slate-400 font-medium">${item.label}</span>
@@ -38,6 +156,12 @@ function initPortalPage() {
         `).join('');
     }
 
+    renderPortalProgress();
+    renderRoadmapGrid();
+    console.log("Portal initialization complete");
+}
+
+function setupPortalEventListeners() {
     // Toggle grading drawer visibility
     const openDrawerBtn = document.getElementById('toggle-grades-drawer-btn');
     const closeDrawerBtn = document.getElementById('close-drawer-btn');
@@ -64,12 +188,14 @@ function initPortalPage() {
         closeDrawerBtn.addEventListener('click', toggleDrawer);
         backdrop.addEventListener('click', toggleDrawer);
     }
+}
 
+function renderPortalProgress() {
     // Calculate completion progress
-    const activeWeeks = Object.values(weeksData).filter(w => w.active && w.id !== '13' && w.id !== '14'); // Exclude project/presentation weeks for quiz calculation
+    const activeWeeks = Object.values(weeksData).filter(w => w.active && w.id !== '13' && w.id !== '14'); 
     
     let totalPointsEarned = 0;
-    const maxPointsPossible = activeWeeks.length * 5; // 1 pt for quiz, 4 pts for problem set
+    const maxPointsPossible = activeWeeks.length * 5;
     
     const pointsListHtml = activeWeeks.map(w => {
         const quizDone = localStorage.getItem(`quiz_completed_week_${w.id}`) === 'true';
@@ -80,16 +206,18 @@ function initPortalPage() {
         const weekPts = quizPts + psPts;
         totalPointsEarned += weekPts;
         
+        const weekLabel = currentLang === 'de' ? 'Woche' : 'Week';
+        
         return `
             <div class="p-3 rounded-xl bg-slate-900/40 border border-slate-800 space-y-2">
                 <div class="flex justify-between items-center text-xs font-mono font-bold text-white">
-                    <span>Woche ${w.id}: ${w.title.substring(0, 30)}${w.title.length > 30 ? '...' : ''}</span>
-                    <span class="text-cyan-400 font-mono font-bold">${weekPts} / 5 Pkt</span>
+                    <span>${weekLabel} ${w.id}: ${w.title.substring(0, 30)}${w.title.length > 30 ? '...' : ''}</span>
+                    <span class="text-cyan-400 font-mono font-bold">${weekPts} / 5 ${ui.pointsLabel}</span>
                 </div>
                 <div class="grid grid-cols-2 gap-2 text-xs">
                     <div class="flex items-center gap-1.5 p-1.5 rounded bg-slate-950/35 border ${quizDone ? 'border-emerald-500/20 text-emerald-400' : 'border-slate-800 text-slate-500'}">
                         <span>${quizDone ? '✓' : '○'}</span>
-                        <span class="font-medium">Quiz (1 Pkt)</span>
+                        <span class="font-medium">Quiz (1 ${ui.pointsLabel})</span>
                     </div>
                     <label class="flex items-center gap-1.5 p-1.5 rounded bg-slate-950/35 border cursor-pointer select-none transition-all ${psDone ? 'border-emerald-500/20 text-emerald-400 hover:border-emerald-500/35' : 'border-slate-800 text-slate-500 hover:border-slate-700'}" for="checkbox-ps-${w.id}">
                         <input 
@@ -100,7 +228,7 @@ function initPortalPage() {
                             ${psDone ? 'checked' : ''}
                         />
                         <span>${psDone ? '✓' : '○'}</span>
-                        <span class="font-medium">ProbSet (4 Pkt)</span>
+                        <span class="font-medium">ProbSet (4 ${ui.pointsLabel})</span>
                     </label>
                 </div>
             </div>
@@ -113,21 +241,20 @@ function initPortalPage() {
     if (pointsListContainer) {
         pointsListContainer.innerHTML = pointsListHtml;
         
-        // Add change event listeners to checkboxes to toggle completion
         pointsListContainer.querySelectorAll('.problemset-checkbox').forEach(chk => {
             chk.addEventListener('change', (e) => {
                 const weekId = e.target.getAttribute('data-week');
                 const isChecked = e.target.checked;
                 localStorage.setItem(`problemset_completed_week_${weekId}`, isChecked ? 'true' : 'false');
                 
-                // Rerender portal to update grades and calculations
-                initPortalPage();
+                renderPortalProgress();
+                renderRoadmapGrid();
             });
         });
     }
     
     if (totalPointsLabel) {
-        totalPointsLabel.innerText = `${totalPointsEarned} / ${maxPointsPossible} Pkt`;
+        totalPointsLabel.innerText = `${totalPointsEarned} / ${maxPointsPossible} ${ui.pointsLabel}`;
     }
     
     const progressPercent = maxPointsPossible > 0 ? Math.round((totalPointsEarned / maxPointsPossible) * 100) : 0;
@@ -136,15 +263,18 @@ function initPortalPage() {
     const progressText = document.getElementById('portal-progress-text');
     if (progressFill && progressText) {
         progressFill.style.width = `${progressPercent}%`;
-        progressText.innerText = `${progressPercent}% abgeschlossen (${totalPointsEarned}/${maxPointsPossible} Punkte)`;
+        const completedText = ui.completed;
+        progressText.innerText = `${progressPercent}% ${completedText} (${totalPointsEarned}/${maxPointsPossible} ${ui.pointsLabel})`;
     }
+}
 
-    // Render Weekly Modules Cards
+function renderRoadmapGrid() {
     const roadmapContainer = document.getElementById('roadmap-grid');
     if (roadmapContainer) {
         roadmapContainer.innerHTML = Object.values(weeksData).map(w => {
             const isCompleted = localStorage.getItem(`quiz_completed_week_${w.id}`) === 'true';
-            const moduleName = modules[w.module] || 'Fortgeschrittene Methoden';
+            const moduleName = modules[w.module] || (currentLang === 'de' ? 'Fortgeschrittene Methoden' : 'Advanced Methods');
+            const weekLabel = currentLang === 'de' ? 'Woche' : 'Week';
             
             if (w.active) {
                 return `
@@ -156,14 +286,14 @@ function initPortalPage() {
                         ` : ''}
                         <div>
                             <div class="text-xs font-mono text-cyan-400 uppercase tracking-wider mb-2">${moduleName}</div>
-                            <h3 class="text-xl font-bold text-white mb-2 group-hover:text-cyan-400 transition-colors">Woche ${w.id}: ${w.title}</h3>
+                            <h3 class="text-xl font-bold text-white mb-2 group-hover:text-cyan-400 transition-colors">${weekLabel} ${w.id}: ${w.title}</h3>
                             <p class="text-sm text-slate-400 leading-relaxed mb-6">${w.description}</p>
                         </div>
                         <a 
                             href="week.html?id=${w.id}" 
                             class="inline-flex items-center gap-2 text-sm font-bold text-cyan-400 hover:text-cyan-300 group-hover:translate-x-1 transition-transform"
                         >
-                            Materialien öffnen &rarr;
+                            ${ui.materialsBtn} &rarr;
                         </a>
                     </div>
                 `;
@@ -173,12 +303,12 @@ function initPortalPage() {
                         <div>
                             <div class="text-xs font-mono text-slate-500 uppercase tracking-wider mb-2">${moduleName}</div>
                             <h3 class="text-xl font-bold text-slate-500 mb-2 flex items-center gap-2">
-                                Woche ${w.id}: ${w.title}
+                                ${weekLabel} ${w.id}: ${w.title}
                                 <span class="text-base text-slate-600">🔒</span>
                             </h3>
                             <p class="text-sm text-slate-500 leading-relaxed mb-6">${w.description}</p>
                         </div>
-                        <span class="text-xs font-mono text-amber-500/75 uppercase tracking-widest font-bold">Demnächst verfügbar</span>
+                        <span class="text-xs font-mono text-amber-500/75 uppercase tracking-widest font-bold">${ui.locked}</span>
                     </div>
                 `;
             }
@@ -193,6 +323,31 @@ let currentWeekId = "1";
 let activeTab = "intro"; // 'intro', 'infographic', 'problemset', 'quiz'
 
 function initWeekPage() {
+    // Localize static elements
+    const syllabusHeader = document.querySelector('aside nav div.text-slate-500');
+    if (syllabusHeader) syllabusHeader.innerText = ui.syllabus;
+    
+    const backToPortalBtn = document.querySelector('aside div.border-t a');
+    if (backToPortalBtn) backToPortalBtn.innerHTML = `<span>&larr;</span> ${ui.backToPortal}`;
+    
+    const backToDashboardLink = document.getElementById('back-to-dashboard');
+    if (backToDashboardLink) backToDashboardLink.innerText = `🏠 ${ui.backToDashboard}`;
+    
+    const tabIntro = document.getElementById('tab-btn-intro');
+    if (tabIntro) tabIntro.innerHTML = `<span>📖</span> ${ui.theoryIntro}`;
+    
+    const tabInfo = document.getElementById('tab-btn-infographic');
+    if (tabInfo) tabInfo.innerHTML = `<span>📊</span> ${ui.infographic}`;
+    
+    const tabPS = document.getElementById('tab-btn-problemset');
+    if (tabPS) tabPS.innerHTML = `<span>💻</span> ${ui.problemSet}`;
+    
+    const tabQuiz = document.getElementById('tab-btn-quiz');
+    if (tabQuiz) tabQuiz.innerHTML = `<span>🧠</span> ${ui.quiz}`;
+    
+    const tabStories = document.getElementById('tab-btn-stories');
+    if (tabStories) tabStories.innerHTML = `<span>🎬</span> ${ui.stories}`;
+
     // Get week ID from URL parameter
     const params = new URLSearchParams(window.location.search);
     const id = params.get('id');
@@ -208,11 +363,12 @@ function initWeekPage() {
 
     // Populate shell details
     const week = weeksData[currentWeekId];
-    const moduleName = modules[week.module] || 'Fortgeschrittene Methoden';
+    const moduleName = modules[week.module] || (currentLang === 'de' ? 'Fortgeschrittene Methoden' : 'Advanced Methods');
+    const weekLabel = currentLang === 'de' ? 'Woche' : 'Week';
     
-    document.getElementById('header-week-title').innerText = `Woche ${week.id}: ${week.title}`;
+    document.getElementById('header-week-title').innerText = `${weekLabel} ${week.id}: ${week.title}`;
     document.getElementById('header-module-title').innerText = moduleName;
-    document.title = `Woche ${week.id}: ${week.title} - Advanced Modeling & System Simulation`;
+    document.title = `${weekLabel} ${week.id}: ${week.title} - Advanced Modeling & System Simulation`;
 
     // Render sidebar navigation
     renderSidebar();
@@ -237,6 +393,8 @@ function renderSidebar() {
     const listContainer = document.getElementById('sidebar-weeks-list');
     if (!listContainer) return;
     
+    const weekLabel = currentLang === 'de' ? 'W' : 'W';
+    
     listContainer.innerHTML = Object.values(weeksData).map(w => {
         const isActive = w.id === currentWeekId;
         const quizDone = localStorage.getItem(`quiz_completed_week_${w.id}`) === 'true';
@@ -245,11 +403,11 @@ function renderSidebar() {
         const isPartiallyCompleted = quizDone || psDone;
         
         if (w.active) {
-            let statusIndicator = `<span class="w-1.5 h-1.5 rounded-full bg-cyan-400" title="Aktiv"></span>`;
+            let statusIndicator = `<span class="w-1.5 h-1.5 rounded-full bg-cyan-400" title="${currentLang === 'de' ? 'Aktiv' : 'Active'}"></span>`;
             if (isFullyCompleted) {
-                statusIndicator = `<span class="text-emerald-400 font-bold text-sm leading-none" title="Vollständig abgeschlossen (5/5 Pkt)">✓</span>`;
+                statusIndicator = `<span class="text-emerald-400 font-bold text-sm leading-none" title="${currentLang === 'de' ? 'Vollständig abgeschlossen' : 'Fully completed'} (5/5 ${ui.pointsLabel})">✓</span>`;
             } else if (isPartiallyCompleted) {
-                statusIndicator = `<span class="text-amber-400 font-bold text-xs leading-none" title="Teilweise abgeschlossen (1/5 oder 4/5 Pkt)">◐</span>`;
+                statusIndicator = `<span class="text-amber-400 font-bold text-xs leading-none" title="${currentLang === 'de' ? 'Teilweise abgeschlossen' : 'Partially completed'} (1/5 ${currentLang === 'de' ? 'oder' : 'or'} 4/5 ${ui.pointsLabel})">◐</span>`;
             }
             
             return `
@@ -262,7 +420,7 @@ function renderSidebar() {
                             : 'text-slate-300 hover:bg-slate-800/50 hover:text-white'
                         }"
                     >
-                        <span class="truncate pr-2">W${w.id}: ${w.title}</span>
+                        <span class="truncate pr-2">${weekLabel}${w.id}: ${w.title}</span>
                         ${statusIndicator}
                     </a>
                 </li>
@@ -272,9 +430,9 @@ function renderSidebar() {
                 <li>
                     <div 
                         class="flex items-center justify-between px-4 py-3 rounded-lg text-sm text-slate-600 cursor-not-allowed select-none"
-                        title="Demnächst verfügbar"
+                        title="${ui.locked}"
                     >
-                        <span class="truncate pr-2">W${w.id}: ${w.title}</span>
+                        <span class="truncate pr-2">${weekLabel}${w.id}: ${w.title}</span>
                         <span class="text-xs">🔒</span>
                     </div>
                 </li>
@@ -302,9 +460,17 @@ function setupTabs() {
                 btn.style.display = 'flex';
                 // Customize tab text for Week 13
                 if (tab === 'intro' && currentWeekId === '13') {
-                    btn.innerHTML = `<span>💡</span> Themenvorschläge & Pitches`;
+                    btn.innerHTML = currentLang === 'de' ? `<span>💡</span> Themenvorschläge & Pitches` : `<span>💡</span> Topic Suggestions & Pitches`;
                 } else if (tab === 'intro') {
-                    btn.innerHTML = `<span>📖</span> Theoretische Einführung`;
+                    btn.innerHTML = `<span>📖</span> ${ui.theoryIntro}`;
+                } else if (tab === 'infographic') {
+                    btn.innerHTML = `<span>📊</span> ${ui.infographic}`;
+                } else if (tab === 'problemset') {
+                    btn.innerHTML = `<span>💻</span> ${ui.problemSet}`;
+                } else if (tab === 'quiz') {
+                    btn.innerHTML = `<span>🧠</span> ${ui.quiz}`;
+                } else if (tab === 'stories') {
+                    btn.innerHTML = `<span>🎬</span> ${ui.stories}`;
                 }
             } else {
                 btn.style.display = 'none';
@@ -362,16 +528,25 @@ function loadTabContent(tab) {
     contentArea.innerHTML = `
         <div class="flex flex-col items-center justify-center py-20 space-y-4">
             <div class="w-10 h-10 border-4 border-cyan-500/20 border-t-cyan-500 rounded-full animate-spin"></div>
-            <p class="text-slate-500 font-mono text-sm">Lade Daten...</p>
+            <p class="text-slate-500 font-mono text-sm">${ui.loading}</p>
         </div>
     `;
 
     const weekPath = `weeks/week${currentWeekId}`;
+    const langSuffix = currentLang === 'en' ? '_en' : '';
 
     if (tab === 'intro') {
-        fetch(`${weekPath}/introduction.html?v=${Date.now()}`)
+        // Try loading language specific version, fallback to default
+        const fileToLoad = `${weekPath}/introduction${langSuffix}.html`;
+        fetch(`${fileToLoad}?v=${Date.now()}`)
             .then(res => {
-                if (!res.ok) throw new Error("Einführung nicht gefunden");
+                if (!res.ok) {
+                    if (langSuffix !== '') {
+                        // Fallback to German if English not found
+                        return fetch(`${weekPath}/introduction.html?v=${Date.now()}`).then(r => r.text());
+                    }
+                    throw new Error(ui.errorIntro);
+                }
                 return res.text();
             })
             .then(html => {
@@ -393,21 +568,21 @@ function loadTabContent(tab) {
                 renderMermaid(contentArea);
             })
             .catch(err => {
-                contentArea.innerHTML = renderErrorState("Einführung konnte nicht geladen werden.", err.message);
+                contentArea.innerHTML = renderErrorState(ui.errorIntro, err.message);
             });
             
     } else if (tab === 'infographic') {
-        // ... (existing infographic logic)
+        const fileToLoad = `${weekPath}/infographic${langSuffix}.html`;
         contentArea.innerHTML = `
             <div class="animate-slide-up space-y-4">
                 <div class="flex justify-between items-center text-xs text-slate-400 font-mono mb-2">
-                    <span>💡 Tipp: Interagierte mit den Diagrammen für Detailinfos</span>
-                    <button id="iframe-reload-btn" class="hover:text-cyan-400 transition-colors">🔄 Neu laden</button>
+                    <span>💡 ${currentLang === 'de' ? 'Tipp: Interagiere mit den Diagrammen für Detailinfos' : 'Tip: Interact with the diagrams for details'}</span>
+                    <button id="iframe-reload-btn" class="hover:text-cyan-400 transition-colors">🔄 ${currentLang === 'de' ? 'Neu laden' : 'Reload'}</button>
                 </div>
                 <div class="iframe-container shadow-2xl border border-slate-800">
                     <iframe 
                         id="infographic-iframe" 
-                        src="${weekPath}/infographic.html?v=${Date.now()}"
+                        src="${fileToLoad}?v=${Date.now()}"
                         allow="fullscreen"
                     ></iframe>
                 </div>
@@ -418,14 +593,20 @@ function loadTabContent(tab) {
         if (reloadBtn) {
             reloadBtn.addEventListener('click', () => {
                 const iframe = document.getElementById('infographic-iframe');
-                if (iframe) iframe.src = `${weekPath}/infographic.html?v=${Date.now()}`;
+                if (iframe) iframe.src = `${fileToLoad}?v=${Date.now()}`;
             });
         }
         
     } else if (tab === 'problemset') {
-        fetch(`${weekPath}/problemset.html?v=${Date.now()}`)
+        const fileToLoad = `${weekPath}/problemset${langSuffix}.html`;
+        fetch(`${fileToLoad}?v=${Date.now()}`)
             .then(res => {
-                if (!res.ok) throw new Error("Problem Set nicht gefunden");
+                if (!res.ok) {
+                    if (langSuffix !== '') {
+                        return fetch(`${weekPath}/problemset.html?v=${Date.now()}`).then(r => r.text());
+                    }
+                    throw new Error(ui.errorProblemSet);
+                }
                 return res.text();
             })
             .then(html => {
@@ -445,9 +626,9 @@ function loadTabContent(tab) {
                                 ${psDone ? '✓' : '📝'}
                             </div>
                             <div>
-                                <h4 class="text-white font-bold text-base">Problem Set Abgabestatus</h4>
+                                <h4 class="text-white font-bold text-base">Problem Set ${currentLang === 'de' ? 'Abgabestatus' : 'Submission Status'}</h4>
                                 <p class="text-xs text-slate-400 font-mono" id="problemset-status-text">
-                                    ${psDone ? 'Status: Erfolgreich abgeschlossen (+4 Punkte)' : 'Status: Noch nicht abgeschlossen (Wert: 4 Punkte)'}
+                                    ${psDone ? 'Status: ' + ui.statusDone + ' (+4 ' + ui.pointsLabel + ')' : 'Status: ' + ui.statusPending + ' (' + (currentLang === 'de' ? 'Wert' : 'Value') + ': 4 ' + ui.pointsLabel + ')'}
                                 </p>
                             </div>
                         </div>
@@ -459,7 +640,7 @@ function loadTabContent(tab) {
                                 : 'bg-slate-900 hover:bg-cyan-500/5 border-slate-800 hover:border-cyan-500/50 text-cyan-400 shadow-cyan-500/5'
                             }"
                         >
-                            ${psDone ? 'Als unvollständig markieren' : 'Als abgeschlossen markieren'}
+                            ${psDone ? ui.markUndone : ui.markDone}
                         </button>
                     </div>
                 `;
@@ -483,16 +664,16 @@ function loadTabContent(tab) {
                             statusCard.className = "glass-card rounded-2xl p-6 border flex flex-col sm:flex-row justify-between items-center gap-4 mb-6 transition-all duration-300 border-emerald-500/35 bg-emerald-500/5 shadow-emerald-500/5";
                             statusIcon.className = "w-12 h-12 rounded-xl flex items-center justify-center text-xl font-bold transition-all duration-300 bg-emerald-500/20 text-emerald-400";
                             statusIcon.innerHTML = "✓";
-                            statusText.innerHTML = "Status: Erfolgreich abgeschlossen (+4 Punkte)";
+                            statusText.innerHTML = `Status: ${ui.statusDone} (+4 ${ui.pointsLabel})`;
                             toggleBtn.className = "px-5 py-2.5 rounded-xl font-bold font-mono text-xs shadow-lg transition-all duration-200 hover:scale-105 active:scale-95 border focus:outline-none bg-emerald-600 hover:bg-emerald-500 border-emerald-500/40 text-white shadow-emerald-600/10";
-                            toggleBtn.innerText = "Als unvollständig markieren";
+                            toggleBtn.innerText = ui.markUndone;
                         } else {
                             statusCard.className = "glass-card rounded-2xl p-6 border flex flex-col sm:flex-row justify-between items-center gap-4 mb-6 transition-all duration-300 border-cyan-500/25 bg-cyan-950/5";
                             statusIcon.className = "w-12 h-12 rounded-xl flex items-center justify-center text-xl font-bold transition-all duration-300 bg-cyan-500/10 text-cyan-400";
                             statusIcon.innerHTML = "📝";
-                            statusText.innerHTML = "Status: Noch nicht abgeschlossen (Wert: 4 Punkte)";
+                            statusText.innerHTML = `Status: ${ui.statusPending} (${currentLang === 'de' ? 'Wert' : 'Value'}: 4 ${ui.pointsLabel})`;
                             toggleBtn.className = "px-5 py-2.5 rounded-xl font-bold font-mono text-xs shadow-lg transition-all duration-200 hover:scale-105 active:scale-95 border focus:outline-none bg-slate-900 hover:bg-cyan-500/5 border-slate-800 hover:border-cyan-500/50 text-cyan-400 shadow-cyan-500/5";
-                            toggleBtn.innerText = "Als abgeschlossen markieren";
+                            toggleBtn.innerText = ui.markDone;
                         }
                         
                         // Update sidebar navigation checks
@@ -507,13 +688,19 @@ function loadTabContent(tab) {
                 renderMermaid(contentArea);
             })
             .catch(err => {
-                contentArea.innerHTML = renderErrorState("Problem Set (in English) konnte nicht geladen werden.", err.message);
+                contentArea.innerHTML = renderErrorState(ui.errorProblemSet, err.message);
             });
             
     } else if (tab === 'quiz') {
-        fetch(`${weekPath}/quiz.json?v=${Date.now()}`)
+        const fileToLoad = `${weekPath}/quiz${langSuffix}.json`;
+        fetch(`${fileToLoad}?v=${Date.now()}`)
             .then(res => {
-                if (!res.ok) throw new Error("Quiz-Datenbank nicht gefunden");
+                if (!res.ok) {
+                    if (langSuffix !== '') {
+                        return fetch(`${weekPath}/quiz.json?v=${Date.now()}`).then(r => r.json());
+                    }
+                    throw new Error(ui.errorQuiz);
+                }
                 return res.json();
             })
             .then(jsonData => {
@@ -525,12 +712,18 @@ function loadTabContent(tab) {
                 });
             })
             .catch(err => {
-                contentArea.innerHTML = renderErrorState("Quiz konnte nicht initialisiert werden.", err.message);
+                contentArea.innerHTML = renderErrorState(ui.errorQuiz, err.message);
             });
     } else if (tab === 'stories') {
-        fetch(`${weekPath}/stories.html?v=${Date.now()}`)
+        const fileToLoad = `${weekPath}/stories${langSuffix}.html`;
+        fetch(`${fileToLoad}?v=${Date.now()}`)
             .then(res => {
-                if (!res.ok) throw new Error("Stories nicht gefunden");
+                if (!res.ok) {
+                    if (langSuffix !== '') {
+                        return fetch(`${weekPath}/stories.html?v=${Date.now()}`).then(r => r.text());
+                    }
+                    throw new Error(ui.errorStories);
+                }
                 return res.text();
             })
             .then(html => {
@@ -552,7 +745,7 @@ function loadTabContent(tab) {
                 renderMermaid(contentArea);
             })
             .catch(err => {
-                contentArea.innerHTML = renderErrorState("Stories konnten nicht geladen werden.", err.message);
+                contentArea.innerHTML = renderErrorState(ui.errorStories, err.message);
             });
     }
 }
@@ -563,7 +756,7 @@ function renderErrorState(title, message) {
             <div class="text-4xl text-rose-500">⚠</div>
             <h3 class="text-xl font-bold text-white">${title}</h3>
             <p class="text-sm text-slate-400 font-mono">${message}</p>
-            <p class="text-xs text-slate-500 leading-relaxed">Bitte stelle sicher, dass die Dateistruktur lokal übereinstimmt und der Server über <code>uv run server.py</code> läuft.</p>
+            <p class="text-xs text-slate-500 leading-relaxed">${currentLang === 'de' ? 'Bitte stelle sicher, dass die Dateistruktur lokal übereinstimmt.' : 'Please ensure the file structure matches locally.'}</p>
         </div>
     `;
 }
@@ -652,7 +845,7 @@ function setupImageLightbox(container) {
         const content = lightbox.querySelector('#lightbox-content');
         
         img.src = src;
-        caption.innerText = alt || 'Abbildung';
+        caption.innerText = alt || (currentLang === 'de' ? 'Abbildung' : 'Figure');
         
         lightbox.classList.remove('hidden');
         void lightbox.offsetWidth; // Force reflow
@@ -693,10 +886,13 @@ function setupImageLightbox(container) {
         // Add hover styles to wrapper/image
         wrapper.classList.add('hover:brightness-95', 'transition-all', 'duration-200');
         
-        wrapper.addEventListener('click', (e) => {
+        const clickHandler = (e) => {
             e.stopPropagation();
             openLightbox(img.src, img.alt);
-        });
+        };
+
+        wrapper.addEventListener('click', clickHandler);
+        img.addEventListener('click', clickHandler);
     });
 }
 

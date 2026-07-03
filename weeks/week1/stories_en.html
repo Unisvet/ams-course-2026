@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        .stories-container {
+            position: relative;
+            width: 100%;
+            height: 600px;
+            background: url('assets/images/week1_stories_bg.png') no-repeat center center;
+            background-size: cover;
+            border-radius: 24px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        .overlay {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at center, rgba(9, 13, 22, 0.2) 0%, rgba(9, 13, 22, 0.8) 100%);
+            pointer-events: none;
+        }
+
+        .floating-chip {
+            position: absolute;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            filter: drop-shadow(0 0 15px rgba(6, 182, 212, 0.5));
+            animation: float 6s ease-in-out infinite;
+            z-index: 10;
+        }
+
+        .floating-chip:hover {
+            transform: scale(1.2) rotate(15deg);
+            filter: drop-shadow(0 0 25px rgba(6, 182, 212, 0.8));
+        }
+
+        .chip-icon {
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, #06b6d4 0%, #8b5cf6 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.2);
+            position: relative;
+        }
+
+        .chip-icon::after {
+            content: '';
+            position: absolute;
+            inset: 4px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+        }
+
+        .star-symbol {
+            font-size: 32px;
+            color: white;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+
+        /* Story Modal */
+        .story-modal {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.9);
+            width: 85%;
+            max-width: 500px;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 24px;
+            padding: 32px;
+            color: white;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+            z-index: 50;
+            box-shadow: 0 0 50px rgba(0, 0, 0, 0.5), 0 0 20px rgba(6, 182, 212, 0.2);
+        }
+
+        .story-modal.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            transition: background 0.2s;
+        }
+
+        .modal-close:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .story-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 24px;
+            font-weight: 800;
+            margin-bottom: 16px;
+            background: linear-gradient(to right, #06b6d4, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .story-text {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #cbd5e1;
+        }
+
+        .chip-label {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            margin-top: 8px;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 10px;
+            font-family: 'JetBrains Mono', monospace;
+            white-space: nowrap;
+            color: #22d3ee;
+            border: 1px solid rgba(34, 211, 238, 0.3);
+            backdrop-blur: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="stories-container">
+        <div class="overlay"></div>
+
+        <!-- Floating Chips/Stars -->
+        <div class="floating-chip" style="top: 25%; left: 20%; animation-delay: 0s;" onclick="openStory('fermi')">
+            <div class="chip-icon">
+                <span class="star-symbol">★</span>
+            </div>
+            <div class="chip-label">Enrico Fermi</div>
+        </div>
+
+        <div class="floating-chip" style="top: 60%; left: 70%; animation-delay: -2s;" onclick="openStory('feynman')">
+            <div class="chip-icon" style="background: linear-gradient(135deg, #ec4899 0%, #eab308 100%); filter: drop-shadow(0 0 15px rgba(236, 72, 153, 0.5));">
+                <span class="star-symbol">✦</span>
+            </div>
+            <div class="chip-label">Richard Feynman</div>
+        </div>
+
+        <div class="floating-chip" style="top: 15%; left: 75%; animation-delay: -4s;" onclick="openStory('turing')">
+            <div class="chip-icon" style="background: linear-gradient(135deg, #10b981 0%, #3b82f6 100%); filter: drop-shadow(0 0 15px rgba(16, 185, 129, 0.5));">
+                <span class="star-symbol">✷</span>
+            </div>
+            <div class="chip-label">Alan Turing</div>
+        </div>
+
+        <!-- Modals -->
+        <div id="modal-fermi" class="story-modal">
+            <button class="modal-close" onclick="closeStory()">×</button>
+            <h3 class="story-title">The "Italian Navigator"</h3>
+            <div class="story-text">
+                <p>Enrico Fermi was a master of "back-of-the-envelope" calculations. During the Trinity test, the first nuclear explosion, he dropped scraps of paper as the shockwave reached him. By observing how far they traveled, he estimated the bomb's yield at about 10 kilotons of TNT—before the sensors were even analyzed. He was remarkably close to the actual value of 21 kilotons.</p>
+                <p class="mt-4 italic text-xs">"In simulation as in reality: A clever model in the mind is often more powerful than a thousand measurements."</p>
+            </div>
+        </div>
+
+        <div id="modal-feynman" class="story-modal">
+            <button class="modal-close" onclick="closeStory()">×</button>
+            <h3 class="story-title">The Great Explainer</h3>
+            <div class="story-text">
+                <p>Richard Feynman hated unnecessary complexity. During the investigation into the Challenger disaster, he demonstrated on live television with a simple glass of ice water how rocket O-rings lose their elasticity in the cold. He turned a highly complex engineering problem into a tangible experiment.</p>
+                <p class="mt-4 italic text-xs">"If you can't explain it simply, you don't understand it. This applies to your code as well."</p>
+            </div>
+        </div>
+
+        <div id="modal-turing" class="story-modal">
+            <button class="modal-close" onclick="closeStory()">×</button>
+            <h3 class="story-title">The Father of AI</h3>
+            <div class="story-text">
+                <p>Alan Turing was thinking about "thinking machines" when computers still consisted of gears and vacuum tubes. At Bletchley Park, he cracked the Enigma codes not just through pure mathematics, but by building a machine (the "Bombe") that simulated another machine. He understood that we need machines to master the complexity of the world.</p>
+                <p class="mt-4 italic text-xs">"Only a machine can decipher the mind of another machine."</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        window.openStory = function(id) {
+            // Close all first
+            document.querySelectorAll('.story-modal').forEach(function(m) { m.classList.remove('active'); });
+            // Open target
+            var modal = document.getElementById('modal-' + id);
+            if (modal) modal.classList.add('active');
+        };
+
+        window.closeStory = function() {
+            document.querySelectorAll('.story-modal').forEach(function(m) { m.classList.remove('active'); });
+        };
+
+        // Close on escape
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeStory();
+        });
+    </script>
+</body>
+</html>

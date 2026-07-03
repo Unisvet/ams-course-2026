@@ -1,4 +1,4 @@
-// Reusable Quiz Engine for AMS Course 2026
+import { ui } from './data.js';
 
 export class QuizEngine {
     constructor(container, quizData, onCompleteCallback) {
@@ -20,11 +20,25 @@ export class QuizEngine {
         return text.replace(/\*\*(.*?)\*\*/g, '<strong class="text-white">$1</strong>');
     }
 
+    typesetEquations() {
+        if (window.renderMathInElement) {
+            window.renderMathInElement(this.container, {
+                delimiters: [
+                    {left: '$$', right: '$$', display: true},
+                    {left: '$', right: '$', display: false},
+                    {left: '\\(', right: '\\)', display: false},
+                    {left: '\\[', right: '\\]', display: true}
+                ],
+                throwOnError: false
+            });
+        }
+    }
+
     init() {
         if (!this.questions || this.questions.length === 0) {
             this.container.innerHTML = `
                 <div class="text-center p-8 glass-card rounded-xl">
-                    <p class="text-vibrant-textMuted">Kein Quiz für diese Woche verfügbar.</p>
+                    <p class="text-vibrant-textMuted">${ui.noQuiz}</p>
                 </div>
             `;
             return;
@@ -43,8 +57,8 @@ export class QuizEngine {
             <div class="animate-slide-up space-y-6">
                 <!-- Progress Header -->
                 <div class="flex justify-between items-center text-sm font-mono text-slate-400">
-                    <span>Frage ${this.currentIndex + 1} von ${this.questions.length}</span>
-                    <span>Fortschritt: ${Math.round(progressPercent)}%</span>
+                    <span>${ui.questionOf.replace('$1', this.currentIndex + 1).replace('$2', this.questions.length)}</span>
+                    <span>${ui.progress.replace('$1', Math.round(progressPercent))}</span>
                 </div>
                 
                 <!-- Progress Bar -->
@@ -55,7 +69,7 @@ export class QuizEngine {
                 <!-- Question Title -->
                 <div class="glass-card rounded-xl p-6 border-l-4 ${isMultiCorrect ? 'border-purple-500 bg-purple-950/5' : 'border-cyan-500 bg-cyan-950/5'}">
                     <span class="text-[10px] font-mono px-2 py-0.5 rounded ${isMultiCorrect ? 'bg-purple-500/20 text-purple-400 border border-purple-500/30' : 'bg-cyan-500/20 text-cyan-400 border border-cyan-500/30'} mb-3 inline-block font-bold uppercase tracking-wider">
-                        ${isMultiCorrect ? 'Mehrfachauswahl (Wähle alle richtigen Antworten)' : 'Einfachauswahl (Wähle eine richtige Antwort)'}
+                        ${isMultiCorrect ? ui.multiChoice : ui.singleChoice}
                     </span>
                     <h3 class="text-xl font-bold text-white leading-relaxed">${this.formatMarkdown(q.question)}</h3>
                 </div>
@@ -78,8 +92,8 @@ export class QuizEngine {
  
                 <!-- Explanation Area (hidden initially) -->
                 <div id="quiz-explanation-box" class="hidden glass-card rounded-xl p-5 bg-slate-900/40 border-l-4 border-amber-500">
-                    <h4 class="text-amber-400 font-mono text-sm font-bold mb-1">Erklärung:</h4>
-                    <p class="text-slate-300 text-sm leading-relaxed">${this.formatMarkdown(q.explanation) || 'Keine Erklärung verfügbar.'}</p>
+                    <h4 class="text-amber-400 font-mono text-sm font-bold mb-1">${ui.explanation}</h4>
+                    <p class="text-slate-300 text-sm leading-relaxed">${this.formatMarkdown(q.explanation) || ui.noExplanation}</p>
                 </div>
 
                 <!-- Action Buttons -->
@@ -89,18 +103,23 @@ export class QuizEngine {
                         class="px-6 py-2.5 rounded-lg font-bold text-sm bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white transition duration-200 shadow-lg disabled:opacity-40 disabled:cursor-not-allowed focus:outline-none"
                         disabled
                     >
-                        Antwort abgeben
+                        ${ui.submitAnswer}
                     </button>
                     <button 
                         id="quiz-next-btn" 
                         class="hidden px-6 py-2.5 rounded-lg font-bold text-sm bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-white transition duration-200 shadow-lg focus:outline-none"
                     >
-                        ${this.currentIndex === this.questions.length - 1 ? 'Quiz abschließen &rarr;' : 'Nächste Frage &rarr;'}
+                        ${this.currentIndex === this.questions.length - 1 ? ui.finishQuiz + ' &rarr;' : ui.nextQuestion + ' &rarr;'}
                     </button>
                 </div>
             </div>
         `;
 
+        this.setupEventListeners();
+        this.typesetEquations();
+    }
+
+    setupEventListeners() {
         // Add Event Listeners for options
         const optionButtons = this.container.querySelectorAll('.quiz-option');
         optionButtons.forEach(btn => {
@@ -226,30 +245,30 @@ export class QuizEngine {
 
     renderResults() {
         const percent = Math.round((this.score / this.questions.length) * 100);
-        let badge = "🎓 Master-Simulant";
-        let feedback = "Hervorragende Leistung! Du hast das Thema dieser Woche vollständig durchdrungen.";
+        let badge = ui.badgeMaster;
+        let feedback = ui.feedbackMaster;
         
         if (percent < 50) {
-            badge = "🌱 Einsteiger";
-            feedback = "Das war ein guter Versuch, aber du solltest die Übungen und die Einführung noch einmal durchgehen.";
+            badge = ui.badgeBeginner;
+            feedback = ui.feedbackBeginner;
         } else if (percent < 85) {
-            badge = "🛡️ Simulations-Analyst";
-            feedback = "Gute Arbeit! Die Kernkonzepte sind verstanden. Schau dir die falschen Fragen noch einmal an.";
+            badge = ui.badgeIntermediate;
+            feedback = ui.feedbackIntermediate;
         }
 
         this.container.innerHTML = `
             <div class="animate-slide-up text-center py-8 px-4 glass-card rounded-2xl border-t-4 border-cyan-500 max-w-xl mx-auto space-y-6">
                 <div class="text-6xl">🏆</div>
-                <h3 class="text-2xl md:text-3xl font-extrabold text-white">Quiz abgeschlossen!</h3>
+                <h3 class="text-2xl md:text-3xl font-extrabold text-white">${ui.quizComplete}</h3>
                 
                 <div class="py-4">
-                    <div class="text-sm font-mono text-slate-400 mb-1">Deine Punktzahl</div>
+                    <div class="text-sm font-mono text-slate-400 mb-1">${ui.yourScore}</div>
                     <div class="text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-500">${this.score} / ${this.questions.length}</div>
-                    <div class="text-lg font-mono text-cyan-400 mt-2 font-bold">${percent}% Richtig</div>
+                    <div class="text-lg font-mono text-cyan-400 mt-2 font-bold">${ui.percentCorrect.replace('$1', percent)}</div>
                 </div>
 
                 <div class="p-4 bg-slate-900/60 rounded-xl border border-slate-800 text-left space-y-2">
-                    <div class="text-xs font-mono text-slate-500 uppercase tracking-wider">Erhaltenes Abzeichen:</div>
+                    <div class="text-xs font-mono text-slate-500 uppercase tracking-wider">${ui.badgeEarned}</div>
                     <div class="text-white font-bold text-lg flex items-center gap-2">
                         <span>${badge}</span>
                     </div>
@@ -261,13 +280,13 @@ export class QuizEngine {
                         id="quiz-restart-btn" 
                         class="px-5 py-2.5 rounded-lg border border-slate-700 hover:border-slate-500 text-sm font-medium text-slate-300 hover:text-white transition duration-200"
                     >
-                        Wiederholen
+                        ${ui.restartQuiz}
                     </button>
                     <a 
                         href="index.html" 
                         class="px-5 py-2.5 rounded-lg font-bold text-sm bg-gradient-to-r from-cyan-500 to-purple-600 hover:from-cyan-400 hover:to-purple-500 text-white transition duration-200 text-center shadow-lg"
                     >
-                        Zurück zum Dashboard
+                        ${ui.backToDashboard}
                     </a>
                 </div>
             </div>
@@ -280,6 +299,8 @@ export class QuizEngine {
             this.score = 0;
             this.init();
         });
+
+        this.typesetEquations();
 
         // Trigger complete callback to notify shell
         if (this.onComplete) {
