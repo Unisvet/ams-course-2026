@@ -1,7 +1,14 @@
 import { courseInfo, modules, weeksData, ui, currentLang, translations } from './data.js';
 import { QuizEngine } from './quiz.js';
 
-document.addEventListener('DOMContentLoaded', () => {
+let currentWeekId = "1";
+let activeTab = "intro"; // 'intro', 'infographic', 'problemset', 'quiz'
+
+
+console.log("main.js module loaded");
+
+function startApp() {
+    console.log("Initializing app...");
     // Detect current page
     const path = window.location.pathname;
     const page = path.substring(path.lastIndexOf('/') + 1);
@@ -10,15 +17,23 @@ document.addEventListener('DOMContentLoaded', () => {
     setupLanguageSwitcher();
     
     if (page === '' || page === 'index.html') {
+        console.log("Main Portal Page detected");
         initPortalPage();
         setupPortalEventListeners();
     } else if (page === 'week.html') {
+        console.log("Week Detail Page detected");
         initWeekPage();
     }
     
     // Setup global lightbox
     setupImageLightbox(document);
-});
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', startApp);
+} else {
+    startApp();
+}
 
 function setupLanguageSwitcher() {
     const btnDe = document.getElementById('lang-de');
@@ -61,8 +76,53 @@ function setupLanguageSwitcher() {
    1. PORTAL PAGE LOGIC (index.html)
    ========================================== */
 function initPortalPage() {
+    console.log("Starting Portal initialization...");
+    
+    // 1. First, render the dynamic content - this is most important!
     try {
-        // Localize static UI elements - more robustly
+        renderPortalProgress();
+        renderRoadmapGrid();
+        console.log("Dynamic content (Progress & Roadmap) rendered");
+    } catch (e) {
+        console.error("Critical error rendering dynamic content:", e);
+    }
+    
+    // 2. Setup Hero Image Lightbox - also critical
+    try {
+        const heroImg = document.getElementById('hero-course-image');
+        if (heroImg) {
+            heroImg.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (window.openLightbox) {
+                    window.openLightbox(heroImg.src, heroImg.alt);
+                } else {
+                    console.warn("Lightbox not initialized yet");
+                }
+            });
+        }
+    } catch (e) {
+        console.error("Error setting up hero image click:", e);
+    }
+
+    // 3. Populate Header info (Title, Subtitle, etc.)
+    try {
+        const titleEl = document.getElementById('course-title');
+        const subtitleEl = document.getElementById('course-subtitle');
+        const semesterEl = document.getElementById('course-semester');
+        const deptEl = document.getElementById('course-department');
+        const instEl = document.getElementById('course-institution');
+
+        if (titleEl) titleEl.innerText = courseInfo.title;
+        if (subtitleEl) subtitleEl.innerText = courseInfo.subtitle;
+        if (semesterEl) semesterEl.innerText = courseInfo.semester;
+        if (deptEl) deptEl.innerText = courseInfo.department;
+        if (instEl) instEl.innerText = courseInfo.institution;
+    } catch (e) {
+        console.error("Error populating course headers:", e);
+    }
+
+    // 4. Localize static UI elements - using defensive blocks for each section
+    try {
         const allH2s = document.querySelectorAll('main h2');
         
         // Goals Section
@@ -76,7 +136,10 @@ function initPortalPage() {
                 if (paragraphs.length >= 2) paragraphs[1].innerHTML = formatMarkdown(ui.goalsContent2);
             }
         }
-        
+    } catch (e) { console.error("Error localizing Goals section:", e); }
+
+    try {
+        const allH2s = document.querySelectorAll('main h2');
         // Core Contents Section
         const coreTitle = Array.from(allH2s).find(h => h.innerText.includes('Kerninhalte') || h.innerText.includes('Core Curriculum'));
         if (coreTitle) {
@@ -87,19 +150,22 @@ function initPortalPage() {
                 if (grid) {
                     const cards = grid.children;
                     if (cards.length >= 4) {
-                        cards[0].querySelector('h4').innerText = `⚙️ ${ui.theory}`;
-                        cards[0].querySelector('p').innerText = ui.theoryDesc;
-                        cards[1].querySelector('h4').innerText = `🤖 ${ui.predictive}`;
-                        cards[1].querySelector('p').innerText = ui.predictiveDesc;
-                        cards[2].querySelector('h4').innerText = `⚡ ${ui.hpc}`;
-                        cards[2].querySelector('p').innerText = ui.hpcDesc;
-                        cards[3].querySelector('h4').innerText = `🧠 ${ui.agentic}`;
-                        cards[3].querySelector('p').innerText = ui.agenticDesc;
+                        if (cards[0].querySelector('h4')) cards[0].querySelector('h4').innerText = `⚙️ ${ui.theory}`;
+                        if (cards[0].querySelector('p')) cards[0].querySelector('p').innerText = ui.theoryDesc;
+                        if (cards[1].querySelector('h4')) cards[1].querySelector('h4').innerText = `🤖 ${ui.predictive}`;
+                        if (cards[1].querySelector('p')) cards[1].querySelector('p').innerText = ui.predictiveDesc;
+                        if (cards[2].querySelector('h4')) cards[2].querySelector('h4').innerText = `⚡ ${ui.hpc}`;
+                        if (cards[2].querySelector('p')) cards[2].querySelector('p').innerText = ui.hpcDesc;
+                        if (cards[3].querySelector('h4')) cards[3].querySelector('h4').innerText = `🧠 ${ui.agentic}`;
+                        if (cards[3].querySelector('p')) cards[3].querySelector('p').innerText = ui.agenticDesc;
                     }
                 }
             }
         }
-        
+    } catch (e) { console.error("Error localizing Core section:", e); }
+
+    try {
+        const allH2s = document.querySelectorAll('main h2');
         // Roadmap Title
         const roadmapTitleElement = document.querySelector('section h2') || Array.from(allH2s).find(h => h.innerText.includes('Roadmap'));
         if (roadmapTitleElement) {
@@ -109,66 +175,39 @@ function initPortalPage() {
                 desc.innerText = ui.roadmapDesc;
             }
         }
+    } catch (e) { console.error("Error localizing Roadmap title:", e); }
+
+    try {
+        const gradesBtnText = document.getElementById('grades-btn-text');
+        if (gradesBtnText) gradesBtnText.innerText = `📊 ${ui.gradesBtn}`;
+        
+        const footerP1 = document.querySelector('footer p:nth-of-type(1)');
+        const footerP2 = document.querySelector('footer p:nth-of-type(2)');
+        if (footerP1) footerP1.innerText = `© 2026 ${courseInfo.title} | ${courseInfo.institution}`;
+        if (footerP2) footerP2.innerText = ui.footerText;
+        
+        const drawerHeader = document.querySelector('#grades-drawer h3');
+        if (drawerHeader) drawerHeader.innerHTML = `<span>📊</span> ${ui.points}`;
+        
+        const drawerH4s = document.querySelectorAll('#grades-drawer h4');
+        if (drawerH4s.length >= 1) drawerH4s[0].innerText = ui.gradingWeight;
+        if (drawerH4s.length >= 2) drawerH4s[1].innerText = ui.yourPoints;
+        if (drawerH4s.length >= 3) drawerH4s[2].innerText = ui.yourProgress;
+    } catch (e) { console.error("Error localizing footer/drawer:", e); }
+    
+    // 5. Populate grading breakdown
+    try {
+        const gradingContainer = document.getElementById('grading-container');
+        if (gradingContainer && courseInfo.grading) {
+            gradingContainer.innerHTML = courseInfo.grading.map(item => `
+                <div class="flex justify-between items-center py-2.5 border-b border-slate-800 text-sm">
+                    <span class="text-slate-400 font-medium">${item.label}</span>
+                    <span class="text-cyan-400 font-mono font-bold">${item.value}</span>
+                </div>
+            `).join('');
+        }
     } catch (e) {
-        console.error("Error localizing static elements:", e);
-    }
-    
-    const gradesBtnText = document.getElementById('grades-btn-text');
-    if (gradesBtnText) gradesBtnText.innerText = `📊 ${ui.gradesBtn}`;
-    
-    const footerP1 = document.querySelector('footer p:nth-of-type(1)');
-    const footerP2 = document.querySelector('footer p:nth-of-type(2)');
-    if (footerP1) footerP1.innerText = `© 2026 ${courseInfo.title} | ${courseInfo.institution}`;
-    if (footerP2) footerP2.innerText = ui.footerText;
-    
-    const drawerHeader = document.querySelector('#grades-drawer h3');
-    if (drawerHeader) drawerHeader.innerHTML = `<span>📊</span> ${ui.points}`;
-    
-    const gradingWeightHeader = document.querySelector('#grades-drawer h4:nth-of-type(1)');
-    if (gradingWeightHeader) gradingWeightHeader.innerText = ui.gradingWeight;
-    
-    const yourPointsHeader = document.querySelector('#grades-drawer h4:nth-of-type(2)');
-    if (yourPointsHeader) yourPointsHeader.innerText = ui.yourPoints;
-    
-    const progressHeader = document.querySelector('#grades-drawer h4:nth-of-type(3)');
-    if (progressHeader) progressHeader.innerText = ui.yourProgress;
-
-    // Populate course titles
-    const titleEl = document.getElementById('course-title');
-    const subtitleEl = document.getElementById('course-subtitle');
-    const semesterEl = document.getElementById('course-semester');
-    const deptEl = document.getElementById('course-department');
-    const instEl = document.getElementById('course-institution');
-
-    if (titleEl) titleEl.innerText = courseInfo.title;
-    if (subtitleEl) subtitleEl.innerText = courseInfo.subtitle;
-    if (semesterEl) semesterEl.innerText = courseInfo.semester;
-    if (deptEl) deptEl.innerText = courseInfo.department;
-    if (instEl) instEl.innerText = courseInfo.institution;
-    
-    // Populate grading breakdown
-    const gradingContainer = document.getElementById('grading-container');
-    if (gradingContainer && courseInfo.grading) {
-        gradingContainer.innerHTML = courseInfo.grading.map(item => `
-            <div class="flex justify-between items-center py-2.5 border-b border-slate-800 text-sm">
-                <span class="text-slate-400 font-medium">${item.label}</span>
-                <span class="text-cyan-400 font-mono font-bold">${item.value}</span>
-            </div>
-        `).join('');
-    }
-
-    renderPortalProgress();
-    renderRoadmapGrid();
-    
-    // Explicitly handle hero image click
-    const heroImg = document.getElementById('hero-course-image');
-    if (heroImg) {
-        heroImg.addEventListener('click', (e) => {
-            e.stopPropagation();
-            if (window.openLightbox) {
-                window.openLightbox(heroImg.src, heroImg.alt);
-            }
-        });
+        console.error("Error populating grading table:", e);
     }
     
     console.log("Portal initialization complete");
@@ -292,6 +331,10 @@ function renderRoadmapGrid() {
             if (w.active) {
                 return `
                     <div class="glass-card rounded-2xl p-6 glow-cyan flex flex-col justify-between border-t-2 border-t-cyan-500/35 relative overflow-hidden group">
+                        <!-- Glass gloss reflection sweep animation -->
+                        <div class="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 ease-out pointer-events-none z-10"></div>
+                        <!-- Subtle bottom overlay vignette -->
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-950/45 via-transparent to-transparent pointer-events-none z-10"></div>
                         ${isCompleted ? `
                             <div class="absolute top-3 right-3 w-6 h-6 bg-emerald-500/20 text-emerald-400 rounded-full font-mono font-bold flex items-center justify-center border border-emerald-500/30 shadow-lg shadow-emerald-500/5" title="Abgeschlossen">
                                 ✓
@@ -332,8 +375,6 @@ function renderRoadmapGrid() {
 /* ==========================================
    2. WEEKLY DASHBOARD LOGIC (week.html)
    ========================================== */
-let currentWeekId = "1";
-let activeTab = "intro"; // 'intro', 'infographic', 'problemset', 'quiz'
 
 function initWeekPage() {
     // Localize static elements
@@ -384,21 +425,16 @@ function initWeekPage() {
     document.title = `${weekLabel} ${week.id}: ${week.title} - Advanced Modeling & System Simulation`;
 
     // Localize Tab Buttons
-    const tabIntro = document.getElementById('tab-btn-intro');
-    const tabInfographic = document.getElementById('tab-btn-infographic');
-    const tabProblemSet = document.getElementById('tab-btn-problemset');
-    const tabQuiz = document.getElementById('tab-btn-quiz');
-    const tabStories = document.getElementById('tab-btn-stories');
-
     if (tabIntro) tabIntro.innerHTML = `<span>📖</span> ${ui.theoryIntro}`;
-    if (tabInfographic) tabInfographic.innerHTML = `<span>📊</span> ${ui.infographic}`;
-    if (tabProblemSet) tabProblemSet.innerHTML = `<span>💻</span> ${ui.problemSet}`;
+    if (tabInfo) tabInfo.innerHTML = `<span>📊</span> ${ui.infographic}`;
+    if (tabPS) tabPS.innerHTML = `<span>💻</span> ${ui.problemSet}`;
     if (tabQuiz) tabQuiz.innerHTML = `<span>🧠</span> ${ui.quiz}`;
     if (tabStories) tabStories.innerHTML = `<span>✨</span> ${ui.stories}`;
 
+
     // Filter tabs based on week data
     const allowedTabs = week.tabs || ['intro', 'infographic', 'problemset', 'quiz', 'stories'];
-    const tabButtons = [tabIntro, tabInfographic, tabProblemSet, tabQuiz, tabStories];
+    const tabButtons = [tabIntro, tabInfo, tabPS, tabQuiz, tabStories];
     const tabIds = ['intro', 'infographic', 'problemset', 'quiz', 'stories'];
 
     tabIds.forEach((tabId, idx) => {
@@ -915,8 +951,21 @@ function setupImageLightbox(container) {
     }
 
     const images = container.querySelectorAll('img');
+    
+    // Check if we should disable click for Stories weeks 5-11
+    const weekNum = parseInt(currentWeekId);
+    const isStoriesTab = activeTab === 'stories';
+    const disableClick = isStoriesTab && weekNum >= 5 && weekNum <= 11;
+
     images.forEach(img => {
         if (img.classList.contains('w-6') || img.classList.contains('h-6') || img.id === 'lightbox-img') return;
+        
+        // If it's a restricted stories week, skip adding click effects
+        if (disableClick) {
+            img.style.cursor = 'default';
+            return;
+        }
+
         
         // Find closest wrapper (relative container or glass-card) that holds overlays
         let wrapper = img;
@@ -934,7 +983,9 @@ function setupImageLightbox(container) {
         
         const clickHandler = (e) => {
             e.stopPropagation();
-            openLightbox(img.src, img.alt);
+            if (window.openLightbox) {
+                window.openLightbox(img.src, img.alt);
+            }
         };
 
         wrapper.addEventListener('click', clickHandler);
