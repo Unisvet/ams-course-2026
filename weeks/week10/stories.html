@@ -1,0 +1,143 @@
+<div class="relative w-full h-[600px] overflow-hidden rounded-2xl shadow-2xl bg-slate-900 font-sans">
+    <!-- Hero Background -->
+    <div class="absolute inset-0 z-0">
+        <img src="assets/images/week10_stories_bg.png" alt="The Architect of Autonomy" class="w-full h-full object-cover opacity-80 pointer-events-none">
+        <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-slate-950/40 pointer-events-none"></div>
+    </div>
+
+    <!-- Floating Interactive Elements -->
+    <div class="absolute inset-0 z-10">
+        <!-- Story 1: Delegation -->
+        <div class="absolute top-[25%] left-[15%] group cursor-pointer" onclick="window.openStory('delegation')">
+            <div class="w-20 h-20 bg-cyan-500/20 backdrop-blur-md border-2 border-cyan-400 rounded-full flex items-center justify-center text-4xl shadow-[0_0_30px_rgba(6,182,212,0.5)] group-hover:scale-110 transition-all duration-300 animate-bounce">
+                🏗️
+            </div>
+            <div class="mt-2 bg-slate-900/80 backdrop-blur-sm px-3 py-1 rounded-lg border border-cyan-500/30 opacity-0 group-hover:opacity-100 transition-opacity">
+                <p class="text-cyan-400 text-xs font-bold font-mono text-center leading-tight">Vom Diktat zur<br>Delegation</p>
+            </div>
+        </div>
+
+        <!-- Story 2: Memory -->
+        <div class="absolute top-[15%] right-[20%] group cursor-pointer" onclick="window.openStory('memory')">
+            <div class="w-16 h-16 bg-pink-500/20 backdrop-blur-md border-2 border-pink-400 rounded-full flex items-center justify-center text-3xl shadow-[0_0_20px_rgba(236,72,153,0.4)] group-hover:scale-110 transition-all duration-300 animate-pulse">
+                💾
+            </div>
+            <div class="mt-2 bg-slate-900/80 backdrop-blur-sm px-3 py-1 rounded-lg border border-pink-500/30 opacity-0 group-hover:opacity-100 transition-opacity">
+                <p class="text-pink-400 text-xs font-bold font-mono">ADK-Memory</p>
+            </div>
+        </div>
+
+        <!-- Story 3: Web UI -->
+        <div class="absolute bottom-[20%] right-[15%] group cursor-pointer" onclick="window.openStory('webui')">
+            <div class="w-18 h-18 bg-purple-500/20 backdrop-blur-md border-2 border-purple-400 rounded-full flex items-center justify-center text-3xl shadow-[0_0_25px_rgba(167,139,250,0.4)] group-hover:scale-110 transition-all duration-300 animate-spin" style="animation-duration: 10s;">
+                🌐
+            </div>
+            <div class="mt-2 bg-slate-900/80 backdrop-blur-sm px-3 py-1 rounded-lg border border-purple-500/30 opacity-0 group-hover:opacity-100 transition-opacity text-center">
+                <p class="text-purple-400 text-xs font-bold font-mono tracking-tighter">Chain of Thought</p>
+            </div>
+        </div>
+
+        <!-- Story 4: Sandbox -->
+        <div class="absolute bottom-[35%] left-[35%] group cursor-pointer" onclick="window.openStory('sandbox')">
+            <div class="w-14 h-14 bg-emerald-500/20 backdrop-blur-md border-2 border-emerald-400 rounded-full flex items-center justify-center text-2xl shadow-[0_0_15px_rgba(16,185,129,0.5)] group-hover:scale-110 transition-all duration-300 animate-pulse">
+                🐚
+            </div>
+            <div class="mt-2 bg-slate-900/80 backdrop-blur-sm px-3 py-1 rounded-lg border border-emerald-500/30 opacity-0 group-hover:opacity-100 transition-opacity">
+                <p class="text-emerald-400 text-xs font-bold font-mono uppercase tracking-tighter text-center">Sichere Sandbox</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modals Container -->
+    <div id="story-modal" class="absolute inset-0 z-50 flex items-center justify-center p-6 bg-slate-950/80 backdrop-blur-md hidden transition-all duration-500">
+        <div class="relative max-w-2xl w-full bg-slate-900 border border-slate-700 rounded-3xl overflow-hidden shadow-2xl transform scale-95 opacity-0 transition-all duration-500" id="modal-content">
+            <button onclick="window.closeStory()" class="absolute top-4 right-4 text-slate-400 hover:text-white transition-colors z-50">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+
+            <div class="p-8">
+                <div id="story-delegation" class="hidden space-y-4">
+                    <div class="flex items-center gap-4 border-b border-cyan-500/30 pb-4">
+                        <span class="text-4xl">🏗️</span>
+                        <div>
+                            <h2 class="text-2xl font-black text-white font-outfit uppercase">Delegation statt Diktat</h2>
+                            <p class="text-cyan-400 font-mono text-sm tracking-widest uppercase">Der neue Workflow</p>
+                        </div>
+                    </div>
+                    <p class="text-slate-300 leading-relaxed text-sm">
+                        Früher mussten wir jede Zeile Code selbst debuggen. Heute sagen wir dem Agenten einfach: "Hier ist das Ziel, bau mir das System." Der Agent im ADK fungiert als Junior-Entwickler, der deine Anweisungen versteht, Fehler selbst erkennt und erst aufhört, wenn das Ziel erreicht ist. Das ist die wahre Macht des Agentic Engineering.
+                    </p>
+                </div>
+
+                <div id="story-memory" class="hidden space-y-4">
+                    <div class="flex items-center gap-4 border-b border-pink-500/30 pb-4">
+                        <span class="text-4xl">💾</span>
+                        <div>
+                            <h2 class="text-2xl font-black text-white font-outfit uppercase">Das Gedächtnis des Agenten</h2>
+                            <p class="text-pink-400 font-mono text-sm tracking-widest uppercase">Zustands-Management</p>
+                        </div>
+                    </div>
+                    <p class="text-slate-300 leading-relaxed text-sm">
+                        Warum vergisst ChatGPT oft, was wir vor fünf Minuten gesagt haben? Weil Standard-LLMs zustandslos sind. Das ADK ändert das: Es pflegt ein permanentes Memory-Objekt. Jede Aktion, jede Fehlermeldung und jeder Gedanke wird gespeichert, sodass der Agent aus seinen eigenen Fehlern lernt – genau wie wir.
+                    </p>
+                </div>
+
+                <div id="story-webui" class="hidden space-y-4">
+                    <div class="flex items-center gap-4 border-b border-purple-500/30 pb-4">
+                        <span class="text-4xl">🌐</span>
+                        <div>
+                            <h2 class="text-2xl font-black text-white font-outfit uppercase">Gedanken visualisieren</h2>
+                            <p class="text-purple-400 font-mono text-sm tracking-widest uppercase">ADK Web Interface</p>
+                        </div>
+                    </div>
+                    <p class="text-slate-300 leading-relaxed text-sm">
+                        Mit `uv run adk web` öffnest du ein Fenster in den Kopf deines Agenten. Du siehst nicht nur das Endergebnis, sondern den gesamten "Chain of Thought". Warum hat der Agent dieses Tool gewählt? Warum hat er diesen Code korrigiert? Transparenz ist der Schlüssel zu vertrauenswürdiger KI.
+                    </p>
+                </div>
+
+                <div id="story-sandbox" class="hidden space-y-4">
+                    <div class="flex items-center gap-4 border-b border-emerald-500/30 pb-4">
+                        <span class="text-4xl">🐚</span>
+                        <div>
+                            <h2 class="text-2xl font-black text-white font-outfit uppercase">Sicherheit zuerst</h2>
+                            <p class="text-emerald-400 font-mono text-sm tracking-widest uppercase">Die Sandbox-Umgebung</p>
+                        </div>
+                    </div>
+                    <p class="text-slate-300 leading-relaxed text-sm">
+                        Autonome Agenten, die Code schreiben? Das klingt gefährlich! Deshalb führt das ADK alle Operationen in einer sicheren Sandbox aus. Der Agent kann experimentieren, Pakete installieren und Skripte testen, ohne dein Hauptsystem zu gefährden. Freiheit für die KI, Sicherheit für dich.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script Section -->
+    <script>
+        window.openStory = function(id) {
+            const modal = document.getElementById('story-modal');
+            const content = document.getElementById('modal-content');
+            ['delegation', 'memory', 'webui', 'sandbox'].forEach(s => {
+                document.getElementById('story-' + s).classList.add('hidden');
+            });
+            document.getElementById('story-' + id).classList.remove('hidden');
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modal.classList.add('opacity-100');
+                content.classList.remove('scale-95', 'opacity-0');
+                content.classList.add('scale-100', 'opacity-100');
+            }, 10);
+        };
+
+        window.closeStory = function() {
+            const modal = document.getElementById('story-modal');
+            const content = document.getElementById('modal-content');
+            content.classList.remove('scale-100', 'opacity-100');
+            content.classList.add('scale-95', 'opacity-0');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 500);
+        };
+    </script>
+</div>

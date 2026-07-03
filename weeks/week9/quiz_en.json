@@ -1,0 +1,123 @@
+[
+    {
+        "question": "Which three pillars form the functional foundation of the agentic loop in autonomous systems?",
+        "options": [
+            "Input, Processing, Output",
+            "Perception, Reasoning, Action",
+            "Data Acquisition, Model Training, Inference",
+            "Prompting, API Call, JSON Parsing"
+        ],
+        "answerIndex": 1,
+        "explanation": "The classic agentic loop is based on the triad: Perception (gathering environmental information), Reasoning (planning, reflecting, and deciding), and Action (executing actions such as function calls via tools)."
+    },
+    {
+        "question": "What advantages does the ReAct pattern (Reasoning and Acting) offer compared to isolated planning or action approaches? (Select all correct answers)",
+        "options": [
+            "It allows the model to plan intermediate steps and analyze intermediate results through 'Thoughts'.",
+            "It reduces inference costs to zero since API calls are no longer necessary.",
+            "It allows the model to recognize errors in 'Observations' (e.g., failed API calls) and dynamically formulate new plans.",
+            "It completely prevents hallucinations in all mathematical calculations."
+        ],
+        "answerIndex": [0, 2],
+        "explanation": "ReAct weaves logical intermediate steps (Thoughts) with concrete actions (Actions). This allows the agent to create structured action plans and react flexibly to unexpected results or errors. It neither reduces inference costs nor completely eliminates hallucinations."
+    },
+    {
+        "question": "How does a Large Language Model notify the executing system that it wants to call a tool?",
+        "options": [
+            "It generates a structured JSON object specifying the function name and arguments.",
+            "It executes the Python code directly in its own latent space.",
+            "It sends an HTTP request over an integrated TCP protocol to the internet.",
+            "It gives the user a text instruction to start the function manually in the console."
+        ],
+        "answerIndex": 0,
+        "explanation": "In tool calling, the LLM outputs a structured format (usually JSON) containing the function name and parameters instead of natural language. The executing system (the application, not the model itself!) intercepts this and executes the function locally or remotely."
+    },
+    {
+        "question": "Which elements typically belong to a complete function declaration (JSON Schema) for tool calling? (Select all correct answers)",
+        "options": [
+            "A unique function name.",
+            "A semantic description of the function so the model understands what the tool is for.",
+            "The full Python implementation of the function body.",
+            "The specification of parameters (data types, descriptions, and required fields)."
+        ],
+        "answerIndex": [0, 1, 3],
+        "explanation": "A JSON schema for tools defines the interface: name, purpose/description for the model, and parameter details. The actual implementation remains hidden at the system level and is not transmitted to the LLM in the schema."
+    },
+    {
+        "question": "Why is JAX particularly well-suited for physical simulations (like the Mandelbrot calculation) in the context of autonomous agent loops?",
+        "options": [
+            "JAX allows Python code to be compiled into hardware-accelerated XLA machine code (via JIT) and executed in parallel, making simulations run in a few milliseconds.",
+            "JAX contains pre-trained neural networks for fractal image recognition.",
+            "JAX requires no memory and prevents any latency.",
+            "JAX automatically converts the Mandelbrot set into text that the LLM can read directly."
+        ],
+        "answerIndex": 0,
+        "explanation": "Agent loops require fast feedback from the simulation. JAX shines here with @jax.jit (Just-In-Time compilation) and vmap (vectorization), which execute computationally intensive loops like the Mandelbrot set in milliseconds, making iterative agent search processes practicable in the first place."
+    },
+    {
+        "question": "Which statements about the Google Gemma Skills ecosystem and the directory structure of a skill are correct? (Select all correct answers)",
+        "options": [
+            "A skill is a modular folder that encapsulates the knowledge and tools for a specific capability.",
+            "The SKILL.md contains YAML metadata (name, description) and cognitive instructions (system prompts).",
+            "A skill must be programmed exclusively in C++ to minimize latencies.",
+            "Tools and JSON schemas are stored in the tools/ subdirectory."
+        ],
+        "answerIndex": [0, 1, 3],
+        "explanation": "Gemma skills are modular capsules controlled by a SKILL.md, and their tool declarations are in the tools/ folder. They are platform-independent and use standardized formats (like JSON and Markdown/Python), not exclusively C++."
+    },
+    {
+        "question": "What happens to the return value (Observation) of a function call in the ReAct pattern?",
+        "options": [
+            "It is deleted because the model keeps the state in memory.",
+            "It is inserted into the conversation history as a new message with a special role (e.g., 'tool' or 'user'), so the model can analyze it in the next reasoning step.",
+            "It is automatically trained into the model's weights (real-time fine-tuning).",
+            "It is displayed to the end user as an error message to stop execution."
+        ],
+        "answerIndex": 1,
+        "explanation": "The return value (Observation) is provided to the model as historical context. The LLM reads this data in the next cycle, reflects on it in a new thought (Thought), and derives the next action."
+    },
+    {
+        "question": "What problems typically occur when a pure language model tries to solve complex simulation tasks (like calculating a differential equation) without tools? (Select all correct answers)",
+        "options": [
+            "The model tends toward mathematical hallucinations in numerical steps.",
+            "The model cannot guarantee deterministic calculations over many time steps.",
+            "The model immediately refuses execution and gives an error message.",
+            "The model is limited to its static knowledge and cannot react to real runtime data."
+        ],
+        "answerIndex": [0, 1, 3],
+        "explanation": "LLMs are statistical text predictors. In complex mathematical processes like differential equations, they hallucinate intermediate steps, cannot guarantee mathematical determinism, and do not react to dynamic system changes due to lack of environmental coupling. However, they do not automatically abort."
+    },
+    {
+        "question": "On which mathematical iteration rule is the Mandelbrot set based, which the agent is supposed to simulate and optimize in Problem Set 9?",
+        "options": [
+            "z_{n+1} = z_n^2 + c",
+            "z_{n+1} = sin(z_n) * c",
+            "x_{n+1} = r * x_n * (1 - x_n)",
+            "f(x) = sigma(W * x + b)"
+        ],
+        "answerIndex": 0,
+        "explanation": "The Mandelbrot set is based on the iteration z_{n+1} = z_n^2 + c with z_0 = 0. Points whose absolute value |z_n| remains bounded under this iteration for all n (never exceeds the escape limit of 2) belong to the set."
+    },
+    {
+        "question": "If a tool call returns an error (e.g., a simulation crash due to invalid parameters), how does a robust ReAct agent ideally react?",
+        "options": [
+            "It ignores the error message and repeats exactly the same action in an infinite loop.",
+            "It aborts the entire execution and throws an unhandled exception.",
+            "It reads the error message in the 'Observation', analyzes the reason in the next 'Thought', and corrects the parameters for the next call.",
+            "It deletes the previous conversation history to hide the error."
+        ],
+        "answerIndex": 2,
+        "explanation": "One of the strongest features of the ReAct pattern is fault tolerance. The agent uses the error message as an observation (Observation), plans a corrective measure in a thought (Thought), and calls the tool again with adjusted parameters."
+    },
+    {
+        "question": "Which of the following interesting facts apply to the founder of fractal geometry, Benoît Mandelbrot? (Select all correct answers)",
+        "options": [
+            "He coined the term 'fractal' in 1975, derived from the Latin 'fractus' ('broken').",
+            "His middle initial 'B.' stands for no specific name; he added it himself (often interpreted as a recursive joke: Benoît B. Mandelbrot).",
+            "He worked for decades as an industrial researcher at IBM, where he had access to state-of-the-art computers to graphically visualize the Mandelbrot set for the first time.",
+            "He won the Nobel Prize in Physics for his mathematical description of fluid turbulence."
+        ],
+        "answerIndex": [0, 1, 2],
+        "explanation": "Benoît Mandelbrot coined the word 'fractal' (A), chose the initial 'B.' as a nameless decorative element (B), and spent most of his career at IBM (C). He did not receive a Nobel Prize, as there is no such prize in mathematics and his contributions to chaos theory/geometry were not awarded with one."
+    }
+]

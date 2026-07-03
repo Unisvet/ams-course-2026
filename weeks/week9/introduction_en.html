@@ -1,0 +1,396 @@
+<div class="space-y-8 animate-fade-in">
+    <!-- Header -->
+    <div class="mb-12">
+        <span class="text-[10px] font-mono text-cyan-400 uppercase tracking-[0.3em] block mb-2">Curriculum Details</span>
+        <h2 class="text-4xl font-black text-white tracking-tight">Theoretical Introduction</h2>
+        <div class="w-20 h-1.5 bg-gradient-to-r from-cyan-500 to-blue-600 mt-4 rounded-full"></div>
+    </div>
+
+    <div class="p-6 glass-card mb-12 rounded-2xl border-l-4 border-cyan-500 bg-gradient-to-r from-cyan-950/20 to-transparent">
+        <h3 class="text-xl md:text-2xl font-bold text-white mb-2">Week 9: Introduction to AI Agents, Tool Calling & Agent Skills</h3>
+        <p class="text-slate-300 text-sm leading-relaxed mt-3 font-sans">
+            The evolution of artificial intelligence is taking place in a rapid transition from passive language models that predict text to autonomous <strong>AI agents</strong> acting in closed-loop systems. An agent is no longer just a statistical oracle, but an active player: it perceives its environment (<strong>Perception</strong>), plans and reflects on its actions (<strong>Reasoning</strong>), and executes targeted actions (<strong>Action</strong>) to solve complex, open-ended problems.
+        </p>
+        <p class="text-slate-300 text-sm leading-relaxed mt-2 font-sans">
+            This week, we break the paradigm of pure text generation. We examine the <strong>ReAct pattern</strong> (Reasoning and Acting) and the technical foundation of <strong>Tool Calling</strong> (Function Calling), through which models can autonomously execute programming functions. We also take a look at the ecosystem of <strong>Google Gemma Skills</strong> for modular agent extension and prepare for <strong>Problem Set 9</strong>, where your agent will optimize a JAX-accelerated Mandelbrot simulation as an autonomous engineer.
+        </p>
+    </div>
+    
+
+    <!-- Core Objectives -->
+    <div class="space-y-4">
+        <h3 class="text-2xl font-bold text-white flex items-center gap-2">
+            <span>🎯</span> Learning Objectives of the Week
+        </h3>
+        <ul class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <li class="p-4 bg-slate-900/40 border border-slate-800 rounded-xl flex gap-3">
+                <span class="text-cyan-400 font-bold">1.</span>
+                <span class="text-sm text-slate-300"><strong>Understanding the Agentic Triad:</strong> Grasping the cyclic coupling of perception, reasoning, and action.</span>
+            </li>
+            <li class="p-4 bg-slate-900/40 border border-slate-800 rounded-xl flex gap-3">
+                <span class="text-pink-400 font-bold">2.</span>
+                <span class="text-sm text-slate-300"><strong>Mastering the ReAct Pattern:</strong> Interactive weaving of logical intermediate thoughts and function calls.</span>
+            </li>
+            <li class="p-4 bg-slate-900/40 border border-slate-800 rounded-xl flex gap-3">
+                <span class="text-yellow-400 font-bold">3.</span>
+                <span class="text-sm text-slate-300"><strong>Implementing Tool Calling & API Protocols:</strong> Declaration of function schemas (JSON Schema) and processing of structured model outputs.</span>
+            </li>
+            <li class="p-4 bg-slate-900/40 border border-slate-800 rounded-xl flex gap-3">
+                <span class="text-purple-400 font-bold">4.</span>
+                <span class="text-sm text-slate-300"><strong>Gemma Skills & JAX Integration:</strong> Encapsulation of complex numerical algorithms as agent tools for autonomous optimization.</span>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Section 1 -->
+    <h3 class="text-xl md:text-2xl font-extrabold text-white mt-12 mb-4 border-b border-slate-900 pb-2 flex items-center gap-2">
+        <span>🔄</span> From Language Model to Autonomous Actor
+    </h3>
+    <p class="text-sm text-slate-300 leading-relaxed font-sans">
+        Classic Large Language Models (LLMs) work autoregressively: they receive a prompt and predict the statistically most likely next token. Although this works fascinatingly well for creative writing or code generation, pure LLMs hit a hard wall when faced with dynamic, unpredictable problems. They have no continuous feedback from the real world and tend to hallucinate when dealing with complex calculations or time-critical facts.
+    </p>
+    <p class="text-sm text-slate-300 leading-relaxed font-sans">
+        The transformation into an <strong>AI agent</strong> resolves this limitation by embedding the model into a cyclic feedback loop with its environment. An agent is based on three pillars:
+    </p>
+
+    <!-- Visual Cards for Agent Loop -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 my-6">
+        <div class="glass-card rounded-2xl p-5 border-t-2 border-t-cyan-500/50 flex flex-col justify-between bg-slate-900/10">
+            <div>
+                <h5 class="text-white font-bold text-base flex items-center gap-2">👁️ Perception</h5>
+                <p class="text-xs text-slate-350 mt-3 leading-relaxed">
+                    The agent receives information from its environment. This can include text prompts, user inputs, API feedback, log files, or image data (multimodality). These inputs update the model's context.
+                </p>
+            </div>
+        </div>
+        <div class="glass-card rounded-2xl p-5 border-t-2 border-t-pink-500/50 flex flex-col justify-between bg-slate-900/10">
+            <div>
+                <h5 class="text-white font-bold text-base flex items-center gap-2">🧠 Reasoning</h5>
+                <p class="text-xs text-slate-350 mt-3 leading-relaxed">
+                    Before taking an action, the agent analyzes the state. It breaks down tasks into sub-goals, plans strategies (Chain of Thought), evaluates intermediate results, and decides whether further data or external calculations are needed.
+                </p>
+            </div>
+        </div>
+        <div class="glass-card rounded-2xl p-5 border-t-2 border-t-purple-500/50 flex flex-col justify-between bg-slate-900/10">
+            <div>
+                <h5 class="text-white font-bold text-base flex items-center gap-2">🛠️ Action</h5>
+                <p class="text-xs text-slate-350 mt-3 leading-relaxed">
+                    The agent interacts with the outside world. Through defined interfaces (tools), it executes code, reads/writes files, queries databases, sends network requests, or calls physical system simulations.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Clickable Mermaid Flowchart for Agent Loop -->
+    <div class="relative group cursor-pointer" onclick="(function(){
+        let modal = document.getElementById('diagram-modal');
+        if (!modal) {
+            modal = document.createElement('div');
+            modal.id = 'diagram-modal';
+            modal.className = 'fixed inset-0 bg-black/85 backdrop-blur-md z-[100] flex items-center justify-center p-4';
+            modal.onclick = function() { modal.style.display = 'none'; document.body.style.overflow = ''; };
+            
+            const card = document.createElement('div');
+            card.className = 'glass-card max-w-2xl w-full p-6 rounded-3xl border border-cyan-500/30 bg-[#090d16]/95 space-y-4 relative';
+            card.onclick = function(e) { e.stopPropagation(); };
+            
+            const closeBtn = document.createElement('button');
+            closeBtn.innerHTML = '&times;';
+            closeBtn.className = 'absolute top-4 right-4 text-slate-450 hover:text-white text-2xl focus:outline-none leading-none';
+            closeBtn.onclick = function() { modal.style.display = 'none'; document.body.style.overflow = ''; };
+            
+            const title = document.createElement('h3');
+            title.className = 'text-xs font-bold text-white font-mono flex items-center gap-2';
+            title.innerText = '🔍 Agentic Control Loop (Enlarged View)';
+            
+            const content = document.createElement('div');
+            content.id = 'modal-diagram-content';
+            content.className = 'p-6 bg-slate-950/80 rounded-2xl border border-slate-900 flex justify-center items-center min-h-[350px]';
+            
+            const footer = document.createElement('p');
+            footer.className = 'text-[10px] text-slate-500 text-center font-mono';
+            footer.innerText = 'Click on the \'x\' or outside to close.';
+            
+            card.appendChild(closeBtn);
+            card.appendChild(title);
+            card.appendChild(content);
+            card.appendChild(footer);
+            modal.appendChild(card);
+            document.body.appendChild(modal);
+        }
+        
+        const content = document.getElementById('modal-diagram-content');
+        content.innerHTML = '';
+        const svg = document.querySelector('.mermaid svg');
+        if (svg) {
+            const clone = svg.cloneNode(true);
+            clone.removeAttribute('height');
+            clone.style.width = '100%';
+            clone.style.height = 'auto';
+            clone.style.maxHeight = '420px';
+            content.appendChild(clone);
+        } else {
+            content.innerHTML = '<p class=\'text-slate-400 text-xs font-mono\'>Loading diagram...</p>';
+        }
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+    })()" title="Click to enlarge">
+        <pre class="mermaid bg-slate-950/40 p-6 rounded-xl border border-slate-900/60 my-6 flex justify-center hover:border-cyan-500/50 hover:shadow-lg hover:shadow-cyan-500/5 transition-all duration-300 min-h-[300px]">
+        graph TD
+            Env["🌍 Environment (JAX Simulation)"] -->|Observation / Feedback| Perc["👁️ Perception"]
+            Perc -->|Updated Context| Reason["🧠 Reasoning"]
+            Reason -->|Tool Call / Parameter| Act["🛠️ Action"]
+            Act -->|Execution / State Change| Env
+            
+            style Env fill:#0f172a,stroke:#8b5cf6,stroke-width:2px,color:#f8fafc
+            style Perc fill:#0f172a,stroke:#06b6d4,color:#f8fafc
+            style Reason fill:#0f172a,stroke:#ec4899,color:#f8fafc
+            style Act fill:#0f172a,stroke:#8b5cf6,color:#f8fafc
+        </pre>
+        <div class="absolute top-3 right-3 px-2 py-1 rounded bg-slate-950/80 border border-slate-800 text-[10px] font-mono text-slate-500 group-hover:text-cyan-400 transition-colors pointer-events-none">
+            🔍 Enlarge diagram
+        </div>
+    </div>
+
+    <!-- Section 2 -->
+    <h3 class="text-xl md:text-2xl font-extrabold text-white mt-12 mb-4 border-b border-slate-900 pb-2 flex items-center gap-2">
+        <span>📖</span> Theoretical Introduction</h3>
+    <p class="text-sm text-slate-300 leading-relaxed font-sans">
+        How does an agent coordinate the interplay of thinking and acting? The groundbreaking approach for this is the <strong>ReAct pattern</strong> (Yao et al., 2022). Before ReAct, two strategies were used separately:
+    </p>
+    <ul class="list-disc pl-6 text-sm text-slate-300 space-y-2.5 my-4">
+        <li><strong>Reason-Only (e.g., Chain of Thought - CoT):</strong> The model generates intermediate steps of reasoning in text but is isolated from external tools. It cannot access real-time data or correct calculation errors.</li>
+        <li><strong>Act-Only (e.g., WebGPT):</strong> The model immediately calls tools and receives answers. However, without logical planning steps, it quickly loses focus on the global goal, gets caught in loops, or fails at complex logic paths.</li>
+    </ul>
+    <p class="text-sm text-slate-300 leading-relaxed font-sans">
+        <strong>ReAct</strong> dynamically weaves reasoning and acting together. The model alternately writes a mental planning step (<strong>Thought</strong>), decides on an action (<strong>Action</strong>), waits for the real result from the environment (<strong>Observation</strong>), and repeats this cycle:
+    </p>
+
+    <!-- ReAct Trace Box -->
+    <div class="p-5 bg-slate-950/60 rounded-xl border border-slate-800 font-mono text-xs space-y-4 my-6">
+        <div class="text-cyan-400 font-bold border-b border-slate-900 pb-1.5 flex justify-between">
+            <span>⚙️ TYPICAL REACT FLOW (TRACE)</span>
+            <span class="text-slate-500">Loop #1</span>
+        </div>
+        <div>
+            <span class="text-pink-400 font-bold">[Thought]</span> I need to examine the maximum complexity in the Mandelbrot boundary at c = -0.7436438870371587 + 0.13182590420531197i. First, I'll run the simulation with a moderate zoom factor of 1000 to capture the rough pixel density.
+        </div>
+        <div>
+            <span class="text-purple-400 font-bold">[Action]</span> run_mandelbrot_simulation(center_real=-0.7436438870371587, center_imag=0.13182590420531197, zoom=1000.0, max_iterations=500)
+        </div>
+        <div class="p-3 bg-slate-900/60 rounded border border-slate-850">
+            <span class="text-yellow-400 font-bold">[Observation]</span> { "entropy": 2.15, "boundary_complexity": 0.45, "pixel_density": 0.38, "status": "SUCCESS" }
+        </div>
+        <div class="text-slate-500 border-t border-slate-900 pt-2 flex justify-between">
+            <span></span>
+            <span>Loop #2</span>
+        </div>
+        <div>
+            <span class="text-pink-400 font-bold">[Thought]</span> The entropy (2.15) suggests moderate structuring. I'll increase the zoom factor to 15000 and the iteration depth to 1000 to reveal finer branching in the Seahorse Valley.
+        </div>
+        <div>
+            <span class="text-purple-400 font-bold">[Action]</span> run_mandelbrot_simulation(center_real=-0.7436438870371587, center_imag=0.13182590420531197, zoom=15000.0, max_iterations=1000)
+        </div>
+        <div class="p-3 bg-slate-900/60 rounded border border-slate-850">
+            <span class="text-yellow-400 font-bold">[Observation]</span> { "entropy": 4.89, "boundary_complexity": 0.92, "pixel_density": 0.76, "status": "SUCCESS" }
+        </div>
+        <div>
+            <span class="text-pink-400 font-bold">[Thought]</span> The entropy jumped to 4.89, proving extremely high detail density and complex fractal filaments. The target coordinates for the Seahorse Valley are thus optimally captured. I'll conclude the search.
+        </div>
+    </div>
+
+    <!-- Section 3 -->
+    <h3 class="text-xl md:text-2xl font-extrabold text-white mt-12 mb-4 border-b border-slate-900 pb-2 flex items-center gap-2">
+        <span>🛠️</span> How Tool Calling Works Under the Hood
+    </h3>
+    <p class="text-sm text-slate-300 leading-relaxed font-sans">
+        For an LLM to call a tool, it must know which tools exist and how to address them. This process takes place via standardized <strong>Tool Calling API protocols</strong> that are natively integrated into modern frameworks (such as the Gemini API):
+    </p>
+
+    <div class="space-y-4 my-6">
+        <div class="p-4 bg-slate-900/30 border border-slate-850 rounded-xl">
+            <h4 class="text-sm font-bold text-white flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-cyan-400"></span> 1. The Declaration (JSON Schema)
+            </h4>
+            <p class="text-xs text-slate-350 mt-1 leading-relaxed">
+                The developer provides the model with a list of available functions along with the prompt. Each function is defined by a precise description and a <strong>JSON Schema</strong> specifying parameter names, data types, and required fields.
+            </p>
+        </div>
+        <div class="p-4 bg-slate-900/30 border border-slate-850 rounded-xl">
+            <h4 class="text-sm font-bold text-white flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-pink-400"></span> 2. The Model's Decision (Function Call Output)
+            </h4>
+            <p class="text-xs text-slate-350 mt-1 leading-relaxed">
+                The model does not generate a human-like response, but recognizes from the context that it needs a tool. It stops regular text generation and outputs a structured JSON object containing the function name and calculated arguments.
+            </p>
+        </div>
+        <div class="p-4 bg-slate-900/30 border border-slate-850 rounded-xl">
+            <h4 class="text-sm font-bold text-white flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-yellow-400"></span> 3. Local Execution & Feedback
+            </h4>
+            <p class="text-xs text-slate-350 mt-1 leading-relaxed">
+                The application platform (the software controlling the LLM) intercepts this structured output, parses it, executes the corresponding function on the local machine, and sends the result back to the model as a <strong>Tool Response</strong>. The LLM processes this result in the next step.
+            </p>
+        </div>
+    </div>
+
+    <!-- JSON Schema Example -->
+    <h4 class="text-base font-bold text-cyan-400 mt-8 mb-3">Example of a Tool Declaration (JSON Schema)</h4>
+    <p class="text-sm text-slate-300 leading-relaxed font-sans mb-3">
+        A schema describes the interface in such detail that the model semantically understands which parameters it needs to pass:
+    </p>
+    <pre class="bg-slate-950 p-4 rounded-xl border border-slate-900 text-xs text-slate-300 overflow-x-auto font-mono">
+{
+  "name": "run_mandelbrot_simulation",
+  "description": "Executes a JAX-accelerated Mandelbrot iteration on a complex coordinate window.",
+  "parameters": {
+    "type": "OBJECT",
+    "properties": {
+      "center_real": {
+        "type": "NUMBER",
+        "description": "Real part of the center in the complex coordinate system."
+      },
+      "center_imag": {
+        "type": "NUMBER",
+        "description": "Imaginary part of the center in the complex coordinate system."
+      },
+      "zoom": {
+        "type": "NUMBER",
+        "description": "Zoom factor (larger values mean a closer view)."
+      },
+      "max_iterations": {
+        "type": "INTEGER",
+        "description": "Maximum iteration depth per pixel (determines details)."
+      }
+    },
+    "required": ["center_real", "center_imag", "zoom"]
+  }
+}</pre>
+
+    <!-- Section 4 -->
+    <h3 class="text-xl md:text-2xl font-extrabold text-white mt-12 mb-4 border-b border-slate-900 pb-2 flex items-center gap-2">
+        <span>📦</span> The Agent Skills Ecosystem (Google Gemma Skills)
+    </h3>
+    <p class="text-sm text-slate-300 leading-relaxed font-sans">
+        In high-professional agent systems, tools and system prompts are not scattered ad-hoc in the code. Instead, they are packaged into modular, reusable capsules called <strong>agent skills</strong>. 
+    </p>
+    <p class="text-sm text-slate-300 leading-relaxed font-sans">
+        The leading standard specifications for this are defined in the repositories <a href="https://github.com/google/skills" class="text-cyan-400 hover:underline" target="_blank">google/skills</a> and <a href="https://github.com/google-gemma/gemma-skills" class="text-cyan-400 hover:underline" target="_blank">google-gemma/gemma-skills</a>. A Gemma skill is a self-contained directory structure that gives the agent a specific new capability:
+    </p>
+
+    <!-- Skill Folder Structure Diagram -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-6">
+        <div class="p-5 bg-slate-950/40 border border-slate-900 rounded-xl font-mono text-xs text-slate-350 space-y-2">
+            <div class="text-purple-400 font-bold border-b border-slate-900 pb-1 flex items-center gap-2">
+                <span>📁 Structure: my-simulation-skill/</span>
+            </div>
+            <div>├── 📄 <span class="text-cyan-400">SKILL.md</span> <span class="text-slate-500">(Metadata & prompt instructions)</span></div>
+            <div>├── 📁 <span class="text-pink-400">tools/</span> <span class="text-slate-500">(JSON Schema declarations)</span></div>
+            <div>├── 📁 <span class="text-pink-400">scripts/</span> <span class="text-slate-500">(Python code & JAX simulation scripts)</span></div>
+            <div>├── 📁 <span class="text-pink-400">examples/</span> <span class="text-slate-500">(Few-shot interaction examples)</span></div>
+            <div>└── 📁 <span class="text-pink-400">references/</span> <span class="text-slate-500">(Handbooks & API docs)</span></div>
+        </div>
+
+        <div class="space-y-3 text-sm text-slate-300 leading-relaxed">
+            <h4 class="font-bold text-white">Functionality and Skill Registration:</h4>
+            <p class="text-xs text-slate-400">
+                1. <strong>Declarative Control (<code>SKILL.md</code>):</strong> The main file of a skill contains a YAML frontmatter (with `name` and `description`). This metadata allows the orchestrator to dynamically trigger skills upon matching requests and embed cognitive instructions directly into the LLM's system prompt.
+            </p>
+            <p class="text-xs text-slate-400">
+                2. <strong>Modular Feature Set:</strong> All schemas declared in `tools/` are automatically loaded and registered as API tools for the model. The model can thus control highly complex physical JAX models stored in `scripts/` through simple prompt commands without needing to modify the underlying application code.
+            </p>
+        </div>
+    </div>
+
+    <!-- Section 5 -->
+    <h3 class="text-xl md:text-2xl font-extrabold text-white mt-12 mb-4 border-b border-slate-900 pb-2 flex items-center gap-2">
+        <span>🔬</span> Preparing for Problem Set 9: The Agent as Engineer
+    </h3>
+    <p class="text-sm text-slate-300 leading-relaxed font-sans">
+        In the upcoming <strong>Problem Set 9</strong>, we take system simulation to a new level. You will no longer manually control a mathematical simulation; instead, you will hold your agent accountable. The task is to declare a <strong>JAX-accelerated Mandelbrot simulation</strong> as a tool and instruct the model to autonomously find a complex target coordinate.
+    </p>
+
+    <h4 class="text-lg font-bold text-cyan-400 mt-8 mb-3 flex items-center gap-2">
+        <span class="text-xs">◆</span> The Mandelbrot Equation and JAX Acceleration
+    </h4>
+    <p class="text-sm text-slate-300 leading-relaxed font-sans">
+        The Mandelbrot set is defined by the iteration of the complex quadratic equation:
+    </p>
+    <div class="my-6 text-center text-lg">
+        $$ z_{n+1} = z_n^2 + c $$
+    </div>
+    <p class="text-sm text-slate-300 leading-relaxed font-sans">
+        Where $z_0 = 0$ and $c$ represents the coordinate in the complex plane. A point belongs to the Mandelbrot set if the sequence remains bounded under iteration ($|z_n| \le 2$). For graphical representation, we calculate the number of iteration steps $n$ until escape ($|z_n| > 2$).
+    </p>
+    <p class="text-sm text-slate-300 leading-relaxed font-sans mt-2">
+        Since this must be calculated millions of times for a grid of $1000 \times 1000$ pixels, we implement the iteration loop in JAX. Thanks to `@jax.jit` and vectorization, this high-performance calculation runs in just a few milliseconds:
+    </p>
+
+    <!-- Python Code block for JAX Mandelbrot -->
+    <pre class="bg-slate-950 p-4 rounded-xl border border-slate-900 text-xs text-slate-300 overflow-x-auto font-mono">
+import jax
+import jax.numpy as jnp
+
+@jax.jit
+def mandelbrot_kernel(c, max_iters):
+    # Executes iteration on a vector of complex numbers c
+    def body_fn(val):
+        z, count, active = val
+        next_z = z**2 + c
+        next_active = active & (jnp.abs(next_z) <= 2.0)
+        next_count = jnp.where(next_active, count + 1, count)
+        return next_z, next_count, next_active
+
+    def cond_fn(val):
+        _, count, active = val
+        return jnp.any(active) & (jnp.min(count) < max_iters)
+
+    z = jnp.zeros_like(c)
+    count = jnp.zeros_like(c, dtype=jnp.int32)
+    active = jnp.ones_like(c, dtype=jnp.bool_)
+
+    _, final_counts, _ = jax.lax.while_loop(cond_fn, body_fn, (z, count, active))
+    return final_counts</pre>
+
+    <h4 class="text-lg font-bold text-cyan-400 mt-8 mb-3 flex items-center gap-2">
+        <span class="text-xs">◆</span> The Cognitive Control Loop in Action
+    </h4>
+    <p class="text-sm text-slate-300 leading-relaxed font-sans">
+        Your agent will be given the objective to determine coordinates of high structural complexity (e.g., the famous "Seahorse Valley"). To do this, the JAX script above will be registered as a tool. The agent runs a simulation, analyzes the returned metrics (such as the entropy of escape times or the pixel density at the set's edge), and independently moves the zoom window until it has reached the optimization goal.
+    </p>
+
+    <!-- Section 6: Literature & Sources -->
+    <h3 class="text-xl md:text-2xl font-extrabold text-white mt-12 mb-4 border-b border-slate-900 pb-2 flex items-center gap-2">
+        <span>📖</span> Theoretical Introduction</h3>
+    <p class="text-sm text-slate-300 leading-relaxed font-sans mb-4">
+        For a deeper scientific examination of Agentic Engineering and Tool Calling, the following research papers and official guides are highly recommended:
+    </p>
+    <ul class="list-decimal pl-6 text-sm text-slate-350 space-y-3 font-sans">
+        <li class="leading-relaxed">
+            <strong class="text-white">ReAct: Synergizing Reasoning and Acting in Language Models</strong>  
+            (Yao et al., ICLR 2023) – The fundamental research paper on the ReAct pattern.  
+            <a href="https://arxiv.org/abs/2210.03629" class="text-cyan-400 hover:underline" target="_blank">arXiv:2210.03629</a>
+        </li>
+        <li class="leading-relaxed">
+            <strong class="text-white">Toolformer: Language Models Can Teach Themselves to Use Tools</strong>  
+            (Schick et al., NeurIPS 2023) – Explains how models learn when and with what arguments they can autonomously call APIs.  
+            <a href="https://arxiv.org/abs/2302.04761" class="text-cyan-400 hover:underline" target="_blank">arXiv:2302.04761</a>
+        </li>
+        <li class="leading-relaxed">
+            <strong class="text-white">MRKL Systems: A Modular, Neuro-symbolic Architecture</strong>  
+            (Karpas et al., 2022) – The pioneering concept for coupling neural networks (LLMs) and symbolic calculators/simulators.  
+            <a href="https://arxiv.org/abs/2205.00445" class="text-cyan-400 hover:underline" target="_blank">arXiv:2205.00445</a>
+        </li>
+        <li class="leading-relaxed">
+            <strong class="text-white">Google Gemma Skills Specification</strong>  
+            Official repositories for modular agent skills and their encapsulation.  
+            <a href="https://github.com/google/skills" class="text-cyan-400 hover:underline" target="_blank">github.com/google/skills</a> &  
+            <a href="https://github.com/google-gemma/gemma-skills" class="text-cyan-400 hover:underline" target="_blank">github.com/google-gemma/gemma-skills</a>
+        </li>
+        <li class="leading-relaxed">
+            <strong class="text-white">Gemini API: Function Calling Guide</strong>  
+            Google's official developer guide for using Tool Calling with Gemini models.  
+            <a href="https://ai.google.dev/gemini-api/docs/function-calling" class="text-cyan-400 hover:underline" target="_blank">ai.google.dev/gemini-api/...</a>
+        </li>
+    </ul>
+</div>

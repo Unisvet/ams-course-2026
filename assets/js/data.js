@@ -132,7 +132,7 @@ export const translations = {
                 module: "5",
                 description: "Die Studierenden präsentieren ihre lauffähigen, hybriden Systemsimulationen. Live-Demos und Code-Reviews.",
                 active: true,
-                tabs: ['intro', 'problemset']
+                tabs: ['intro', 'problemset', 'stories']
             }
         },
         ui: {
@@ -149,7 +149,7 @@ export const translations = {
             agentic: "Agentic AI",
             agenticDesc: "Integration von Gemini & Gemma; Automatisierung mit Antigravity CLI & Multi-Agenten-Orchestrierung.",
             roadmapTitle: "Semester-Roadmap (14 Wochen)",
-            roadmapDesc: "Klicke auf eine aktive Woche, um die Materialien zu öffnen.",
+            roadmapDesc: "Klicke auf eine aktive Woche, um die Materialien zu Öffnen.",
             gradesBtn: "Noten & Fortschritt",
             footerText: "Entwickelt für moderne Lehrmethoden in Systemsimulation und Frontier AI",
             points: "Leistungspunkte",
@@ -331,7 +331,7 @@ export const translations = {
                 module: "5",
                 description: "Students present their runnable, hybrid system simulations. Live demos and code reviews.",
                 active: true,
-                tabs: ['intro', 'problemset']
+                tabs: ['intro', 'problemset', 'stories']
             }
         },
         ui: {
@@ -347,7 +347,7 @@ export const translations = {
             hpcDesc: "Partial Differential Equations (PDEs) & stochastic Monte Carlo / Markov chains with JAX/Flax.",
             agentic: "Agentic AI",
             agenticDesc: "Integration of Gemini & Gemma; automation with Antigravity CLI & multi-agent orchestration.",
-            roadmapTitle: "Semester Roadmap (14 Weeks)",
+            roadmapTitle: "Semester-Roadmap (14 Wochen)",
             roadmapDesc: "Click on an active week to open the materials.",
             gradesBtn: "Grades & Progress",
             footerText: "Developed for modern teaching methods in system simulation and Frontier AI",

@@ -1,0 +1,112 @@
+[
+    {
+        "question": "What is the core paradigm of 'Agentic Engineering' compared to classical programming?",
+        "options": [
+            "Dictation instead of delegation: Developers write more detailed while loops.",
+            "Delegation instead of dictation: Developers set goals, and the agent plans and corrects itself autonomously.",
+            "Pure code generation without execution or fault tolerance.",
+            "Dispensing with all high-performance libraries."
+        ],
+        "answerIndex": 1,
+        "explanation": "Agentic Engineering shifts the developer's task from detailed flow control (dictation) to formulating goals for an autonomous system (delegation)."
+    },
+    {
+        "question": "Which command do you use to add the ADK framework to your project using the modern package manager `uv`?",
+        "options": [
+            "pip install google-adk",
+            "uv add google-adk",
+            "npm install google-adk",
+            "python -m pip install google-adk"
+        ],
+        "answerIndex": 1,
+        "explanation": "With `uv add google-adk`, you add the dependency to the current project and ensure a clean, isolated environment."
+    },
+    {
+        "question": "Which four core parameters are defined when instantiating an ADK agent? (Select all correct answers)",
+        "options": [
+            "model (the underlying LLM)",
+            "name (the internal routing name)",
+            "description (the capability description for multi-agent scenarios)",
+            "instruction (the system prompt that governs persona and behavior)"
+        ],
+        "answerIndex": [0, 1, 2, 3],
+        "explanation": "All four parameters (model, name, description, instruction) are essential for establishing the identity, logic, and communication capability of an ADK agent."
+    },
+    {
+        "question": "Why is an agent's `description` so important in the ADK?",
+        "options": [
+            "It is displayed as a design element on the user interface.",
+            "It serves as a license key for the Gemini API.",
+            "In multi-agent systems (MAS), it enables autonomous task routing by other agents.",
+            "It limits the file size of the executed scripts."
+        ],
+        "answerIndex": 2,
+        "explanation": "In a multi-agent system, orchestrators and other agents use the description to decide which agent is best suited for a specific task."
+    },
+    {
+        "question": "How does the ADK solve the problem of statelessness in standard LLM API calls?",
+        "options": [
+            "It performs fine-tuning of the model on every call.",
+            "It forces the model to store all information locally in a SQLite database.",
+            "It provides automatic, implicit memory management that stores the conversation history and tool results.",
+            "There is no solution, as the ADK also operates statelessly."
+        ],
+        "answerIndex": 2,
+        "explanation": "The ADK relieves the developer of manual chat history management by automatically saving and managing conversation and tool states."
+    },
+    {
+        "question": "Which cyclical flow (loop) describes how an autonomous ADK agent works?",
+        "options": [
+            "Input ➔ Output ➔ Format ➔ Print",
+            "Perceive ➔ Think ➔ Act ➔ Check",
+            "Fetch ➔ Run ➔ Compile ➔ Exit",
+            "Read ➔ Write ➔ Execute ➔ Delete"
+        ],
+        "answerIndex": 1,
+        "explanation": "The ADK loop works as follows: perceiving the state (Perceive), planning the next step (Think), executing actions/tools (Act), and checking the result or errors (Check)."
+    },
+    {
+        "question": "How does the developer tell the ADK agent how to call a custom Python tool?",
+        "options": [
+            "By writing a separate JSON file for each Python function.",
+            "The ADK reads the precise type hints and docstring of the Python function to create the schema.",
+            "The agent automatically guesses the parameters based on the function name.",
+            "Tools must be compiled in C++ so the model can call them."
+        ],
+        "answerIndex": 1,
+        "explanation": "The ADK uses Python introspection: it parses the type hints (e.g., float, str) and docstrings of the passed functions to generate the function schema for the LLM."
+    },
+    {
+        "question": "Which CLI command starts the visual ADK web UI for debugging the Chain of Thought on http://localhost:8000?",
+        "options": [
+            "uv run adk run",
+            "uv run adk web",
+            "python agent.py --web",
+            "adk start-server"
+        ],
+        "answerIndex": 1,
+        "explanation": "With `uv run adk web`, the integrated development server is started, where thought steps and tool calls can be traced visually in the web interface."
+    },
+    {
+        "question": "What happens by default if a tool call in the ADK control loop returns an error message or a warning?",
+        "options": [
+            "The Python script crashes with an unhandled exception.",
+            "The agent ignores the error and repeats the identical action until timeout.",
+            "The agent captures the error message as an observation, reflects on it (Think), and autonomously corrects the arguments.",
+            "The API locks the user's access key."
+        ],
+        "answerIndex": 2,
+        "explanation": "The ADK agent captures errors in the Check step and stores them as an observation in memory. In the next Think step, the model attempts to fix the cause of the error and apply corrected parameters."
+    },
+    {
+        "question": "Which frontier model is used by default in Week 10 as the cognitive core for the Observer-Prime agent?",
+        "options": [
+            "gemini-1.5-pro",
+            "gemma-2-2b",
+            "gemini-3.5-flash",
+            "gpt-4o"
+        ],
+        "answerIndex": 2,
+        "explanation": "Gemini 3.5 Flash is used as the default engine in the ADK setup for simulation-based exercises due to its high speed and logical capabilities."
+    }
+]

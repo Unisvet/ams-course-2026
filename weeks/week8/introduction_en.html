@@ -1,0 +1,676 @@
+<div class="space-y-8">
+    <!-- Header -->
+    <div class="mb-12">
+        <span class="text-[10px] font-mono text-cyan-400 uppercase tracking-[0.3em] block mb-2">Curriculum Details</span>
+        <h2 class="text-4xl font-black text-white tracking-tight">Theoretical Introduction</h2>
+        <div class="w-20 h-1.5 bg-gradient-to-r from-cyan-500 to-blue-600 mt-4 rounded-full"></div>
+    </div>
+
+    <div class="p-6 glass-card mb-12 rounded-2xl border-l-4 border-cyan-500 bg-gradient-to-r from-cyan-950/20 to-transparent">
+        <h3 class="text-xl md:text-2xl font-bold text-white mb-2">Week 8: Local Inference Architectures in System Simulation</h3>
+        <p class="text-slate-300 text-sm leading-relaxed mt-3 font-sans">
+            The evolution of computer-aided system simulation is characterized by an increasing fusion of classical mathematical state-space models and cognitive decision-making elements. While core physical processes – such as partial differential equations or stochastic Monte Carlo simulations – are solved highly efficiently on specialized hardware accelerators using JAX or TensorFlow, the intelligent control and monitoring of these simulations requires flexible, context-sensitive agent architectures. The historical approach of realizing this cognitive layer via global cloud interfaces (such as the Gemini API) reaches fundamental limits in industrial environments: unpredictable network latencies, dependence on a permanent internet connection, and the risk of uncontrolled leakage of sensitive operational data.
+        </p>
+        <p class="text-slate-300 text-sm leading-relaxed mt-2 font-sans">
+            This week, we want to test the design and implementation of a local, offline-capable monitoring and optimization agent for discrete-event system simulations. At the center is <strong>"Problem Set 8: Project Genesis – The Sovereign Guardian"</strong>. This problem set builds on the new Google Gemma 4 open-weights model family, optimized for on-device execution, and links local inference via Kagglehub with a reactively controlled physical queuing simulation, as well as the basics of local Retrieval-Augmented Generation (RAG) and remote fine-tuning via the new Google Colab CLI.
+        </p>
+    </div>
+    
+
+    <!-- Section 1 -->
+    <h3 class="text-xl md:text-2xl font-extrabold text-white mt-12 mb-4 border-b border-slate-900 pb-2 flex items-center gap-2">
+        <span>🌐</span> Open-Source, Open-Weights, and Closed-Source
+    </h3>
+    <p class="text-sm text-slate-300 leading-relaxed font-sans">
+        In modern cognitive system simulation, choosing the right LLM paradigm has evolved into a core strategic decision. The landscape of AI models is essentially shaped by three architecture classes that differ fundamentally in terms of transparency, sovereignty, and operating costs:
+    </p>
+    <ul class="list-disc pl-6 text-sm text-slate-300 space-y-3.5 my-4 font-sans">
+        <li class="leading-relaxed">
+            <strong class="text-white">Closed-Source / Proprietary Models:</strong> These models (e.g., GPT-4, Google Gemini Ultra, Claude 3.5 Sonnet) are offered exclusively via manufacturer REST APIs. Although they offer enormous logical depth, they are unsuitable for real-time critical closed-loop control. Latencies fluctuate strongly and sensitive telemetry and control data must leave the physical factory boundaries. In addition, continuous API calls generate unpredictable operating costs.
+        </li>
+        <li class="leading-relaxed">
+            <strong class="text-white">True Open-Source Models:</strong> Models like <em>Pythia</em> (EleutherAI) or <em>BLOOM</em> (BigScience) disclose not only the model weights but also the exact training data, filtering algorithms, and the full preprocessing source code. They allow for seamless scientific auditing but often lag behind commercial models in their mathematical-logical performance density per parameter.
+        </li>
+        <li class="leading-relaxed">
+            <strong class="text-white">Open-Weights Models:</strong> This hybrid class forms the foundation for modern industrial applications. Leading examples are <strong>Llama 3</strong> (Meta), <strong>Mistral</strong> (Mistral AI), and the <strong>Gemma 4 family</strong> (Google DeepMind). Developers receive unrestricted access to the trained weight matrices and can execute, adapt, and specialize them per fine-tuning for specific system simulations on their own hardware. Although the underlying training dataset usually remains proprietary, local executability guarantees absolute data sovereignty, deterministic millisecond latencies, and complete network independence (offline capability).
+        </li>
+    </ul>
+    <p class="text-sm text-slate-300 leading-relaxed font-sans">
+        For system engineers, open-weights models like Gemma 4 thus offer the ideal compromise: the logical brilliance of commercial top-level research combined with the unrestricted, cost-free control and customizability of local open-source software.
+    </p>
+
+    <!-- Section 2 -->
+    <h3 class="text-xl md:text-2xl font-extrabold text-white mt-12 mb-4 border-b border-slate-900 pb-2 flex items-center gap-2">
+        <span>🚀</span> Architecture and Performance Spectra of the Gemma 4 Model Family
+    </h3>
+    <p class="text-sm text-slate-300 leading-relaxed font-sans">
+        Developed by Google DeepMind, the Gemma 4 model family was designed based on Gemini 3 research to provide maximum cognitive performance density per parameter (Intelligence-per-Parameter) directly on end devices. For simulation-based optimization tasks, this efficiency is crucial as it allows high-complexity language models to be executed in parallel with computationally intensive numerical simulations on the same physical hardware.
+        </p>
+
+    <h4 class="text-lg font-bold text-cyan-400 mt-8 mb-3 flex items-center gap-2">
+        <span class="text-xs">◆</span> Structural Specifications and Memory Requirements
+    </h4>
+    <p class="text-sm text-slate-300 leading-relaxed font-sans">
+        The model family is divided into five different parameter classes, each optimized for specific hardware resources and operational constraints:
+    </p>
+
+    <!-- Visual Cards for Table 1 -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 my-6">
+        <!-- Gemma 4 E2B -->
+        <div class="glass-card rounded-2xl p-5 border-t-2 border-t-cyan-500/50 flex flex-col justify-between hover:scale-[1.02] transition-transform duration-200 bg-slate-900/10">
+            <div>
+                <div class="flex justify-between items-center mb-2">
+                    <h5 class="text-white font-bold text-base">Gemma 4 E2B</h5>
+                    <span class="px-2 py-0.5 rounded bg-cyan-950 border border-cyan-500/35 text-cyan-400 text-[10px] font-mono font-bold uppercase">Edge & Mobile</span>
+                </div>
+                <ul class="text-xs text-slate-350 space-y-1.5 mt-3">
+                    <li><strong class="text-slate-200">Parameters:</strong> 2.3 bn effective</li>
+                    <li><strong class="text-slate-200">Memory:</strong> ~11.4 GB</li>
+                    <li><strong class="text-slate-200">Focus:</strong> Edge devices & Mobile</li>
+                    <li><strong class="text-slate-200">Specialty:</strong> PLE architecture</li>
+                </ul>
+            </div>
+        </div>
+        <!-- Gemma 4 E4B -->
+        <div class="glass-card rounded-2xl p-5 border-t-2 border-t-pink-500/50 flex flex-col justify-between hover:scale-[1.02] transition-transform duration-200 bg-slate-900/10">
+            <div>
+                <div class="flex justify-between items-center mb-2">
+                    <h5 class="text-white font-bold text-base">Gemma 4 E4B</h5>
+                    <span class="px-2 py-0.5 rounded bg-pink-950 border border-pink-500/35 text-pink-400 text-[10px] font-mono font-bold uppercase">Workstation</span>
+                </div>
+                <ul class="text-xs text-slate-350 space-y-1.5 mt-3">
+                    <li><strong class="text-slate-200">Parameters:</strong> 4.5 bn effective</li>
+                    <li><strong class="text-slate-200">Memory:</strong> ~17.9 GB</li>
+                    <li><strong class="text-slate-200">Focus:</strong> Local workstations</li>
+                    <li><strong class="text-slate-200">Specialty:</strong> Optimized throughput</li>
+                </ul>
+            </div>
+        </div>
+        <!-- Gemma 4 12B -->
+        <div class="glass-card rounded-2xl p-5 border-t-2 border-t-yellow-500/50 flex flex-col justify-between hover:scale-[1.02] transition-transform duration-200 bg-slate-900/10">
+            <div>
+                <div class="flex justify-between items-center mb-2">
+                    <h5 class="text-white font-bold text-base">Gemma 4 12B</h5>
+                    <span class="px-2 py-0.5 rounded bg-yellow-950 border border-yellow-500/35 text-yellow-400 text-[10px] font-mono font-bold uppercase">Multimodal</span>
+                </div>
+                <ul class="text-xs text-slate-350 space-y-1.5 mt-3">
+                    <li><strong class="text-slate-200">Parameters:</strong> 12.0 bn effective</li>
+                    <li><strong class="text-slate-200">Memory:</strong> ~26.7 GB</li>
+                    <li><strong class="text-slate-200">Focus:</strong> Multimodal (encoder-free)</li>
+                    <li><strong class="text-slate-200">Specialty:</strong> No separate visual encoder</li>
+                </ul>
+            </div>
+        </div>
+        <!-- Gemma 4 26B A4B -->
+        <div class="glass-card rounded-2xl p-5 border-t-2 border-t-purple-500/50 flex flex-col justify-between hover:scale-[1.02] transition-transform duration-200 bg-slate-900/10">
+            <div>
+                <div class="flex justify-between items-center mb-2">
+                    <h5 class="text-white font-bold text-base">Gemma 4 26B A4B</h5>
+                    <span class="px-2 py-0.5 rounded bg-purple-950 border border-purple-500/35 text-purple-400 text-[10px] font-mono font-bold uppercase">MoE / Throughput</span>
+                </div>
+                <ul class="text-xs text-slate-350 space-y-1.5 mt-3">
+                    <li><strong class="text-slate-200">Parameters:</strong> 4.0 bn active (26bn total)</li>
+                    <li><strong class="text-slate-200">Memory:</strong> ~57.7 GB</li>
+                    <li><strong class="text-slate-200">Focus:</strong> Massive throughput</li>
+                    <li><strong class="text-slate-200">Specialty:</strong> Mixture-of-Experts (MoE)</li>
+                </ul>
+            </div>
+        </div>
+        <!-- Gemma 4 31B -->
+        <div class="glass-card rounded-2xl p-5 border-t-2 border-t-emerald-500/50 flex flex-col justify-between hover:scale-[1.02] transition-transform duration-200 bg-slate-900/10">
+            <div>
+                <div class="flex justify-between items-center mb-2">
+                    <h5 class="text-white font-bold text-base">Gemma 4 31B</h5>
+                    <span class="px-2 py-0.5 rounded bg-emerald-950 border border-emerald-500/35 text-emerald-400 text-[10px] font-mono font-bold uppercase">Server</span>
+                </div>
+                <ul class="text-xs text-slate-350 space-y-1.5 mt-3">
+                    <li><strong class="text-slate-200">Parameters:</strong> 31.0 bn effective</li>
+                    <li><strong class="text-slate-200">Memory:</strong> ~69.9 GB</li>
+                    <li><strong class="text-slate-200">Focus:</strong> Industrial server</li>
+                    <li><strong class="text-slate-200">Specialty:</strong> Dense high-end model</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mermaid 1 -->
+    <pre class="mermaid bg-slate-950/40 p-4 rounded-xl border border-slate-900/60 my-6 flex justify-center">
+    graph TD
+        %% Categorization of the Gemma 4 Family
+        subgraph Edge_Systems [Edge & Mobile Hardware]
+            E2B[Gemma 4 E2B<br/>2.3 Bn Eff.]
+            E4B[Gemma 4 E4B<br/>4.5 Bn Eff.]
+        end
+
+        subgraph High_Performance [Workstation & Server]
+            M12B[Gemma 4 12B<br/>12.0 Bn Eff.]
+            A4B[Gemma 4 26B A4B<br/>MoE - Massive Throughput]
+            S31B[Gemma 4 31B<br/>31.0 Bn Eff.]
+        end
+
+        %% Definition of Primary Focus
+        E2B & E4B --> PLE[Per-Layer Embeddings]
+        A4B --> MOE[Mixture-of-Experts]
+        S31B --> DENSE[Dense High-End Model]
+        
+        style Edge_Systems fill:#090d16,stroke:#06b6d4,stroke-width:2px,color:#f8fafc
+        style High_Performance fill:#090d16,stroke:#8b5cf6,stroke-width:2px,color:#f8fafc
+        style E2B fill:#0f172a,stroke:#06b6d4,color:#f8fafc
+        style E4B fill:#0f172a,stroke:#06b6d4,color:#f8fafc
+        style M12B fill:#0f172a,stroke:#8b5cf6,color:#f8fafc
+        style A4B fill:#0f172a,stroke:#8b5cf6,color:#f8fafc
+        style S31B fill:#0f172a,stroke:#8b5cf6,color:#f8fafc
+        style PLE fill:#090d16,stroke:#06b6d4,color:#f8fafc
+        style MOE fill:#090d16,stroke:#8b5cf6,color:#f8fafc
+        style DENSE fill:#090d16,stroke:#8b5cf6,color:#f8fafc
+    </pre>
+
+    <p class="text-sm text-slate-300 leading-relaxed font-sans">
+        The efficiency of the small models (E2B and E4B) results significantly from the Per-Layer Embeddings (PLE) structure. Here, instead of a single global embedding space, each decoder layer is assigned its own high-frequency embedding table for each token. This reduces the necessary depth of the transformer network for abstracting logical relationships, but slightly increases the static memory size when loading weight tables compared to traditional dense models of similar effective parameter counts.
+    </p>
+    <p class="text-sm text-slate-300 leading-relaxed font-sans">
+        Additionally, all variants have native support for Multi-Token Prediction (MTP). By integrating a smaller draft model for speculative decoding, generation speed is significantly increased with identical mathematical output quality.
+    </p>
+
+    <h4 class="text-lg font-bold text-cyan-400 mt-8 mb-3 flex items-center gap-2">
+        <span class="text-xs">◆</span> Performance Evaluation in Global Comparison
+    </h4>
+    <p class="text-sm text-slate-300 leading-relaxed font-sans">
+        In standardized performance measurements, the Gemma 4 family demonstrates remarkable superiority over older architectures and approaches closed-source cloud models in specialized sub-disciplines. The following comparison shows the values:
+    </p>
+
+    <!-- Visual Benchmark Table (Table 2) -->
+    <div class="overflow-x-auto my-6 border border-slate-800 rounded-xl bg-slate-950/25">
+        <table class="min-w-full divide-y divide-slate-800 text-sm">
+            <thead class="bg-slate-900/40">
+                <tr>
+                    <th class="px-4 py-3 text-left text-xs font-mono font-bold text-slate-400 uppercase tracking-wider">Benchmark</th>
+                    <th class="px-4 py-3 text-left text-xs font-mono font-bold text-cyan-400 uppercase tracking-wider">Gemma 4 31B IT</th>
+                    <th class="px-4 py-3 text-left text-xs font-mono font-bold text-purple-400 uppercase tracking-wider">Gemma 4 26B MoE</th>
+                    <th class="px-4 py-3 text-left text-xs font-mono font-bold text-pink-400 uppercase tracking-wider">Gemma 4 E4B IT</th>
+                    <th class="px-4 py-3 text-left text-xs font-mono font-bold text-slate-400 uppercase tracking-wider">Gemma 4 E2B IT</th>
+                    <th class="px-4 py-3 text-left text-xs font-mono font-bold text-slate-500 uppercase tracking-wider">Gemma 3 27B IT</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-850 bg-slate-950/10">
+                <!-- Arena AI -->
+                <tr class="hover:bg-slate-900/20 transition-colors">
+                    <td class="px-4 py-3 text-white font-semibold text-xs">Arena AI (text) <em>(Elo)</em></td>
+                    <td class="px-4 py-3 text-cyan-400 font-mono text-xs font-bold">1452</td>
+                    <td class="px-4 py-3 text-purple-400 font-mono text-xs font-bold">1441</td>
+                    <td class="px-4 py-3 text-slate-500 font-mono text-xs">—</td>
+                    <td class="px-4 py-3 text-slate-500 font-mono text-xs">—</td>
+                    <td class="px-4 py-3 text-slate-400 font-mono text-xs">1365</td>
+                </tr>
+                <!-- MMMLU -->
+                <tr class="hover:bg-slate-900/20 transition-colors">
+                    <td class="px-4 py-3 text-white font-semibold text-xs">MMMLU <em>(Multilingual Q&A)</em></td>
+                    <td class="px-4 py-3 text-slate-300 font-mono text-xs">
+                        <div class="flex items-center justify-between gap-2">
+                            <span>85.2%</span>
+                            <div class="w-12 h-1 bg-slate-900 rounded-full overflow-hidden">
+                                <div class="h-full bg-cyan-500" style="width: 85.2%"></div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-4 py-3 text-slate-300 font-mono text-xs">
+                        <div class="flex items-center justify-between gap-2">
+                            <span>82.6%</span>
+                            <div class="w-12 h-1 bg-slate-900 rounded-full overflow-hidden">
+                                <div class="h-full bg-purple-500" style="width: 82.6%"></div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-4 py-3 text-slate-300 font-mono text-xs">
+                        <div class="flex items-center justify-between gap-2">
+                            <span>69.4%</span>
+                            <div class="w-12 h-1 bg-slate-900 rounded-full overflow-hidden">
+                                <div class="h-full bg-pink-500" style="width: 69.4%"></div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-4 py-3 text-slate-300 font-mono text-xs">
+                        <div class="flex items-center justify-between gap-2">
+                            <span>60.0%</span>
+                            <div class="w-12 h-1 bg-slate-900 rounded-full overflow-hidden">
+                                <div class="h-full bg-slate-500" style="width: 60.0%"></div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-4 py-3 text-slate-400 font-mono text-xs">
+                        <div class="flex items-center justify-between gap-2">
+                            <span>67.6%</span>
+                            <div class="w-12 h-1 bg-slate-900 rounded-full overflow-hidden">
+                                <div class="h-full bg-slate-700" style="width: 67.6%"></div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <!-- MMMU Pro -->
+                <tr class="hover:bg-slate-900/20 transition-colors">
+                    <td class="px-4 py-3 text-white font-semibold text-xs">MMMU Pro <em>(Multimodal Reasoning)</em></td>
+                    <td class="px-4 py-3 text-slate-300 font-mono text-xs">
+                        <div class="flex items-center justify-between gap-2">
+                            <span>76.9%</span>
+                            <div class="w-12 h-1 bg-slate-900 rounded-full overflow-hidden">
+                                <div class="h-full bg-cyan-500" style="width: 76.9%"></div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-4 py-3 text-slate-300 font-mono text-xs">
+                        <div class="flex items-center justify-between gap-2">
+                            <span>73.8%</span>
+                            <div class="w-12 h-1 bg-slate-900 rounded-full overflow-hidden">
+                                <div class="h-full bg-purple-500" style="width: 73.8%"></div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-4 py-3 text-slate-300 font-mono text-xs">
+                        <div class="flex items-center justify-between gap-2">
+                            <span>52.6%</span>
+                            <div class="w-12 h-1 bg-slate-900 rounded-full overflow-hidden">
+                                <div class="h-full bg-pink-500" style="width: 52.6%"></div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-4 py-3 text-slate-300 font-mono text-xs">
+                        <div class="flex items-center justify-between gap-2">
+                            <span>44.2%</span>
+                            <div class="w-12 h-1 bg-slate-900 rounded-full overflow-hidden">
+                                <div class="h-full bg-slate-500" style="width: 44.2%"></div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-4 py-3 text-slate-400 font-mono text-xs">
+                        <div class="flex items-center justify-between gap-2">
+                            <span>49.7%</span>
+                            <div class="w-12 h-1 bg-slate-900 rounded-full overflow-hidden">
+                                <div class="h-full bg-slate-700" style="width: 49.7%"></div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <!-- AIME 2026 -->
+                <tr class="hover:bg-slate-900/20 transition-colors">
+                    <td class="px-4 py-3 text-white font-semibold text-xs">AIME 2026 <em>(Math without Tools)</em></td>
+                    <td class="px-4 py-3 text-slate-300 font-mono text-xs">
+                        <div class="flex items-center justify-between gap-2">
+                            <span>89.2%</span>
+                            <div class="w-12 h-1 bg-slate-900 rounded-full overflow-hidden">
+                                <div class="h-full bg-cyan-500" style="width: 89.2%"></div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-4 py-3 text-slate-300 font-mono text-xs">
+                        <div class="flex items-center justify-between gap-2">
+                            <span>88.3%</span>
+                            <div class="w-12 h-1 bg-slate-900 rounded-full overflow-hidden">
+                                <div class="h-full bg-purple-500" style="width: 88.3%"></div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-4 py-3 text-slate-300 font-mono text-xs">
+                        <div class="flex items-center justify-between gap-2">
+                            <span>42.5%</span>
+                            <div class="w-12 h-1 bg-slate-900 rounded-full overflow-hidden">
+                                <div class="h-full bg-pink-500" style="width: 42.5%"></div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-4 py-3 text-slate-300 font-mono text-xs">
+                        <div class="flex items-center justify-between gap-2">
+                            <span>37.5%</span>
+                            <div class="w-12 h-1 bg-slate-900 rounded-full overflow-hidden">
+                                <div class="h-full bg-slate-500" style="width: 37.5%"></div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-4 py-3 text-slate-400 font-mono text-xs">
+                        <div class="flex items-center justify-between gap-2">
+                            <span>20.8%</span>
+                            <div class="w-12 h-1 bg-slate-900 rounded-full overflow-hidden">
+                                <div class="h-full bg-slate-700" style="width: 20.8%"></div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <!-- LiveCodeBench -->
+                <tr class="hover:bg-slate-900/20 transition-colors">
+                    <td class="px-4 py-3 text-white font-semibold text-xs">LiveCodeBench v6 <em>(Coding)</em></td>
+                    <td class="px-4 py-3 text-slate-300 font-mono text-xs">
+                        <div class="flex items-center justify-between gap-2">
+                            <span>80.0%</span>
+                            <div class="w-12 h-1 bg-slate-900 rounded-full overflow-hidden">
+                                <div class="h-full bg-cyan-500" style="width: 80.0%"></div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-4 py-3 text-slate-300 font-mono text-xs">
+                        <div class="flex items-center justify-between gap-2">
+                            <span>77.1%</span>
+                            <div class="w-12 h-1 bg-slate-900 rounded-full overflow-hidden">
+                                <div class="h-full bg-purple-500" style="width: 77.1%"></div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-4 py-3 text-slate-300 font-mono text-xs">
+                        <div class="flex items-center justify-between gap-2">
+                            <span>52.0%</span>
+                            <div class="w-12 h-1 bg-slate-900 rounded-full overflow-hidden">
+                                <div class="h-full bg-pink-500" style="width: 52.0%"></div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-4 py-3 text-slate-300 font-mono text-xs">
+                        <div class="flex items-center justify-between gap-2">
+                            <span>44.0%</span>
+                            <div class="w-12 h-1 bg-slate-900 rounded-full overflow-hidden">
+                                <div class="h-full bg-slate-500" style="width: 44.0%"></div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-4 py-3 text-slate-400 font-mono text-xs">
+                        <div class="flex items-center justify-between gap-2">
+                            <span>29.1%</span>
+                            <div class="w-12 h-1 bg-slate-900 rounded-full overflow-hidden">
+                                <div class="h-full bg-slate-700" style="width: 29.1%"></div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <!-- GPQA -->
+                <tr class="hover:bg-slate-900/20 transition-colors">
+                    <td class="px-4 py-3 text-white font-semibold text-xs">GPQA Diamond <em>(Science)</em></td>
+                    <td class="px-4 py-3 text-slate-300 font-mono text-xs">
+                        <div class="flex items-center justify-between gap-2">
+                            <span>84.3%</span>
+                            <div class="w-12 h-1 bg-slate-900 rounded-full overflow-hidden">
+                                <div class="h-full bg-cyan-500" style="width: 84.3%"></div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-4 py-3 text-slate-300 font-mono text-xs">
+                        <div class="flex items-center justify-between gap-2">
+                            <span>82.3%</span>
+                            <div class="w-12 h-1 bg-slate-900 rounded-full overflow-hidden">
+                                <div class="h-full bg-purple-500" style="width: 82.3%"></div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-4 py-3 text-slate-300 font-mono text-xs">
+                        <div class="flex items-center justify-between gap-2">
+                            <span>58.6%</span>
+                            <div class="w-12 h-1 bg-slate-900 rounded-full overflow-hidden">
+                                <div class="h-full bg-pink-500" style="width: 58.6%"></div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-4 py-3 text-slate-300 font-mono text-xs">
+                        <div class="flex items-center justify-between gap-2">
+                            <span>43.4%</span>
+                            <div class="w-12 h-1 bg-slate-900 rounded-full overflow-hidden">
+                                <div class="h-full bg-slate-500" style="width: 43.4%"></div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-4 py-3 text-slate-400 font-mono text-xs">
+                        <div class="flex items-center justify-between gap-2">
+                            <span>42.4%</span>
+                            <div class="w-12 h-1 bg-slate-900 rounded-full overflow-hidden">
+                                <div class="h-full bg-slate-700" style="width: 42.4%"></div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <!-- Tool Use -->
+                <tr class="hover:bg-slate-900/20 transition-colors">
+                    <td class="px-4 py-3 text-white font-semibold text-xs">𝝉2-bench <em>(Agent Tools)</em></td>
+                    <td class="px-4 py-3 text-slate-300 font-mono text-xs">
+                        <div class="flex items-center justify-between gap-2">
+                            <span>86.4%</span>
+                            <div class="w-12 h-1 bg-slate-900 rounded-full overflow-hidden">
+                                <div class="h-full bg-cyan-500" style="width: 86.4%"></div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-4 py-3 text-slate-300 font-mono text-xs">
+                        <div class="flex items-center justify-between gap-2">
+                            <span>85.5%</span>
+                            <div class="w-12 h-1 bg-slate-900 rounded-full overflow-hidden">
+                                <div class="h-full bg-purple-500" style="width: 85.5%"></div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-4 py-3 text-slate-300 font-mono text-xs">
+                        <div class="flex items-center justify-between gap-2">
+                            <span>57.5%</span>
+                            <div class="w-12 h-1 bg-slate-900 rounded-full overflow-hidden">
+                                <div class="h-full bg-pink-500" style="width: 57.5%"></div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-4 py-3 text-slate-300 font-mono text-xs">
+                        <div class="flex items-center justify-between gap-2">
+                            <span>29.4%</span>
+                            <div class="w-12 h-1 bg-slate-900 rounded-full overflow-hidden">
+                                <div class="h-full bg-slate-500" style="width: 29.4%"></div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-4 py-3 text-slate-400 font-mono text-xs">
+                        <div class="flex items-center justify-between gap-2">
+                            <span>6.6%</span>
+                            <div class="w-12 h-1 bg-slate-900 rounded-full overflow-hidden">
+                                <div class="h-full bg-slate-700" style="width: 6.6%"></div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <p class="text-sm text-slate-300 leading-relaxed font-sans">
+        Of particular note is the performance increase in the area of agent-based tool use (𝝉2-bench) and complex logical reasoning (AIME 2026). These advances qualify Gemma 4 to a high degree as a cognitive coordinator in simulation-based control loops.
+    </p>
+
+    <!-- Section 3 -->
+    <h3 class="text-xl md:text-2xl font-extrabold text-white mt-12 mb-4 border-b border-slate-900 pb-2 flex items-center gap-2">
+        <span>🧠</span> Native Thinking Mode and Token Control
+    </h3>
+    <p class="text-sm text-slate-300 leading-relaxed font-sans">
+        A standout feature of Gemma 4 is the native thinking mode, which enables deep cognitive analysis steps before the final response generation. Unlike traditional prompts where the model must be forced into a structured thinking process by explicit text instructions ("Think step by step"), this behavior is directly integrated into the model's architecture and vocabulary.
+    </p>
+
+    <h4 class="text-lg font-bold text-cyan-400 mt-8 mb-3 flex items-center gap-2">
+        <span class="text-xs">◆</span> Structuring via Native Control Tokens
+    </h4>
+    <p class="text-sm text-slate-300 leading-relaxed font-sans">
+        Thinking mode is activated by inserting the control token <code class="text-cyan-400 font-mono bg-slate-900/60 px-1.5 py-0.5 rounded text-xs">&lt;|think|&gt;</code> directly at the beginning of the system prompt. During the inference process, the model then opens a dedicated channel, which is delimited by the special vocabulary tokens <code class="text-cyan-400 font-mono bg-slate-900/60 px-1.5 py-0.5 rounded text-xs">&lt;|channel&gt;thought</code> and <code class="text-cyan-400 font-mono bg-slate-900/60 px-1.5 py-0.5 rounded text-xs">&lt;channel|&gt;</code>.
+    </p>
+
+    <p class="text-sm text-slate-350 leading-relaxed font-sans my-4">
+        Instead of abstract diagrams, let's look at the exact string representation to understand how the tokenizer formats these control tokens under the hood.
+    </p>
+
+    <h4 class="text-md font-bold text-cyan-400 mt-6 mb-2 flex items-center gap-2">
+        <span class="text-xs">◆</span> 1. The Input Prompt (What the model sees)
+    </h4>
+    <p class="text-sm text-slate-300 leading-relaxed font-sans">
+        When you apply the chat template via the processor, the system formats your instructions and the user request into a single raw string. Specific delimiter tokens (<code class="text-cyan-400 font-mono bg-slate-900/60 px-1 py-0.5 rounded text-[10px]">&lt;bos&gt;</code>, <code class="text-cyan-400 font-mono bg-slate-900/60 px-1 py-0.5 rounded text-[10px]">&lt;|turn&gt;</code>, <code class="text-cyan-400 font-mono bg-slate-900/60 px-1 py-0.5 rounded text-[10px]">&lt;turn|&gt;</code>) are used:
+    </p>
+    <pre class="bg-slate-950/40 p-4 rounded-xl border border-slate-900/60 my-4 overflow-x-auto"><code class="language-python"># The exact raw string structure sent to the model's input
+raw_prompt = (
+    "&lt;bos&gt;"
+    "&lt;|turn&gt;system\n"
+    "&lt;|think|&gt;\n"
+    "You are an industrial AI controller. Analyze the telemetry.&lt;turn|&gt;\n"
+    "&lt;|turn&gt;user\n"
+    "Status report: Queue=12, Capacity=15. Decision?&lt;turn|&gt;\n"
+    "&lt;|turn&gt;model\n"
+)</code></pre>
+
+    <h4 class="text-md font-bold text-cyan-400 mt-6 mb-2 flex items-center gap-2">
+        <span class="text-xs">◆</span> 2. The Inference Stream (What the model generates)
+    </h4>
+    <p class="text-sm text-slate-300 leading-relaxed font-sans">
+        Once the model receives the <code class="text-cyan-400 font-mono bg-slate-900/60 px-1.5 py-0.5 rounded text-xs">&lt;|turn&gt;model\n</code> token at the end of the prompt, it takes control and begins generating. Since we prepared it with the <code class="text-cyan-400 font-mono bg-slate-900/60 px-1.5 py-0.5 rounded text-xs">&lt;|think|&gt;</code> flag, its immediate reaction is to open the thinking channel, think through the problem logically, close the channel, and finally output the action visible to the user:
+    </p>
+    <pre class="bg-slate-950/40 p-4 rounded-xl border border-slate-900/60 my-4 overflow-x-auto"><code class="language-python"># The raw output stream generated by the model
+raw_output = (
+    "&lt;|channel&gt;thought\n"
+    "The queue is currently at 12. This exceeds the warning threshold of 10. "
+    "According to the SOP, I must immediately set the rate to 3.0 to prevent an overflow.\n"
+    "&lt;channel|&gt;\n"
+    "NEW_SERVICE_RATE: 3.0&lt;turn|&gt;"
+)</code></pre>
+
+    <p class="text-sm text-slate-300 leading-relaxed font-sans my-4">
+        For system integration and state management, a technical detail is of critical importance: in multi-turn conversations, the content of the thinking channel (thought) generated in previous rounds must <strong>not</strong> be fed back into the history of the next run.
+    </p>
+    <p class="text-sm text-slate-300 leading-relaxed font-sans my-4">
+        The context for the next step is cleaned by passing only the final, user-visible model responses as history. This protects the system from excessive token growth and prevents cognitive overload of the model by outdated logical branches. Here you can see how this is programmatically enforced using regular expressions:
+    </p>
+
+    <h4 class="text-md font-bold text-cyan-400 mt-6 mb-2 flex items-center gap-2">
+        <span class="text-xs">◆</span> 3. State Management and Token Cleaning
+    </h4>
+    <pre class="bg-slate-950/40 p-4 rounded-xl border border-slate-900/60 my-4 overflow-x-auto"><code class="language-python">import re
+
+# RegEx pattern to isolate all content between the channel tokens
+thought_pattern = r"&lt;\|channel&gt;thought\s*(.*?)\s*&lt;channel\|&gt;"
+
+# Extraction of the thinking process (for local terminal logs/debugging)
+thought_match = re.search(thought_pattern, raw_output, re.DOTALL)
+thought_process = thought_match.group(1).strip() if thought_match else ""
+
+# Cleaning the output: Removing the thought block and the closing turn token
+final_response = re.sub(thought_pattern, "", raw_output, flags=re.DOTALL)
+final_response = final_response.replace("&lt;turn|&gt;", "").strip()
+
+print(f"--- HIDDEN LOGIC ---\n{thought_process}\n")
+print(f"--- VISIBLE ACTION ---\n{final_response}")
+
+# Correct history management: ONLY the cleaned response is taken into the next cycle
+# conversation_history.append({
+#     "role": "model", 
+#     "content": final_response
+# })</code></pre>
+
+    <!-- Section 4 -->
+    <h3 class="text-xl md:text-2xl font-extrabold text-white mt-12 mb-4 border-b border-slate-900 pb-2 flex items-center gap-2">
+        <span>🔍</span> Local Retrieval-Augmented Generation (RAG) in System Control
+    </h3>
+    <p class="text-sm text-slate-300 leading-relaxed font-sans">
+        The integration of RAG structures on edge devices significantly expands the capabilities of the local observer agent. While a standard language model acts exclusively on the knowledge acquired during training, RAG allows the model to access external data sources in real time. In the context of industrial manufacturing simulations, this primarily concerns machine-specific operating manuals, standard operating procedures (SOPs), and regulatory safety limits.
+    </p>
+    <p class="text-sm text-slate-300 leading-relaxed font-sans">
+        By executing RAG on a local edge instance, it is ensured that confidential factory documents never pass through external networks. The mechanism is based on a three-stage process that runs directly in the simulation loop:
+    </p>
+
+    <!-- Mermaid 4 -->
+    <pre class="mermaid bg-slate-950/40 p-4 rounded-xl border border-slate-900/60 my-6 flex justify-center">
+    graph TD
+        A[Current Simulation State] --> B{Local Vector Index}
+        B -- Cosine Similarity --> C[Retrieval of Relevant Regulations]
+        C --> D[Gemma 4 Local Inference]
+        D --> E[Precise Control Decision]
+        E --> F[Feedback into the Simulation]
+        
+        style A fill:#0f172a,stroke:#06b6d4,color:#f8fafc
+        style B fill:#1e1b4b,stroke:#8b5cf6,color:#f8fafc
+        style C fill:#0f172a,stroke:#06b6d4,color:#f8fafc
+        style D fill:#1e1b4b,stroke:#8b5cf6,color:#f8fafc
+        style E fill:#064e3b,stroke:#059669,color:#a7f3d0
+        style F fill:#4c1d95,stroke:#7c3aed,color:#ddd6fe
+    </pre>
+
+    <p class="text-sm text-slate-300 leading-relaxed font-sans">
+        The model reads the current simulation state, matches it with an embedded knowledge database via a local cosine similarity calculation, draws on the relevant physical control regulations, and generates a precise, technically sound control decision based on this.
+    </p>
+
+    <!-- Section 5 -->
+    <h3 class="text-xl md:text-2xl font-extrabold text-white mt-12 mb-4 border-b border-slate-900 pb-2 flex items-center gap-2">
+        <span>📊</span> Utility Analysis: Cloud Inference versus Local Edge Models
+    </h3>
+    <p class="text-sm text-slate-300 leading-relaxed font-sans">
+        The integration of local language models like Gemma 4 into industrial simulation environments represents a conscious departure from centralized cloud topologies. To assess the strategic viability of this decision, a systematic comparison of the architectures based on quantitative and qualitative parameters is required.
+    </p>
+
+    <h4 class="text-lg font-bold text-cyan-400 mt-8 mb-3 flex items-center gap-2">
+        <span class="text-xs">◆</span> Comparison Matrix of Inference Paradigms
+    </h4>
+
+    <!-- Visual Table 3 with Advantage Badges -->
+    <div class="overflow-x-auto my-6 border border-slate-800 rounded-xl bg-slate-950/25">
+        <table class="min-w-full divide-y divide-slate-800 text-sm">
+            <thead class="bg-slate-900/40">
+                <tr>
+                    <th class="px-4 py-3 text-left text-xs font-mono font-bold text-slate-400 uppercase tracking-wider">Evaluation Criterion</th>
+                    <th class="px-4 py-3 text-left text-xs font-mono font-bold text-slate-450 uppercase tracking-wider">Cloud Inference (e.g., Gemini API)</th>
+                    <th class="px-4 py-3 text-left text-xs font-mono font-bold text-cyan-400 uppercase tracking-wider">Local Edge Inference (e.g., Gemma 4)</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-850 bg-slate-950/10 text-xs">
+                <!-- Latency -->
+                <tr class="hover:bg-slate-900/20 transition-colors">
+                    <td class="px-4 py-3 text-white font-bold font-mono">Latency Behavior</td>
+                    <td class="px-4 py-3 text-slate-400 leading-relaxed">Fluctuating (network-dependent); typically between 100 ms and 2000 ms.</td>
+                    <td class="px-4 py-3 text-slate-200 leading-relaxed">
+                        <span class="inline-block px-1.5 py-0.5 rounded bg-emerald-950 border border-emerald-500/35 text-emerald-400 text-[9px] font-mono font-bold uppercase mr-1.5">Advantage</span>
+                        Low and highly deterministic; directly tied to local hardware utilization.
+                    </td>
+                </tr>
+                <!-- Security -->
+                <tr class="hover:bg-slate-900/20 transition-colors">
+                    <td class="px-4 py-3 text-white font-bold font-mono">Data Security & Sovereignty</td>
+                    <td class="px-4 py-3 text-slate-400 leading-relaxed">Telemetry data and system metrics must be transmitted to external data centers.</td>
+                    <td class="px-4 py-3 text-slate-200 leading-relaxed">
+                        <span class="inline-block px-1.5 py-0.5 rounded bg-emerald-950 border border-emerald-500/35 text-emerald-400 text-[9px] font-mono font-bold uppercase mr-1.5">Advantage</span>
+                        Full data sovereignty; sensitive industrial data remains local on the physical machine.
+                    </td>
+                </tr>
+                <!-- Fail-safety -->
+                <tr class="hover:bg-slate-900/20 transition-colors">
+                    <td class="px-4 py-3 text-white font-bold font-mono">Fail-safety</td>
+                    <td class="px-4 py-3 text-slate-400 leading-relaxed">Total failure of control logic in case of network interruption or API downtime.</td>
+                    <td class="px-4 py-3 text-slate-200 leading-relaxed">
+                        <span class="inline-block px-1.5 py-0.5 rounded bg-emerald-950 border border-emerald-500/35 text-emerald-400 text-[9px] font-mono font-bold uppercase mr-1.5">Advantage</span>
+                        High resilience; control remains fully operational even in offline mode.
+                    </td>
+                </tr>
+                <!-- Costs -->
+                <tr class="hover:bg-slate-900/20 transition-colors">
+                    <td class="px-4 py-3 text-white font-bold font-mono">Operating Costs (OPEX)</td>
+                    <td class="px-4 py-3 text-slate-400 leading-relaxed">Variable costs per token; potentially high for high-frequency control loops.</td>
+                    <td class="px-4 py-3 text-slate-200 leading-relaxed">
+                        <span class="inline-block px-1.5 py-0.5 rounded bg-emerald-950 border border-emerald-500/35 text-emerald-400 text-[9px] font-mono font-bold uppercase mr-1.5">Advantage</span>
+                        Fixed hardware costs (CAPEX); zero marginal costs for additional inference calls.
+                    </td>
+                </tr>
+                <!-- Knowledge Base -->
+                <tr class="hover:bg-slate-900/20 transition-colors">
+                    <td class="px-4 py-3 text-white font-bold font-mono">Intelligence Depth</td>
+                    <td class="px-4 py-3 text-slate-200 leading-relaxed">
+                        <span class="inline-block px-1.5 py-0.5 rounded bg-emerald-950 border border-emerald-500/35 text-emerald-400 text-[9px] font-mono font-bold uppercase mr-1.5">Advantage</span>
+                        Access to the most powerful frontier models (e.g., Gemini Ultra) with maximum logic density.
+                    </td>
+                    <td class="px-4 py-3 text-slate-400 leading-relaxed">Limited by the parameter count of the edge hardware (e.g., Gemma 4 12B).</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <p class="text-sm text-slate-300 leading-relaxed font-sans">
+        The analysis clearly shows that for real-time control and safety-critical industrial simulations, local edge inference is the superior architecture. While cloud models are preferred for broad strategic analysis, local open-weights models like Gemma 4 act as robust "Sovereign Guardians" of the physical system.
+    </p>
+
+    <div class="p-6 glass-card rounded-2xl border-t-2 border-t-purple-500/35 bg-purple-950/5 space-y-4 my-8">
+        <h4 class="text-purple-400 font-bold text-lg flex items-center gap-2"><span>📖</span> Theoretical Introduction</h4>
+        <ul class="list-disc pl-6 text-sm text-slate-300 space-y-2.5 my-4">
+            <li class="leading-relaxed"><strong class="text-white">The Technical Report:</strong> Google DeepMind (2026). *Gemma 4: Open Models for Sovereign Edge Intelligence*.</li>
+            <li class="leading-relaxed"><strong class="text-white">RAG on Edge:</strong> Lewis, P., et al. (2020). *Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks*.</li>
+            <li class="leading-relaxed"><strong class="text-white">The Antigravity ADE Handbook:</strong> Section 8.2. *Configuring Local Kagglehub Inference Hooks*.</li>
+        </ul>
+    </div>
+</div>

@@ -1,0 +1,116 @@
+[
+    {
+        "question": "How does the convergence rate of classical Monte Carlo integration scale with increasing dimension d?",
+        "options": [
+            "It decreases exponentially with dimension d",
+            "It remains constant at O(1/sqrt(N)) independent of d",
+            "It improves quadratically through more dimensions",
+            "The curse of dimensionality is completely bypassed"
+        ],
+        "answerIndex": 1,
+        "explanation": "Exactly that is the magic of Monte Carlo! No matter if 2 or 100 dimensions, the convergence rate remains at O(1/sqrt(N)). That's why we love MC in high dimensions. Stay tuned!"
+    },
+    {
+        "question": "Why does JAX not have a global random state like numpy.random?",
+        "options": [
+            "To prevent race conditions on parallelized GPUs/TPUs",
+            "Because functional purity (Pure Functions) is enforced",
+            "Because Google wants to keep the mathematical constant Pi secret",
+            "JAX developers simply forgot to implement it"
+        ],
+        "answerIndex": [
+            0,
+            1
+        ],
+        "explanation": "JAX forces us into functional purity. A global state would lead to nasty race conditions during parallel calculations on GPUs/TPUs. Clean code pays off!"
+    },
+    {
+        "question": "What happens if you reuse a JAX PRNGKey in a loop without splitting it?",
+        "options": [
+            "The code immediately aborts with a compiler error",
+            "Exactly identical random numbers are generated every time",
+            "The simulation loses its functional purity",
+            "The system secretly switches to memory mode"
+        ],
+        "answerIndex": 1,
+        "explanation": "Watch out, trap! Since JAX is functionally pure, the same key always delivers the same output. So never forget your jax.random.split(), otherwise you'll simulate Groundhog Day!"
+    },
+    {
+        "question": "Which property fundamentally defines a first-order discrete Markov chain?",
+        "options": [
+            "The system has no memory of historical states",
+            "The future depends exclusively on the current state",
+            "Transition probabilities must always remain absolutely stable",
+            "It was originally invented for the analysis of quanta"
+        ],
+        "answerIndex": [
+            0,
+            1
+        ],
+        "explanation": "This is the famous Markov property (memorylessness). The chain is not interested in the past, but only in the here and now. Keep it simple!"
+    },
+    {
+        "question": "What does Value-at-Risk (VaR_95%) describe in a stochastic business simulation?",
+        "options": [
+            "The maximum profit that the company will achieve to 95%",
+            "The loss limit that occurs in the worst 5% of cases",
+            "The exact mean of all simulated revenue paths",
+            "The statistical risk that the GPU will melt due to overheating"
+        ],
+        "answerIndex": 1,
+        "explanation": "VaR is your risk radar! At 95% confidence, it shows you the loss that is only exceeded in the worst 5% of scenarios. A must-know for risk management!"
+    },
+    {
+        "question": "Which JAX primitive transforms a single-key simulation into a massively parallel vectorized execution?",
+        "options": [
+            "jax.jit",
+            "jax.vmap",
+            "jax.lax.scan",
+            "jax.grad"
+        ],
+        "answerIndex": 1,
+        "explanation": "vmap (vectorizing map) is your best friend for performance! It takes a function for a single input and runs it parallel across entire batches. Mega efficient!"
+    },
+    {
+        "question": "Why is a log-normal distribution often used for operational costs in Monte Carlo models?",
+        "options": [
+            "Because costs can never be negative",
+            "To model rare, extremely high loss risks (fat-tails)",
+            "Because it is more symmetrical than the classic Gaussian distribution",
+            "So that the axes in the plot look nicer"
+        ],
+        "answerIndex": [
+            0,
+            1
+        ],
+        "explanation": "Costs cannot be negative and often have outliers upwards (fat-tails). The log-normal distribution models this asymmetric risk perfectly. Well thought out!"
+    },
+    {
+        "question": "How does a structural Black Swan event mathematically affect a Markov model?",
+        "options": [
+            "The transition matrix P(t) is modified time-dependently and transiently",
+            "Probabilities shift abruptly into crisis states",
+            "The system breaks down deterministically and stops",
+            "All probabilities instantaneously become perfectly equal"
+        ],
+        "answerIndex": [
+            0,
+            1
+        ],
+        "explanation": "Black Swans break the normal rules. Mathematically, this means that our transition probabilities change abruptly and jump into crisis states. Expect the unexpected!"
+    },
+    {
+        "question": "How do Antigravity 2.0 Skills and Gemini 3.5 Flash support the stochastic pipeline?",
+        "options": [
+            "Through automated profiling of JAX compilation times",
+            "Autonomous subagents test code variation limits in the sandbox terminal",
+            "They completely prohibit the use of random numbers",
+            "They replace mathematical formulas with pure AI hallucinations"
+        ],
+        "answerIndex": [
+            0,
+            1
+        ],
+        "explanation": "This is where AI meets stochastics! Autonomous subagents test huge code variation spaces in the sandbox terminal, while you focus on the logic. The future!"
+    }
+]

@@ -1,0 +1,146 @@
+<div class="relative w-full h-[600px] overflow-hidden rounded-2xl shadow-2xl bg-slate-900 font-sans">
+    <!-- Hero Background (Anime Style) -->
+    <div class="absolute inset-0 z-0">
+        <img src="assets/images/week6_stories_bg.png" alt="Domain of Chaos" class="w-full h-full object-cover opacity-80 pointer-events-none">
+        <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-slate-950/40 pointer-events-none"></div>
+    </div>
+
+    <!-- Floating Interactive Elements -->
+    <div class="absolute inset-0 z-10">
+        <!-- Story 1: Ulam -->
+        <div class="absolute top-[25%] left-[20%] group cursor-pointer" onclick="window.openStory('ulam')">
+            <div class="w-16 h-16 bg-yellow-500/20 backdrop-blur-md border-2 border-yellow-400 rounded-full flex items-center justify-center text-3xl shadow-[0_0_20px_rgba(234,179,8,0.5)] group-hover:scale-110 transition-all duration-300 animate-bounce">
+                🎲
+            </div>
+            <div class="mt-2 bg-slate-900/80 backdrop-blur-sm px-3 py-1 rounded-lg border border-yellow-500/30 opacity-0 group-hover:opacity-100 transition-opacity">
+                <p class="text-yellow-400 text-xs font-bold font-mono">Stanislaw Ulam</p>
+            </div>
+        </div>
+
+        <!-- Story 2: Markov -->
+        <div class="absolute bottom-[30%] left-[15%] group cursor-pointer" onclick="window.openStory('markov')">
+            <div class="w-16 h-16 bg-cyan-500/20 backdrop-blur-md border-2 border-cyan-400 rounded-full flex items-center justify-center text-3xl shadow-[0_0_20px_rgba(6,182,212,0.5)] group-hover:scale-110 transition-all duration-300 animate-pulse">
+                ⛓️
+            </div>
+            <div class="mt-2 bg-slate-900/80 backdrop-blur-sm px-3 py-1 rounded-lg border border-cyan-500/30 opacity-0 group-hover:opacity-100 transition-opacity">
+                <p class="text-cyan-400 text-xs font-bold font-mono">Andrei Markov</p>
+            </div>
+        </div>
+
+        <!-- Story 3: Black Swan -->
+        <div class="absolute top-[35%] right-[15%] group cursor-pointer" onclick="window.openStory('swan')">
+            <div class="w-16 h-16 bg-purple-500/20 backdrop-blur-md border-2 border-purple-400 rounded-full flex items-center justify-center text-3xl shadow-[0_0_20px_rgba(139,92,246,0.5)] group-hover:scale-110 transition-all duration-300 animate-bounce" style="animation-delay: 0.5s;">
+                🦢
+            </div>
+            <div class="mt-2 bg-slate-900/80 backdrop-blur-sm px-3 py-1 rounded-lg border border-purple-500/30 opacity-0 group-hover:opacity-100 transition-opacity">
+                <p class="text-purple-400 text-xs font-bold font-mono">Black Swan</p>
+            </div>
+        </div>
+
+        <!-- Story 4: JAX Keys -->
+        <div class="absolute bottom-[20%] right-[30%] group cursor-pointer" onclick="window.openStory('jax')">
+            <div class="w-16 h-16 bg-pink-500/20 backdrop-blur-md border-2 border-pink-400 rounded-full flex items-center justify-center text-3xl shadow-[0_0_20px_rgba(236,72,153,0.5)] group-hover:scale-110 transition-all duration-300 animate-spin" style="animation-duration: 8s;">
+                🔑
+            </div>
+            <div class="mt-2 bg-slate-900/80 backdrop-blur-sm px-3 py-1 rounded-lg border border-pink-500/30 opacity-0 group-hover:opacity-100 transition-opacity">
+                <p class="text-pink-400 text-xs font-bold font-mono">JAX-Schlüssel</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modals Container -->
+    <div id="story-modal" class="absolute inset-0 z-50 flex items-center justify-center p-6 bg-slate-950/80 backdrop-blur-md hidden transition-all duration-500">
+        <div class="relative max-w-2xl w-full bg-slate-900 border border-slate-700 rounded-3xl overflow-hidden shadow-2xl transform scale-95 opacity-0 transition-all duration-500" id="modal-content">
+            <button onclick="window.closeStory()" class="absolute top-4 right-4 text-slate-400 hover:text-white transition-colors z-50">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+
+            <div class="p-8">
+                <div id="story-ulam" class="hidden space-y-4">
+                    <div class="flex items-center gap-4 border-b border-yellow-500/30 pb-4">
+                        <span class="text-4xl">🎲</span>
+                        <div>
+                            <h2 class="text-2xl font-black text-white font-outfit uppercase">Stanislaw Ulam</h2>
+                            <p class="text-yellow-400 font-mono text-sm tracking-widest">Das Solitaire-Genie</p>
+                        </div>
+                    </div>
+                    <p class="text-slate-300 leading-relaxed italic border-l-4 border-yellow-500 pl-4 py-2 bg-yellow-950/20">
+                        "Einfach mal 100-mal durchspielen."
+                    </p>
+                    <p class="text-slate-300 leading-relaxed text-sm">
+                        Während er im Bett lag, erfand Ulam die Monte-Carlo-Methode. Er erkannte, dass komplexe mathematische Probleme oft leichter experimentell durch Simulation gelöst werden können als durch pure Formeln. Später nutzte er diese Technik, um die Wasserstoffbombe mitzuberechnen. Ein Casino-Besuch seines Onkels gab dem Ganzen den Namen.
+                    </p>
+                </div>
+
+                <div id="story-markov" class="hidden space-y-4">
+                    <div class="flex items-center gap-4 border-b border-cyan-500/30 pb-4">
+                        <span class="text-4xl">⛓️</span>
+                        <div>
+                            <h2 class="text-2xl font-black text-white font-outfit uppercase">Andrei Markov</h2>
+                            <p class="text-cyan-400 font-mono text-sm tracking-widest">Der Dichter der Wahrscheinlichkeit</p>
+                        </div>
+                    </div>
+                    <p class="text-slate-300 leading-relaxed text-sm">
+                        Markov interessierte sich nicht für Physik, sondern für Alexander Puschkin. Er analysierte 20.000 Buchstaben aus "Eugen Onegin", um zu zeigen, dass Buchstabenfolgen eine Kette bilden. Heute treiben seine Markov-Ketten alles an – von Google-Suchen bis hin zu Finanzprognosen. Chaos hat ein System.
+                    </p>
+                </div>
+
+                <div id="story-swan" class="hidden space-y-4">
+                    <div class="flex items-center gap-4 border-b border-purple-500/30 pb-4">
+                        <span class="text-4xl">🦢</span>
+                        <div>
+                            <h2 class="text-2xl font-black text-white font-outfit uppercase">The Black Swan</h2>
+                            <p class="text-purple-400 font-mono text-sm tracking-widest">Das Unvorhersehbare</p>
+                        </div>
+                    </div>
+                    <p class="text-slate-300 leading-relaxed text-sm">
+                        Nassim Taleb warnte uns vor den 'Black Swans': Ereignisse, die so selten sind, dass keine Statistik sie vorhersagt, die aber die Welt verändern. Monte-Carlo-Simulationen helfen uns, diese Extrem-Szenarien zumindest durchzuspielen. In Woche 6 lernst du, wie man sich auf das Unmögliche vorbereitet.
+                    </p>
+                </div>
+
+                <div id="story-jax" class="hidden space-y-4">
+                    <div class="flex items-center gap-4 border-b border-pink-500/30 pb-4">
+                        <span class="text-4xl">🔑</span>
+                        <div>
+                            <h2 class="text-2xl font-black text-white font-outfit uppercase">JAX-PRNG Keys</h2>
+                            <p class="text-pink-400 font-mono text-sm tracking-widest">Kryptographischer Zufall</p>
+                        </div>
+                    </div>
+                    <p class="text-slate-300 leading-relaxed text-sm">
+                        In JAX ist Zufall eine reine Funktion. Du hältst den Schlüssel (Key) in der Hand. Vergisst du ihn zu 'splitten', bleibt die Zeit stehen – jedes Ergebnis wird identisch. Es ist wie Groundhog Day für Programmierer. Nutze die Threefry-Verschlüsselung, um Millionen von Pfaden gleichzeitig auf der GPU zu entfesseln.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script Section -->
+    <script>
+        window.openStory = function(id) {
+            const modal = document.getElementById('story-modal');
+            const content = document.getElementById('modal-content');
+            ['ulam', 'markov', 'swan', 'jax'].forEach(s => {
+                document.getElementById('story-' + s).classList.add('hidden');
+            });
+            document.getElementById('story-' + id).classList.remove('hidden');
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modal.classList.add('opacity-100');
+                content.classList.remove('scale-95', 'opacity-0');
+                content.classList.add('scale-100', 'opacity-100');
+            }, 10);
+        };
+
+        window.closeStory = function() {
+            const modal = document.getElementById('story-modal');
+            const content = document.getElementById('modal-content');
+            content.classList.remove('scale-100', 'opacity-100');
+            content.classList.add('scale-95', 'opacity-0');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 500);
+        };
+    </script>
+</div>

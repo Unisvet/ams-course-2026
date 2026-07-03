@@ -1,0 +1,143 @@
+<div class="relative w-full h-[600px] overflow-hidden rounded-2xl shadow-2xl bg-slate-900 font-sans">
+    <!-- Hero Background -->
+    <div class="absolute inset-0 z-0">
+        <img src="assets/images/week11_stories_bg.png" alt="The Nexus of Swarms" class="w-full h-full object-cover opacity-80 pointer-events-none">
+        <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-slate-950/40 pointer-events-none"></div>
+    </div>
+
+    <!-- Floating Interactive Elements -->
+    <div class="absolute inset-0 z-10">
+        <!-- Story 1: Scholar-Prime -->
+        <div class="absolute top-[20%] left-[20%] group cursor-pointer" onclick="window.openStory('scholar')">
+            <div class="w-20 h-20 bg-cyan-500/20 backdrop-blur-md border-2 border-cyan-400 rounded-full flex items-center justify-center text-4xl shadow-[0_0_30px_rgba(6,182,212,0.5)] group-hover:scale-110 transition-all duration-300 animate-pulse">
+                👨‍🎓
+            </div>
+            <div class="mt-2 bg-slate-900/80 backdrop-blur-sm px-3 py-1 rounded-lg border border-cyan-500/30 opacity-0 group-hover:opacity-100 transition-opacity">
+                <p class="text-cyan-400 text-xs font-bold font-mono text-center leading-tight text-center uppercase tracking-widest">Scholar-Prime</p>
+            </div>
+        </div>
+
+        <!-- Story 2: Builder-Prime -->
+        <div class="absolute bottom-[25%] left-[15%] group cursor-pointer" onclick="window.openStory('builder')">
+            <div class="w-18 h-18 bg-pink-500/20 backdrop-blur-md border-2 border-pink-400 rounded-full flex items-center justify-center text-3xl shadow-[0_0_20px_rgba(236,72,153,0.4)] group-hover:scale-110 transition-all duration-300 animate-bounce">
+                👷
+            </div>
+            <div class="mt-2 bg-slate-900/80 backdrop-blur-sm px-3 py-1 rounded-lg border border-pink-500/30 opacity-0 group-hover:opacity-100 transition-opacity">
+                <p class="text-pink-400 text-xs font-bold font-mono uppercase tracking-widest text-center">Builder-Prime</p>
+            </div>
+        </div>
+
+        <!-- Story 3: Manager-Prime -->
+        <div class="absolute top-[30%] right-[15%] group cursor-pointer" onclick="window.openStory('manager')">
+            <div class="w-22 h-22 bg-yellow-500/20 backdrop-blur-md border-2 border-yellow-400 rounded-full flex items-center justify-center text-4xl shadow-[0_0_35px_rgba(234,179,8,0.4)] group-hover:scale-110 transition-all duration-300 animate-spin" style="animation-duration: 15s;">
+                👔
+            </div>
+            <div class="mt-2 bg-slate-900/80 backdrop-blur-sm px-3 py-1 rounded-lg border border-yellow-500/30 opacity-0 group-hover:opacity-100 transition-opacity text-center">
+                <p class="text-yellow-400 text-xs font-bold font-mono uppercase tracking-widest text-center">Manager-Prime</p>
+            </div>
+        </div>
+
+        <!-- Story 4: Antigravity Nexus -->
+        <div class="absolute bottom-[15%] right-[25%] group cursor-pointer" onclick="window.openStory('nexus')">
+            <div class="w-16 h-16 bg-purple-500/20 backdrop-blur-md border-2 border-purple-400 rounded-full flex items-center justify-center text-3xl shadow-[0_0_25px_rgba(167,139,250,0.5)] group-hover:scale-110 transition-all duration-300 animate-pulse">
+                📡
+            </div>
+            <div class="mt-2 bg-slate-900/80 backdrop-blur-sm px-3 py-1 rounded-lg border border-purple-500/30 opacity-0 group-hover:opacity-100 transition-opacity">
+                <p class="text-purple-400 text-xs font-bold font-mono uppercase tracking-widest text-center">AG-Nexus</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modals Container -->
+    <div id="story-modal" class="absolute inset-0 z-50 flex items-center justify-center p-6 bg-slate-950/80 backdrop-blur-md hidden transition-all duration-500">
+        <div class="relative max-w-2xl w-full bg-slate-900 border border-slate-700 rounded-3xl overflow-hidden shadow-2xl transform scale-95 opacity-0 transition-all duration-500" id="modal-content">
+            <button onclick="window.closeStory()" class="absolute top-4 right-4 text-slate-400 hover:text-white transition-colors z-50">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+
+            <div class="p-8">
+                <div id="story-scholar" class="hidden space-y-4">
+                    <div class="flex items-center gap-4 border-b border-cyan-500/30 pb-4">
+                        <span class="text-4xl">👨‍🎓</span>
+                        <div>
+                            <h2 class="text-2xl font-black text-white font-outfit uppercase">Scholar-Prime</h2>
+                            <p class="text-cyan-400 font-mono text-sm tracking-widest uppercase">The Academic Tracker</p>
+                        </div>
+                    </div>
+                    <p class="text-slate-300 leading-relaxed text-sm">
+                        "I don't just read – I understand." Scholar-Prime uses DeepMind Science Skills to sift through millions of scientific papers on arXiv and OpenAlex. He doesn't just find the paper you're looking for, but also extracts precise physical parameters like thermal conductivity or decay rates for your simulations. A library genius in code form.
+                    </p>
+                </div>
+
+                <div id="story-builder" class="hidden space-y-4">
+                    <div class="flex items-center gap-4 border-b border-pink-500/30 pb-4">
+                        <span class="text-4xl">👷</span>
+                        <div>
+                            <h2 class="text-2xl font-black text-white font-outfit uppercase">Builder-Prime</h2>
+                            <p class="text-pink-400 font-mono text-sm tracking-widest uppercase">The Sandbox Master</p>
+                        </div>
+                    </div>
+                    <p class="text-slate-300 leading-relaxed text-sm">
+                        Give him a goal, and he builds the bridge. Builder-Prime specializes in writing, compiling, and testing code in isolated sandboxes. If a tool call fails, he's the first to analyze the error and correct the parameters. He is the executive arm of the swarm, ensuring that theory works in practice.
+                    </p>
+                </div>
+
+                <div id="story-manager" class="hidden space-y-4">
+                    <div class="flex items-center gap-4 border-b border-yellow-500/30 pb-4">
+                        <span class="text-4xl">👔</span>
+                        <div>
+                            <h2 class="text-2xl font-black text-white font-outfit uppercase">Manager-Prime</h2>
+                            <p class="text-yellow-400 font-mono text-sm tracking-widest uppercase">The Orchestrator</p>
+                        </div>
+                    </div>
+                    <p class="text-slate-300 leading-relaxed text-sm">
+                        One agent is good, a swarm is better. Manager-Prime keeps track of all active sub-agents. He delegates tasks to Scholar-Prime, passes the results to Builder-Prime, and monitors the global goal. In the Antigravity Desktop App, he is your direct contact for complex multi-agent operations.
+                    </p>
+                </div>
+
+                <div id="story-nexus" class="hidden space-y-4">
+                    <div class="flex items-center gap-4 border-b border-purple-500/30 pb-4">
+                        <span class="text-4xl">📡</span>
+                        <div>
+                            <h2 class="text-2xl font-black text-white font-outfit uppercase">Antigravity Nexus</h2>
+                            <p class="text-purple-400 font-mono text-sm tracking-widest uppercase">The Nerve Center</p>
+                        </div>
+                    </div>
+                    <p class="text-slate-300 leading-relaxed text-sm">
+                        Antigravity is more than an app – it's an ecosystem. Whether you're typing in the CLI, using the SDK in Python, or checking diffs in the IDE: everything runs through the Core Agent Harness. Here, communication, security, and cognition merge into a single unit ready to push the boundaries of software development.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script Section -->
+    <script>
+        window.openStory = function(id) {
+            const modal = document.getElementById('story-modal');
+            const content = document.getElementById('modal-content');
+            ['scholar', 'builder', 'manager', 'nexus'].forEach(s => {
+                document.getElementById('story-' + s).classList.add('hidden');
+            });
+            document.getElementById('story-' + id).classList.remove('hidden');
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modal.classList.add('opacity-100');
+                content.classList.remove('scale-95', 'opacity-0');
+                content.classList.add('scale-100', 'opacity-100');
+            }, 10);
+        };
+
+        window.closeStory = function() {
+            const modal = document.getElementById('story-modal');
+            const content = document.getElementById('modal-content');
+            content.classList.remove('scale-100', 'opacity-100');
+            content.classList.add('scale-95', 'opacity-0');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 500);
+        };
+    </script>
+</div>

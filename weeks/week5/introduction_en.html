@@ -1,0 +1,66 @@
+<div class="space-y-8">
+    <!-- Header -->
+    <div class="mb-12">
+        <span class="text-[10px] font-mono text-cyan-400 uppercase tracking-[0.3em] block mb-2">Curriculum Details</span>
+        <h2 class="text-4xl font-black text-white tracking-tight">Theoretical Introduction</h2>
+        <div class="w-20 h-1.5 bg-gradient-to-r from-cyan-500 to-blue-600 mt-4 rounded-full"></div>
+    </div>
+
+    <div class="p-6 glass-card mb-12 rounded-2xl border-l-4 border-cyan-500 bg-gradient-to-r from-cyan-950/20 to-transparent">
+        <h3 class="text-xl md:text-2xl font-bold text-white mb-2">Week 5: The Fabric of Reality</h3>
+        <p class="text-slate-300 text-sm leading-relaxed">Scientific Machine Learning: Physics-Informed Neural Networks (PINNs) and Fourier Neural Operators (FNOs)</p>
+    </div>
+    
+
+    
+    <p class="text-sm text-slate-300 leading-relaxed my-3">Dear Architects of the *Neo-Simulacrum*,</p>
+    <p class="text-sm text-slate-300 leading-relaxed my-3">In the past weeks, you have learned to model the deterministic rules of systems and scale them to unimaginable speeds through JAX's hardware acceleration. However, pure computing power without physical understanding is blind. An AI model that merely interpolates vast amounts of data does not "understand" the world. If it extrapolates even one step beyond its training data, it collapses chaotically—violating mass conservation, ignoring thermodynamics, and producing physical impossibilities.</p>
+    <p class="text-sm text-slate-300 leading-relaxed my-3">This week, we undergo the ultimate paradigm shift. We leave classical numerics behind and enter the era of <strong class="text-white">Scientific Machine Learning (SciML)</strong>. We will teach our autonomous AI agents (like *Observer-Prime*) not just to simulate fundamental Partial Differential Equations (PDEs), but to *internalize* them as a continuous mathematical fabric.</p>
+
+    <h3 class="text-xl md:text-2xl font-extrabold text-white mt-12 mb-4 border-b border-slate-900 pb-2 flex items-center gap-2">
+        <span class="text-cyan-400">⚙️</span> 1. The Paradigm Shift: The End of Rigid Grids
+    </h3>
+    <p class="text-sm text-slate-300 leading-relaxed my-3">In the classical engineering world—the era of the *"Sorcerers of Simulink"*—laws of nature were approximated by rigid grids (meshes). Methods like the Finite Difference Method (FDM) divide space and time into tiny, fragile blocks to calculate slopes as simple quotients (\(\frac{\Delta u}{\Delta t}\)).</p>
+    <p class="text-sm text-slate-300 leading-relaxed my-3">These iterative algorithms crawl painfully slowly from timestep to timestep. They accumulate rounding errors, suffer from the exponential curse of dimensionality in 3D problems, and fail catastrophically with incomplete sensor data. The biggest problem: if even a tiny boundary condition in the design changes, the grid breaks, and the entire simulation must be restarted for hours.</p>
+    <p class="text-sm text-slate-300 leading-relaxed my-3">With your ascent into JAX's functional networks, we break this grid-based corset. A neural network is inherently a *universal function approximator*. We use it to learn a continuous, analytically differentiable surrogate function \(u(x, t)\). The model spans a seamless field across space and time. It can be queried at *any* arbitrary coordinate without a grid point ever having to exist there (<strong class="text-white">mesh-free</strong>).</p>
+
+    <h3 class="text-xl md:text-2xl font-extrabold text-white mt-12 mb-4 border-b border-slate-900 pb-2 flex items-center gap-2">
+        <span class="text-purple-400">🧠</span> 2. Physics-Informed Neural Networks (PINNs): Physics as a Loss Function
+    </h3>
+    <p class="text-sm text-slate-300 leading-relaxed my-3">But how do you force an inherently "data-believing" network to respect the conservation laws of physics? The genius of <strong class="text-white">PINNs</strong> (first formalized by *Raissi et al., 2019*) lies in modifying the loss function. We use the differential equation itself as a mathematical penalty.</p>
+    <p class="text-sm text-slate-300 leading-relaxed my-3">Training forces the Flax network through three separate constraints to adapt to reality:</p>
+    <ol class="list-decimal pl-6 text-sm text-slate-300 space-y-3 my-4">
+        <li class="leading-relaxed"><strong class="text-white">Initial Condition (IC) Loss –</strong> <strong class="text-white">*The Genesis State</strong><strong class="text-white">*:</strong><br>Mathematics alone is endless. The system needs a starting point. The network must learn that at time \(t=0\), it must exactly match the known starting state of the world (e.g., an ice-cold sine wave).</li>
+        <li class="leading-relaxed"><strong class="text-white">Boundary Condition (BC) Loss –</strong> <strong class="text-white">*The Edges of the Sandbox</strong><strong class="text-white">*:</strong><br>We must bound the system spatially. At the boundaries of the system (e.g., the ends of a metal rod at \(x=-1\) and \(x=1\)), the network must permanently respect the temperatures prevailing there (e.g., \(0^\circ C\)).</li>
+        <li class="leading-relaxed"><strong class="text-white">PDE Residual Loss –</strong> <strong class="text-white">*The Fabric of Reality</strong><strong class="text-white">*:</strong><br>The heart of PINNs. We scatter thousands of random "collocation points" \((x, t)\) across our virtual space-time cylinder. At these points, we have *no* measurement data. Instead, we calculate how much the network deviates from the physical law (e.g., the 1D heat equation \(u_t - \alpha u_{xx} = 0\)). Any deviation from \(0\) is the so-called residual. It is heavily penalized during gradient descent.</li>
+    </ol>
+
+    <h3 class="text-xl md:text-2xl font-extrabold text-white mt-12 mb-4 border-b border-slate-900 pb-2 flex items-center gap-2">
+        <span class="text-cyan-400">⚡</span> 3. JAX and the Scalpel of Automatic Differentiation
+    </h3>
+    <p class="text-sm text-slate-300 leading-relaxed my-3">How do we calculate the PDE residual? How do we derive the temperature output exactly by space (\(x\)) and time (\(t\)) without resorting to noisy difference quotients?</p>
+    <p class="text-sm text-slate-300 leading-relaxed my-3">This is where the absolute superiority of your JAX environment reveals itself. Since your Flax neural model is a pure, stateless mathematical graph, we can use <strong class="text-white">Automatic Differentiation (AutoDiff)</strong>. With primitives like `jax.grad` (or `jax.jacrev`/`jax.hessian` for second derivatives), we apply the analytical chain rule flawlessly to the entire network. We obtain exact derivatives with machine precision.</p>
+
+    <h3 class="text-xl md:text-2xl font-extrabold text-white mt-12 mb-4 border-b border-slate-900 pb-2 flex items-center gap-2">
+        <span class="text-cyan-400">🎯</span> 4. The Operator Horizon: Fourier Neural Operators (FNOs)
+    </h3>
+    <p class="text-sm text-slate-300 leading-relaxed my-3">A trained PINN is impressive but has a structural bottleneck: it learns exactly <strong class="text-white">one</strong> solution instance. If you train your PINN on a starting state (the Genesis State) in the form of a sine wave, it calculates extremely fast for that world. However, if the client changes the starting temperature to an asymmetric box profile, you must completely discard the PINN and retrain it over thousands of epochs.</p>
+    <p class="text-sm text-slate-300 leading-relaxed my-3">In the digital endgame of modern industries (real-time aerodynamics for Formula 1 cars or global weather forecasts), we therefore enter the next level of abstraction: <strong class="text-white">Neural Operators</strong>.</p>
+    <p class="text-sm text-slate-300 leading-relaxed my-3">An operator doesn't just map individual coordinates to a value (\((x, t) \rightarrow u\)). It maps entire *infinite-dimensional function spaces* to each other. A <strong class="text-white">Fourier Neural Operator (FNO)</strong> takes a *complete initial condition function* as input and generates the *complete solution function* for the future in a single forward pass.</p>
+    <p class="text-sm text-slate-300 leading-relaxed my-3"><strong class="text-white">The Frequency Trick:</strong> The FNO uses the Fast Fourier Transform (FFT) to transform the physical spatial data into the <strong class="text-white">frequency domain</strong>. In the frequency domain, complex laws of nature (like diffusion) act like simple integral kernel filters—they simply dampen high frequencies. The model then transforms the signal back into our spatial domain.</p>
+    <p class="text-sm text-slate-300 leading-relaxed my-3"><strong class="text-white">The Incredible Result (Zero-Shot Super-Resolution):</strong> Because frequencies are continuous, the FNO is *resolution-independent*. You can train an FNO on heavily compressed data (e.g., a \(32 \times 32\) grid) and feed in high-resolution \(1024 \times 1024\) input data in production. The FNO will predict the solution in fractions of a millisecond absolutely flawlessly. It hasn't learned the solution to *one* problem, but the <strong class="text-white">rules of physics themselves</strong>.</p>
+
+    <div class="p-6 glass-card rounded-2xl border-t-2 border-t-purple-500/35 bg-purple-950/5 space-y-4 my-8">
+        <h4 class="text-purple-400 font-bold text-lg flex items-center gap-2"><span>📖</span> Theoretical Introduction</h4>
+        <ul class="list-disc pl-6 text-sm text-slate-300 space-y-2.5 my-4">
+            <li><strong class="text-white">VisualPDE (visualpde.com):</strong> Interactive browser-based solver for physical intuition.</li>
+            <li><strong class="text-white">Raissi et al. (2019):</strong> The seminal paper on Physics-Informed Neural Networks.</li>
+            <li><strong class="text-white">Li et al. (2020):</strong> Fourier Neural Operator for Parametric PDEs.</li>
+        </ul>
+    </div>
+
+    <div class="p-5 glass-card rounded-xl border-l-4 border-yellow-500 bg-yellow-500/5 my-6 space-y-2">
+        <h4 class="text-yellow-400 font-bold text-sm flex items-center gap-2"><span>💡</span> Your Mission for this Week:</h4>
+        <p class="text-sm text-slate-300 leading-relaxed">You will instruct your agents to pour these concepts into working JAX code and make 3D heat propagation visually tangible. Welcome to the fabric of reality!</p>
+    </div>
+</div>

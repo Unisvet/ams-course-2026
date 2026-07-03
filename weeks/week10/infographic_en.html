@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Infographic - ADK Cognitive Loop & Tool Correction</title>
+<!-- Tailwind CDN -->
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        vibrant: {
+          bg: '#090d16',
+          surface: '#0f172a',
+          surfaceLight: '#1e293b',
+          cyan: '#06b6d4',
+          pink: '#ec4899',
+          yellow: '#eab308',
+          purple: '#8b5cf6',
+          text: '#f8fafc',
+          textMuted: '#94a3b8'
+        }
+      }
+    }
+  }
+}
+</script>
+<style>
+body {
+  background-color: #090d16;
+  color: #f8fafc;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+.glass-card {
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(6, 182, 212, 0.15);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+.chart-container {
+  position: relative;
+  width: 100%;
+  height: 220px;
+}
+</style>
+<!-- Chart.js CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="antialiased p-4 md:p-6">
+    <div class="max-w-5xl mx-auto space-y-6">
+        <div class="text-center">
+          <h1 class="text-xl md:text-2xl font-black text-white tracking-tight">The Autonomous Control Loop in Action (ADK Tool Self-Correction)</h1>
+          <p class="text-xs text-vibrant-textMuted mt-1">Interactive Simulation: Watch how the ADK agent calls a tool, analyzes errors, and independently adjusts parameters.</p>
+        </div>
+
+        <!-- CoT Cycle Visualizer -->
+        <div class="glass-card rounded-2xl p-4">
+            <h3 class="text-xs font-mono font-bold text-cyan-400 mb-3 uppercase tracking-wider">The ADK Cycle (Perceive ➔ Think ➔ Act ➔ Check)</h3>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-center text-xs">
+                <div id="step-perceive" class="p-3 bg-slate-900/40 border border-slate-800 rounded-xl transition-all duration-300">
+                    <span class="text-lg">👁️</span>
+                    <h4 class="font-bold text-cyan-400 mt-1">1. Perceive</h4>
+                    <p class="text-[10px] text-vibrant-textMuted mt-1">Agent reads current state & history from memory.</p>
+                </div>
+                <div id="step-think" class="p-3 bg-slate-900/40 border border-slate-800 rounded-xl transition-all duration-300">
+                    <span class="text-lg">🧠</span>
+                    <h4 class="font-bold text-pink-400 mt-1">2. Think</h4>
+                    <p class="text-[10px] text-vibrant-textMuted mt-1">Model decides on the next adjustment.</p>
+                </div>
+                <div id="step-act" class="p-3 bg-slate-900/40 border border-slate-800 rounded-xl transition-all duration-300">
+                    <span class="text-lg">🛠️</span>
+                    <h4 class="font-bold text-purple-400 mt-1">3. Act</h4>
+                    <p class="text-[10px] text-vibrant-textMuted mt-1">The tool <code>adjust_reactor_temperature</code> is called.</p>
+                </div>
+                <div id="step-check" class="p-3 bg-slate-900/40 border border-slate-800 rounded-xl transition-all duration-300">
+                    <span class="text-lg">🔍</span>
+                    <h4 class="font-bold text-yellow-400 mt-1">4. Check</h4>
+                    <p class="text-[10px] text-vibrant-textMuted mt-1">Checking the return value for errors or warnings.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            <!-- Left Column: Graph & Status Badge -->
+            <div class="lg:col-span-6 space-y-4">
+                <div class="glass-card rounded-2xl p-5 flex flex-col justify-between h-full">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-sm font-bold text-white">Reactor Temperature (Limit: 350K)</h3>
+                        <div id="status-badge" class="px-2.5 py-1 rounded-lg border border-cyan-500/30 text-[10px] font-mono font-bold text-cyan-400 bg-cyan-950/20 flex items-center gap-1.5 shadow backdrop-blur-md select-none">
+                            <span class="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse"></span>
+                            SYSTEM READY
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="reactorChart"></canvas>
+                    </div>
+                    
+                    <!-- Controls -->
+                    <div class="mt-6 flex gap-3">
+                        <button id="run-btn" onclick="startSimulation()" class="flex-1 py-3 px-4 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-xs font-mono font-bold text-white shadow-lg transition duration-200">
+                            🤖 Start Agent
+                        </button>
+                        <button id="step-btn" onclick="nextStep()" class="py-3 px-4 rounded-xl bg-slate-800 border border-slate-700 hover:bg-slate-700 text-xs font-mono font-bold text-slate-300 transition duration-200" disabled>
+                            ⏭️ Next Step
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Terminal Log -->
+            <div class="lg:col-span-6">
+                <div class="glass-card rounded-2xl p-5 flex flex-col h-[380px]">
+                    <div class="flex items-center justify-between border-b border-slate-800 pb-3 mb-3">
+                        <h3 class="text-xs font-mono font-bold text-pink-400 uppercase tracking-wider">Observer-Prime Cognitive Log</h3>
+                        <span class="text-[10px] text-slate-500 font-mono">v10.0-ADK</span>
+                    </div>
+                    <div id="terminal-body" class="flex-1 overflow-y-auto space-y-3 font-mono text-[11px] leading-relaxed pr-2 scrollbar-thin scrollbar-thumb-slate-800">
+                        <div class="text-slate-500">// Click on "Start Agent" to begin thermal stabilization.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const ctx = document.getElementById('reactorChart').getContext('2d');
+        let chart;
+        let tempHistory = [300];
+        let stepsLabels = ["Start"];
+        let currentStepIndex = 0;
+        let isAutoMode = false;
+        
+        function initChart() {
+            if (chart) chart.destroy();
+            chart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: stepsLabels,
+                    datasets: [{
+                        label: 'Reactor Temp (K)',
+                        data: tempHistory,
+                        borderColor: '#06b6d4',
+                        backgroundColor: 'rgba(6, 182, 212, 0.1)',
+                        borderWidth: 2,
+                        pointBackgroundColor: '#ec4899',
+                        pointBorderColor: '#fff',
+                        pointRadius: 4,
+                        fill: true,
+                        tension: 0.1
+                    }, {
+                        label: 'Warning Limit (350K)',
+                        data: Array(stepsLabels.length).fill(350),
+                        borderColor: 'rgba(239, 68, 68, 0.4)',
+                        borderDash: [5, 5],
+                        borderWidth: 1.5,
+                        pointRadius: 0,
+                        fill: false
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    scales: {
+                        x: { ticks: { color: '#94a3b8', font: { size: 9 } }, grid: { color: 'rgba(255,255,255,0.02)' } },
+                        y: { 
+                            min: 280, max: 400,
+                            ticks: { color: '#94a3b8', font: { size: 9 } }, 
+                            grid: { color: 'rgba(255,255,255,0.04)' } 
+                        }
+                    }
+                }
+            });
+        }
+        initChart();
+
+        const simScript = [
+            {
+                phase: "perceive",
+                badge: "PERCEIVING STATE",
+                badgeColor: "text-cyan-400 bg-cyan-950/20 border-cyan-800",
+                highlightId: "step-perceive",
+                temp: 300,
+                log: `<span class="text-cyan-400">[PERCEIVE]</span> Conversation state loaded. <br>
+                      &gt; Current temperature: 300K.<br>
+                      &gt; Target parameters: Increase by 80K.`
+            },
+            {
+                phase: "think",
+                badge: "THINKING...",
+                badgeColor: "text-pink-400 bg-pink-950/20 border-pink-800",
+                highlightId: "step-think",
+                temp: 300,
+                log: `<span class="text-pink-400">[THINK]</span> User requests a temperature increase of 80 Kelvin. <br>
+                      I have the tool: <code class="text-cyan-400">adjust_reactor_temperature(delta_t)</code>.<br>
+                      I calculate: delta_t = 80.0. I will call the tool directly.`
+            },
+            {
+                phase: "act",
+                badge: "EXECUTING TOOL",
+                badgeColor: "text-purple-400 bg-purple-950/20 border-purple-800",
+                highlightId: "step-act",
+                temp: 380,
+                stepLabel: "Iter 1 (+80K)",
+                log: `<span class="text-purple-400">[ACT]</span> Calling tool: <code class="text-cyan-400">adjust_reactor_temperature(delta_t=80.0)</code><br>
+                      &gt; <span class="text-red-500 font-bold">ERROR OBSERVATION:</span> "WARNING: Reactor overheated at 380.0K! Core breach imminent."`
+            },
+            {
+                phase: "check",
+                badge: "CHECKING RESULT",
+                badgeColor: "text-yellow-400 bg-yellow-950/20 border-yellow-800",
+                highlightId: "step-check",
+                temp: 380,
+                log: `<span class="text-yellow-400">[CHECK]</span> The tool reported a warning (overheating).<br>
+                      The state was registered in the memory state. The attempt failed. The agent must correct autonomously.`
+            },
+            {
+                phase: "perceive",
+                badge: "PERCEIVING STATE",
+                badgeColor: "text-cyan-400 bg-cyan-950/20 border-cyan-800",
+                highlightId: "step-perceive",
+                temp: 380,
+                log: `<span class="text-cyan-400">[PERCEIVE]</span> Memory read. <br>
+                      &gt; Last call with delta_t=80.0 led to 380.0K (limit exceeded).<br>
+                      &gt; Current physical state of simulation: Reactor reset at 300K.`
+            },
+            {
+                phase: "think",
+                badge: "THINKING...",
+                badgeColor: "text-pink-400 bg-pink-950/20 border-pink-800",
+                highlightId: "step-think",
+                temp: 300,
+                log: `<span class="text-pink-400">[THINK]</span> The limit is 350K. My previous attempt (+80K) was too aggressive.<br>
+                      I must reduce the step size to safely approach the target value. I'm halving the step and testing delta_t = 40.0.`
+            },
+            {
+                phase: "act",
+                badge: "EXECUTING TOOL",
+                badgeColor: "text-purple-400 bg-purple-950/20 border-purple-800",
+                highlightId: "step-act",
+                temp: 340,
+                stepLabel: "Iter 2 (+40K)",
+                log: `<span class="text-purple-400">[ACT]</span> Calling tool: <code class="text-cyan-400">adjust_reactor_temperature(delta_t=40.0)</code><br>
+                      &gt; <span class="text-emerald-400">SUCCESS-OBSERVATION:</span> "Success: Reactor stabilized at 340.0K."`
+            },
+            {
+                phase: "check",
+                badge: "CHECKING RESULT",
+                badgeColor: "text-yellow-400 bg-yellow-950/20 border-yellow-800",
+                highlightId: "step-check",
+                temp: 340,
+                log: `<span class="text-yellow-400">[CHECK]</span> The tool reported success. The temperature is stable at 340.0K.`
+            },
+            {
+                phase: "perceive",
+                badge: "PERCEIVING STATE",
+                badgeColor: "text-cyan-400 bg-cyan-950/20 border-cyan-800",
+                highlightId: "step-perceive",
+                temp: 340,
+                log: `<span class="text-cyan-400">[PERCEIVE]</span> Memory read. <br>
+                      &gt; Current stabilized state: 340.0K.<br>
+                      &gt; The target limit (350K) is almost reached. Remaining margin: 10K.`
+            },
+            {
+                phase: "think",
+                badge: "THINKING...",
+                badgeColor: "text-pink-400 bg-pink-950/20 border-pink-800",
+                highlightId: "step-think",
+                temp: 340,
+                log: `<span class="text-pink-400">[THINK]</span> I'm at 340.0K. I want to further approach the maximum safety limit of 350K.<br>
+                      To avoid another warning, I choose a fine safety step of delta_t = 9.9.`
+            },
+            {
+                phase: "act",
+                badge: "EXECUTING TOOL",
+                badgeColor: "text-purple-400 bg-purple-950/20 border-purple-800",
+                highlightId: "step-act",
+                temp: 349.9,
+                stepLabel: "Iter 3 (+9.9K)",
+                log: `<span class="text-purple-400">[ACT]</span> Calling tool: <code class="text-cyan-400">adjust_reactor_temperature(delta_t=9.9)</code><br>
+                      &gt; <span class="text-emerald-400">SUCCESS-OBSERVATION:</span> "Success: Reactor stabilized at 349.9K."`
+            },
+            {
+                phase: "check",
+                badge: "STABILIZED",
+                badgeColor: "text-emerald-400 bg-emerald-950/20 border-emerald-800",
+                highlightId: "step-check",
+                temp: 349.9,
+                log: `<span class="text-emerald-400">[CHECK]</span> Target temperature reached and stabilized at 349.9K. <br>
+                      No further adjustments required. The autonomous optimization loop is terminating.`
+            }
+        ];
+
+        function highlightStep(stepId) {
+            ['step-perceive', 'step-think', 'step-act', 'step-check'].forEach(id => {
+                const el = document.getElementById(id);
+                el.classList.remove('border-cyan-500/80', 'bg-cyan-950/20', 'scale-105', 'shadow-lg', 'shadow-cyan-500/10');
+                el.classList.add('border-slate-800', 'bg-slate-900/40');
+            });
+            const target = document.getElementById(stepId);
+            if (target) {
+                target.classList.remove('border-slate-800', 'bg-slate-900/40');
+                target.classList.add('border-cyan-500/80', 'bg-cyan-950/20', 'scale-105', 'shadow-lg', 'shadow-cyan-500/10');
+            }
+        }
+
+        function appendToLog(htmlContent) {
+            const term = document.getElementById('terminal-body');
+            const div = document.createElement('div');
+            div.className = 'p-3 bg-slate-900/50 rounded-lg border border-slate-900/60 shadow-sm animate-fade-in';
+            div.innerHTML = htmlContent;
+            term.appendChild(div);
+            term.scrollTop = term.scrollHeight;
+        }
+
+        function startSimulation() {
+            tempHistory = [300]; stepsLabels = ["Start"]; currentStepIndex = 0; isAutoMode = true;
+            document.getElementById('terminal-body').innerHTML = '<div class="text-cyan-400">// Starting autonomous multi-step optimization with ADK...</div>';
+            document.getElementById('run-btn').innerText = "🤖 Running...";
+            document.getElementById('run-btn').disabled = true;
+            initChart(); runLoop();
+        }
+
+        function runLoop() {
+            if (currentStepIndex >= simScript.length) {
+                document.getElementById('run-btn').innerText = "🤖 Start Agent";
+                document.getElementById('run-btn').disabled = false;
+                return;
+            }
+            executeStep();
+            currentStepIndex++;
+            setTimeout(runLoop, 2500);
+        }
+
+        function executeStep() {
+            const data = simScript[currentStepIndex];
+            const badge = document.getElementById('status-badge');
+            badge.innerText = data.badge;
+            badge.className = `px-2.5 py-1 rounded-lg border ${data.badgeColor} text-[10px] font-mono font-bold flex items-center gap-1.5 shadow backdrop-blur-md select-none`;
+            highlightStep(data.highlightId);
+            appendToLog(data.log);
+            if (data.phase === "act") {
+                stepsLabels.push(data.stepLabel || `Step ${stepsLabels.length}`);
+                tempHistory.push(data.temp);
+                chart.update();
+            } else if (data.phase === "check" && data.temp === 380) {
+                stepsLabels.push("Reset");
+                tempHistory.push(300);
+                chart.update();
+            }
+        }
+    </script>
+</body>
+</html>

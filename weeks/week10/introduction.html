@@ -1,6 +1,12 @@
 <div class="space-y-8 animate-fade-in">
-    <!-- Intro Banner -->
-    <div class="p-6 glass-card rounded-2xl border-l-4 border-cyan-500 bg-gradient-to-r from-cyan-950/20 to-transparent">
+    <!-- Header -->
+    <div class="mb-12">
+        <span class="text-[10px] font-mono text-cyan-400 uppercase tracking-[0.3em] block mb-2">Theoretical Introduction</span>
+        <h2 class="text-4xl font-black text-white tracking-tight">Theoretische Einführung</h2>
+        <div class="w-20 h-1.5 bg-gradient-to-r from-cyan-500 to-blue-600 mt-4 rounded-full"></div>
+    </div>
+
+    <div class="p-6 glass-card mb-12 rounded-2xl border-l-4 border-cyan-500 bg-gradient-to-r from-cyan-950/20 to-transparent">
         <h3 class="text-xl md:text-2xl font-bold text-white mb-2">Woche 10: Einführung in das Agent Development Kit (ADK)</h3>
         <p class="text-slate-300 text-sm leading-relaxed mt-3 font-sans">
             Bisher haben wir in unseren Python-Skripten Foundation Models primär als aufrufbare Funktionen genutzt. Wir haben manuell Chat-Historien gepflegt, JSON-Antworten geparst und komplexe „Thought-Action-Observation“-Schleifen (ReAct) programmiert, damit das Modell Werkzeuge nutzen kann. Jeder Ablauf war starr und musste im Detail von uns diktiert werden.
@@ -9,6 +15,7 @@
             Mit dem <strong>Agentic Engineering</strong> ändert sich dieses Paradigma grundlegend: Wir wechseln vom Diktat zur Delegation. Der Entwickler nutzt eine moderne Umgebung (z. B. die <strong>Antigravity IDE</strong>) und beschreibt dem KI-Agenten das Ziel in natürlicher Sprache (<em>„Vibe Coding“</em>). Der Agent plan autonom, schreibt Code, orchestriert Subagenten, testet Ergebnisse in einer sicheren Sandbox und korrigiert Fehler eigenständig. Das <strong>Google Agent Development Kit (ADK)</strong> liefert uns das Code-Framework, um genau solche autonomen, zustandsbehafteten Agenten in Python zu bauen.
         </p>
     </div>
+    
 
     <!-- Core Objectives -->
     <div class="space-y-4">

@@ -1,0 +1,213 @@
+<div class="space-y-8 animate-fade-in">
+    <!-- Header -->
+    <div class="mb-12">
+        <span class="text-[10px] font-mono text-cyan-400 uppercase tracking-[0.3em] block mb-2">Curriculum Details</span>
+        <h2 class="text-4xl font-black text-white tracking-tight">Theoretical Introduction</h2>
+        <div class="w-20 h-1.5 bg-gradient-to-r from-cyan-500 to-blue-600 mt-4 rounded-full"></div>
+    </div>
+
+    <div class="p-6 glass-card mb-12 rounded-2xl border-l-4 border-cyan-500 bg-gradient-to-r from-cyan-950/20 to-transparent">
+        <h3 class="text-xl md:text-2xl font-bold text-white mb-2">Week 10: Introduction to the Agent Development Kit (ADK)</h3>
+        <p class="text-slate-300 text-sm leading-relaxed mt-3 font-sans">
+            So far, we have primarily used Foundation Models as callable functions in our Python scripts. We manually maintained chat histories, parsed JSON responses, and programmed complex "Thought-Action-Observation" loops (ReAct) so the model could use tools. Every workflow was rigid and had to be dictated by us in detail.
+        </p>
+        <p class="text-slate-300 text-sm leading-relaxed mt-2 font-sans">
+            With <strong>Agentic Engineering</strong>, this paradigm changes fundamentally: we move from dictation to delegation. The developer uses a modern environment (e.g., the <strong>Antigravity IDE</strong>) and describes the goal to the AI agent in natural language (<em>"Vibe Coding"</em>). The agent plans autonomously, writes code, orchestrates sub-agents, tests results in a safe sandbox, and corrects errors independently. The <strong>Google Agent Development Kit (ADK)</strong> provides the code framework to build exactly such autonomous, stateful agents in Python.
+        </p>
+    </div>
+    
+
+    <!-- Core Objectives -->
+    <div class="space-y-4">
+        <h3 class="text-2xl font-bold text-white flex items-center gap-2">
+            <span>🎯</span> Learning Objectives
+        </h3>
+        <ul class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <li class="p-4 bg-slate-900/40 border border-slate-800 rounded-xl flex gap-3">
+                <span class="text-cyan-400 font-bold">1.</span>
+                <span class="text-sm text-slate-300"><strong>Delegation instead of Dictation:</strong> Understand the paradigm shift from manual code debugging to autonomous, goal-driven agent systems.</span>
+            </li>
+            <li class="p-4 bg-slate-900/40 border border-slate-800 rounded-xl flex gap-3">
+                <span class="text-pink-400 font-bold">2.</span>
+                <span class="text-sm text-slate-300"><strong>Master ADK Architecture:</strong> Understand and apply the anatomy of an agent based on the four pillars (Model, Name, Description, Instruction).</span>
+            </li>
+            <li class="p-4 bg-slate-900/40 border border-slate-800 rounded-xl flex gap-3">
+                <span class="text-yellow-400 font-bold">3.</span>
+                <span class="text-sm text-slate-300"><strong>Memory & State Tracking:</strong> How implicit state management and autonomous error correction work in the Perceive-Think-Act loop.</span>
+            </li>
+            <li class="p-4 bg-slate-900/40 border border-slate-800 rounded-xl flex gap-3">
+                <span class="text-purple-400 font-bold">4.</span>
+                <span class="text-sm text-slate-300"><strong>Visual Debugging & Web UI:</strong> Launching local servers via <code>uv</code> and visual analysis of the Chain of Thought in the browser interface.</span>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Section 1 -->
+    <h3 class="text-xl md:text-2xl font-extrabold text-white mt-12 mb-4 border-b border-slate-900 pb-2 flex items-center gap-2">
+        <span>📦</span> 1. Installation and Setup with <code class="text-cyan-400 bg-cyan-950/30 px-2 py-0.5 rounded text-base">uv</code>
+    </h3>
+    <p class="text-sm text-slate-300 leading-relaxed font-sans">
+        The ADK integrates seamlessly into modern Python workflows. Since we focus on high performance and reproducible environments in our course, we use <code>uv</code> instead of the legacy <code>pip</code>. We add the ADK directly to our project:
+    </p>
+    <pre class="bg-slate-950 p-4 rounded-xl border border-slate-850 overflow-x-auto text-xs font-mono text-cyan-450 my-4"><code>uv add google-adk</code></pre>
+    <p class="text-sm text-slate-300 leading-relaxed font-sans">
+        We store sensitive keys securely in a <code>.env</code> file, which the ADK reads automatically on startup:
+    </p>
+    <pre class="bg-slate-950 p-4 rounded-xl border border-slate-850 overflow-x-auto text-xs font-mono text-pink-400 my-4"><code>GOOGLE_API_KEY="your_api_key_here"</code></pre>
+    <p class="text-sm text-slate-300 leading-relaxed font-sans">
+        With the integrated command-line interface, we can then immediately generate a runnable agent project with the correct structure (<code>__init__.py</code> and <code>agent.py</code>):
+    </p>
+    <pre class="bg-slate-950 p-4 rounded-xl border border-slate-850 overflow-x-auto text-xs font-mono text-cyan-450 my-4"><code>uv run adk create my_first_agent</code></pre>
+
+    <!-- Section 2 -->
+    <h3 class="text-xl md:text-2xl font-extrabold text-white mt-12 mb-4 border-b border-slate-900 pb-2 flex items-center gap-2">
+        <span>🧬</span> 2. Anatomy of an Agent (<code class="text-pink-400">agent.py</code>)
+    </h3>
+    <p class="text-sm text-slate-300 leading-relaxed font-sans mb-6">
+        An agent is defined in the ADK via four central parameters:
+    </p>
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 my-6">
+        <div class="glass-card rounded-2xl p-5 border-t-2 border-t-cyan-500/50 bg-slate-900/10">
+            <h5 class="text-white font-bold text-sm">🤖 1. model</h5>
+            <p class="text-xs text-slate-400 mt-2 leading-relaxed">
+                The cognitive LLM brain. We use <code>gemini-3.5-flash</code> for extreme latency advantages and logical strength.
+            </p>
+        </div>
+        <div class="glass-card rounded-2xl p-5 border-t-2 border-t-pink-500/50 bg-slate-900/10">
+            <h5 class="text-white font-bold text-sm">🏷️ 2. name</h5>
+            <p class="text-xs text-slate-400 mt-2 leading-relaxed">
+                The unique system name (e.g., <code>observer_prime</code>) for internal routing within the ADK system.
+            </p>
+        </div>
+        <div class="glass-card rounded-2xl p-5 border-t-2 border-t-yellow-500/50 bg-slate-900/10">
+            <h5 class="text-white font-bold text-sm">📝 3. description</h5>
+            <p class="text-xs text-slate-400 mt-2 leading-relaxed">
+                Capability description. Essential in multi-agent systems (MAS) for autonomous task routing.
+            </p>
+        </div>
+        <div class="glass-card rounded-2xl p-5 border-t-2 border-t-purple-500/50 bg-slate-900/10">
+            <h5 class="text-white font-bold text-sm">📜 4. instruction</h5>
+            <p class="text-xs text-slate-400 mt-2 leading-relaxed">
+                The system prompt. Defines personality, scope of action, rules, and detailed knowledge.
+            </p>
+        </div>
+    </div>
+
+    <!-- Code Block -->
+    <div class="space-y-2">
+        <h5 class="text-xs font-bold text-slate-400 font-mono">Python implementation example:</h5>
+        <pre class="bg-slate-950 p-4 rounded-xl border border-slate-850 overflow-x-auto text-xs font-mono text-cyan-400"><code class="language-python">from google.adk.agents.llm_agent import Agent
+93: 
+94: root_agent = Agent(
+95:     model='gemini-3.5-flash',
+96:     name='reactor_overseer',
+97:     description='A specialized agent for system simulations.',
+98:     instruction='You are a precise engineer. Monitor parameters and use tools for stabilization.'
+99: )</code></pre>
+    </div>
+
+    <!-- Section 3 -->
+    <h3 class="text-xl md:text-2xl font-extrabold text-white mt-12 mb-4 border-b border-slate-900 pb-2 flex items-center gap-2">
+        <span>🔄</span> 3. State Tracking & Memory Management
+    </h3>
+    <p class="text-sm text-slate-300 leading-relaxed font-sans">
+        Traditional API calls are <em>stateless</em> – the model forgets everything after each response. The ADK solves this problem through implicit <strong>memory management</strong>.
+        The system automatically saves the state of the conversation and the results of function calls. The integrated <strong>Perceive ➔ Think ➔ Act ➔ Check</strong> loop ensures that the agent recognizes errors in tool calls, reads the error message from its memory, and independently tries new parameters without your program crashing or requiring manual intervention.
+    </p>
+
+    <!-- Clickable Mermaid Flowchart -->
+    <div class="relative group cursor-pointer" onclick="(function(){
+        let modal = document.getElementById('diagram-modal');
+        if (!modal) {
+            modal = document.createElement('div');
+            modal.id = 'diagram-modal';
+            modal.className = 'fixed inset-0 bg-black/85 backdrop-blur-md z-[100] flex items-center justify-center p-4';
+            modal.onclick = function() { modal.style.display = 'none'; document.body.style.overflow = ''; };
+            
+            const card = document.createElement('div');
+            card.className = 'glass-card max-w-2xl w-full p-6 rounded-3xl border border-cyan-500/30 bg-[#090d16]/95 space-y-4 relative';
+            card.onclick = function(e) { e.stopPropagation(); };
+            
+            const closeBtn = document.createElement('button');
+            closeBtn.innerHTML = '&times;';
+            closeBtn.className = 'absolute top-4 right-4 text-slate-450 hover:text-white text-2xl focus:outline-none leading-none';
+            closeBtn.onclick = function() { modal.style.display = 'none'; document.body.style.overflow = ''; };
+            
+            const title = document.createElement('h3');
+            title.className = 'text-xs font-bold text-white font-mono flex items-center gap-2';
+            title.innerText = '🔍 ADK Cognitive Control Loop (Enlarged View)';
+            
+            const content = document.createElement('div');
+            content.id = 'modal-diagram-content';
+            content.className = 'p-6 bg-slate-950/80 rounded-2xl border border-slate-900 flex justify-center items-center min-h-[350px]';
+            
+            const footer = document.createElement('p');
+            footer.className = 'text-[10px] text-slate-500 text-center font-mono';
+            footer.innerText = 'Click on \'x\' or outside to close.';
+            
+            card.appendChild(closeBtn);
+            card.appendChild(title);
+            card.appendChild(content);
+            card.appendChild(footer);
+            modal.appendChild(card);
+            document.body.appendChild(modal);
+        }
+        
+        const content = document.getElementById('modal-diagram-content');
+        content.innerHTML = '';
+        const svg = document.querySelector('.mermaid svg');
+        if (svg) {
+            const clone = svg.cloneNode(true);
+            clone.removeAttribute('height');
+            clone.style.width = '100%';
+            clone.style.height = 'auto';
+            clone.style.maxHeight = '420px';
+            content.appendChild(clone);
+        } else {
+            content.innerHTML = '<p class=\'text-slate-400 text-xs font-mono\'>Loading diagram...</p>';
+        }
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+    })()" title="Click to enlarge">
+        <pre class="mermaid bg-slate-950/40 p-6 rounded-xl border border-slate-900/60 my-6 flex justify-center hover:border-cyan-500/50 hover:shadow-lg hover:shadow-cyan-500/5 transition-all duration-300 min-h-[300px]">
+        graph TD
+            User["👤 User Goal"] -->|Start Prompt| State["💾 State/Memory Manager"]
+            State -->|History & Context| Think["🧠 Think (Reasoning with Gemini)"]
+            Think -->|Tool Invocation| Act["🛠️ Act (Execute Python Tool)"]
+            Act -->|Observation/Result| Check["🔍 Check (Autonomous Verification)"]
+            Check -->|Retry on Warn/Fail| State
+            Check -->|Success Response| User
+            
+            style User fill:#0f172a,stroke:#8b5cf6,stroke-width:2px,color:#f8fafc
+            style State fill:#0f172a,stroke:#06b6d4,color:#f8fafc
+            style Think fill:#0f172a,stroke:#ec4899,color:#f8fafc
+            style Act fill:#0f172a,stroke:#8b5cf6,color:#f8fafc
+            style Check fill:#0f172a,stroke:#eab308,color:#f8fafc
+        </pre>
+        <div class="absolute top-3 right-3 px-2 py-1 rounded bg-slate-950/80 border border-slate-800 text-[10px] font-mono text-slate-500 group-hover:text-cyan-400 transition-colors pointer-events-none">
+            🔍 Enlarge diagram
+        </div>
+    </div>
+
+    <!-- Section 4 -->
+    <h3 class="text-xl md:text-2xl font-extrabold text-white mt-12 mb-4 border-b border-slate-900 pb-2 flex items-center gap-2">
+        <span>🖥️</span> 4. Execution and Testing (CLI vs. Web)
+    </h3>
+    <p class="text-sm text-slate-300 leading-relaxed font-sans">
+        The ADK provides ready-made interfaces by default to interact with agents immediately without having to build your own frontend:
+    </p>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-6">
+        <div class="p-6 glass-card rounded-2xl border-l-4 border-cyan-500 space-y-2">
+            <h4 class="text-white font-bold text-base">📟 Interactive CLI Shell</h4>
+            <p class="text-xs text-slate-300 leading-relaxed">
+                With the command <code>uv run adk run cognitive_core</code>, you start the agent in a text-based interactive console. Perfect for quick, lean tests directly from the terminal.
+            </p>
+        </div>
+        <div class="p-6 glass-card rounded-2xl border-l-4 border-purple-500 space-y-2">
+            <h4 class="text-white font-bold text-base">🌐 Local Web UI</h4>
+            <p class="text-xs text-slate-300 leading-relaxed">
+                The command <code>uv run adk web</code> starts a local server (defaults to <code>http://localhost:8000</code>). In the browser chat, you can see the agent thinking live (<em>Chain of Thought</em>) and which tools it calls – the ideal tool for visual debugging!
+            </p>
+        </div>
+    </div>
+</div>

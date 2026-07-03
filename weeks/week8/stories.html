@@ -1,0 +1,143 @@
+<div class="relative w-full h-[600px] overflow-hidden rounded-2xl shadow-2xl bg-slate-900 font-sans">
+    <!-- Hero Background -->
+    <div class="absolute inset-0 z-0">
+        <img src="assets/images/week8_stories_bg.png" alt="The Sovereign Guardian" class="w-full h-full object-cover opacity-80 pointer-events-none">
+        <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-slate-950/40 pointer-events-none"></div>
+    </div>
+
+    <!-- Floating Interactive Elements -->
+    <div class="absolute inset-0 z-10">
+        <!-- Story 1: Fortress -->
+        <div class="absolute top-[25%] right-[15%] group cursor-pointer" onclick="window.openStory('fortress')">
+            <div class="w-16 h-16 bg-slate-500/20 backdrop-blur-md border-2 border-slate-300 rounded-full flex items-center justify-center text-3xl shadow-[0_0_20px_rgba(255,255,255,0.3)] group-hover:scale-110 transition-all duration-300 animate-pulse">
+                🏰
+            </div>
+            <div class="mt-2 bg-slate-900/80 backdrop-blur-sm px-3 py-1 rounded-lg border border-slate-500/30 opacity-0 group-hover:opacity-100 transition-opacity">
+                <p class="text-slate-300 text-xs font-bold font-mono text-center uppercase tracking-tighter">Festung der Autarkie</p>
+            </div>
+        </div>
+
+        <!-- Story 2: Gemma -->
+        <div class="absolute top-[50%] left-[20%] group cursor-pointer" onclick="window.openStory('gemma')">
+            <div class="w-20 h-20 bg-cyan-500/20 backdrop-blur-md border-2 border-cyan-400 rounded-full flex items-center justify-center text-4xl shadow-[0_0_30px_rgba(6,182,212,0.5)] group-hover:scale-110 transition-all duration-300 animate-bounce">
+                🤖
+            </div>
+            <div class="mt-2 bg-slate-900/80 backdrop-blur-sm px-3 py-1 rounded-lg border border-cyan-500/30 opacity-0 group-hover:opacity-100 transition-opacity">
+                <p class="text-cyan-400 text-xs font-bold font-mono">Gemma 4 Edge</p>
+            </div>
+        </div>
+
+        <!-- Story 3: Cloud -->
+        <div class="absolute bottom-[20%] right-[30%] group cursor-pointer" onclick="window.openStory('cloud')">
+            <div class="w-16 h-16 bg-red-500/20 backdrop-blur-md border-2 border-red-400 rounded-full flex items-center justify-center text-3xl shadow-[0_0_20px_rgba(248,113,113,0.4)] group-hover:scale-110 transition-all duration-300 animate-pulse">
+                🌫️
+            </div>
+            <div class="mt-2 bg-slate-900/80 backdrop-blur-sm px-3 py-1 rounded-lg border border-red-500/30 opacity-0 group-hover:opacity-100 transition-opacity text-center">
+                <p class="text-red-400 text-xs font-bold font-mono uppercase tracking-tighter">Das Risiko Cloud</p>
+            </div>
+        </div>
+
+        <!-- Story 4: Thinking -->
+        <div class="absolute top-[15%] left-[40%] group cursor-pointer" onclick="window.openStory('thinking')">
+            <div class="w-14 h-14 bg-purple-500/20 backdrop-blur-md border-2 border-purple-400 rounded-full flex items-center justify-center text-2xl shadow-[0_0_15px_rgba(167,139,250,0.5)] group-hover:scale-110 transition-all duration-300 animate-spin" style="animation-duration: 12s;">
+                🧠
+            </div>
+            <div class="mt-2 bg-slate-900/80 backdrop-blur-sm px-3 py-1 rounded-lg border border-purple-500/30 opacity-0 group-hover:opacity-100 transition-opacity">
+                <p class="text-purple-400 text-xs font-bold font-mono uppercase tracking-tighter">Natives Denken</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modals Container -->
+    <div id="story-modal" class="absolute inset-0 z-50 flex items-center justify-center p-6 bg-slate-950/80 backdrop-blur-md hidden transition-all duration-500">
+        <div class="relative max-w-2xl w-full bg-slate-900 border border-slate-700 rounded-3xl overflow-hidden shadow-2xl transform scale-95 opacity-0 transition-all duration-500" id="modal-content">
+            <button onclick="window.closeStory()" class="absolute top-4 right-4 text-slate-400 hover:text-white transition-colors z-50">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+
+            <div class="p-8">
+                <div id="story-fortress" class="hidden space-y-4">
+                    <div class="flex items-center gap-4 border-b border-slate-500/30 pb-4">
+                        <span class="text-4xl">🏰</span>
+                        <div>
+                            <h2 class="text-2xl font-black text-white font-outfit uppercase">Die Festung</h2>
+                            <p class="text-slate-400 font-mono text-sm tracking-widest uppercase">Datensouveränität</p>
+                        </div>
+                    </div>
+                    <p class="text-slate-300 leading-relaxed text-sm">
+                        In einer Welt, in der Daten das neue Öl sind, ist Autarkie die ultimative Verteidigung. Dein lokaler Wächter arbeitet komplett offline. Keine Telemetrie verlässt das Werk, kein Hacker kann die Verbindung kappen. Die Simulation gehört dir allein – sicher, privat und absolut deterministisch.
+                    </p>
+                </div>
+
+                <div id="story-gemma" class="hidden space-y-4">
+                    <div class="flex items-center gap-4 border-b border-cyan-500/30 pb-4">
+                        <span class="text-4xl">🤖</span>
+                        <div>
+                            <h2 class="text-2xl font-black text-white font-outfit uppercase">Gemma 4 Edge</h2>
+                            <p class="text-cyan-400 font-mono text-sm tracking-widest uppercase">Der lokale Titan</p>
+                        </div>
+                    </div>
+                    <p class="text-slate-300 leading-relaxed text-sm">
+                        Lass dich nicht von der Größe täuschen. Mit nur 2,3 Milliarden Parametern schlägt Gemma 4 E2B im Bereich Logik und Code-Analyse Modelle, die zehnmal so groß sind. Durch PLE-Architektur (Per-Layer Embeddings) passt sie in den VRAM deines Laptops und steuert deine JAX-Simulation mit chirurgischer Präzision.
+                    </p>
+                </div>
+
+                <div id="story-cloud" class="hidden space-y-4">
+                    <div class="flex items-center gap-4 border-b border-red-500/30 pb-4">
+                        <span class="text-4xl">🌫️</span>
+                        <div>
+                            <h2 class="text-2xl font-black text-white font-outfit uppercase">Das Cloud-Risiko</h2>
+                            <p class="text-red-400 font-mono text-sm tracking-widest uppercase">Latenz & Abhängigkeit</p>
+                        </div>
+                    </div>
+                    <p class="text-slate-300 leading-relaxed text-sm">
+                        Was passiert, wenn das WLAN im Werk ausfällt? Bei Cloud-Inferenz bricht die Steuerung deiner Simulation sofort zusammen. Latenzspitzen von 2000ms machen Echtzeit-Optimierung unmöglich. Der Sovereign Guardian eliminiert diese Risiken – er ist das Rückgrat deines industriellen Neo-Simulacrums.
+                    </p>
+                </div>
+
+                <div id="story-thinking" class="hidden space-y-4">
+                    <div class="flex items-center gap-4 border-b border-purple-500/30 pb-4">
+                        <span class="text-4xl">🧠</span>
+                        <div>
+                            <h2 class="text-2xl font-black text-white font-outfit uppercase">Natives Denken</h2>
+                            <p class="text-purple-400 font-mono text-sm tracking-widest uppercase">Logik im Silizium</p>
+                        </div>
+                    </div>
+                    <p class="text-slate-300 leading-relaxed text-sm">
+                        Gemma 4 braucht keine Anweisungen wie 'Denk nach'. Der Denkmodus ist Teil ihrer DNA. Durch das &lt;|think|&gt; Token öffnet sie einen verborgenen Kanal, wägt physikalische Risiken ab und liefert erst dann die optimale Entscheidung. Kognition ist hier keine Illusion, sondern ein technisches Protokoll.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script Section -->
+    <script>
+        window.openStory = function(id) {
+            const modal = document.getElementById('story-modal');
+            const content = document.getElementById('modal-content');
+            ['fortress', 'gemma', 'cloud', 'thinking'].forEach(s => {
+                document.getElementById('story-' + s).classList.add('hidden');
+            });
+            document.getElementById('story-' + id).classList.remove('hidden');
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modal.classList.add('opacity-100');
+                content.classList.remove('scale-95', 'opacity-0');
+                content.classList.add('scale-100', 'opacity-100');
+            }, 10);
+        };
+
+        window.closeStory = function() {
+            const modal = document.getElementById('story-modal');
+            const content = document.getElementById('modal-content');
+            content.classList.remove('scale-100', 'opacity-100');
+            content.classList.add('scale-95', 'opacity-0');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 500);
+        };
+    </script>
+</div>

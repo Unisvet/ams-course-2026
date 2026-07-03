@@ -1,0 +1,112 @@
+[
+    {
+        "question": "What distinguishes an Agent Development Environment (ADE) from a classical IDE?",
+        "options": [
+            "An ADE is used exclusively for writing Python code.",
+            "An ADE provides a controlled runtime environment for cognitive agents with tracing, sandboxing, and multi-agent orchestration.",
+            "An ADE is a text editor without any compiler support.",
+            "There is no difference; the terms are absolutely synonymous."
+        ],
+        "answerIndex": 1,
+        "explanation": "An ADE goes far beyond just writing code: it manages cognitive runtimes, isolates agents in sandboxes to protect the system, and tracks cognitive steps (thoughts/actions) in detail."
+    },
+    {
+        "question": "In which programming language was the user interface of the Antigravity CLI written?",
+        "options": [
+            "Python",
+            "JavaScript",
+            "Go (Golang)",
+            "Rust"
+        ],
+        "answerIndex": 2,
+        "explanation": "The Antigravity CLI is a terminal interface (TUI) written in Go, designed for extreme latency advantages, headless execution, and speed."
+    },
+    {
+        "question": "Which four interfaces form the functional foundation of Google Antigravity 2.0? (Select all correct answers)",
+        "options": [
+            "Antigravity Desktop App",
+            "Antigravity IDE",
+            "Antigravity CLI",
+            "Antigravity SDK"
+        ],
+        "answerIndex": [0, 1, 2, 3],
+        "explanation": "Google Antigravity 2.0 is divided into these four primary interfaces, all of which build on the common Core Agent Harness and are optimized for different workflows."
+    },
+    {
+        "question": "For which application scenario is the Antigravity SDK best suited?",
+        "options": [
+            "For drawing diagrams in a web browser.",
+            "For visual execution of voice commands on the desktop.",
+            "For programmatically creating agents and embedding agentic AI into your own software pipelines.",
+            "As a pure replacement for git versioning commands."
+        ],
+        "answerIndex": 2,
+        "explanation": "The SDK (Python/TypeScript/Go) provides the programming libraries to integrate agent logic and tool bindings directly into code structures and server scripts."
+    },
+    {
+        "question": "What is the main task of the Antigravity Desktop App?",
+        "options": [
+            "To serve as a text editor for C++ code.",
+            "The central orchestration, scheduled background execution, and monitoring of parallel agent processes.",
+            "Hosting local LLM weights without API access.",
+            "Image processing and rendering of UI mockups."
+        ],
+        "answerIndex": 1,
+        "explanation": "The desktop application serves as a command center for background agents, parallel tasks, multi-agent swarms, and scheduled automations (cron jobs)."
+    },
+    {
+        "question": "Which scientific databases can be queried via the DeepMind Science Skills? (Select all correct answers)",
+        "options": [
+            "arXiv",
+            "OpenAlex",
+            "PubMed",
+            "Wikipedia"
+        ],
+        "answerIndex": [0, 1, 2],
+        "explanation": "The Google DeepMind Science Skills provide specialized CLI tools for arXiv, OpenAlex, and PubMed. Wikipedia is not one of these academically referenced research databases in the repository."
+    },
+    {
+        "question": "What role does the 'Core Agent Harness' play in Antigravity 2.0?",
+        "options": [
+            "It is used for hardware acceleration of graphics cards.",
+            "It is the common cognitive core system (harness) upon which all four interfaces (App, IDE, CLI, SDK) are built.",
+            "It blocks unauthorized API keys for external databases.",
+            "It is used exclusively for backing up local file systems."
+        ],
+        "answerIndex": 1,
+        "explanation": "The Core Agent Harness forms the uniform foundation. No matter which interface (CLI, SDK, IDE, App) is used, the underlying agent logic and execution share the same engine."
+    },
+    {
+        "question": "What is a key security aspect when running autonomous AI agents in an ADE?",
+        "options": [
+            "That agents cannot write special characters.",
+            "The use of isolated sandboxes to protect the host system from unwanted file access or code execution.",
+            "That the agent must ask for a password at every step.",
+            "The deactivation of any internet connection."
+        ],
+        "answerIndex": 1,
+        "explanation": "Since autonomous agents execute and modify system code via tools, encapsulation in an isolated virtual sandbox is the most important security aspect to protect the host system."
+    },
+    {
+        "question": "How does the ADK parse the schema of Python functions to provide them as tools to the agent?",
+        "options": [
+            "The developer must manually create an XML file every time.",
+            "The ADK reads the type hints and docstrings of the Python function and generates the JSON schema for the LLM from them.",
+            "The ADK guesses parameters based on file size.",
+            "No parsing takes place; tools are passed directly as unstructured text to the LLM."
+        ],
+        "answerIndex": 1,
+        "explanation": "The ADK uses Python introspection. It reads the type hints of the arguments (e.g., float) as well as the textual description from the function docstring to build the JSON tool declaration."
+    },
+    {
+        "question": "Which tool from the DeepMind Science Skills is particularly well-suited for analyzing citation networks and resolving DOIs?",
+        "options": [
+            "literature-search-arxiv",
+            "pubmed-database",
+            "literature-search-openalex",
+            "google-scholar-search"
+        ],
+        "answerIndex": 2,
+        "explanation": "The OpenAlex tool (`literature-search-openalex`) is specifically optimized for querying the open global citation catalog OpenAlex and is excellent for DOI lookups and citation metrics."
+    }
+]

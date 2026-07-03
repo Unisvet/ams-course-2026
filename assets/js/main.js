@@ -101,11 +101,12 @@ function initPortalPage() {
         }
         
         // Roadmap Title
-        const roadmapTitleElement = Array.from(allH2s).find(h => h.innerText.includes('Roadmap'));
+        const roadmapTitleElement = document.querySelector('section h2') || Array.from(allH2s).find(h => h.innerText.includes('Roadmap'));
         if (roadmapTitleElement) {
             roadmapTitleElement.innerText = ui.roadmapTitle;
-            if (roadmapTitleElement.nextElementSibling) {
-                roadmapTitleElement.nextElementSibling.innerText = ui.roadmapDesc;
+            const desc = roadmapTitleElement.nextElementSibling;
+            if (desc && desc.tagName === 'P') {
+                desc.innerText = ui.roadmapDesc;
             }
         }
     } catch (e) {
@@ -158,6 +159,18 @@ function initPortalPage() {
 
     renderPortalProgress();
     renderRoadmapGrid();
+    
+    // Explicitly handle hero image click
+    const heroImg = document.getElementById('hero-course-image');
+    if (heroImg) {
+        heroImg.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (window.openLightbox) {
+                window.openLightbox(heroImg.src, heroImg.alt);
+            }
+        });
+    }
+    
     console.log("Portal initialization complete");
 }
 
@@ -369,6 +382,39 @@ function initWeekPage() {
     document.getElementById('header-week-title').innerText = `${weekLabel} ${week.id}: ${week.title}`;
     document.getElementById('header-module-title').innerText = moduleName;
     document.title = `${weekLabel} ${week.id}: ${week.title} - Advanced Modeling & System Simulation`;
+
+    // Localize Tab Buttons
+    const tabIntro = document.getElementById('tab-btn-intro');
+    const tabInfographic = document.getElementById('tab-btn-infographic');
+    const tabProblemSet = document.getElementById('tab-btn-problemset');
+    const tabQuiz = document.getElementById('tab-btn-quiz');
+    const tabStories = document.getElementById('tab-btn-stories');
+
+    if (tabIntro) tabIntro.innerHTML = `<span>📖</span> ${ui.theoryIntro}`;
+    if (tabInfographic) tabInfographic.innerHTML = `<span>📊</span> ${ui.infographic}`;
+    if (tabProblemSet) tabProblemSet.innerHTML = `<span>💻</span> ${ui.problemSet}`;
+    if (tabQuiz) tabQuiz.innerHTML = `<span>🧠</span> ${ui.quiz}`;
+    if (tabStories) tabStories.innerHTML = `<span>✨</span> ${ui.stories}`;
+
+    // Filter tabs based on week data
+    const allowedTabs = week.tabs || ['intro', 'infographic', 'problemset', 'quiz', 'stories'];
+    const tabButtons = [tabIntro, tabInfographic, tabProblemSet, tabQuiz, tabStories];
+    const tabIds = ['intro', 'infographic', 'problemset', 'quiz', 'stories'];
+
+    tabIds.forEach((tabId, idx) => {
+        const btn = tabButtons[idx];
+        if (btn) {
+            if (allowedTabs.includes(tabId)) {
+                btn.classList.remove('hidden');
+            } else {
+                btn.classList.add('hidden');
+            }
+        }
+    });
+
+    // Localize Back to Dashboard link
+    const backBtn = document.getElementById('back-to-dashboard');
+    if (backBtn) backBtn.innerText = `🏠 ${ui.backToDashboard}`;
 
     // Render sidebar navigation
     renderSidebar();
@@ -839,7 +885,7 @@ function setupImageLightbox(container) {
         });
     }
 
-    function openLightbox(src, alt) {
+    window.openLightbox = function(src, alt) {
         const img = lightbox.querySelector('#lightbox-img');
         const caption = lightbox.querySelector('#lightbox-caption');
         const content = lightbox.querySelector('#lightbox-content');
@@ -876,7 +922,7 @@ function setupImageLightbox(container) {
         let wrapper = img;
         if (img.parentElement && img.parentElement.classList.contains('relative')) {
             wrapper = img.parentElement;
-        } else if (img.parentElement && img.parentElement.parentElement && img.parentElement.parentElement.classList.contains('glass-card')) {
+        } else if (img.parentElement && img.parentElement.parentElement && (img.parentElement.parentElement.classList.contains('glass-card') || img.parentElement.parentElement.classList.contains('relative'))) {
             wrapper = img.parentElement.parentElement;
         }
         

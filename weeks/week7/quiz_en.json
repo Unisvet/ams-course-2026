@@ -1,0 +1,101 @@
+[
+    {
+        "question": "Why did Self-Attention (Transformer) replace LSTMs for long simulation logs?",
+        "options": [
+            "It processes the entire history in parallel in the context window instead of passing information step by step.",
+            "It completely eliminates computationally expensive matrix multiplications.",
+            "It automatically converts unstructured logs into analog radio signals.",
+            "It works exclusively with binary decision trees."
+        ],
+        "answerIndex": 0,
+        "explanation": "The self-attention mechanism processes the entire history in parallel in the context window, making it much more powerful than sequential LSTMs for long contexts."
+    },
+    {
+        "question": "Which historical milestone did the 'OpenAI Codex' model set for modern system simulations?",
+        "options": [
+            "Code generation by mastering formal programming language syntax.",
+            "First model to emulate emotional states of programmers.",
+            "Complete replacement of compiler optimizations by AI predictions.",
+            "Special physical maintenance and oiling of mechanical components."
+        ],
+        "answerIndex": 0,
+        "explanation": "OpenAI Codex proved for the first time that language models can master complex programming syntax and generate high-quality Python code for simulations."
+    },
+    {
+        "question": "What is Anthropic's Claude series known for, which is crucial for complex system analysis?",
+        "options": [
+            "Exclusive specialization in Excel macros for accounting.",
+            "Execution without power supply on quantum mechanical paper strips.",
+            "Early massive context windows and alignment via Constitutional AI.",
+            "Complete rejection of probability theory in text outputs."
+        ],
+        "answerIndex": 2,
+        "explanation": "Claude is characterized by groundbreaking context windows (such as 200k+ tokens) and alignment via Constitutional AI, perfect for analyzing entire codebases."
+    },
+    {
+        "question": "Which architectural principle did Mistral AI make particularly popular with models like 'Mixtral'?",
+        "options": [
+            "Complete rejection of layer normalization in the neural network.",
+            "Linking artificial neurons with biological mushroom mycelia.",
+            "Extremely small context windows of 7 words for maximum latency.",
+            "Mixture of Experts (MoE) to activate specialized sub-networks."
+        ],
+        "answerIndex": 3,
+        "explanation": "Mixture of Experts (MoE) activates only a subset of the network per token (sparse activation), which offers maximum performance at reduced inference costs."
+    },
+    {
+        "question": "What global trend in the AI ecosystem do modern Chinese open-source models (like Qwen) demonstrate?",
+        "options": [
+            "Democratization of frontier reasoning at minimal inference costs.",
+            "Complete departure from mathematics towards purely emotional text.",
+            "Need for data inputs in the form of historical abacus vectors.",
+            "Limiting model outputs to pure yes/no answers."
+        ],
+        "answerIndex": 0,
+        "explanation": "Chinese open-source and open-weight models (like Qwen and DeepSeek) demonstrate that frontier-level reasoning and mathematics skills can be trained and operated at a fraction of the cost."
+    },
+    {
+        "question": "Attention(Q,K,V)=softmax(QK^T/sqrt(d_k))V. What does the scaling factor sqrt(d_k) in the denominator do?",
+        "options": [
+            "Stops extreme vector growth & vanishing of softmax gradients.",
+            "Multiplication of the output by the JAX friction constant.",
+            "Automatic rounding of all floating-point numbers to even integers.",
+            "It converts the text prompt into a compressed JPEG image."
+        ],
+        "answerIndex": 0,
+        "explanation": "Scaling prevents extreme dot products at high dimensions, which keeps the gradients in the softmax function stable and prevents them from vanishing."
+    },
+    {
+        "question": "Why do we use a strict JSON schema instead of free text for automated parameter optimization?",
+        "options": [
+            "Because free text requires significantly more physical hard disk space.",
+            "Guarantees direct, boilerplate-free readability into simulation variables.",
+            "Because JSON is the only language understood by TPUs.",
+            "Automatic cryptographic encryption of the network prompt."
+        ],
+        "answerIndex": 1,
+        "explanation": "A fixed JSON schema via Pydantic guarantees that the model's API outputs can be read and used directly and without risk of error by software."
+    },
+    {
+        "question": "How does a natively multimodal model process an attached PNG diagram of a simulation?",
+        "options": [
+            "The model routes the image to human click workers in the cloud.",
+            "Image & text are processed directly in the same semantic vector space.",
+            "Conversion into raw RGB pixel lists read sequentially.",
+            "Pure analysis of the filename to estimate the visual content."
+        ],
+        "answerIndex": 1,
+        "explanation": "Natively multimodal models (like Gemini) process text and visual pixels directly in the same common semantic vector space, enabling true visual understanding."
+    },
+    {
+        "question": "Which attack vector is present in 'IGNORE ALL PREVIOUS INSTRUCTIONS' and how do you defend against it?",
+        "options": [
+            "Prompt Injection. Defense via system instructions & data delimiters.",
+            "Buffer Overflow, solved by physical RAM expansion on the motherboard.",
+            "DDoS attack, fended off by an external hardware firewall on the router.",
+            "A classic Trojan horse for deleting local Python files."
+        ],
+        "answerIndex": 0,
+        "explanation": "Prompt Injection attempts to bypass system rules. Defense occurs through strict system instructions, separate data spaces, and parser validations."
+    }
+]

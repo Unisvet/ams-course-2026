@@ -1,0 +1,1229 @@
+<!DOCTYPE html>
+<html lang="en" class="min-h-screen">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SciML Explorer: PINNs & FNOs</title>
+    
+    <!-- Google Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800;900&display=swap">
+    
+    <!-- Tailwind CSS (CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        vibrant: {
+                            bg: '#090d16',
+                            surface: '#0f172a',
+                            surfaceLight: '#1e293b',
+                            cyan: '#06b6d4',
+                            pink: '#ec4899',
+                            yellow: '#eab308',
+                            purple: '#8b5cf6',
+                            text: '#f8fafc',
+                            textMuted: '#94a3b8',
+                            grid: 'rgba(255, 255, 255, 0.05)'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'Outfit', 'system-ui', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- KaTeX for beautiful math equations -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" onload="renderMath()"></script>
+
+    <style>
+        body {
+            background-color: #090d16;
+            color: #f8fafc;
+            font-family: 'Inter', system-ui, sans-serif;
+        }
+        h1, h2, h3, h4 {
+            font-family: 'Outfit', sans-serif;
+        }
+        .glass-card {
+            background: rgba(15, 23, 42, 0.65);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .glass-card:hover {
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+        .glow-cyan:hover, .glow-cyan.active {
+            box-shadow: 0 0 20px rgba(6, 182, 212, 0.15);
+            border-color: rgba(6, 182, 212, 0.4);
+        }
+        .glow-pink:hover, .glow-pink.active {
+            box-shadow: 0 0 20px rgba(236, 72, 153, 0.15);
+            border-color: rgba(236, 72, 153, 0.4);
+        }
+        .glow-purple:hover, .glow-purple.active {
+            box-shadow: 0 0 20px rgba(139, 92, 246, 0.15);
+            border-color: rgba(139, 92, 246, 0.4);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(15, 23, 42, 0.4);
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #1e293b;
+            border-radius: 99px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #334155;
+        }
+        .animated-pulse-fast {
+            animation: pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: .5; transform: scale(1.05); }
+        }
+        .tab-btn.active {
+            color: #06b6d4;
+            border-bottom: 2px solid #06b6d4;
+        }
+        /* Formula styling override */
+        .katex-display {
+            margin: 0.5em 0 !important;
+        }
+    </style>
+</head>
+<body class="antialiased p-4 sm:p-6 min-h-screen flex flex-col items-center">
+
+    <div class="max-w-6xl w-full space-y-6">
+        
+        <!-- Header -->
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-slate-900 pb-4">
+            <div>
+                <span class="px-2.5 py-0.5 rounded-full bg-cyan-950/40 text-cyan-400 text-xs font-mono font-bold uppercase tracking-wider border border-cyan-900/30">
+                    Interactive SciML Dashboard
+                </span>
+                <h1 class="text-2xl sm:text-3xl font-black text-white mt-1">SciML Explorer: PINNs & FNOs</h1>
+                <p class="text-xs sm:text-sm text-vibrant-textMuted mt-0.5">Interactively explore how neural networks internalize physics and neural operators replace grid simulations.</p>
+            </div>
+            
+            <!-- Tab Menu -->
+            <div class="flex bg-slate-950/60 p-1.5 rounded-xl border border-slate-900 shrink-0 self-stretch md:self-auto overflow-x-auto custom-scrollbar">
+                <button onclick="switchTab('simulation')" id="btn-tab-simulation" class="tab-btn active px-3.5 py-1.5 rounded-lg text-xs font-bold font-mono transition-all flex items-center gap-1.5 whitespace-nowrap">
+                    <span>🌊</span> Physics Fabric
+                </button>
+                <button onclick="switchTab('architecture')" id="btn-tab-architecture" class="tab-btn px-3.5 py-1.5 rounded-lg text-xs font-bold font-mono transition-all text-slate-400 hover:text-white flex items-center gap-1.5 whitespace-nowrap">
+                    <span>🧠</span> PINN Architecture
+                </button>
+                <button onclick="switchTab('fno')" id="btn-tab-fno" class="tab-btn px-3.5 py-1.5 rounded-lg text-xs font-bold font-mono transition-all text-slate-400 hover:text-white flex items-center gap-1.5 whitespace-nowrap">
+                    <span>⚡</span> FNO Frequency Space
+                </button>
+                <button onclick="switchTab('showdown')" id="btn-tab-showdown" class="tab-btn px-3.5 py-1.5 rounded-lg text-xs font-bold font-mono transition-all text-slate-400 hover:text-white flex items-center gap-1.5 whitespace-nowrap">
+                    <span>📊</span> Solver Matrix
+                </button>
+            </div>
+        </div>
+
+        <!-- TAB 1: SIMULATION -->
+        <div id="tab-simulation" class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            <!-- Left Panel (Controls) -->
+            <div class="lg:col-span-4 space-y-4">
+                <div class="glass-card rounded-2xl p-5 space-y-5">
+                    <h3 class="text-base font-bold text-white border-b border-slate-900 pb-2 flex items-center gap-2">
+                        <span>⚙️</span> Simulation Parameters
+                    </h3>
+
+                    <!-- IC Select -->
+                    <div class="space-y-2">
+                        <label class="text-xs font-mono text-cyan-400 font-bold uppercase tracking-wider">Initial Condition</label>
+                        <div class="grid grid-cols-3 gap-2">
+                            <button onclick="setIC('sine')" id="btn-ic-sine" class="px-2.5 py-2 rounded-xl text-[10px] font-mono font-bold bg-cyan-500/10 border border-cyan-500/35 text-cyan-400 hover:bg-cyan-500/20 transition-all select-none">
+                                Genesis (Sine)
+                            </button>
+                            <button onclick="setIC('square')" id="btn-ic-square" class="px-2.5 py-2 rounded-xl text-[10px] font-mono font-bold bg-slate-900 border border-slate-800 text-slate-400 hover:border-slate-700 hover:text-white transition-all select-none">
+                                Shock (Square)
+                            </button>
+                            <button onclick="setIC('gaussian')" id="btn-ic-gaussian" class="px-2.5 py-2 rounded-xl text-[10px] font-mono font-bold bg-slate-900 border border-slate-800 text-slate-400 hover:border-slate-700 hover:text-white transition-all select-none">
+                                Pulse (Gauss)
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Diffusion Slide -->
+                    <div class="space-y-2">
+                        <div class="flex justify-between items-center text-xs font-mono">
+                            <span class="text-slate-400">Thermal Diffusivity (\(\alpha\))</span>
+                            <span id="val-alpha" class="text-cyan-400 font-bold">0.05</span>
+                        </div>
+                        <input type="range" id="slide-alpha" min="0.01" max="0.15" step="0.01" value="0.05" oninput="updateAlpha(this.value)" class="w-full h-1.5 bg-slate-900 rounded-lg appearance-none cursor-pointer accent-cyan-500">
+                    </div>
+
+                    <!-- Mode Toggle -->
+                    <div class="space-y-2 pt-2 border-t border-slate-900">
+                        <label class="text-xs font-mono text-cyan-400 font-bold uppercase tracking-wider">Solver Method</label>
+                        <div class="grid grid-cols-2 gap-2">
+                            <button onclick="setMode('pinn')" id="btn-mode-pinn" class="px-3 py-2 rounded-xl text-xs font-bold font-mono bg-cyan-500/10 border border-cyan-500/35 text-cyan-400 transition-all flex items-center justify-center gap-1.5">
+                                <span class="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse"></span> PINN (Mesh-free)
+                            </button>
+                            <button onclick="setMode('fdm')" id="btn-mode-fdm" class="px-3 py-2 rounded-xl text-xs font-bold font-mono bg-slate-900 border border-slate-800 text-slate-400 transition-all flex items-center justify-center gap-1.5">
+                                FDM (Finite Grid)
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Grid Size (Only for FDM) -->
+                    <div id="fdm-settings" class="space-y-4 pt-2 border-t border-slate-900 hidden">
+                        <div class="space-y-2">
+                            <div class="flex justify-between items-center text-xs font-mono">
+                                <span class="text-slate-400">Grid Points (Spatial \(N\))</span>
+                                <span id="val-grid" class="text-pink-400 font-bold">20 Pkt</span>
+                            </div>
+                            <input type="range" id="slide-grid" min="8" max="64" step="2" value="20" oninput="updateGrid(this.value)" class="w-full h-1.5 bg-slate-900 rounded-lg appearance-none cursor-pointer accent-pink-500">
+                        </div>
+
+                        <!-- Instability Toggle -->
+                        <label class="flex items-center gap-2.5 p-3 rounded-xl bg-red-950/10 border border-red-900/20 cursor-pointer select-none transition-all hover:bg-red-950/20">
+                            <input type="checkbox" id="chk-instability" onchange="toggleInstability(this.checked)" class="w-4 h-4 rounded border-slate-800 text-rose-500 bg-slate-950 focus:ring-0 cursor-pointer accent-rose-500">
+                            <div>
+                                <span class="text-xs font-bold text-rose-400 block font-mono">Provoke CFL Instability</span>
+                                <span class="text-[9px] text-slate-500 leading-tight block">Increases \(\Delta t\) in the grid to force numerical divergence.</span>
+                            </div>
+                        </label>
+                    </div>
+
+                    <!-- Time Scrub -->
+                    <div class="space-y-2 pt-2 border-t border-slate-900">
+                        <div class="flex justify-between items-center text-xs font-mono">
+                            <span class="text-slate-400">Time Step (Time \(t\))</span>
+                            <span id="val-time" class="text-cyan-400 font-bold">0.00</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <button id="btn-play" onclick="togglePlay()" class="p-2 rounded-xl bg-slate-900 border border-slate-800 text-xs hover:border-slate-700 select-none">▶</button>
+                            <input type="range" id="slide-time" min="0" max="1" step="0.01" value="0" oninput="updateTime(this.value)" class="w-full h-1.5 bg-slate-900 rounded-lg appearance-none cursor-pointer accent-cyan-500">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Info Block -->
+                <div class="glass-card rounded-2xl p-5 space-y-2.5 bg-cyan-950/5 border-l-4 border-l-cyan-500">
+                    <h4 class="text-xs font-bold font-mono text-cyan-400 uppercase tracking-wider">SciML Insight:</h4>
+                    <p id="solver-explanation" class="text-xs text-slate-300 leading-relaxed">
+                        The **PINN** approximates the differential equation continuously. Through the loss function (which penalizes the model's derivatives), physical conservation is enforced everywhere. It requires no discrete calculation mesh.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Right Panel (Visualization canvas) -->
+            <div class="lg:col-span-8 space-y-4">
+                <!-- Rod Visualization & Chart -->
+                <div class="glass-card rounded-2xl p-5 space-y-4">
+                    <div class="flex justify-between items-center border-b border-slate-900 pb-2">
+                        <h3 class="text-sm font-bold text-white flex items-center gap-2">
+                            <span id="solver-badge" class="px-2 py-0.5 rounded text-[10px] font-mono bg-cyan-950/50 text-cyan-400 border border-cyan-900/50">PINN</span>
+                            Temperature Distribution \(u(x, t)\)
+                        </h3>
+                        <span class="text-xs font-mono text-slate-500">Location \(x \in [-1, 1]\)</span>
+                    </div>
+
+                    <!-- Main Graph Canvas -->
+                    <div class="relative w-full aspect-[16/8] bg-slate-950/40 rounded-xl overflow-hidden border border-slate-900 flex items-center justify-center">
+                        <canvas id="canvas-main-plot" class="absolute inset-0 w-full h-full"></canvas>
+                        <!-- Instability overlay warning -->
+                        <div id="instability-warning" class="absolute inset-0 bg-red-950/80 backdrop-blur-sm flex flex-col items-center justify-center p-6 text-center space-y-3 hidden border border-red-500/30">
+                            <span class="text-3xl">⚠️</span>
+                            <h4 class="text-base font-bold text-rose-400 font-mono uppercase tracking-widest">Numerical Divergence (CFL Break)</h4>
+                            <p class="text-xs text-slate-300 max-w-sm leading-relaxed">
+                                \(\alpha \frac{\Delta t}{\Delta x^2} > 0.5\). The grid is too fine for this large time step. Errors accumulate and cause the numerical simulation to explode.
+                            </p>
+                            <span class="text-[10px] font-mono text-slate-500">Switch to the PINN solver to see continuous stability!</span>
+                        </div>
+                    </div>
+
+                    <!-- Glowing Physical Rod -->
+                    <div class="space-y-2">
+                        <div class="flex justify-between items-center text-[10px] font-mono text-slate-400">
+                            <span>Physical Metal Rod (Hot/Cold Visualization)</span>
+                            <div class="flex gap-4">
+                                <span class="flex items-center gap-1"><span class="w-2 h-2 rounded bg-cyan-500"></span> Cold (\(u < 0\))</span>
+                                <span class="flex items-center gap-1"><span class="w-2 h-2 rounded bg-pink-500"></span> Hot (\(u > 0\))</span>
+                            </div>
+                        </div>
+                        <div class="h-6 rounded-lg overflow-hidden relative border border-slate-900 bg-slate-950/60 flex items-center">
+                            <canvas id="canvas-rod" class="w-full h-full"></canvas>
+                            <!-- Discrete Grid overlays (only for FDM) -->
+                            <div id="rod-grid-markers" class="absolute inset-0 flex justify-between pointer-events-none opacity-30">
+                                <!-- Generated by JS -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Spacetime Manifold (2D heatmap) -->
+                <div class="glass-card rounded-2xl p-5">
+                    <div class="flex justify-between items-center border-b border-slate-900 pb-2 mb-3">
+                        <h3 class="text-xs font-bold font-mono text-slate-400 uppercase tracking-widest">Space-Time Cylinder (Spacetime Manifold)</h3>
+                        <span class="text-[10px] font-mono text-cyan-400" id="manifold-badge">5000 Collocation Points (PDE Loss)</span>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
+                        <div class="md:col-span-8 relative aspect-[16/6] bg-slate-950/65 rounded-xl border border-slate-900 overflow-hidden">
+                            <canvas id="canvas-manifold" class="absolute inset-0 w-full h-full cursor-pointer"></canvas>
+                        </div>
+                        <div class="md:col-span-4 space-y-2.5 text-xs">
+                            <p class="text-slate-400 leading-relaxed">
+                                The diagram shows the entire solved space-time fabric. The vertical axis is **time \(t\)**, the horizontal axis is **location \(x\)**.
+                            </p>
+                            <p id="manifold-details" class="text-[11px] text-cyan-500/80 font-mono leading-relaxed">
+                                🟡 **Yellow Dots:** Random collocation points where the PINN satisfies the physics equation via AutoDiff. No measurement data required!
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 2: ARCHITECTURE & LOSS ENGINE -->
+        <div id="tab-architecture" class="grid grid-cols-1 lg:grid-cols-12 gap-6 hidden">
+            <!-- Node Graph Panel -->
+            <div class="lg:col-span-7 glass-card rounded-2xl p-5 space-y-4">
+                <div class="flex justify-between items-center border-b border-slate-900 pb-2">
+                    <h3 class="text-sm font-bold text-white flex items-center gap-2">
+                        <span>🧠</span> JAX AutoDiff & PINN Computational Graph
+                    </h3>
+                    <div class="flex items-center gap-2">
+                        <button onclick="toggleTraining()" id="btn-train" class="px-3 py-1 rounded-lg text-xs font-mono font-bold bg-cyan-500/10 border border-cyan-500/40 text-cyan-400 hover:bg-cyan-500/20 transition-all select-none">
+                            ▶ Simulate Training
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Neural SVG Diagram -->
+                <div class="w-full aspect-[16/10] bg-slate-950/40 border border-slate-900 rounded-xl relative flex items-center justify-center p-2">
+                    <svg id="svg-nn" class="w-full h-full" viewBox="0 0 800 500">
+                        <!-- Connecting curves, nodes and animations generated in JS -->
+                    </svg>
+                </div>
+            </div>
+
+            <!-- JAX/Flax Code Panel -->
+            <div class="lg:col-span-5 flex flex-col space-y-4">
+                <!-- Training Progress / Stats -->
+                <div class="glass-card rounded-2xl p-5 space-y-4">
+                    <h3 class="text-sm font-bold text-white border-b border-slate-900 pb-2">
+                        📈 Loss Progress & Validation
+                    </h3>
+                    <div class="h-32 bg-slate-950/50 rounded-xl border border-slate-900 overflow-hidden relative">
+                        <canvas id="canvas-loss-chart" class="absolute inset-0 w-full h-full"></canvas>
+                    </div>
+                    <div class="grid grid-cols-2 gap-2 font-mono text-[11px]">
+                        <div class="p-2.5 rounded bg-slate-900/50 border border-slate-850">
+                            <span class="text-slate-500 uppercase block text-[9px] tracking-wider">Epoch</span>
+                            <span id="stat-epoch" class="text-white font-bold">0 / 2000</span>
+                        </div>
+                        <div class="p-2.5 rounded bg-slate-900/50 border border-slate-850">
+                            <span class="text-slate-500 uppercase block text-[9px] tracking-wider">Total Loss</span>
+                            <span id="stat-total-loss" class="text-cyan-400 font-bold">1.4820</span>
+                        </div>
+                        <div class="p-2.5 rounded bg-slate-900/50 border border-slate-850">
+                            <span class="text-slate-500 uppercase block text-[9px] tracking-wider">PDE Residual Loss</span>
+                            <span id="stat-pde-loss" class="text-purple-400 font-bold">0.8240</span>
+                        </div>
+                        <div class="p-2.5 rounded bg-slate-900/50 border border-slate-850">
+                            <span class="text-slate-500 uppercase block text-[9px] tracking-wider">IC / BC Loss</span>
+                            <span id="stat-icbc-loss" class="text-pink-400 font-bold">0.6580</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Clickable Interactive Code Drawers -->
+                <div class="glass-card rounded-2xl p-5 flex-1 space-y-3 flex flex-col justify-between">
+                    <div class="space-y-3">
+                        <h3 class="text-sm font-bold text-white border-b border-slate-900 pb-2">
+                            🔎 Code Inspector (Click in graph)
+                        </h3>
+                        <div class="flex gap-2">
+                            <button onclick="inspectCode('pde')" id="btn-inspect-pde" class="px-2 py-1 rounded bg-purple-500/10 border border-purple-500/35 text-[10px] font-mono font-bold text-purple-400 hover:bg-purple-500/20">
+                                PDE Loss
+                            </button>
+                            <button onclick="inspectCode('ic')" id="btn-inspect-ic" class="px-2 py-1 rounded bg-slate-900 border border-slate-800 text-[10px] font-mono font-bold text-slate-400 hover:border-slate-700">
+                                IC Loss
+                            </button>
+                            <button onclick="inspectCode('bc')" id="btn-inspect-bc" class="px-2 py-1 rounded bg-slate-900 border border-slate-800 text-[10px] font-mono font-bold text-slate-400 hover:border-slate-700">
+                                BC Loss
+                            </button>
+                        </div>
+                        <div class="p-3 bg-slate-950 rounded-xl border border-slate-900 font-mono text-[10px] text-slate-300 leading-normal overflow-x-auto overflow-y-auto max-h-[180px] custom-scrollbar shadow-inner relative">
+                            <pre id="code-block" class="language-python">
+# Click on a component above...
+                            </pre>
+                        </div>
+                    </div>
+                    <div class="text-[10px] text-slate-500 font-mono leading-relaxed pt-2 border-t border-slate-900/60">
+                        💡 **Did you know?** JAX AutoDiff derives the neural network analytically by \(x\) and \(t\). There are no rounding errors from difference quotients!
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 3: FOURIER NEURAL OPERATOR (FNO) -->
+        <div id="tab-fno" class="grid grid-cols-1 lg:grid-cols-12 gap-6 hidden">
+            <!-- Left Info Panel -->
+            <div class="lg:col-span-4 space-y-4">
+                <div class="glass-card rounded-2xl p-5 space-y-4">
+                    <h3 class="text-base font-bold text-white border-b border-slate-900 pb-2">
+                        ⚡ Fourier Neural Operator (FNO)
+                    </h3>
+                    <p class="text-xs text-slate-300 leading-relaxed">
+                        While PINNs must be completely retrained for each new initial condition, a **Neural Operator** learns a mapping between entire function spaces.
+                    </p>
+                    <p class="text-xs text-slate-400 leading-relaxed">
+                        The FNO uses the **Fast Fourier Transform (FFT)**. In the frequency domain, the complex integral-differential equations of physics become simple linear filters.
+                    </p>
+                    
+                    <div class="space-y-3 pt-3 border-t border-slate-900">
+                        <label class="text-xs font-mono text-cyan-400 font-bold uppercase tracking-wider block">Compare Grid Resolutions</label>
+                        <div class="grid grid-cols-2 gap-2">
+                            <button onclick="setFNOResolution(16)" id="btn-res-16" class="px-3 py-2 rounded-xl text-xs font-bold font-mono bg-cyan-500/10 border border-cyan-500/35 text-cyan-400">
+                                16 Grid Points (Coarse)
+                            </button>
+                            <button onclick="setFNOResolution(128)" id="btn-res-128" class="px-3 py-2 rounded-xl text-xs font-bold font-mono bg-slate-900 border border-slate-800 text-slate-400">
+                                128 Grid Points (Fine)
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="p-3.5 rounded-xl bg-purple-950/10 border border-purple-900/20 space-y-1.5">
+                        <span class="text-xs font-bold text-purple-400 block font-mono">Zero-Shot Super-Resolution:</span>
+                        <p class="text-[10px] text-slate-400 leading-relaxed">
+                            Since frequency filtering is independent of grid resolution, the FNO can be trained on coarse grids (16 pts) and evaluated directly on extremely fine grids (128 pts). No recalculation needed!
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FNO visual Pipeline -->
+            <div class="lg:col-span-8 glass-card rounded-2xl p-5 space-y-6">
+                <h3 class="text-sm font-bold text-white border-b border-slate-900 pb-2">
+                    🔄 The FNO Spectral Pipeline (Visual Flow)
+                </h3>
+
+                <!-- Flow Visual Elements -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <!-- Step 1: Input -->
+                    <div class="p-4 rounded-xl bg-slate-950/50 border border-slate-900 flex flex-col justify-between aspect-square">
+                        <div>
+                            <span class="text-[10px] font-mono text-cyan-400 uppercase tracking-widest font-bold">Step 1: Spatial Domain (Input)</span>
+                            <h4 class="text-xs text-white font-bold mt-1">Initial Function \(a(x)\)</h4>
+                        </div>
+                        <div class="h-28 bg-slate-950 border border-slate-900 rounded-lg overflow-hidden relative">
+                            <canvas id="canvas-fno-input" class="absolute inset-0 w-full h-full"></canvas>
+                        </div>
+                        <span class="text-[9px] text-slate-500">Location \(x \in [-1, 1]\). The user can change the oscillations.</span>
+                    </div>
+
+                    <!-- Step 2: Freq Domain -->
+                    <div class="p-4 rounded-xl bg-slate-950/50 border border-slate-900 flex flex-col justify-between aspect-square relative">
+                        <!-- Decorative Arrow -->
+                        <div class="hidden md:block absolute -left-3 top-1/2 -translate-y-1/2 text-cyan-500 font-black text-sm z-10">➔</div>
+                        <div>
+                            <span class="text-[10px] font-mono text-pink-400 uppercase tracking-widest font-bold">Step 2: Spectral Coefficients</span>
+                            <h4 class="text-xs text-white font-bold mt-1">FFT & Frequency Kernel</h4>
+                        </div>
+                        <div class="h-28 bg-slate-950 border border-slate-900 rounded-lg overflow-hidden relative">
+                            <canvas id="canvas-fno-freq" class="absolute inset-0 w-full h-full"></canvas>
+                        </div>
+                        <span class="text-[9px] text-slate-500">Fast Fourier Transform filters out high-frequency noise / details.</span>
+                    </div>
+
+                    <!-- Step 3: Output -->
+                    <div class="p-4 rounded-xl bg-slate-950/50 border border-slate-900 flex flex-col justify-between aspect-square relative">
+                        <div class="hidden md:block absolute -left-3 top-1/2 -translate-y-1/2 text-pink-500 font-black text-sm z-10">➔</div>
+                        <div>
+                            <span class="text-[10px] font-mono text-purple-400 uppercase tracking-widest font-bold">Step 3: Spatial Domain (Output)</span>
+                            <h4 class="text-xs text-white font-bold mt-1">IFFT & Solution \(u(x)\)</h4>
+                        </div>
+                        <div class="h-28 bg-slate-950 border border-slate-900 rounded-lg overflow-hidden relative">
+                            <canvas id="canvas-fno-output" class="absolute inset-0 w-full h-full"></canvas>
+                        </div>
+                        <span class="text-[9px] text-slate-500">Inverse FFT maps the filtered modes smoothly back to the rod temperature.</span>
+                    </div>
+                </div>
+
+                <div class="p-4 rounded-xl bg-slate-950/30 border border-slate-900 font-mono text-xs text-slate-400 flex items-center justify-between">
+                    <span>💡 **Change the resolution** on the left to see how the shape of the output curve remains exactly identical!</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 4: SOLVER SHOWDOWN -->
+        <div id="tab-showdown" class="glass-card rounded-2xl p-5 space-y-6 hidden">
+            <div class="border-b border-slate-900 pb-2">
+                <h3 class="text-base font-bold text-white flex items-center gap-2">
+                    <span>📊</span> Solver Showdown: Who wins in practice?
+                </h3>
+                <p class="text-xs text-vibrant-textMuted mt-0.5">Direct performance comparison of classical numerical methods (FDM, FEM) with modern SciML approaches (PINN, FNO).</p>
+            </div>
+
+            <!-- Comparison Table -->
+            <div class="overflow-x-auto custom-scrollbar">
+                <table class="w-full text-left border-collapse text-xs font-mono">
+                    <thead>
+                        <tr class="border-b border-slate-900 text-[10px] text-cyan-400 uppercase tracking-wider">
+                            <th class="py-3 px-4 font-bold">Criterion / Method</th>
+                            <th class="py-3 px-4 font-bold">FDM (Finite Difference)</th>
+                            <th class="py-3 px-4 font-bold">FEM (Finite Element)</th>
+                            <th class="py-3 px-4 font-bold">PINN (Physics-Informed)</th>
+                            <th class="py-3 px-4 font-bold">FNO (Fourier Operator)</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-900/60 text-slate-300">
+                        <tr class="hover:bg-slate-900/20">
+                            <td class="py-3.5 px-4 font-bold text-white">Mesh-Freedom</td>
+                            <td class="py-3.5 px-4">❌ No (Rigid Grids)</td>
+                            <td class="py-3.5 px-4">❌ No (Flexible Meshes)</td>
+                            <td class="py-3.5 px-4 text-emerald-400">✔️ Yes (Fully Continuous)</td>
+                            <td class="py-3.5 px-4">➖ No (Needs Grid Input)</td>
+                        </tr>
+                        <tr class="hover:bg-slate-900/20">
+                            <td class="py-3.5 px-4 font-bold text-white">Inference Speed</td>
+                            <td class="py-3.5 px-4">➖ Medium (Iterative Timesteps)</td>
+                            <td class="py-3.5 px-4">❌ Slow (Equation Systems)</td>
+                            <td class="py-3.5 px-4">➖ Medium (MLP Forward Pass)</td>
+                            <td class="py-3.5 px-4 text-emerald-400">✔️ Extremely Fast (sub-ms via FFT)</td>
+                        </tr>
+                        <tr class="hover:bg-slate-900/20">
+                            <td class="py-3.5 px-4 font-bold text-white">Pre-Computation (Training Time)</td>
+                            <td class="py-3.5 px-4 text-emerald-400">✔️ None (Ready to go)</td>
+                            <td class="py-3.5 px-4 text-emerald-400">✔️ None (Ready to go)</td>
+                            <td class="py-3.5 px-4">❌ Very High (Optimization Loop)</td>
+                            <td class="py-3.5 px-4">❌ Extremely High (Massive Data)</td>
+                        </tr>
+                        <tr class="hover:bg-slate-900/20">
+                            <td class="py-3.5 px-4 font-bold text-white">New Initial Conditions</td>
+                            <td class="py-3.5 px-4 text-emerald-400">✔️ Flexible (New Input)</td>
+                            <td class="py-3.5 px-4 text-emerald-400">✔️ Flexible (New Input)</td>
+                            <td class="py-3.5 px-4">❌ Retraining Necessary</td>
+                            <td class="py-3.5 px-4 text-emerald-400">✔️ Zero-Shot Generalization</td>
+                        </tr>
+                        <tr class="hover:bg-slate-900/20">
+                            <td class="py-3.5 px-4 font-bold text-white">Measurement Data Integration</td>
+                            <td class="py-3.5 px-4">❌ Extremely Hard</td>
+                            <td class="py-3.5 px-4">❌ Hard</td>
+                            <td class="py-3.5 px-4 text-emerald-400">✔️ Seamless (as Data Loss)</td>
+                            <td class="py-3.5 px-4 text-emerald-400">✔️ Seamless (Pure Data Models)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Interactive Scenario Solver Selector -->
+            <div class="p-5 bg-slate-950/40 rounded-xl border border-slate-900 space-y-4">
+                <h4 class="text-xs font-bold font-mono text-cyan-400 uppercase tracking-wider">Engineering Scenarios: Which solver fits?</h4>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                    <button onclick="showScenario('f1')" id="btn-scen-f1" class="p-3.5 rounded-xl border border-slate-800 bg-slate-900/50 hover:border-slate-700 text-left transition-all">
+                        <span class="text-xs font-bold text-white block">🏎️ Real-time CFD Aerodynamics</span>
+                        <span class="text-[9px] text-slate-500 leading-tight block mt-0.5">Flow around F1 cars during design changes.</span>
+                    </button>
+                    <button onclick="showScenario('sensor')" id="btn-scen-sensor" class="p-3.5 rounded-xl border border-slate-800 bg-slate-900/50 hover:border-slate-700 text-left transition-all">
+                        <span class="text-xs font-bold text-white block">🌡️ Filling Sensor Gaps</span>
+                        <span class="text-[9px] text-slate-500 leading-tight block mt-0.5">Heat development in battery with sparse sensors.</span>
+                    </button>
+                    <button onclick="showScenario('bridge')" id="btn-scen-bridge" class="p-3.5 rounded-xl border border-slate-800 bg-slate-900/50 hover:border-slate-700 text-left transition-all">
+                        <span class="text-xs font-bold text-white block">🌉 Structural Bridge Load</span>
+                        <span class="text-[9px] text-slate-500 leading-tight block mt-0.5">Precise deformation measurement on a known bridge.</span>
+                    </button>
+                </div>
+                <div id="scenario-result" class="p-4 rounded-xl bg-cyan-950/20 border border-cyan-900/30 text-xs text-slate-300 leading-relaxed animate-fade-in hidden">
+                    <!-- Loaded dynamically in JS -->
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Core Javascript Code -->
+    <script>
+        // Set up math auto-render helper
+        function renderMath() {
+            if (window.renderMathInElement) {
+                window.renderMathInElement(document.body, {
+                    delimiters: [
+                        {left: '$$', right: '$$', display: true},
+                        {left: '$', right: '$', display: false},
+                        {left: '\\(', right: '\\)', display: false},
+                        {left: '\\[', right: '\\]', display: true}
+                    ],
+                    throwOnError: false
+                });
+            }
+        }
+
+        // Global states
+        let currentTab = 'simulation';
+        let currentIC = 'sine';
+        let currentMode = 'pinn';
+        let alpha = 0.05;
+        let gridSize = 20;
+        let isInstabilityEnabled = false;
+        let currentTime = 0.0;
+        let isPlaying = false;
+        let playInterval = null;
+        let trainingInterval = null;
+        let trainingEpoch = 0;
+        let currentFNO_res = 16;
+
+        // FDM and PINN solver arrays
+        let simData = null;
+
+        // Code templates for code inspector
+        const codeTemplates = {
+            pde: `# JAX Physics Residual Loss (1D Heat Equation)
+# Heat Equation: u_t - alpha * u_xx = 0
+def pde_loss(params, x_col, t_col, alpha=0.05):
+    # Vectorized derivative evaluation
+    def residual_fn(x, t):
+        # First derivative wrt time (t)
+        u_t = jax.grad(model.apply, argnums=2)(params, x, t)
+        
+        # Second derivative wrt space (x)
+        u_x = jax.grad(model.apply, argnums=1)(params, x, t)
+        u_xx = jax.grad(lambda x_val: jax.grad(model.apply, argnums=1)(params, x_val, t))(x)
+        
+        return u_t - alpha * u_xx
+
+    residuals = jax.vmap(residual_fn)(x_col, t_col)
+    return jnp.mean(residuals ** 2) # Penalize deviation from 0`,
+            ic: `# Initial Condition (IC) Loss - Genesis State
+# Target: u(x, 0) = -sin(pi * x)
+def ic_loss(params, x_ic):
+    # Predict u at t=0
+    pred = jax.vmap(lambda x: model.apply(params, x, 0.0))(x_ic)
+    
+    # Target value from Genesis wave
+    target = -jnp.sin(jnp.pi * x_ic)
+    
+    return jnp.mean((pred - target) ** 2)`,
+            bc: `# Dirichlet Boundary Condition (BC) Loss - Rod Edges
+# Rod endpoints kept at 0 degrees Celsius: u(-1, t) = u(1, t) = 0
+def bc_loss(params, t_bc):
+    # Evaluate model predictions at rod edges
+    pred_left = jax.vmap(lambda t: model.apply(params, -1.0, t))(t_bc)
+    pred_right = jax.vmap(lambda t: model.apply(params, 1.0, t))(t_bc)
+    
+    # Target is zero degrees at both borders
+    return jnp.mean(pred_left ** 2) + jnp.mean(pred_right ** 2)`
+        };
+
+        // Initialize elements
+        document.addEventListener('DOMContentLoaded', () => {
+            initSimulation();
+            drawMainPlot();
+            drawRod();
+            drawSpacetimeManifold();
+            renderMath();
+            initNeuralGraph();
+            drawLossChart();
+            initFNOPipeline();
+        });
+
+        // Tab Switching
+        function switchTab(tabId) {
+            currentTab = tabId;
+            const tabs = ['simulation', 'architecture', 'fno', 'showdown'];
+            tabs.forEach(t => {
+                document.getElementById(`tab-${t}`).classList.add('hidden');
+                document.getElementById(`btn-tab-${t}`).className = "tab-btn px-3.5 py-1.5 rounded-lg text-xs font-bold font-mono transition-all text-slate-400 hover:text-white";
+            });
+            document.getElementById(`tab-${tabId}`).classList.remove('hidden');
+            document.getElementById(`btn-tab-${tabId}`).className = "tab-btn active px-3.5 py-1.5 rounded-lg text-xs font-bold font-mono transition-all text-cyan-400";
+            
+            // Special initialization based on active tab
+            if (tabId === 'simulation') {
+                setTimeout(() => {
+                    initSimulation();
+                    drawMainPlot();
+                    drawRod();
+                    drawSpacetimeManifold();
+                }, 50);
+            } else if (tabId === 'architecture') {
+                setTimeout(() => {
+                    initNeuralGraph();
+                    drawLossChart();
+                }, 50);
+            } else if (tabId === 'fno') {
+                setTimeout(() => {
+                    initFNOPipeline();
+                }, 50);
+            }
+        }
+
+        // ==========================================
+        // TAB 1: SIMULATION ENGINE (JS SOLVER)
+        // ==========================================
+        function solveHeatEquation(IC_type, alphaVal, N, dt_multiplier = 1.0) {
+            const x = [];
+            const dx = 2.0 / (N - 1);
+            for (let i = 0; i < N; i++) {
+                x.push(-1.0 + i * dx);
+            }
+            
+            let u = new Float32Array(N);
+            for (let i = 0; i < N; i++) {
+                if (IC_type === 'sine') {
+                    u[i] = -Math.sin(Math.PI * x[i]);
+                } else if (IC_type === 'square') {
+                    u[i] = (x[i] >= -0.4 && x[i] <= 0.4) ? 1.2 : -0.2;
+                } else if (IC_type === 'gaussian') {
+                    u[i] = 1.4 * Math.exp(-x[i]*x[i] / 0.06) - 0.2;
+                }
+            }
+            
+            u[0] = 0;
+            u[N-1] = 0;
+
+            const Nt = 100;
+            const t = [];
+            for (let j = 0; j <= Nt; j++) {
+                t.push(j / Nt);
+            }
+
+            const max_dt = (dx * dx) / (2.0 * alphaVal);
+            let sim_dt = max_dt * 0.9;
+            if (dt_multiplier > 1.0) {
+                sim_dt = max_dt * 1.55;
+            }
+
+            const states = [];
+            states.push(new Float32Array(u));
+
+            let current_u = new Float32Array(u);
+            let next_u = new Float32Array(N);
+            let elapsed_t = 0;
+            let exploded = false;
+            
+            for (let step = 1; step <= Nt; step++) {
+                const target_t = step / Nt;
+                
+                while (elapsed_t < target_t) {
+                    const dt = Math.min(sim_dt, target_t - elapsed_t);
+                    if (dt <= 0) break;
+                    
+                    next_u[0] = 0;
+                    next_u[N-1] = 0;
+                    const r = alphaVal * dt / (dx * dx);
+                    
+                    for (let i = 1; i < N - 1; i++) {
+                        next_u[i] = current_u[i] + r * (current_u[i+1] - 2.0 * current_u[i] + current_u[i-1]);
+                    }
+                    
+                    for (let i = 0; i < N; i++) {
+                        if (isNaN(next_u[i]) || Math.abs(next_u[i]) > 8.0) {
+                            exploded = true;
+                            break;
+                        }
+                    }
+                    
+                    if (exploded) {
+                        for (let s = step; s <= Nt; s++) {
+                            const explosion = new Float32Array(N);
+                            for (let idx=0; idx<N; idx++) {
+                                explosion[idx] = (idx % 2 === 0 ? 3.0 : -3.0) * Math.sin(idx * 8 + s);
+                            }
+                            states.push(explosion);
+                        }
+                        return { x, t, states, exploded: true, cflRatio: r };
+                    }
+                    
+                    current_u.set(next_u);
+                    elapsed_t += dt;
+                }
+                states.push(new Float32Array(current_u));
+            }
+            return { x, t, states, exploded: false, cflRatio: alphaVal * sim_dt / (dx * dx) };
+        }
+
+        function solvePINNExact(IC_type, alphaVal, t, x) {
+            // Heat equation u_t = alpha * u_xx has analytical solution u(x,t) = exp(-alpha * pi^2 * t) * sin(pi * x)
+            // for sine IC. We use this as a "surrogate" for the PINN's learned smooth solution.
+            if (IC_type === 'sine') {
+                return -Math.exp(-alphaVal * Math.PI * Math.PI * t) * Math.sin(Math.PI * x);
+            } else if (IC_type === 'square') {
+                // Sum of Fourier series for heat equation on square pulse
+                let sum = 0;
+                for (let n = 1; n < 15; n++) {
+                    const kn = n * Math.PI;
+                    const coeff = (2.0 / kn) * (Math.sin(kn * 0.4) - Math.sin(kn * -0.4));
+                    sum += coeff * Math.exp(-alphaVal * kn * kn * t) * Math.cos(kn * x / 2);
+                }
+                return sum * 0.8;
+            } else {
+                // Gaussian pulse approximation
+                const sigma = Math.sqrt(0.06 + 2 * alphaVal * t);
+                return (1.4 * (Math.sqrt(0.06) / sigma) * Math.exp(-x*x / (sigma*sigma))) - 0.2;
+            }
+        }
+
+        function initSimulation() {
+            simData = solveHeatEquation(currentIC, alpha, gridSize, isInstabilityEnabled ? 1.5 : 1.0);
+            const warning = document.getElementById('instability-warning');
+            if (simData.exploded) warning.classList.remove('hidden');
+            else warning.classList.add('hidden');
+        }
+
+        function setIC(ic) {
+            currentIC = ic;
+            const buttons = ['sine', 'square', 'gaussian'];
+            buttons.forEach(b => {
+                const btn = document.getElementById(`btn-ic-${b}`);
+                if (b === ic) {
+                    btn.className = "px-2.5 py-2 rounded-xl text-[10px] font-mono font-bold bg-cyan-500/10 border border-cyan-500/35 text-cyan-400";
+                } else {
+                    btn.className = "px-2.5 py-2 rounded-xl text-[10px] font-mono font-bold bg-slate-900 border border-slate-800 text-slate-400 hover:border-slate-700 hover:text-white";
+                }
+            });
+            initSimulation();
+            drawMainPlot();
+            drawRod();
+            drawSpacetimeManifold();
+        }
+
+        function setMode(mode) {
+            currentMode = mode;
+            const pinnBtn = document.getElementById('btn-mode-pinn');
+            const fdmBtn = document.getElementById('btn-mode-fdm');
+            const fdmSettings = document.getElementById('fdm-settings');
+            const solverBadge = document.getElementById('solver-badge');
+            const explanation = document.getElementById('solver-explanation');
+            const markers = document.getElementById('rod-grid-markers');
+
+            if (mode === 'pinn') {
+                pinnBtn.className = "px-3 py-2 rounded-xl text-xs font-bold font-mono bg-cyan-500/10 border border-cyan-500/35 text-cyan-400 flex items-center justify-center gap-1.5";
+                fdmBtn.className = "px-3 py-2 rounded-xl text-xs font-bold font-mono bg-slate-900 border border-slate-800 text-slate-400 flex items-center justify-center gap-1.5";
+                fdmSettings.classList.add('hidden');
+                solverBadge.className = "px-2 py-0.5 rounded text-[10px] font-mono bg-cyan-950/50 text-cyan-400 border border-cyan-900/50";
+                solverBadge.innerText = "PINN (Mesh-free)";
+                explanation.innerText = "The **PINN** approximates the differential equation continuously. Through the loss function (which penalizes the model's derivatives), physical conservation is enforced everywhere. It requires no discrete calculation mesh.";
+                markers.innerHTML = "";
+            } else {
+                fdmBtn.className = "px-3 py-2 rounded-xl text-xs font-bold font-mono bg-pink-500/10 border border-pink-500/35 text-pink-400 flex items-center justify-center gap-1.5";
+                pinnBtn.className = "px-3 py-2 rounded-xl text-xs font-bold font-mono bg-slate-900 border border-slate-800 text-slate-400 flex items-center justify-center gap-1.5";
+                fdmSettings.classList.remove('hidden');
+                solverBadge.className = "px-2 py-0.5 rounded text-[10px] font-mono bg-pink-950/50 text-pink-400 border border-pink-900/50";
+                solverBadge.innerText = "FDM (Grid)";
+                explanation.innerText = "The **Finite Difference Method (FDM)** breaks the rod into discrete points and calculates slopes sequentially in time. If the grid is too fine or the time steps too large, stability collapses.";
+                
+                let lineStr = "";
+                for (let i = 0; i < gridSize; i++) {
+                    lineStr += `<div class="w-px h-full bg-slate-950/60"></div>`;
+                }
+                markers.innerHTML = lineStr;
+            }
+            initSimulation();
+            drawMainPlot();
+            drawRod();
+            drawSpacetimeManifold();
+        }
+
+        function updateAlpha(val) {
+            alpha = parseFloat(val);
+            document.getElementById('val-alpha').innerText = alpha.toFixed(2);
+            initSimulation();
+            drawMainPlot();
+            drawRod();
+            drawSpacetimeManifold();
+        }
+
+        function updateGrid(val) {
+            gridSize = parseInt(val);
+            document.getElementById('val-grid').innerText = `${gridSize} Pts`;
+            if (currentMode === 'fdm') {
+                const markers = document.getElementById('rod-grid-markers');
+                let lineStr = "";
+                for (let i = 0; i < gridSize; i++) {
+                    lineStr += `<div class="w-px h-full bg-slate-950/60"></div>`;
+                }
+                markers.innerHTML = lineStr;
+            }
+            initSimulation();
+            drawMainPlot();
+            drawRod();
+            drawSpacetimeManifold();
+        }
+
+        function toggleInstability(checked) {
+            isInstabilityEnabled = checked;
+            initSimulation();
+            drawMainPlot();
+            drawRod();
+            drawSpacetimeManifold();
+        }
+
+        function updateTime(val) {
+            currentTime = parseFloat(val);
+            document.getElementById('val-time').innerText = currentTime.toFixed(2);
+            document.getElementById('slide-time').value = currentTime;
+            drawMainPlot();
+            drawRod();
+            drawSpacetimeManifold();
+        }
+
+        function togglePlay() {
+            const btn = document.getElementById('btn-play');
+            if (isPlaying) {
+                clearInterval(playInterval);
+                btn.innerText = "▶";
+                isPlaying = false;
+            } else {
+                btn.innerText = "⏸";
+                isPlaying = true;
+                playInterval = setInterval(() => {
+                    let nextTime = currentTime + 0.015;
+                    if (nextTime > 1.0) nextTime = 0.0;
+                    updateTime(nextTime);
+                }, 80);
+            }
+        }
+
+        function drawMainPlot() {
+            const canvas = document.getElementById('canvas-main-plot');
+            const ctx = canvas.getContext('2d');
+            const rect = canvas.getBoundingClientRect();
+            canvas.width = rect.width * window.devicePixelRatio;
+            canvas.height = rect.height * window.devicePixelRatio;
+            ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+            const w = rect.width;
+            const h = rect.height;
+            ctx.clearRect(0, 0, w, h);
+            ctx.strokeStyle = 'rgba(255,255,255,0.03)';
+            ctx.lineWidth = 1;
+            for (let i = 1; i < 10; i++) {
+                ctx.beginPath(); ctx.moveTo(w * i / 10, 0); ctx.lineTo(w * i / 10, h); ctx.stroke();
+                ctx.beginPath(); ctx.moveTo(0, h * i / 10); ctx.lineTo(w, h * i / 10); ctx.stroke();
+            }
+            ctx.strokeStyle = 'rgba(255,255,255,0.2)';
+            ctx.beginPath(); ctx.moveTo(0, h / 2); ctx.lineTo(w, h / 2); ctx.stroke();
+            const xToPixel = (xVal) => 40 + (xVal + 1.0) * (w - 80) / 2.0;
+            const uToPixel = (uVal) => h / 2 - uVal * (h - 80) / 3.0;
+            ctx.fillStyle = '#94a3b8';
+            ctx.font = '10px JetBrains Mono';
+            ctx.fillText('-1.0 (Left)', 15, h / 2 + 15);
+            ctx.fillText('1.0 (Right)', w - 85, h / 2 + 15);
+            ctx.fillText('u = +1.5', 10, 30);
+            ctx.fillText('u = -1.5', 10, h - 20);
+            if (currentMode === 'fdm') {
+                const timeIndex = Math.min(Math.floor(currentTime * 100), 100);
+                const currentU = simData.states[timeIndex];
+                ctx.strokeStyle = simData.exploded ? '#f43f5e' : '#ec4899';
+                ctx.lineWidth = 2.5;
+                ctx.beginPath();
+                for (let i = 0; i < gridSize; i++) {
+                    const px = xToPixel(simData.x[i]);
+                    const py = uToPixel(currentU[i]);
+                    if (i === 0) ctx.moveTo(px, py);
+                    else ctx.lineTo(px, py);
+                }
+                ctx.stroke();
+                ctx.fillStyle = simData.exploded ? '#ef4444' : '#f472b6';
+                for (let i = 0; i < gridSize; i++) {
+                    ctx.beginPath(); ctx.arc(xToPixel(simData.x[i]), uToPixel(currentU[i]), 3, 0, 2*Math.PI); ctx.fill();
+                }
+            } else {
+                ctx.strokeStyle = '#06b6d4';
+                ctx.lineWidth = 3;
+                ctx.beginPath();
+                const steps = 150;
+                for (let i = 0; i <= steps; i++) {
+                    const xVal = -1.0 + 2.0 * (i / steps);
+                    const py = uToPixel(solvePINNExact(currentIC, alpha, currentTime, xVal));
+                    if (i === 0) ctx.moveTo(xToPixel(xVal), py);
+                    else ctx.lineTo(xToPixel(xVal), py);
+                }
+                ctx.stroke();
+                ctx.fillStyle = 'rgba(234, 179, 8, 0.85)';
+                for (let k = 0; k < 12; k++) {
+                    const cx = Math.sin(k * 45.3) * 0.95;
+                    const py = uToPixel(solvePINNExact(currentIC, alpha, currentTime, cx));
+                    const pulse = 2.5 + Math.sin(Date.now() / 150 + k) * 0.8;
+                    ctx.beginPath(); ctx.arc(xToPixel(cx), py, pulse, 0, 2*Math.PI); ctx.fill();
+                }
+            }
+        }
+
+        function drawRod() {
+            const canvas = document.getElementById('canvas-rod');
+            const ctx = canvas.getContext('2d');
+            canvas.width = canvas.offsetWidth; canvas.height = canvas.offsetHeight;
+            const w = canvas.width; const h = canvas.height;
+            const timeIndex = Math.min(Math.floor(currentTime * 100), 100);
+            const grad = ctx.createLinearGradient(0, 0, w, 0);
+            const steps = 60;
+            for (let i = 0; i <= steps; i++) {
+                const ratio = i / steps;
+                const xVal = -1.0 + 2.0 * ratio;
+                let uVal = 0;
+                if (currentMode === 'fdm') {
+                    let closestIdx = 0; let minDist = 999.0;
+                    for (let g = 0; g < gridSize; g++) {
+                        const dist = Math.abs(simData.x[g] - xVal);
+                        if (dist < minDist) { minDist = dist; closestIdx = g; }
+                    }
+                    uVal = simData.states[timeIndex][closestIdx];
+                } else uVal = solvePINNExact(currentIC, alpha, currentTime, xVal);
+                let colorStr = '#090d16';
+                if (simData.exploded && currentMode === 'fdm') colorStr = (i % 2 === 0) ? '#ef4444' : '#3f1015';
+                else {
+                    if (uVal > 0) colorStr = `rgba(236, 72, 153, ${0.1 + Math.min(uVal / 1.2, 1.0) * 0.9})`;
+                    else if (uVal < 0) colorStr = `rgba(6, 182, 212, ${0.1 + Math.min(Math.abs(uVal) / 1.2, 1.0) * 0.9})`;
+                    else colorStr = 'rgba(15, 23, 42, 0.4)';
+                }
+                grad.addColorStop(ratio, colorStr);
+            }
+            ctx.fillStyle = grad; ctx.fillRect(0, 0, w, h);
+        }
+
+        function drawSpacetimeManifold() {
+            const canvas = document.getElementById('canvas-manifold');
+            const ctx = canvas.getContext('2d');
+            const rect = canvas.getBoundingClientRect();
+            canvas.width = rect.width; canvas.height = rect.height;
+            const w = canvas.width; const h = canvas.height;
+            ctx.clearRect(0, 0, w, h);
+            const imgData = ctx.createImageData(w, h);
+            for (let y = 0; y < h; y++) {
+                const t_val = y / h;
+                for (let x = 0; x < w; x++) {
+                    const x_val = -1.0 + 2.0 * (x / w);
+                    let uVal = 0;
+                    if (currentMode === 'fdm' && !simData.exploded) {
+                        const tIdx = Math.floor(t_val * 100);
+                        let closestIdx = 0; let minDist = 999.0;
+                        for (let g = 0; g < gridSize; g++) {
+                            const dist = Math.abs(simData.x[g] - x_val);
+                            if (dist < minDist) { minDist = dist; closestIdx = g; }
+                        }
+                        uVal = simData.states[tIdx][closestIdx];
+                    } else uVal = solvePINNExact(currentIC, alpha, t_val, x_val);
+                    const idx = (y * w + x) * 4;
+                    if (uVal > 0) {
+                        const intensity = Math.min(uVal / 1.2, 1.0);
+                        imgData.data[idx] = Math.floor(236 * intensity + 9 * (1.0 - intensity));
+                        imgData.data[idx+1] = Math.floor(72 * intensity + 13 * (1.0 - intensity));
+                        imgData.data[idx+2] = Math.floor(153 * intensity + 22 * (1.0 - intensity));
+                        imgData.data[idx+3] = 180;
+                    } else {
+                        const intensity = Math.min(Math.abs(uVal) / 1.2, 1.0);
+                        imgData.data[idx] = Math.floor(6 * intensity + 9 * (1.0 - intensity));
+                        imgData.data[idx+1] = Math.floor(182 * intensity + 13 * (1.0 - intensity));
+                        imgData.data[idx+2] = Math.floor(212 * intensity + 22 * (1.0 - intensity));
+                        imgData.data[idx+3] = 180;
+                    }
+                }
+            }
+            ctx.putImageData(imgData, 0, 0);
+            ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 1.5; ctx.beginPath();
+            ctx.moveTo(0, currentTime * h); ctx.lineTo(w, currentTime * h); ctx.stroke();
+            canvas.onmousedown = function(e) {
+                const b = canvas.getBoundingClientRect();
+                updateTime(Math.max(0.0, Math.min(1.0, (e.clientY - b.top) / b.height)));
+            };
+            if (currentMode === 'pinn') {
+                ctx.fillStyle = 'rgba(234, 179, 8, 0.4)';
+                for (let k = 0; k < 60; k++) {
+                    ctx.beginPath(); ctx.arc((Math.sin(k * 74.3) + 1.0) / 2.0 * w, (Math.cos(k * 12.7) + 1.0) / 2.0 * h, 2, 0, 2*Math.PI); ctx.fill();
+                }
+            }
+        }
+
+        let lossValues = {
+            total: [1.48, 1.30, 0.98, 0.75, 0.52, 0.38, 0.25, 0.18, 0.11, 0.07, 0.04, 0.02, 0.012, 0.007, 0.004, 0.003],
+            pde: [0.82, 0.78, 0.61, 0.48, 0.35, 0.28, 0.19, 0.14, 0.09, 0.05, 0.03, 0.015, 0.009, 0.005, 0.003, 0.002],
+            icbc: [0.66, 0.52, 0.37, 0.27, 0.17, 0.10, 0.06, 0.04, 0.02, 0.02, 0.01, 0.005, 0.003, 0.002, 0.001, 0.001]
+        };
+
+        function inspectCode(section) {
+            document.getElementById('code-block').innerText = codeTemplates[section];
+            ['pde', 'ic', 'bc'].forEach(s => {
+                document.getElementById(`btn-inspect-${s}`).className = "px-2 py-1 rounded bg-slate-900 border border-slate-800 text-[10px] font-mono font-bold text-slate-400 hover:border-slate-700";
+            });
+            const c = {pde:'#8b5cf6', ic:'#ec4899', bc:'#06b6d4'}[section];
+            document.getElementById(`btn-inspect-${section}`).className = `px-2 py-1 rounded bg-slate-900 border border-opacity-50 text-[10px] font-mono font-bold transition-all`;
+            document.getElementById(`btn-inspect-${section}`).style.color = c;
+            document.getElementById(`btn-inspect-${section}`).style.borderColor = c;
+            highlightSvgNodes(section);
+        }
+
+        function initNeuralGraph() {
+            const svg = document.getElementById('svg-nn'); svg.innerHTML = '';
+            const inputNodes = [{ id: 'in-x', x: 80, y: 180, label: 'Space x', color: '#06b6d4' }, { id: 'in-t', x: 80, y: 320, label: 'Time t', color: '#06b6d4' }];
+            const h1 = [{x:200,y:110},{x:200,y:200},{x:200,y:290},{x:200,y:380}];
+            const h2 = [{x:320,y:110},{x:320,y:200},{x:320,y:290},{x:320,y:380}];
+            const out = [{ id: 'out-u', x: 440, y: 250, label: 'Temp u', color: '#eab308' }];
+            const ad = [{ id: 'ad-ut', x: 570, y: 160, label: 'AutoDiff u_t', color: '#ec4899' }, { id: 'ad-uxx', x: 570, y: 340, label: 'AutoDiff u_xx', color: '#8b5cf6' }];
+            const loss = [{ id: 'loss-ic', x: 710, y: 100, label: 'IC Loss', color: '#ec4899' }, { id: 'loss-bc', x: 710, y: 210, label: 'BC Loss', color: '#06b6d4' }, { id: 'loss-pde', x: 710, y: 340, label: 'PDE Residual', color: '#8b5cf6' }];
+            const drawC = (n1, n2, cl, s=1.5) => { const l=document.createElementNS("http://www.w3.org/2000/svg","line"); l.setAttribute("x1",n1.x); l.setAttribute("y1",n1.y); l.setAttribute("x2",n2.x); l.setAttribute("y2",n2.y); l.setAttribute("class",cl); l.setAttribute("stroke-width",s); svg.appendChild(l); };
+            inputNodes.forEach(i=>h1.forEach(h=>drawC(i,h,'stroke-slate-800/40')));
+            h1.forEach(a=>h2.forEach(b=>drawC(a,b,'stroke-slate-800/45')));
+            h2.forEach(a=>out.forEach(b=>drawC(a,b,'stroke-slate-800/40')));
+            out.forEach(o=>{drawC(o,ad[0],'stroke-pink-500/25',2);drawC(o,ad[1],'stroke-purple-500/25',2);});
+            drawC(inputNodes[1],ad[0],'stroke-slate-800/40'); drawC(inputNodes[0],ad[1],'stroke-slate-800/40');
+            drawC(ad[0],loss[2],'stroke-purple-500/30',2); drawC(ad[1],loss[2],'stroke-purple-500/30',2);
+            drawC(out[0],loss[0],'stroke-pink-500/25'); drawC(out[0],loss[1],'stroke-cyan-500/25');
+            inputNodes.forEach(n=>createNodeEl(svg,n.x,n.y,20,n.color,n.id,n.label));
+            h1.forEach((n,i)=>createNodeEl(svg,n.x,n.y,14,'#1e293b',`h1-${i}`));
+            h2.forEach((n,i)=>createNodeEl(svg,n.x,n.y,14,'#1e293b',`h2-${i}`));
+            out.forEach(n=>createNodeEl(svg,n.x,n.y,22,n.color,n.id,n.label));
+            ad.forEach(b=>createRectEl(svg,b.x-50,b.y-20,100,40,b.color,b.id,b.label));
+            loss.forEach(l=>createRectEl(svg,l.x-45,l.y-18,90,36,l.color,l.id,l.label));
+            createLabelEl(svg,260,40,"Neural Network MLP (Flax)","#94a3b8");
+            createLabelEl(svg,570,80,"AutoDiff Derivative (JAX)","#ec4899");
+            createLabelEl(svg,710,50,"Loss landscape","#eab308");
+            ['pde','ic','bc'].forEach(s=>document.getElementById(`loss-${s}`).addEventListener('click',()=>inspectCode(s)));
+            ['ut','uxx'].forEach(s=>document.getElementById(`ad-${s}`).addEventListener('click',()=>inspectCode('pde')));
+            inspectCode('pde');
+        }
+
+        function createNodeEl(svg, x, y, r, color, id, label) {
+            const g=document.createElementNS("http://www.w3.org/2000/svg","g");
+            const c=document.createElementNS("http://www.w3.org/2000/svg","circle");
+            c.setAttribute("cx",x);c.setAttribute("cy",y);c.setAttribute("r",r);c.setAttribute("fill",color);
+            c.setAttribute("stroke","rgba(255,255,255,0.1)");c.setAttribute("stroke-width","2");c.setAttribute("id",id);
+            c.setAttribute("class","cursor-pointer transition-all hover:scale-110");g.appendChild(c);
+            if(label){
+                const t=document.createElementNS("http://www.w3.org/2000/svg","text");
+                t.setAttribute("x",x);t.setAttribute("y",y+r+16);t.setAttribute("text-anchor","middle");
+                t.setAttribute("fill","#94a3b8");t.setAttribute("font-size","10px");t.setAttribute("font-family","JetBrains Mono");
+                t.textContent=label;g.appendChild(t);
+            }
+            svg.appendChild(g);
+        }
+
+        function createRectEl(svg, x, y, w, h, color, id, label) {
+            const g=document.createElementNS("http://www.w3.org/2000/svg","g");g.setAttribute("id",id);g.setAttribute("class","cursor-pointer");
+            const r=document.createElementNS("http://www.w3.org/2000/svg","rect");
+            r.setAttribute("x",x);r.setAttribute("y",y);r.setAttribute("width",w);r.setAttribute("height",h);r.setAttribute("rx","6");
+            r.setAttribute("fill","rgba(15, 23, 42, 0.8)");r.setAttribute("stroke",color);r.setAttribute("stroke-width","2");
+            r.setAttribute("class","transition-all hover:brightness-125");g.appendChild(r);
+            const t=document.createElementNS("http://www.w3.org/2000/svg","text");
+            t.setAttribute("x",x+w/2);t.setAttribute("y",y+h/2+4);t.setAttribute("text-anchor","middle");
+            t.setAttribute("fill","#f8fafc");t.setAttribute("font-size","9px");t.setAttribute("font-family","JetBrains Mono");
+            t.textContent=label;g.appendChild(t);svg.appendChild(g);
+        }
+
+        function createLabelEl(svg, x, y, text, color) {
+            const t=document.createElementNS("http://www.w3.org/2000/svg","text");
+            t.setAttribute("x",x);t.setAttribute("y",y);t.setAttribute("text-anchor","middle");
+            t.setAttribute("fill",color);t.setAttribute("font-size","11px");t.setAttribute("font-family","Outfit");
+            t.setAttribute("font-weight","bold");t.textContent=text;svg.appendChild(t);
+        }
+
+        function highlightSvgNodes(section) {
+            ['pde','ic','bc'].forEach(n=>{const el=document.getElementById(`loss-${n}`); if(el) el.querySelector('rect').setAttribute("stroke-width","2");});
+            const t=document.getElementById(`loss-${section}`); if(t) t.querySelector('rect').setAttribute("stroke-width","4");
+        }
+
+        function drawLossChart(activeStep = 0) {
+            const canvas = document.getElementById('canvas-loss-chart'); const ctx = canvas.getContext('2d');
+            canvas.width = canvas.offsetWidth; canvas.height = canvas.offsetHeight;
+            const w = canvas.width; const h = canvas.height; ctx.clearRect(0,0,w,h);
+            const drawC = (arr, col) => {
+                ctx.strokeStyle = col; ctx.lineWidth = 2; ctx.beginPath();
+                for (let i = 0; i <= activeStep; i++) {
+                    const x = 30 + i * (w - 60) / (lossValues.total.length - 1);
+                    const y = 15 + (Math.log10(arr[i]) - Math.log10(1.5)) * (h - 30) / (Math.log10(0.001) - Math.log10(1.5));
+                    if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+                }
+                ctx.stroke();
+                if (activeStep > 0) {
+                    const x = 30 + activeStep * (w - 60) / (lossValues.total.length - 1);
+                    const y = 15 + (Math.log10(arr[activeStep]) - Math.log10(1.5)) * (h - 30) / (Math.log10(0.001) - Math.log10(1.5));
+                    ctx.fillStyle = col; ctx.beginPath(); ctx.arc(x, y, 4, 0, 2*Math.PI); ctx.fill();
+                }
+            };
+            drawC(lossValues.total, '#06b6d4'); drawC(lossValues.pde, '#8b5cf6'); drawC(lossValues.icbc, '#ec4899');
+            ctx.fillStyle = '#475569'; ctx.font = '8px JetBrains Mono'; ctx.fillText('0 Epochs', 15, h - 5); ctx.fillText('2000 Epochs', w - 75, h - 5);
+        }
+
+        function toggleTraining() {
+            const btn = document.getElementById('btn-train');
+            if (trainingInterval) { clearInterval(trainingInterval); trainingInterval = null; btn.innerText = "▶ Simulate Training"; }
+            else {
+                btn.innerText = "⏸ Stop"; trainingEpoch = 0;
+                trainingInterval = setInterval(() => {
+                    trainingEpoch++;
+                    if (trainingEpoch >= lossValues.total.length) { clearInterval(trainingInterval); trainingInterval = null; btn.innerText = "🔄 Restart"; return; }
+                    document.getElementById('stat-epoch').innerText = `${Math.floor(trainingEpoch * 2000 / lossValues.total.length)} / 2000`;
+                    document.getElementById('stat-total-loss').innerText = lossValues.total[trainingEpoch].toFixed(4);
+                    document.getElementById('stat-pde-loss').innerText = lossValues.pde[trainingEpoch].toFixed(4);
+                    document.getElementById('stat-icbc-loss').innerText = lossValues.icbc[trainingEpoch].toFixed(4);
+                    drawLossChart(trainingEpoch);
+                }, 300);
+            }
+        }
+
+        let fnoInputSignal = new Float32Array(16); let fnoInputRes = 16; let fnoOutputSignal = new Float32Array(16);
+        function setFNOResolution(res) {
+            fnoInputRes = res; currentFNO_res = res;
+            document.getElementById('btn-res-16').className = res === 16 ? "px-3 py-2 rounded-xl text-xs font-bold font-mono bg-cyan-500/10 border border-cyan-500/35 text-cyan-400" : "px-3 py-2 rounded-xl text-xs font-bold font-mono bg-slate-900 border border-slate-800 text-slate-400";
+            document.getElementById('btn-res-128').className = res === 128 ? "px-3 py-2 rounded-xl text-xs font-bold font-mono bg-cyan-500/10 border border-cyan-500/35 text-cyan-400" : "px-3 py-2 rounded-xl text-xs font-bold font-mono bg-slate-900 border border-slate-800 text-slate-400";
+            initFNOPipeline();
+        }
+
+        function initFNOPipeline() {
+            fnoInputSignal = new Float32Array(fnoInputRes); fnoOutputSignal = new Float32Array(fnoInputRes);
+            for (let i = 0; i < fnoInputRes; i++) {
+                const x = -1.0 + 2.0 * (i / fnoInputRes);
+                fnoInputSignal[i] = -Math.sin(Math.PI * x) + 0.3 * Math.sin(6 * Math.PI * x) + 0.15 * Math.sin(14 * Math.PI * x);
+                fnoOutputSignal[i] = -Math.exp(-0.05 * Math.PI * Math.PI * 0.4) * Math.sin(Math.PI * x) + 0.3 * Math.exp(-0.05 * 36 * Math.PI * Math.PI * 0.4) * Math.sin(6 * Math.PI * x);
+            }
+            drawFNOPipelineCanvases();
+        }
+
+        function drawFNOPipelineCanvases() {
+            const drawBox = (id, signal, col) => {
+                const c = document.getElementById(id); const ctx = c.getContext('2d');
+                c.width = c.offsetWidth; c.height = c.offsetHeight; const w = c.width; const h = c.height; ctx.clearRect(0,0,w,h);
+                ctx.strokeStyle = col; ctx.lineWidth = 2; ctx.beginPath();
+                for (let i = 0; i < fnoInputRes; i++) {
+                    const px = i * w / (fnoInputRes - 1); const py = h/2 - signal[i] * (h - 20) / 3.0;
+                    if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+                }
+                ctx.stroke();
+                ctx.fillStyle = col + 'CC';
+                for (let i = 0; i < fnoInputRes; i++) { ctx.beginPath(); ctx.arc(i * w / (fnoInputRes - 1), h/2 - signal[i] * (h - 20) / 3.0, 2, 0, 2*Math.PI); ctx.fill(); }
+            };
+            drawBox('canvas-fno-input', fnoInputSignal, '#06b6d4');
+            drawBox('canvas-fno-output', fnoOutputSignal, '#8b5cf6');
+            const cf = document.getElementById('canvas-fno-freq'); const cxf = cf.getContext('2d');
+            cf.width = cf.offsetWidth; cf.height = cf.offsetHeight; const wf = cf.width; const hf = cf.height; cxf.clearRect(0,0,wf,hf);
+            cxf.fillStyle = '#ec4899'; const modes = [1.0, 0.1, 0.45, 0.05, 0.25, 0.02, 0.15, 0.01];
+            modes.forEach((v, i) => { const bw = wf/10; const bx = 10 + i * (wf-20)/modes.length; const bh = v*(hf-30); cxf.fillRect(bx, hf-15-bh, bw, bh); });
+            cxf.strokeStyle = '#8b5cf6'; cxf.lineWidth = 1; cxf.beginPath(); cxf.moveTo(0, hf-15-0.5*(hf-30)); cxf.lineTo(wf, hf-15-0.05*(hf-30)); cxf.stroke();
+        }
+
+        const scenarios = {
+            f1: { title: "🏎️ Winner: Fourier Neural Operator (FNO)", text: "For real-time aerodynamics simulation where CAD models change constantly, FNO is unbeatable. With sub-millisecond inference, designers can verify changes instantly, whereas classical solvers take hours and PINNs would need retraining for each shape." },
+            sensor: { title: "🌡️ Winner: Physics-Informed Neural Network (PINN)", text: "For sparse sensor data (e.g., only 3 points on a battery), FDM/FEM fail without a closed mesh. A PINN integrates sparse sensor points as data loss while enforcing physics (PDE residual) in the unmeasured space, interpolating physically accurately." },
+            bridge: { title: "🌉 Winner: Finite Element Method (FEM)", text: "For safety certification of static structures like bridges, where precision to several decimals is vital and boundary conditions are fixed, FEM remains the choice. It requires no risky AI training and has mathematically proven error bounds." }
+        };
+
+        function showScenario(id) {
+            ['f1', 'sensor', 'bridge'].forEach(b => {
+                document.getElementById(`btn-scen-${b}`).className = b === id ? "p-3.5 rounded-xl border border-cyan-500/35 bg-cyan-950/20 text-left transition-all shadow-lg shadow-cyan-500/5" : "p-3.5 rounded-xl border border-slate-800 bg-slate-900/50 hover:border-slate-700 text-left transition-all";
+            });
+            const res = document.getElementById('scenario-result');
+            res.innerHTML = `<h4 class="font-bold text-white mb-1">${scenarios[id].title}</h4><p class="text-slate-300">${scenarios[id].text}</p>`;
+            res.classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>

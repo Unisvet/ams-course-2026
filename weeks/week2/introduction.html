@@ -1,4 +1,17 @@
 <div class="space-y-8">
+    <!-- Header -->
+    <div class="mb-12">
+        <span class="text-[10px] font-mono text-cyan-400 uppercase tracking-[0.3em] block mb-2">Theoretical Introduction</span>
+        <h2 class="text-4xl font-black text-white tracking-tight">Theoretische Einführung</h2>
+        <div class="w-20 h-1.5 bg-gradient-to-r from-cyan-500 to-blue-600 mt-4 rounded-full"></div>
+    </div>
+
+    <div class="p-6 glass-card mb-12 rounded-2xl border-l-4 border-cyan-500 bg-gradient-to-r from-cyan-950/20 to-transparent">
+        <h3 class="text-xl font-bold text-white mb-2">Woche 2: Prädiktive Modellierung, Keras 3 & JAX Grundlagen</h3>
+        <p class="text-slate-300 text-sm leading-relaxed">
+            In dieser Woche steigen wir in die datengetriebene Simulation ein. Wir lernen den Paradigmenwechsel von klassischen, deterministischen Blockdiagrammen (Simulink) hin zu neuronalen Emulatoren mit Keras 3 kennen. Parallel steigen wir in die Programmierung mit JAX ein, um hocheffiziente, hardwarebeschleunigte Berechnungen durchzuführen.
+        </p>
+    </div>
     <!-- Radio triggers for tab selection -->
     <input type="radio" id="tab-physics-trigger" name="week2-tabs" class="hidden" checked />
     <input type="radio" id="tab-jax-trigger" name="week2-tabs" class="hidden" />
@@ -43,20 +56,12 @@
         }
     </style>
 
-    <!-- Intro Banner -->
-    <div class="p-6 glass-card rounded-2xl border-l-4 border-cyan-500 bg-gradient-to-r from-cyan-950/20 to-transparent">
-        <h3 class="text-xl font-bold text-white mb-2">Woche 2: Prädiktive Modellierung, Keras 3 & JAX Grundlagen</h3>
-        <p class="text-slate-300 text-sm leading-relaxed">
-            In dieser Woche steigen wir in die datengetriebene Simulation ein. Wir lernen den Paradigmenwechsel von klassischen, deterministischen Blockdiagrammen (Simulink) hin zu neuronalen Emulatoren mit Keras 3 kennen. Parallel steigen wir in die Programmierung mit JAX ein, um hocheffiziente, hardwarebeschleunigte Berechnungen durchzuführen.
-        </p>
-    </div>
+    
 
     <!-- Wrapper that contains tab headers and panels -->
     <div class="tab-content-wrapper space-y-6">
         <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-slate-800 pb-3">
-            <h3 class="text-xl md:text-2xl font-extrabold text-white flex items-center gap-2">
-                <span class="text-cyan-400">📚</span> Theoretische Handbücher (PDFs)
-            </h3>
+            
             
             <!-- Tab Controls using labels -->
             <div class="flex bg-slate-950/80 p-1.5 rounded-xl border border-slate-800/80 w-full sm:w-auto">

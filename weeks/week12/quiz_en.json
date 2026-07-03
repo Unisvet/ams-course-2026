@@ -1,0 +1,123 @@
+[
+    {
+        "question": "Which protocol is designed to standardize the discovery and communication between independent agents built on different frameworks?",
+        "options": [
+            "MCP",
+            "A2A (Agent2Agent)",
+            "UCP",
+            "AG-UI"
+        ],
+        "answerIndex": 1,
+        "explanation": "The A2A protocol (Agent2Agent) allows agents to discover each other via Agent Cards and communicate using a standardized message format, regardless of their underlying implementation."
+    },
+    {
+        "question": "What is the primary purpose of the Model Context Protocol (MCP)?",
+        "options": [
+            "To define how agents render UI components.",
+            "To authorize financial transactions between agents.",
+            "To provide a universal connection pattern for agents to access data and tools.",
+            "To stream text incrementally from an LLM."
+        ],
+        "answerIndex": 2,
+        "explanation": "MCP (Model Context Protocol) eliminates the need for custom integration code by providing a standard way for agents to connect to hundreds of different servers and databases."
+    },
+    {
+        "question": "Which protocol is used to unify the entire shopping lifecycle (catalog search, checkout) for agents?",
+        "options": [
+            "AP2",
+            "UCP (Universal Commerce Protocol)",
+            "AG-UI",
+            "A2UI"
+        ],
+        "answerIndex": 1,
+        "explanation": "UCP (Universal Commerce Protocol) provides standardized schemas for shopping carts and order processes, allowing agents to communicate with different merchants without needing vendor-specific code."
+    },
+    {
+        "question": "What does the AP2 protocol stand for in the context of agent payments?",
+        "options": [
+            "Agent Pricing Protocol",
+            "Agent Payments Protocol",
+            "Automated Purchase Protocol",
+            "Agentic Privacy Protocol"
+        ],
+        "answerIndex": 1,
+        "explanation": "The Agent Payments Protocol (AP2) adds a security layer for payments by using cryptographic mandates and spending limits (guardrails)."
+    },
+    {
+        "question": "How does A2UI differ from traditional web development for agents?",
+        "options": [
+            "It requires agents to write HTML/CSS code directly.",
+            "It uses a declarative JSON format with safe component primitives, separating structure from data.",
+            "It only works with Python-based frontends.",
+            "It is used for backend-to-backend communication only."
+        ],
+        "answerIndex": 1,
+        "explanation": "A2UI (Agent-to-User Interface) allows agents to compose dynamic UIs from a fixed set of components, ensuring safety and reducing the need for custom frontend development."
+    },
+    {
+        "question": "Which protocol acts as middleware to stream agent events (like tool calls and reasoning) to a frontend?",
+        "options": [
+            "A2A",
+            "MCP",
+            "AG-UI (Agent-User Interaction)",
+            "UCP"
+        ],
+        "answerIndex": 2,
+        "explanation": "AG-UI (Agent-User Interaction Protocol) standardizes the SSE (Server-Sent Events) stream between agent frameworks and user interfaces, handling tool calls and incremental text delivery."
+    },
+    {
+        "question": "An agent wants to throw a party in Cottbus and needs to order 100 cases of Spreewald gherkin lemonade. Which protocol prevents it from accidentally spending the entire research budget of BTU Cottbus?",
+        "options": [
+            "A2A (Agent Dating Service)",
+            "AP2 (with budget mandates)",
+            "MCP (Gherkin Database Connection)",
+            "A2UI (Party Interface Design)"
+        ],
+        "answerIndex": 1,
+        "explanation": "AP2 (Agent Payments Protocol) uses cryptographic mandates and spending limits to ensure that agents only spend as much as the human has authorized."
+    },
+    {
+        "question": "Two agents meet in a digital café. How do they exchange 'business cards' to determine if they can work together?",
+        "options": [
+            "They send each other their entire source code.",
+            "They use A2A 'Agent Cards'.",
+            "They hope the user introduces them.",
+            "They ping each other until one gives up."
+        ],
+        "answerIndex": 1,
+        "explanation": "The A2A standard (Agent2Agent) uses 'Agent Cards' to automatically exchange capabilities, encryption keys, and protocol versions."
+    },
+    {
+        "question": "Your agent has a new hobby: it wants to render an interactive 3D map of Cottbus city center, but you don't feel like writing JavaScript. What is your rescue?",
+        "options": [
+            "You quit your job.",
+            "You use A2UI for declarative interfaces.",
+            "You ask the agent to paint you a picture.",
+            "You use MCP to send a physical map by mail."
+        ],
+        "answerIndex": 1,
+        "explanation": "A2UI allows agents to assemble complex UIs from predefined components without the developer having to manually write CSS or JS for every new view."
+    },
+    {
+        "question": "Your agent tries to order 500 pizzas for the entire faculty but only has a budget of 50€. Which protocol is the 'bouncer' that stops the transaction?",
+        "options": [
+            "UCP (Universal Pizza Protocol)",
+            "AP2 (with budget mandate)",
+            "A2A (Pizza Maker Discovery)",
+            "AG-UI (Hunger Stream)"
+        ],
+        "answerIndex": 1,
+        "explanation": "AP2 (Agent Payments Protocol) uses mandates to ensure that agents only act within their authorized financial guardrails."
+    },
+    {
+        "question": "Why is it a bad idea to let agents talk 'wildly' to each other without standardized protocols (like A2A)?",
+        "options": [
+            "They might fall in love with each other.",
+            "It creates a Babylonian confusion of incompatible JSON structures.",
+            "It turns the internet connection purple.",
+            "Agents refuse to work overtime without a protocol."
+        ],
+        "answerIndex": 1,
+        "explanation": "Without protocols like A2A, we would have to write custom code for every agent combination. Standards ensure 'Plug-and-Play' interoperability."
+    }
+]

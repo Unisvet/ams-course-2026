@@ -1,8 +1,15 @@
 <div class="space-y-8">
-    <!-- Intro Banner -->
-    <div class="p-6 glass-card rounded-2xl border-l-4 border-cyan-500 bg-gradient-to-r from-cyan-950/20 to-transparent">
+    <!-- Header -->
+    <div class="mb-12">
+        <span class="text-[10px] font-mono text-cyan-400 uppercase tracking-[0.3em] block mb-2">Theoretical Introduction</span>
+        <h2 class="text-4xl font-black text-white tracking-tight">Theoretische Einführung</h2>
+        <div class="w-20 h-1.5 bg-gradient-to-r from-cyan-500 to-blue-600 mt-4 rounded-full"></div>
+    </div>
+
+    <div class="p-6 glass-card mb-12 rounded-2xl border-l-4 border-cyan-500 bg-gradient-to-r from-cyan-950/20 to-transparent">
         <h3 class="text-xl md:text-2xl font-bold text-white mb-2">Woche 7: Das kognitive Orakel (LLMs, Frontier AI & Gemini API)</h3>
     </div>
+    
 <h4 class="text-base font-bold text-cyan-400 mt-8 mb-3 flex items-center gap-2">
     <span class="text-xs">◆</span> Von der stochastischen Simulation zur semantischen Intelligenz
 </h4>
@@ -112,7 +119,7 @@ response = client.models.generate_content(
 parsed_data = response.parsed  </code></pre>
 <p class="text-sm text-slate-300 leading-relaxed my-3">Für Sie als Entwickler bedeutet das: Foundation Models besitzen ein tiefes, topologisches Verständnis von Code-Strukturen und kausalen Zusammenhängen. Kombiniert mit <strong class="text-white">multimodaler Perzeption</strong> (Bild + Text) kann Gemini ein von Matplotlib gerendertes PNG-Bild einer Simulation betrachten und sofort erkennen, ob das System stabil oszilliert oder chaotisch divergiert.</p>
     <div class="p-6 glass-card rounded-2xl border-t-2 border-t-purple-500/35 bg-purple-950/5 space-y-4 my-8">
-        <h4 class="text-purple-400 font-bold text-lg flex items-center gap-2"><span>📚</span> Pflichtlektüre für Woche 7</h4>
+        <h4 class="text-purple-400 font-bold text-lg flex items-center gap-2"><span>📖</span> Theoretische Einführung</h4>
 <ul class="list-disc pl-6 text-sm text-slate-300 space-y-2.5 my-4">
     <li class="leading-relaxed"><strong class="text-white">Die theoretische Basis (Architektur):</strong><br>Vaswani, A., et al. (2017). *Attention Is All You Need*. <strong class="text-white">ArXiv-Link:</strong> <a href="https://arxiv.org/pdf/1706.03762" class="text-cyan-400 hover:underline" target="_blank">https://arxiv.org/pdf/1706.03762</a> *Fokus:* Verstehen Sie das Konzept der Multi-Head Attention und warum diese Architektur komplexe Sequenzmuster ohne Informationsverlust über lange Kontexte hinweg behalten kann.</li>
     <li class="leading-relaxed"><strong class="text-white">Die praktische Schnittstelle (API-Integration):</strong><br>Google Developer Documentation. *Gemini API Quickstarts & Structured Outputs*. <strong class="text-white">Dokumentations-Link:</strong> <a href="https://ai.google.dev/gemini-api/docs" class="text-cyan-400 hover:underline" target="_blank">https://ai.google.dev/gemini-api/docs</a> *Fokus:* Machen Sie sich mit dem Funktionsaufruf (Tool Calling), Multimodal Prompts (Bild + Text) und der Implementierung von response_schema vertraut, um saubere JSON-Rückgaben zu garantieren.</li>
@@ -120,7 +127,7 @@ parsed_data = response.parsed  </code></pre>
 </ul>
     </div>
     <div class="p-6 glass-card rounded-2xl border-t-2 border-t-purple-500/35 bg-purple-950/5 space-y-4 my-8">
-        <h4 class="text-purple-400 font-bold text-lg flex items-center gap-2"><span>📚</span> Interessante Literaturhinweise</h4>
+        <h4 class="text-purple-400 font-bold text-lg flex items-center gap-2"><span>📖</span> Theoretische Einführung</h4>
 <ol class="list-decimal pl-6 text-sm text-slate-300 space-y-3 my-4">
     <li class="leading-relaxed">History of LLMs: Complete Timeline & Evolution (1950-2026) - Toloka AI, accessed June 4, 2026, <a href="https://toloka.ai/blog/history-of-llms/" class="text-cyan-400 hover:underline" target="_blank">https://toloka.ai/blog/history-of-llms/</a></li>
     <li class="leading-relaxed">Self Attention in Transformers - Outcome School, accessed June 4, 2026, <a href="https://outcomeschool.com/blog/self-attention-in-transformers" class="text-cyan-400 hover:underline" target="_blank">https://outcomeschool.com/blog/self-attention-in-transformers</a></li>

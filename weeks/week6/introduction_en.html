@@ -1,0 +1,154 @@
+<div class="space-y-8">
+    <!-- Header -->
+    <div class="mb-12">
+        <span class="text-[10px] font-mono text-cyan-400 uppercase tracking-[0.3em] block mb-2">Curriculum Details</span>
+        <h2 class="text-4xl font-black text-white tracking-tight">Theoretical Introduction</h2>
+        <div class="w-20 h-1.5 bg-gradient-to-r from-cyan-500 to-blue-600 mt-4 rounded-full"></div>
+    </div>
+
+    <div class="p-6 glass-card mb-12 rounded-2xl border-l-4 border-cyan-500 bg-gradient-to-r from-cyan-950/20 to-transparent">
+        <h3 class="text-xl md:text-2xl font-bold text-white mb-2">Week 6: Theoretical Introduction – The Domain of Chaos</h3>
+        <p class="text-slate-300 text-sm leading-relaxed">Stochastic Simulations in the AI Age</p>
+    </div>
+    
+
+    <p class="text-sm text-slate-300 leading-relaxed my-3">Welcome to the <strong class="text-white">Chamber of Chaos</strong>. So far in this course, you have primarily moved in deterministic worlds: you have trained neural networks that follow the rigid, continuous laws of physics (PINNs) or optimized precise mathematical graphs. But the real universe – and especially modern artificial intelligence – is fundamentally stochastic. Whether it's the survival of a deep-tech startup in the market, the exploration of a reinforcement learning agent, or thermal fluctuations in physical systems: <strong class="text-white">Reality is noisy.</strong></p>
+
+    <p class="text-sm text-slate-300 leading-relaxed my-3">This week, we break the dictates of classic, sequential CPU loops. Using massively parallel hardware, stateless random number generators (JAX), and agent-based orchestration in the modern <strong class="text-white">Antigravity IDE</strong>, you will learn how to not only manage chaos but to conquer it algorithmically.</p>
+
+    <h3 class="text-xl md:text-2xl font-extrabold text-white mt-12 mb-4 border-b border-slate-900 pb-2 flex items-center gap-2">
+        <span class="text-cyan-400">⚡</span> 1. The Geometry and Mathematics of Monte Carlo Integration
+    </h3>
+
+    <p class="text-sm text-slate-300 leading-relaxed my-3">Classical numerical integration methods (such as the trapezoidal rule or Simpson's rule) quickly reach their limits. If we want to calculate an integral over a high-dimensional space \(\Omega \subset \mathbb{R}^d\):</p>
+
+    <div class="my-6 overflow-x-auto">$$ I = \int_{\Omega} g(x) \, dx $$</div>
+
+    <p class="text-sm text-slate-300 leading-relaxed my-3">deterministic grid methods require exponential computational effort. For a precise grid with \(n\) points per dimension, we need \(n^d\) function evaluations. This is called the <strong class="text-white">Curse of Dimensionality</strong>. Conventional systems give up for \(d > 4\).</p>
+
+    <h4 class="text-base font-bold text-cyan-400 mt-8 mb-3 flex items-center gap-2">
+        <span class="text-xs">◆</span> The Stochastic Way Out
+    </h4>
+
+    <p class="text-sm text-slate-300 leading-relaxed my-3">The <strong class="text-white">Monte Carlo Integration</strong> elegantly reformulates the integration problem into a problem of probability theory. We consider a uniformly distributed random variable \(X\) on the domain \(\Omega\) with the probability density \(p(x) = 1/V\), where \(V = \int_{\Omega} 1 \, dx\) represents the total volume of the space. The integral can now be expressed as an expected value:</p>
+
+    <div class="my-6 overflow-x-auto">$$ I = V \int_{\Omega} g(x) p(x) \, dx = V \cdot \mathbb{E}[g(X)] $$</div>
+
+    <p class="text-sm text-slate-300 leading-relaxed my-3">According to the <strong class="text-white">Strong Law of Large Numbers</strong>, the empirical mean of \(N\) independent and identically distributed (i.i.d.) samples \(X_i\) converges in the limit to the true expected value:</p>
+
+    <div class="my-6 overflow-x-auto">$$ \hat{I}_N = \frac{V}{N} \sum_{i=1}^{N} g(X_i) \xrightarrow{A.S.} I $$</div>
+
+    <p class="text-sm text-slate-300 leading-relaxed my-3">The mathematical miracle lies in the convergence speed, which is dictated by the <strong class="text-white">Central Limit Theorem</strong>. The statistical error of the estimation behaves as follows:</p>
+
+    <div class="my-6 overflow-x-auto">$$ \text{Error} \sim \mathcal{O}\left(\frac{\sigma}{\sqrt{N}}\right) $$</div>
+
+    <p class="text-sm text-slate-300 leading-relaxed my-3">where \(\sigma\) describes the standard deviation of the function \(g(X)\). <strong class="text-white">This error bound is completely independent of the dimension</strong> \(d\)<strong class="text-white">.</strong> No matter whether you calculate an integral in one dimension or in a 100-dimensional space – the convergence rate remains \(\frac{1}{\sqrt{N}}\).</p>
+
+    <div class="p-5 glass-card rounded-xl border-l-4 border-yellow-500 bg-yellow-500/5 my-6 space-y-2">
+        <h4 class="text-yellow-400 font-bold text-sm flex items-center gap-2"><span>💡</span> Interesting Fact: An Uncle in Monaco and the Flu</h4>
+        <p class="text-sm text-slate-300 leading-relaxed">The Monte Carlo method was invented in the 1940s by the mathematician Stanislaw Ulam while he was lying in bed with brain inflammation and playing *Solitaire* out of boredom. He wanted to calculate the probability of winning but realized that pure combinatorics overwhelmed him mathematically. So he thought to himself: "Why don't I just play it through 100 times experimentally?" When he told his colleague John von Neumann about it, they turned it into a secret tool for the Manhattan Project. They chose the code name <strong class="text-white">"Monte Carlo"</strong> because Ulam's uncle regularly borrowed money from relatives to gamble it away in the famous Casino of Monte Carlo!</p>
+    </div>
+
+    <h3 class="text-xl md:text-2xl font-extrabold text-white mt-12 mb-4 border-b border-slate-900 pb-2 flex items-center gap-2">
+        <span class="text-cyan-400">⚡</span> 2. Stochastic Business Revenue Models & Risk Management
+    </h3>
+
+    <p class="text-sm text-slate-300 leading-relaxed my-3">In real systems – whether supply chains, server loads, or financial flows – input variables are rarely fixed. A robust <strong class="text-white">Monte Carlo Business Model</strong> replaces static estimates with continuous probability distributions:</p>
+
+    <ul class="list-disc pl-6 text-sm text-slate-300 space-y-2.5 my-4">
+        <li class="leading-relaxed"><strong class="text-white">Normal Distribution (</strong>\(\mathcal{N}\)<strong class="text-white">):</strong> Ideal for aggregated quantities (e.g., market demand) where many independent effects act together (Central Limit Theorem).</li>
+        <li class="leading-relaxed"><strong class="text-white">Log-Normal Distribution:</strong> Since costs, loss amounts, or asset prices can never be negative and often show right-skewed, fat-tail distributions, the variable is logarithmically transformed: \(\ln(C) \sim \mathcal{N}(\mu, \sigma^2)\).</li>
+        <li class="leading-relaxed"><strong class="text-white">Uniform Distribution (</strong>\(\mathcal{U}\)<strong class="text-white">):</strong> Used when only fixed upper and lower limits are known, but there is no knowledge of clustering (e.g., regulatory fine rates).</li>
+    </ul>
+
+    <p class="text-sm text-slate-300 leading-relaxed my-3">By playing through these combined distributions millions of times, we generate an empirical distribution function for the final result. From this, we extract the <strong class="text-white">Value-at-Risk</strong> <strong class="text-white">(</strong>\(VaR_\alpha\)<strong class="text-white">)</strong><strong class="text-white">.</strong> The \(VaR_{95\%}\) defines the loss limit that is undershot in the worst 5% of all simulated futures – a fundamental metric for system stability.</p>
+
+    <div class="p-5 glass-card rounded-xl border-l-4 border-yellow-500 bg-yellow-500/5 my-6 space-y-2">
+        <h4 class="text-yellow-400 font-bold text-sm flex items-center gap-2"><span>💡</span> Funny Fact: The Drowned Statistician</h4>
+        <p class="text-sm text-slate-300 leading-relaxed">Many companies still plan with the so-called "Most Likely" scenario (the most probable mean). Economists call the phenomenon that calculating with averages almost always ends in catastrophe the *Flaw of Averages*. A famous statistician joke sums up the problem perfectly: *A statistician who couldn't swim wanted to cross a river. He was completely reassured when he learned that the river is on average only 1 meter deep. Halfway across he stepped into a 4 meter deep hole and drowned.* Monte Carlo simulation protects us precisely from this hole.</p>
+    </div>
+
+    <h3 class="text-xl md:text-2xl font-extrabold text-white mt-12 mb-4 border-b border-slate-900 pb-2 flex items-center gap-2">
+        <span class="text-cyan-400">⚡</span> 3. Markov Chains in Dynamic Systems
+    </h3>
+
+    <p class="text-sm text-slate-300 leading-relaxed my-3">Systems change over time. When the future of a system depends only on its current state and is independent of its previous history, we speak of the <strong class="text-white">Markov Property</strong> (memorylessness). A discrete Markov chain is described by a transition matrix \(P\), where each element \(P_{ij}\) defines the probability of moving from state \(i\) to state \(j\):</p>
+
+    <div class="my-6 overflow-x-auto">$$ P_{ij} = \mathbb{P}(X_{t+1} = j \mid X_t = i) $$</div>
+
+    <p class="text-sm text-slate-300 leading-relaxed my-3">In dynamic AI and business environments, however, these matrices are rarely constant. Exogenous shocks – so-called <strong class="text-white">Black Swan Events</strong> – transients modify the structure of the system. Mathematically, this means a time-dependent modification of the transition probabilities \(P(t)\). The challenge is to develop algorithms that simulate the transition into catastrophic absorbing states (e.g., insolvency, system crash) and quantify the resilience of the overall system.</p>
+
+    <div class="p-5 glass-card rounded-xl border-l-4 border-yellow-500 bg-yellow-500/5 my-6 space-y-2">
+        <h4 class="text-yellow-400 font-bold text-sm flex items-center gap-2"><span>💡</span> Interesting Fact: Russian Poems instead of Quantum Physics</h4>
+        <p class="text-sm text-slate-300 leading-relaxed">One might think that Andrei Markov invented his famous chains to model the weather, stocks, or subatomic particles. Far from it! Markov was a passionate linguist. He invented the theory in 1913 to analyze the sequence of letters in Russian literature. He spent months manually counting <strong class="text-white">20,000 letters</strong> from Alexander Pushkin's verse novel *Eugene Onegin* to prove that a vowel follows a consonant with a measurably higher probability than another consonant follows. Your financial and AI simulations are therefore based in their core on Russian poetry.</p>
+    </div>
+
+    <h3 class="text-xl md:text-2xl font-extrabold text-white mt-12 mb-4 border-b border-slate-900 pb-2 flex items-center gap-2">
+        <span class="text-cyan-400">⚡</span> 4. Scaling Random Processes: Statelessness with JAX
+    </h3>
+
+    <p class="text-sm text-slate-300 leading-relaxed my-3">Why don't we use classic NumPy or MATLAB for huge stochastic simulations in the AI era? The reason lies in the architecture of modern accelerators (GPUs/TPUs).</p>
+
+    <h4 class="text-base font-bold text-cyan-400 mt-8 mb-3 flex items-center gap-2">
+        <span class="text-xs">◆</span> The Problem: Stateful PRNGs
+    </h4>
+
+    <p class="text-sm text-slate-300 leading-relaxed my-3">Classic random number generators (as in NumPy) are based on a global, mutable state. A call to np.random.rand() reads the current seed, changes it internally, and returns the value: \(\text{State}_{t+1}, X = f(\text{State}_t)\). On massively parallel hardware, this leads to massive performance drops because thousands of cores would have to access the same global memory area at the same time (race conditions). In addition, the principle of <strong class="text-white">reproducibility</strong> becomes impossible in asynchronous operation.</p>
+
+    <h4 class="text-base font-bold text-cyan-400 mt-8 mb-3 flex items-center gap-2">
+        <span class="text-xs">◆</span> The Solution: The Stateless JAX Approach
+    </h4>
+
+    <p class="text-sm text-slate-300 leading-relaxed my-3">JAX enforces functional purity. The random state is passed explicitly as an immutable array – the PRNGKey. The key is never modified in the background. If you need new random values, you must explicitly branch (fork) the key deterministically using jax.random.split():</p>
+
+    <pre class="bg-slate-950 p-4 rounded-xl border border-slate-850 overflow-x-auto text-xs font-mono text-cyan-400 my-4"><code class="language-python">                             [ Master Key ]  
+                                       |  
+                +------------+------------+  
+                |                                 |  
+          [ Subkey A ]                      [ Subkey B ]  
+                |                                    |  
+      (Random Variable 1)             (Random Variable 2)  </code></pre>
+
+    <p class="text-sm text-slate-300 leading-relaxed my-3">This functional purity allows JAX to parallelize the entire simulation loop using jax.vmap (Vectorized Map). Instead of processing a million paths one after the other in a Python loop, the XLA compiler transforms the code so that hundreds of paths are executed simultaneously on the GPU's vector registers. Complemented by jax.lax.scan for sequential time steps (as with Markov chains), we achieve simulation speeds that outperform classic CPU structures by a factor of 100 to 1000.</p>
+
+    <div class="p-5 glass-card rounded-xl border-l-4 border-yellow-500 bg-yellow-500/5 my-6 space-y-2">
+        <h4 class="text-yellow-400 font-bold text-sm flex items-center gap-2"><span>💡</span> Funny (and Dangerous) Fact: Groundhog Day</h4>
+        <p class="text-sm text-slate-300 leading-relaxed">JAX uses the *Threefry* algorithm for its stateless keys – a method that actually comes from military cryptography (a modified block cipher). Generating random numbers in JAX is therefore mathematically "backwards decrypting" counters. This leads to a nasty trap for JAX beginners: If you forget to split the key and reuse the same key in a loop, JAX spits out exactly the same random number – every single time. Your "stochastic" simulation then transforms lightning fast into a completely static, error-free time loop!</p>
+    </div>
+
+    <div class="p-6 glass-card rounded-2xl border-t-2 border-t-purple-500/35 bg-purple-950/5 space-y-4 my-8">
+        <h4 class="text-purple-400 font-bold text-lg flex items-center gap-2"><span>📖</span> Theoretical Introduction</h4>
+        <p class="text-sm text-slate-300 leading-relaxed">For a deeper understanding of stochastic modeling and its scaling, the following works are highly recommended:</p>
+
+        <h4 class="text-base font-bold text-purple-400 mt-8 mb-3 flex items-center gap-2">
+            <span class="text-xs">◆</span> On Monte Carlo Integration and Stochastic Methods:
+        </h4>
+        <ul class="list-disc pl-6 text-sm text-slate-300 space-y-2.5 my-4">
+            <li class="leading-relaxed"><strong class="text-white">Robert, C. P., & Casella, G. (2004).</strong> *Monte Carlo Statistical Methods*. Springer Science & Business Media.</li>
+            <li class="leading-relaxed"><strong class="text-white">Kroese, D. P., Taimre, T., & Botev, Z. I. (2013).</strong> *Handbook of Monte Carlo Methods*. John Wiley & Sons.</li>
+        </ul>
+
+        <h4 class="text-base font-bold text-purple-400 mt-8 mb-3 flex items-center gap-2">
+            <span class="text-xs">◆</span> On Business Simulations and Financial Risk:
+        </h4>
+        <ul class="list-disc pl-6 text-sm text-slate-300 space-y-2.5 my-4">
+            <li class="leading-relaxed"><strong class="text-white">Glasserman, P. (2003).</strong> *Monte Carlo Methods in Financial Engineering*. Springer Science & Business Media.</li>
+        </ul>
+
+        <h4 class="text-base font-bold text-purple-400 mt-8 mb-3 flex items-center gap-2">
+            <span class="text-xs">◆</span> On Markov Chains and Dynamic Systems:
+        </h4>
+        <ul class="list-disc pl-6 text-sm text-slate-300 space-y-2.5 my-4">
+            <li class="leading-relaxed"><strong class="text-white">Norris, J. R. (1998).</strong> *Markov Chains*. Cambridge University Press.</li>
+            <li class="leading-relaxed"><strong class="text-white">Taleb, N. N. (2007).</strong> *The Black Swan: The Impact of the Highly Improbable*. Random House.</li>
+        </ul>
+
+        <h4 class="text-base font-bold text-purple-400 mt-8 mb-3 flex items-center gap-2">
+            <span class="text-xs">◆</span> On Scaling and High-Performance JAX:
+        </h4>
+        <ul class="list-disc pl-6 text-sm text-slate-300 space-y-2.5 my-4">
+            <li class="leading-relaxed"><strong class="text-white">JAX Reference Documentation.</strong> *Common Gotchas in JAX: Random Numbers*.</li>
+            <li class="leading-relaxed"><strong class="text-white">Google Developer Docs.</strong> *Antigravity Ecosystem & Agentic Skills Workspace (v2.0, 2026).*</li>
+        </ul>
+    </div>
+</div>

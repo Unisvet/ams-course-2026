@@ -1,0 +1,143 @@
+<div class="relative w-full h-[600px] overflow-hidden rounded-2xl shadow-2xl bg-slate-900 font-sans">
+    <!-- Hero Background -->
+    <div class="absolute inset-0 z-0">
+        <img src="assets/images/week9_stories_bg.png" alt="The Fractal Explorer" class="w-full h-full object-cover opacity-80 pointer-events-none">
+        <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-slate-950/40 pointer-events-none"></div>
+    </div>
+
+    <!-- Floating Interactive Elements -->
+    <div class="absolute inset-0 z-10">
+        <!-- Story 1: ReAct Agent -->
+        <div class="absolute top-[30%] left-[10%] group cursor-pointer" onclick="window.openStory('explorer')">
+            <div class="w-20 h-20 bg-cyan-500/20 backdrop-blur-md border-2 border-cyan-400 rounded-full flex items-center justify-center text-4xl shadow-[0_0_30px_rgba(6,182,212,0.5)] group-hover:scale-110 transition-all duration-300 animate-bounce">
+                🌀
+            </div>
+            <div class="mt-2 bg-slate-900/80 backdrop-blur-sm px-3 py-1 rounded-lg border border-cyan-500/30 opacity-0 group-hover:opacity-100 transition-opacity">
+                <p class="text-cyan-400 text-xs font-bold font-mono">The ReAct Agent</p>
+            </div>
+        </div>
+
+        <!-- Story 2: Mandelbrot -->
+        <div class="absolute top-[15%] right-[25%] group cursor-pointer" onclick="window.openStory('mandelbrot')">
+            <div class="w-16 h-16 bg-pink-500/20 backdrop-blur-md border-2 border-pink-400 rounded-full flex items-center justify-center text-3xl shadow-[0_0_20px_rgba(236,72,153,0.4)] group-hover:scale-110 transition-all duration-300 animate-pulse">
+                📐
+            </div>
+            <div class="mt-2 bg-slate-900/80 backdrop-blur-sm px-3 py-1 rounded-lg border border-pink-500/30 opacity-0 group-hover:opacity-100 transition-opacity">
+                <p class="text-pink-400 text-xs font-bold font-mono">Benoît B.</p>
+            </div>
+        </div>
+
+        <!-- Story 3: JAX Power -->
+        <div class="absolute bottom-[25%] right-[15%] group cursor-pointer" onclick="window.openStory('jax')">
+            <div class="w-18 h-18 bg-yellow-500/20 backdrop-blur-md border-2 border-yellow-400 rounded-full flex items-center justify-center text-3xl shadow-[0_0_25px_rgba(234,179,8,0.4)] group-hover:scale-110 transition-all duration-300 animate-spin" style="animation-duration: 8s;">
+                ⚡
+            </div>
+            <div class="mt-2 bg-slate-900/80 backdrop-blur-sm px-3 py-1 rounded-lg border border-yellow-500/30 opacity-0 group-hover:opacity-100 transition-opacity text-center">
+                <p class="text-yellow-400 text-xs font-bold font-mono tracking-tighter">JAX Acceleration</p>
+            </div>
+        </div>
+
+        <!-- Story 4: Seahorse Valley -->
+        <div class="absolute bottom-[40%] left-[40%] group cursor-pointer" onclick="window.openStory('valley')">
+            <div class="w-14 h-14 bg-purple-500/20 backdrop-blur-md border-2 border-purple-400 rounded-full flex items-center justify-center text-2xl shadow-[0_0_15px_rgba(167,139,250,0.5)] group-hover:scale-110 transition-all duration-300 animate-pulse">
+                🐚
+            </div>
+            <div class="mt-2 bg-slate-900/80 backdrop-blur-sm px-3 py-1 rounded-lg border border-purple-500/30 opacity-0 group-hover:opacity-100 transition-opacity">
+                <p class="text-purple-400 text-xs font-bold font-mono uppercase tracking-tighter text-center">Seahorse Valley</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modals Container -->
+    <div id="story-modal" class="absolute inset-0 z-50 flex items-center justify-center p-6 bg-slate-950/80 backdrop-blur-md hidden transition-all duration-500">
+        <div class="relative max-w-2xl w-full bg-slate-900 border border-slate-700 rounded-3xl overflow-hidden shadow-2xl transform scale-95 opacity-0 transition-all duration-500" id="modal-content">
+            <button onclick="window.closeStory()" class="absolute top-4 right-4 text-slate-400 hover:text-white transition-colors z-50">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+
+            <div class="p-8">
+                <div id="story-explorer" class="hidden space-y-4">
+                    <div class="flex items-center gap-4 border-b border-cyan-500/30 pb-4">
+                        <span class="text-4xl">🌀</span>
+                        <div>
+                            <h2 class="text-2xl font-black text-white font-outfit uppercase">The Cognitive Explorer</h2>
+                            <p class="text-cyan-400 font-mono text-sm tracking-widest uppercase">Perceive, Reason, Act</p>
+                        </div>
+                    </div>
+                    <p class="text-slate-300 leading-relaxed text-sm">
+                        An agent doesn't just read, it does. Your JAX-Mandelbrot agent uses the ReAct pattern to navigate the infinity of the fractal plane. It sees the pixel density (Perception), considers the next zoom step (Reasoning), and calls the simulation (Action). An endless dance between logic and mathematics.
+                    </p>
+                </div>
+
+                <div id="story-mandelbrot" class="hidden space-y-4">
+                    <div class="flex items-center gap-4 border-b border-pink-500/30 pb-4">
+                        <span class="text-4xl">📐</span>
+                        <div>
+                            <h2 class="text-2xl font-black text-white font-outfit uppercase">Benoît B. Mandelbrot</h2>
+                            <p class="text-pink-400 font-mono text-sm tracking-widest uppercase">The Father of Fractals</p>
+                        </div>
+                    </div>
+                    <p class="text-slate-300 leading-relaxed text-sm">
+                        Mandelbrot was working at IBM when he realized that nature is not made of smooth lines but of rough, self-similar structures. Did you know the 'B.' in his name stands for nothing? He added it himself – a little recursive joke from a man who saw the world as an infinitely nested system.
+                    </p>
+                </div>
+
+                <div id="story-jax" class="hidden space-y-4">
+                    <div class="flex items-center gap-4 border-b border-yellow-500/30 pb-4">
+                        <span class="text-4xl">⚡</span>
+                        <div>
+                            <h2 class="text-2xl font-black text-white font-outfit uppercase">JAX Speed</h2>
+                            <p class="text-yellow-400 font-mono text-sm tracking-widest uppercase">XLA Acceleration</p>
+                        </div>
+                    </div>
+                    <p class="text-slate-300 leading-relaxed text-sm">
+                        To 'act' in real-time, the agent needs immediate results. Conventional Python would be too slow for the millions of iterations. Thanks to JAX and @jax.jit, we compile the Mandelbrot equation directly into machine code. What used to take minutes now happens in milliseconds – the agent no longer feels any delay.
+                    </p>
+                </div>
+
+                <div id="story-valley" class="hidden space-y-4">
+                    <div class="flex items-center gap-4 border-b border-purple-500/30 pb-4">
+                        <span class="text-4xl">🐚</span>
+                        <div>
+                            <h2 class="text-2xl font-black text-white font-outfit uppercase">Seahorse Valley</h2>
+                            <p class="text-purple-400 font-mono text-sm tracking-widest uppercase">The Goal of the Search</p>
+                        </div>
+                    </div>
+                    <p class="text-slate-300 leading-relaxed text-sm">
+                        Hidden deep inside the set is Seahorse Valley – a place of breathtaking complexity where filaments wind like seahorse tails. Your agent must find this valley by analyzing the entropy of the data. It's the search for the needle in the haystack of infinite coordinates.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script Section -->
+    <script>
+        window.openStory = function(id) {
+            const modal = document.getElementById('story-modal');
+            const content = document.getElementById('modal-content');
+            ['explorer', 'mandelbrot', 'jax', 'valley'].forEach(s => {
+                document.getElementById('story-' + s).classList.add('hidden');
+            });
+            document.getElementById('story-' + id).classList.remove('hidden');
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modal.classList.add('opacity-100');
+                content.classList.remove('scale-95', 'opacity-0');
+                content.classList.add('scale-100', 'opacity-100');
+            }, 10);
+        };
+
+        window.closeStory = function() {
+            const modal = document.getElementById('story-modal');
+            const content = document.getElementById('modal-content');
+            content.classList.remove('scale-100', 'opacity-100');
+            content.classList.add('scale-95', 'opacity-0');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 500);
+        };
+    </script>
+</div>

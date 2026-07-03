@@ -1,0 +1,137 @@
+[
+    {
+        "question": "What is the primary goal of 'Edge AI' in industrial system simulation?",
+        "options": [
+            "Outsourcing computationally intensive simulation to external cloud servers to save costs.",
+            "Protection of data sovereignty (intellectual sovereignty) and the avoidance of network latencies.",
+            "Automatic generation of PowerPoint presentations through multimodal inputs.",
+            "Acceleration of JAX calculations through stochastic Monte Carlo methods."
+        ],
+        "answerIndex": 1,
+        "explanation": "Executing models directly on local hardware (Edge) ensures that sensitive telemetry data never leaves the local network. In addition, latencies and connection risks in control loops are eliminated."
+    },
+    {
+        "question": "How is the thought channel (Thought Channel) natively activated and isolated in Gemma 4?",
+        "options": [
+            "By appending 'import thought' in Python code.",
+            "By placing the '<|think|>' token at the beginning of the system message and subsequent RegEx parsing.",
+            "By automatic generation of a Git commit via the Colab CLI.",
+            "By setting the arrival rate λ in a discrete-event simulation."
+        ],
+        "answerIndex": 1,
+        "explanation": "Gemma 4 uses special control tokens. The native thought mode is triggered by the '<|think|>' token at the beginning of the system prompt, after which the model generates its reflections in a protected channel."
+    },
+    {
+        "question": "Why is switching from cloud APIs (like Gemini) to local open-weights models (like Gemma 4) so crucial in our industrial Neo-Simulacrum?",
+        "options": [
+            "To relieve the WLAN in the factory.",
+            "Because latencies fluctuate and sensitive telemetry data must not leave the physical factory boundaries.",
+            "Because cloud models cannot solve complex stochastic equations.",
+            "Because Gemma 4 fundamentally beats cloud-based models in every discipline."
+        ],
+        "answerIndex": 1,
+        "explanation": "Exactly! The 'Fortress of Autarky' is based on absolute data sovereignty. In real-time control loops, deterministic millisecond latencies without external network dependency are the highest priority."
+    },
+    {
+        "question": "Which architectural feature gives the compact Gemma 4 E2B model (2.3 bn parameters) its surprisingly high logical performance density on edge devices?",
+        "options": [
+            "Mixture-of-Experts (MoE) routing.",
+            "An infinitely large context window (Transformer-XL).",
+            "Per-Layer Embeddings (PLE).",
+            "LSTM feedback loops at the hardware level."
+        ],
+        "answerIndex": 2,
+        "explanation": "Right! Per-Layer Embeddings (PLE) assign their own high-frequency embedding tables to each decoder layer. This reduces the necessary depth of the transformer network without sacrificing cognitive intelligence."
+    },
+    {
+        "question": "How is the cognitive thinking mode (Thought Mode) natively called and delimited from the rest of the text in Gemma 4?",
+        "options": [
+            "Through the simple text prompt 'Think step by step'.",
+            "With the control token <|think|> at the beginning and the channel delimiters <|channel>thought and <channel|>.",
+            "Via an external Python script that pauses the text.",
+            "By increasing the temperature variable of the inference engine to 1.5."
+        ],
+        "answerIndex": 1,
+        "explanation": "Boom! The model switches to the thinking mode directly at the vocabulary level when it sees the <|think|> token at the beginning. No more clumsy prompting necessary, the logic is natively burned into the architecture!"
+    },
+    {
+        "question": "What happens (and why) if we take the hidden thinking processes (<|channel>thought) uncleaned into the history of the next step in a multi-turn chat?",
+        "options": [
+            "The model gets smarter because it has more context.",
+            "Token growth explodes and the model suffers from cognitive overload due to outdated logic branches.",
+            "The GPU crashes immediately with an OutOfMemory (OOM) error.",
+            "It has no impact on inference."
+        ],
+        "answerIndex": 1,
+        "explanation": "Correct! We must clean the history (sanitization). Old thoughts from previous ticks only confuse the model and consume valuable token limits. Only the final, visible action counts for the past!"
+    },
+    {
+        "question": "Why do we mostly use PyTorch (Hugging Face) for local text generation (inference) instead of pure JAX, even though JAX is the speed king for mathematical simulations?",
+        "options": [
+            "Because JAX fundamentally cannot process text data.",
+            "Because PyTorch masters dynamic sequence lengths (eager execution) without constant, slow XLA recompilation.",
+            "Because Google has completely removed JAX from its open-source offering.",
+            "To save the licensing costs of JAX."
+        ],
+        "answerIndex": 1,
+        "explanation": "Hit! JAX loves static graphs and fixed array sizes for compilation. Since text generation is unpredictably long, pure JAX would have to recompile at every token length change. PyTorch is much more pragmatic here!"
+    },
+    {
+        "question": "How does offline Retrieval-Augmented Generation (RAG) specifically help us in our guardian system?",
+        "options": [
+            "It allows the agent to search the internet for solutions.",
+            "It converts text commands into images at lightning speed.",
+            "It injects situation-specific standard operating procedures (SOPs) locally into the prompt based on the current system state.",
+            "It compresses the model's weights to save VRAM."
+        ],
+        "answerIndex": 2,
+        "explanation": "Excellent! Through RAG, the prompt is dynamically enriched with the appropriate rule (e.g., for high buffer utilization). If the factory regulations change, we only swap the local text file without expensive fine-tuning!"
+    },
+    {
+        "question": "What strategic advantage does the Google Colab CLI (google-colab-cli) offer us in our autonomous edge workflow?",
+        "options": [
+            "It makes our local laptop GPUs twice as fast by overclocking.",
+            "We can transparently outsource computationally intensive fine-tuning to the cloud and pull weights directly back into the local workspace.",
+            "It completely replaces Git and GitHub.",
+            "It bypasses the Kaggle login for proprietary models."
+        ],
+        "answerIndex": 1,
+        "explanation": "Correct! We maintain our smooth, local edge workflow but throw the massive matrix multiplications for training elegantly via the CLI to external Google data centers. The finished AI then runs locally again."
+    },
+    {
+        "question": "What inevitably happens in our stochastic DiscreteFoundry simulation if the arrival rate (Poisson) is permanently greater than the service rate?",
+        "options": [
+            "The system reaches a magical, stable equilibrium by itself.",
+            "The machine gets physically hotter and shuts down.",
+            "The buffer fills up and system overflows (dropped parts / scrap) occur.",
+            "The simulation divides by zero and crashes with a Python error."
+        ],
+        "answerIndex": 2,
+        "explanation": "A classic problem of stochastic queuing theory! Without our AI agent as a controller, an endless queue builds up due to instability until the system collapses and parts are 'dropped' as scrap."
+    },
+    {
+        "question": "Why do we force the LLM in the system prompt to output its decision in a strict format like 'NEW_SERVICE_RATE: 3.0'?",
+        "options": [
+            "Because the model otherwise only answers in poems and metaphors.",
+            "To be able to safely extract the numerical value programmatically via regular expressions (RegEx) and feed it as a float variable into the simulation.",
+            "This is a hard-wired, unchangeable characteristic of the Gemma architecture.",
+            "To artificially inflate the number of tokens in the output."
+        ],
+        "answerIndex": 1,
+        "explanation": "Interface security is everything! An agent must deliver machine-readable outputs. Without a strict parsing pattern, the best cognitive decision evaporates in the text, and the closed loop (closed-loop) breaks down."
+    },
+    {
+        "question": "Which of the following principles belong to the core concept of the 'Fortress of Autarky' (Local Guardian) of our Neo-Simulacrum?",
+        "options": [
+            "Absolute data sovereignty and offline capability.",
+            "Global mutable states in the simulation.",
+            "Use of cloud APIs for critical real-time decisions.",
+            "Execution of open-weights models directly on edge hardware."
+        ],
+        "answerIndex": [
+            0,
+            3
+        ],
+        "explanation": "Perfect! Edge inference guarantees us data security and failure safety without external networks. Open-weights models like Gemma give us unrestricted, latency-free control over the entire cognitive inference process."
+    }
+]

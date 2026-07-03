@@ -1,0 +1,131 @@
+[
+    {
+        "question": "Why do PINNs free us from the limitations of classical FDM solvers?",
+        "options": [
+            "They use extremely fine 3D grids for perfect precision",
+            "They approximate a continuous, seamless function",
+            "Random collocation points replace the rigid mesh (mesh-free)",
+            "They ignore space and simulate exclusively in time"
+        ],
+        "answerIndex": [
+            1,
+            2
+        ],
+        "explanation": "Classical solvers are tied to grids. PINNs, on the other hand, approximate the solution as a continuous, differentiable function. Mesh-free collocation points eliminate discretization, creating entirely new freedoms in complex geometries!"
+    },
+    {
+        "question": "Which components make up the loss function of a classic PINN?",
+        "options": [
+            "Initial Condition (IC) Loss - The Genesis State",
+            "Boundary Condition (BC) Loss - Edges of the Sandbox",
+            "Agentic Hallucination Loss - The LLM error",
+            "PDE Residual Loss - The laws of physics conservation"
+        ],
+        "answerIndex": [
+            0,
+            1,
+            3
+        ],
+        "explanation": "A PINN learns physics through penalty! The loss function forces the network to respect conservation laws (PDE Residual) everywhere in space, while IC and BC couple the solution to reality at the edges and the start time."
+    },
+    {
+        "question": "Why does our JAX network use jax.grad for spatial derivatives?",
+        "options": [
+            "To replace classical difference quotients with rough estimates",
+            "It applies exact analytical chain rules to the network",
+            "It transforms the model into a differentiable physical fabric",
+            "JAX unfortunately no longer allows classical addition and multiplication"
+        ],
+        "answerIndex": [
+            1,
+            2
+        ],
+        "explanation": "Autodiff is the key! jax.grad uses exact chain rules instead of inaccurate finite differences. The neural network thus becomes an analytically differentiable fabric that perfectly embodies physical equations."
+    },
+    {
+        "question": "What is the absolute superpower of PINNs for inverse problems?",
+        "options": [
+            "Unknown parameters are simply defined as learnable weights",
+            "Backpropagation learns the missing physics value automatically",
+            "They solve the heat equation without any physical formulas",
+            "The simulation must recompile 10,000 times if data is missing"
+        ],
+        "answerIndex": [
+            0,
+            1
+        ],
+        "explanation": "The paradigm shifts: forward and inverse problems are treated identically! Missing material constants simply become learnable parameters (weights) that the network discovers via backpropagation along with the solution."
+    },
+    {
+        "question": "What happens if we forget the Initial Conditions (IC) during training?",
+        "options": [
+            "The network knows the physics but not our starting state",
+            "The Genesis State is missing and there are infinitely many valid solutions",
+            "The compiler crashes because the PRNGKey is missing",
+            "The model guesses the perfect starting value out of nowhere"
+        ],
+        "answerIndex": [
+            0,
+            1
+        ],
+        "explanation": "The PDE only provides the rules of the world, not the 'where' and 'when'. Without the 'Genesis State' (IC), the network floats in a space of infinitely many physically correct but irrelevant solutions for our specific problem."
+    },
+    {
+        "question": "What fundamental bottleneck do classic, fully-trained PINNs have?",
+        "options": [
+            "They map infinite-dimensional function spaces to each other",
+            "They learn exactly ONE solution instance (one initial condition)",
+            "If the part changes, you have to retrain completely for hours",
+            "They forget the physics rules after 10,000 epochs"
+        ],
+        "answerIndex": [
+            1,
+            2
+        ],
+        "explanation": "The curse of overfitting to a geometry: a classic PINN is not a general solver, but a trained function for exactly one setup. Any small change to boundary conditions or shape requires expensive retraining from scratch."
+    },
+    {
+        "question": "How do Fourier Neural Operators (FNOs) escape the bottleneck of normal PINNs?",
+        "options": [
+            "They transform data into frequency space via FFT",
+            "They map entire function spaces instead of individual coordinates",
+            "They use extremely many FDM grid points for giant precision",
+            "They learn physics by filtering low frequencies"
+        ],
+        "answerIndex": [
+            0,
+            1,
+            3
+        ],
+        "explanation": "The leap into operator space! Instead of mapping points to points, FNOs learn to map entire function spaces via FFT in frequency space. They capture global physics through low-frequency modes, making them incredibly efficient."
+    },
+    {
+        "question": "What does the endgame feature 'Zero-Shot Super-Resolution' mean for FNOs?",
+        "options": [
+            "Train on 32x32, query instantly at 1024x1024",
+            "The model completely loses control at high resolutions",
+            "Frequencies are continuous and thus resolution-independent",
+            "The model shoots laser beams in zero-gravity simulations"
+        ],
+        "answerIndex": [
+            0,
+            2
+        ],
+        "explanation": "The true power of the frequency domain: since FNOs learn continuous frequencies instead of discrete pixels, they are resolution-independent. Once trained on coarse data (32x32), they extrapolate flawlessly and in milliseconds to HD resolutions!"
+    },
+    {
+        "question": "Why do we initialize our Flax architecture with PRNGKeys?",
+        "options": [
+            "Because JAX forbids global, hidden states (Functional Purity!)",
+            "So that architecture (blueprint) and weights are strictly separated mathematically",
+            "OOP states (self.weights) would block the JIT compiler",
+            "Because Python 3.10 abolished native random numbers"
+        ],
+        "answerIndex": [
+            0,
+            1,
+            2
+        ],
+        "explanation": "Functional Purity is JAX's supreme law! Hidden states (OOP) destroy JIT compilation. PRNGKeys guarantee deterministic randomness and cleanly decouple architecture from parameters for maximum performance."
+    }
+]
