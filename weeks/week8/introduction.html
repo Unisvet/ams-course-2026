@@ -538,7 +538,7 @@ raw_output = (
     <pre class="bg-slate-950/40 p-4 rounded-xl border border-slate-900/60 my-4 overflow-x-auto"><code class="language-python">import re
 
 # RegEx-Muster zur Isolation aller Inhalte zwischen den Kanal-Tokens
-thought_pattern = r"&lt;\|channel&gt;thought\s*(.*?)\s*&lt;channel\|&gt;"
+thought_pattern = r"&lt;\|channel&gt;thought\s<i>(.</i>?)\s*&lt;channel\|&gt;"
 
 # Extraktion des Denkprozesses (für lokale Terminal-Logs/Debugging)
 thought_match = re.search(thought_pattern, raw_output, re.DOTALL)

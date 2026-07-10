@@ -14,7 +14,7 @@
 <p class="text-sm text-slate-300 leading-relaxed my-3"><strong class="text-white">Project:</strong> Project Genesis – The Oracle Awakens</p>
 
 
-<p class="text-sm text-slate-300 leading-relaxed my-3">Welcome to the third week of our *Neo-Simulacrum*. Over the past two weeks, you have mastered the deterministic foundations of system simulation. You have generated physical time series, understood how continuous signal flows (using the example of an RC low-pass filter) are mathematically mapped, and versioned your projects in a modern uv environment via Git. We have observed the physical system and recorded its states as a data stream.</p>
+<p class="text-sm text-slate-300 leading-relaxed my-3">Welcome to the third week of our <i>Neo-Simulacrum</i>. Over the past two weeks, you have mastered the deterministic foundations of system simulation. You have generated physical time series, understood how continuous signal flows (using the example of an RC low-pass filter) are mathematically mapped, and versioned your projects in a modern uv environment via Git. We have observed the physical system and recorded its states as a data stream.</p>
 <p class="text-sm text-slate-300 leading-relaxed my-3">However, merely generating isolated data points is not enough for a modern engineer. The highest art of applied systems theory is to understand the hidden <strong class="text-white">system dynamics</strong> and use this knowledge for error detection and control. In the classical engineering world, we describe the dynamics of a system through rigid differential equations. But when real physical systems change due to noise, wear, or unpredictable environmental influences, these static formulas fail.</p>
 <p class="text-sm text-slate-300 leading-relaxed my-3">This week, we undergo a fundamental paradigm shift: we replace the manual solving of equations with <strong class="text-white">data-driven optimization</strong>. You will migrate your local project to the cloud (Google Colab) and train a neural network using hardware accelerators. This network acts as a "universal function approximator": it optimizes its internal parameters completely autonomously until it has learned the underlying physical laws of system dynamics from pure data noise.</p>
 
@@ -26,23 +26,23 @@
 <h4 class="text-base font-bold text-cyan-400 mt-8 mb-3 flex items-center gap-2">
     <span class="text-xs">◆</span> 1. System Dynamics as Data Compression (The Autoencoder)
 </h4>
-<p class="text-sm text-slate-300 leading-relaxed my-3">Classical system dynamics describe how states change over time. This week, we use a *Deep Autoencoder* to replicate these dynamics in a data-driven way. An autoencoder acts as an architectural information bottleneck: it is forced to compress a high-dimensional temporal signal into an extremely small mathematical space (the *Latent Space*) and then reconstruct it.</p>
-<p class="text-sm text-slate-300 leading-relaxed my-3">Due to this artificial scarcity, the network *must* discard irrelevant sensor noise and internalize the fundamental physical laws (e.g., oscillations, phase shifts). If these dynamics break down (as with our injected sabotage from Week 2), the reconstruction fails – a high-precision automated alarm.</p>
+<p class="text-sm text-slate-300 leading-relaxed my-3">Classical system dynamics describe how states change over time. This week, we use a <i>Deep Autoencoder</i> to replicate these dynamics in a data-driven way. An autoencoder acts as an architectural information bottleneck: it is forced to compress a high-dimensional temporal signal into an extremely small mathematical space (the <i>Latent Space</i>) and then reconstruct it.</p>
+<p class="text-sm text-slate-300 leading-relaxed my-3">Due to this artificial scarcity, the network <i>must</i> discard irrelevant sensor noise and internalize the fundamental physical laws (e.g., oscillations, phase shifts). If these dynamics break down (as with our injected sabotage from Week 2), the reconstruction fails – a high-precision automated alarm.</p>
 
 <h4 class="text-base font-bold text-cyan-400 mt-8 mb-3 flex items-center gap-2">
     <span class="text-xs">◆</span> 2. Optimization as a Learning Process (Gradient Descent & Loss)
 </h4>
-<p class="text-sm text-slate-300 leading-relaxed my-3">When we say an AI "learns," we mean it is solving a massive, high-dimensional optimization problem. Your Keras model possesses thousands of unconfigured parameters. To adapt these to the system dynamics, we define a <strong class="text-white">target function / loss function</strong> (here the *Reconstruction Loss* or *Mean Squared Error*). Modern optimization algorithms use the mathematical derivative (the gradient) to iteratively adjust parameters until the error is minimized. Optimization here is not a static end goal, but the dynamic motor of our simulation.</p>
+<p class="text-sm text-slate-300 leading-relaxed my-3">When we say an AI "learns," we mean it is solving a massive, high-dimensional optimization problem. Your Keras model possesses thousands of unconfigured parameters. To adapt these to the system dynamics, we define a <strong class="text-white">target function / loss function</strong> (here the <i>Reconstruction Loss</i> or <i>Mean Squared Error</i>). Modern optimization algorithms use the mathematical derivative (the gradient) to iteratively adjust parameters until the error is minimized. Optimization here is not a static end goal, but the dynamic motor of our simulation.</p>
 
 <h4 class="text-base font-bold text-cyan-400 mt-8 mb-3 flex items-center gap-2">
     <span class="text-xs">◆</span> 3. Differentiable Programming & Compiler Optimization (JAX & XLA)
 </h4>
-<p class="text-sm text-slate-300 leading-relaxed my-3">Optimizing thousands of parameters immediately pushes classical laptop CPUs to their limits. To optimize dynamic system models in fractions of a second, we use the superpower of the <strong class="text-white">Keras 3 JAX backend</strong>. JAX offers *Automatic Differentiation (Autodiff)* – it can pull exact mathematical derivatives through complex Python code. Furthermore, JAX uses the <strong class="text-white">XLA compiler (Accelerated Linear Algebra)</strong>. XLA analyzes your code, fuses mathematical operations ("Just-In-Time" JIT compilation), and translates them directly for massively parallel hardware accelerators (Google TPUs or GPUs in Colab).</p>
+<p class="text-sm text-slate-300 leading-relaxed my-3">Optimizing thousands of parameters immediately pushes classical laptop CPUs to their limits. To optimize dynamic system models in fractions of a second, we use the superpower of the <strong class="text-white">Keras 3 JAX backend</strong>. JAX offers <i>Automatic Differentiation (Autodiff)</i> – it can pull exact mathematical derivatives through complex Python code. Furthermore, JAX uses the <strong class="text-white">XLA compiler (Accelerated Linear Algebra)</strong>. XLA analyzes your code, fuses mathematical operations ("Just-In-Time" JIT compilation), and translates them directly for massively parallel hardware accelerators (Google TPUs or GPUs in Colab).</p>
 
 <h4 class="text-base font-bold text-cyan-400 mt-8 mb-3 flex items-center gap-2">
     <span class="text-xs">◆</span> 4. Architectural Optimization (Agentic Refactoring)
 </h4>
-<p class="text-sm text-slate-300 leading-relaxed my-3">Not only parameters but also the mathematical structure of a model dictates how well it can capture system dynamics. A classical, fully connected network (*Dense layer*) views a time window statically – it loses the concept of temporal order. As part of our *Agentic Workflow*, you will use AI agents to iteratively optimize your network and rewrite it into a <strong class="text-white">1D Convolutional Neural Network (Conv1D)</strong>. These convolutional filters slide across the time axis and are mathematically much better suited for capturing physical frequencies and transient rhythms.</p>
+<p class="text-sm text-slate-300 leading-relaxed my-3">Not only parameters but also the mathematical structure of a model dictates how well it can capture system dynamics. A classical, fully connected network (<i>Dense layer</i>) views a time window statically – it loses the concept of temporal order. As part of our <i>Agentic Workflow</i>, you will use AI agents to iteratively optimize your network and rewrite it into a <strong class="text-white">1D Convolutional Neural Network (Conv1D)</strong>. These convolutional filters slide across the time axis and are mathematically much better suited for capturing physical frequencies and transient rhythms.</p>
 
 <h3 class="text-xl md:text-2xl font-extrabold text-white mt-12 mb-4 border-b border-slate-900 pb-2 flex items-center gap-2">
     <span class="text-cyan-400">🎯</span> Learning Objectives for Week 3
@@ -52,7 +52,7 @@
     <li class="leading-relaxed"><strong class="text-white">Map system dynamics in a data-driven way:</strong> Build object-oriented architectures that compress physical time series and learn their inherent dynamics.</li>
     <li class="leading-relaxed"><strong class="text-white">Orchestrate hardware acceleration:</strong> Master the seamless transition from a local uv environment to cloud training on Google Colab TPUs via GitHub.</li>
     <li class="leading-relaxed"><strong class="text-white">Understand Differentiable Computing:</strong> Explain the role of JAX and the XLA compiler in calculating gradients and optimizing physical models.</li>
-    <li class="leading-relaxed"><strong class="text-white">Apply Agentic Refactoring:</strong> Direct foundation models (Gemini/Antigravity) to automatically optimize complex model architectures (e.g., from *Dense* to *Conv1D*).</li>
+    <li class="leading-relaxed"><strong class="text-white">Apply Agentic Refactoring:</strong> Direct foundation models (Gemini/Antigravity) to automatically optimize complex model architectures (e.g., from <i>Dense</i> to <i>Conv1D</i>).</li>
 </ul>
 
 <div class="p-6 glass-card rounded-2xl border-t-2 border-t-purple-500/35 bg-purple-950/5 space-y-4 my-8">
@@ -63,35 +63,35 @@
         <span class="text-xs">◆</span> 1. Optimization in Machine Learning (Theory)
     </h4>
     <ul class="list-disc pl-6 text-sm text-slate-300 space-y-2.5 my-4">
-        <li class="leading-relaxed"><strong class="text-white">Goodfellow, I., Bengio, Y., & Courville, A. (2016).</strong> <strong class="text-white">*Deep Learning</strong><strong class="text-white">*. MIT Press.</strong> (Freely available at <a href="https://www.deeplearningbook.org/" class="text-cyan-400 hover:underline" target="_blank">deeplearningbook.org</a>)</li>
+        <li class="leading-relaxed"><strong class="text-white">Goodfellow, I., Bengio, Y., & Courville, A. (2016).</strong> <strong class="text-white"><i>Deep Learning</strong><strong class="text-white"></i>. MIT Press.</strong> (Freely available at <a href="https://www.deeplearningbook.org/" class="text-cyan-400 hover:underline" target="_blank">deeplearningbook.org</a>)</li>
     </ul>
-    <p class="text-sm text-slate-300 leading-relaxed my-3"><strong class="text-white">Chapter 8: Optimization for Training Deep Models.</strong> Read about the concept of error-based optimization. How do algorithms like *Adam* (Adaptive Moment Estimation) navigate through high-dimensional loss landscapes?</p>
-    <p class="text-sm text-slate-300 leading-relaxed my-3"><strong class="text-white">Chapter 14: Autoencoders.</strong> Focus on "Undercomplete Autoencoders" and understand why the *Reconstruction Loss* functions as a quantitative indicator for system deviations.</p>
+    <p class="text-sm text-slate-300 leading-relaxed my-3"><strong class="text-white">Chapter 8: Optimization for Training Deep Models.</strong> Read about the concept of error-based optimization. How do algorithms like <i>Adam</i> (Adaptive Moment Estimation) navigate through high-dimensional loss landscapes?</p>
+    <p class="text-sm text-slate-300 leading-relaxed my-3"><strong class="text-white">Chapter 14: Autoencoders.</strong> Focus on "Undercomplete Autoencoders" and understand why the <i>Reconstruction Loss</i> functions as a quantitative indicator for system deviations.</p>
 
     <h4 class="text-base font-bold text-purple-400 mt-8 mb-3 flex items-center gap-2">
         <span class="text-xs">◆</span> 2. The Tooling Revolution (Software Engineering)
     </h4>
     <ul class="list-disc pl-6 text-sm text-slate-300 space-y-2.5 my-4">
-        <li class="leading-relaxed"><strong class="text-white">Keras 3 Official Documentation:</strong> <strong class="text-white">*“The Keras 3 Multi-Backend”</strong><strong class="text-white">*.</strong></li>
+        <li class="leading-relaxed"><strong class="text-white">Keras 3 Official Documentation:</strong> <strong class="text-white"><i>“The Keras 3 Multi-Backend”</strong><strong class="text-white"></i>.</strong></li>
     </ul>
-    <p class="text-sm text-slate-300 leading-relaxed my-3">*Focus:* Understand the historical significance of backend agnosticism. Why is it a massive advantage for system engineers to write code that compiles in TensorFlow, PyTorch, or JAX without changes?</p>
+    <p class="text-sm text-slate-300 leading-relaxed my-3"><i>Focus:</i> Understand the historical significance of backend agnosticism. Why is it a massive advantage for system engineers to write code that compiles in TensorFlow, PyTorch, or JAX without changes?</p>
     
     <ul class="list-disc pl-6 text-sm text-slate-300 space-y-2.5 my-4">
-        <li class="leading-relaxed"><strong class="text-white">JAX Documentation:</strong> <strong class="text-white">*“The Autodiff Cookbook”</strong><strong class="text-white">*.</strong></li>
+        <li class="leading-relaxed"><strong class="text-white">JAX Documentation:</strong> <strong class="text-white"><i>“The Autodiff Cookbook”</strong><strong class="text-white"></i>.</strong></li>
     </ul>
-    <p class="text-sm text-slate-300 leading-relaxed my-3">*Focus:* Grasp the difference between numerical approximation and *Automatic Differentiation*. Why is Autodiff the absolute key to optimization in modern, differentiable physics? <a href="https://docs.jax.dev/en/latest/" class="text-cyan-400 hover:underline" target="_blank">https://docs.jax.dev/en/latest/</a></p>
+    <p class="text-sm text-slate-300 leading-relaxed my-3"><i>Focus:</i> Grasp the difference between numerical approximation and <i>Automatic Differentiation</i>. Why is Autodiff the absolute key to optimization in modern, differentiable physics? <a href="https://docs.jax.dev/en/latest/" class="text-cyan-400 hover:underline" target="_blank">https://docs.jax.dev/en/latest/</a></p>
 
     <h4 class="text-base font-bold text-purple-400 mt-8 mb-3 flex items-center gap-2">
         <span class="text-xs">◆</span> 3. State-of-the-Art in Time Series and Signal Processing (Outlook)
     </h4>
     <ul class="list-disc pl-6 text-sm text-slate-300 space-y-2.5 my-4">
-        <li class="leading-relaxed"><strong class="text-white">Fawaz, H. I., et al. (2019).</strong> <strong class="text-white">*"Deep learning for time series classification: a review"</strong><strong class="text-white">*.</strong></li>
+        <li class="leading-relaxed"><strong class="text-white">Fawaz, H. I., et al. (2019).</strong> <strong class="text-white"><i>"Deep learning for time series classification: a review"</strong><strong class="text-white"></i>.</strong></li>
     </ul>
-    <p class="text-sm text-slate-300 leading-relaxed my-3">*Focus:* This review article bridges the gap to our refactoring exercise. Analyze how researchers use architectural optimizations to evaluate physical signals (e.g., EEG brainwaves or turbine vibrations) using 1D convolutions. <a href="https://arxiv.org/pdf/1809.04356" class="text-cyan-400 hover:underline" target="_blank">https://arxiv.org/pdf/1809.04356</a></p>
+    <p class="text-sm text-slate-300 leading-relaxed my-3"><i>Focus:</i> This review article bridges the gap to our refactoring exercise. Analyze how researchers use architectural optimizations to evaluate physical signals (e.g., EEG brainwaves or turbine vibrations) using 1D convolutions. <a href="https://arxiv.org/pdf/1809.04356" class="text-cyan-400 hover:underline" target="_blank">https://arxiv.org/pdf/1809.04356</a></p>
 
     <div class="p-5 glass-card rounded-xl border-l-4 border-yellow-500 bg-yellow-500/5 my-6 space-y-2">
         <h4 class="text-yellow-400 font-bold text-sm flex items-center gap-2"><span>💡</span> Self-Study Tip:</h4>
-        <p class="text-sm text-slate-300 leading-relaxed my-3">Mathematics and compiler architectures can seem abstract. Use tools like ChatGPT or the Antigravity CLI as a tutor while reading! An excellent prompt for your agent is: *"Explain the concept of Latent Space in an autoencoder using the data compression of an MP3 audio signal as an analogy, and draw a comparison to capturing physical system dynamics."*</p>
+        <p class="text-sm text-slate-300 leading-relaxed my-3">Mathematics and compiler architectures can seem abstract. Use tools like ChatGPT or the Antigravity CLI as a tutor while reading! An excellent prompt for your agent is: <i>"Explain the concept of Latent Space in an autoencoder using the data compression of an MP3 audio signal as an analogy, and draw a comparison to capturing physical system dynamics."</i></p>
     </div>
 </div>
 </div>
