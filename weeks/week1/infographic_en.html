@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" class="min-h-screen">
 <head>
     <meta charset="UTF-8">
@@ -109,16 +109,16 @@
             <!-- Tab Menu -->
             <div class="flex bg-slate-950/60 p-1.5 rounded-xl border border-slate-900 shrink-0 self-stretch md:self-auto overflow-x-auto custom-scrollbar">
                 <button onclick="switchTab('solver')" id="btn-tab-solver" class="tab-btn active px-3.5 py-1.5 rounded-lg text-xs font-bold font-mono transition-all flex items-center gap-1.5 whitespace-nowrap">
-                    <span>âš¡</span> Solvers & Stability
+                    <span>⚡</span> Solvers & Stability
                 </button>
                 <button onclick="switchTab('pendulum')" id="btn-tab-pendulum" class="tab-btn px-3.5 py-1.5 rounded-lg text-xs font-bold font-mono transition-all text-slate-400 hover:text-white flex items-center gap-1.5 whitespace-nowrap">
-                    <span>ðŸŽ¡</span> Pendulum Phase Space
+                    <span>🎡</span> Pendulum Phase Space
                 </button>
                 <button onclick="switchTab('stack')" id="btn-tab-stack" class="tab-btn px-3.5 py-1.5 rounded-lg text-xs font-bold font-mono transition-all text-slate-400 hover:text-white flex items-center gap-1.5 whitespace-nowrap">
-                    <span>ðŸ§ </span> Agentic Stack Run
+                    <span>🧠</span> Agentic Stack Run
                 </button>
                 <button onclick="switchTab('paradigm')" id="btn-tab-paradigm" class="tab-btn px-3.5 py-1.5 rounded-lg text-xs font-bold font-mono transition-all text-slate-400 hover:text-white flex items-center gap-1.5 whitespace-nowrap">
-                    <span>ðŸ”„</span> Paradigm Shift
+                    <span>🔄</span> Paradigm Shift
                 </button>
             </div>
         </div>
@@ -129,7 +129,7 @@
             <div class="lg:col-span-4 space-y-4">
                 <div class="glass-card rounded-2xl p-5 space-y-5">
                     <h3 class="text-base font-bold text-white border-b border-slate-900 pb-2 flex items-center gap-2">
-                        <span>âš™ï¸</span> Solver Sabotage
+                        <span>⚙️</span> Solver Sabotage
                     </h3>
 
                     <!-- Equation Label -->
@@ -182,7 +182,7 @@
             <div class="lg:col-span-8 glass-card rounded-2xl p-5 space-y-4">
                 <div class="flex justify-between items-center border-b border-slate-900 pb-2">
                     <h3 class="text-sm font-bold text-white flex items-center gap-2">
-                        <span>ðŸ“Š</span> Numerical Current Flow \(I(t)\)
+                        <span>📊</span> Numerical Current Flow \(I(t)\)
                     </h3>
                     <span class="text-xs font-mono text-slate-500">Time \(t \in [0, 20]\)</span>
                 </div>
@@ -193,7 +193,7 @@
                     
                     <!-- Explosion Overlay -->
                     <div id="solver-explosion-box" class="absolute inset-0 bg-red-950/80 backdrop-blur-sm flex flex-col items-center justify-center p-6 text-center space-y-3 hidden border border-red-500/30">
-                        <span class="text-3xl">ðŸ’¥</span>
+                        <span class="text-3xl">💥</span>
                         <h4 class="text-base font-bold text-rose-400 font-mono uppercase tracking-widest">System Instability (Matrix Broken)</h4>
                         <p class="text-xs text-slate-300 max-w-sm leading-relaxed">
                             The time step \(\Delta t\) is too large for the system! The explicit Euler method loses stability, and the current values grow unstoppably.
@@ -219,7 +219,7 @@
             <div class="lg:col-span-4 space-y-4">
                 <div class="glass-card rounded-2xl p-5 space-y-5">
                     <h3 class="text-base font-bold text-white border-b border-slate-900 pb-2">
-                        ðŸŽ¡ Pendulum Properties
+                        🎡 Pendulum Properties
                     </h3>
 
                     <!-- Frequency slider -->
@@ -301,7 +301,7 @@
             <div class="lg:col-span-4 space-y-4">
                 <div class="glass-card rounded-2xl p-5 space-y-4">
                     <h3 class="text-base font-bold text-white border-b border-slate-900 pb-2">
-                        ðŸ§  The 2-Tier Agentic Stack
+                        🧠 The 2-Tier Agentic Stack
                     </h3>
                     <p class="text-xs text-slate-300 leading-relaxed">
                         A modern simulation stack separates cognitive planning from deterministic calculation.
@@ -324,7 +324,7 @@
                     </div>
 
                     <button onclick="startAgentRun()" id="btn-run-agent" class="w-full py-2.5 rounded-xl font-bold font-mono text-xs bg-cyan-500/10 border border-cyan-500/40 text-cyan-400 hover:bg-cyan-500/20 active:scale-95 transition-all select-none">
-                        â–¶ Start Agentic Loop
+                        ▶ Start Agentic Loop
                     </button>
                 </div>
             </div>
@@ -356,7 +356,7 @@
         <div id="tab-paradigm" class="glass-card rounded-2xl p-5 space-y-6 hidden animate-fade-in">
             <div class="border-b border-slate-900 pb-2">
                 <h3 class="text-base font-bold text-white flex items-center gap-2">
-                    ðŸ”„ Paradigm Shift: Simulink vs. Agentic Stack
+                    🔄 Paradigm Shift: Simulink vs. Agentic Stack
                 </h3>
                 <p class="text-xs text-vibrant-textMuted mt-0.5">How the daily work of a system simulation engineer has fundamentally changed.</p>
             </div>
@@ -409,7 +409,7 @@
                 <div class="p-4 rounded-xl bg-slate-900/50 border border-slate-800 text-center font-mono shrink-0 select-none">
                     <div class="text-[10px] text-slate-500">Physical State</div>
                     <div class="text-xs text-pink-400 font-bold">Pendulum T = 1250ms</div>
-                    <div class="text-xs text-slate-400 my-1">âž” Dimensionless Scaling âž”</div>
+                    <div class="text-xs text-slate-400 my-1">➡ Dimensionless Scaling ➡</div>
                     <div class="text-xs text-cyan-400 font-bold">T_dim = 1.25</div>
                 </div>
             </div>
@@ -857,7 +857,7 @@
                 output: [
                     "&gt; Layer 2 (Cognitive Layer): Calculate theoretical string length L_approx.",
                     "  Formula: T = 2*pi*sqrt(L/g)  =&gt;  L = g * (T/(2*pi))^2",
-                    "  Estimation (g=9.81m/sÂ²): L = 9.81 * (2.5 / 6.283)Â² â‰ˆ 1.552m.",
+                    "  Estimation (g=9.81m/s²): L = 9.81 * (2.5 / 6.283)² ≈ 1.552m.",
                     "&gt; Layer 2: Starting deterministic engine (Layer 1) with L = 1.552m for exact testing..."
                 ],
                 badge: "Step 1/4: Estimation"
@@ -891,7 +891,7 @@
                     "  Found period T_sim = 2.500 seconds. Target reached!",
                     "&gt; Layer 2 (Cognitive Layer): Optimization complete. Writing report...",
                     "  File docs/Agent_Report.md successfully created.",
-                    "&gt; ðŸŸ¢ PROCESS COMPLETED SUCCESSFULLY."
+                    "&gt; 🟢 PROCESS COMPLETED SUCCESSFULLY."
                 ],
                 badge: "Step 4/4: Completion"
             }
@@ -939,7 +939,7 @@
                 step.output.forEach((line, idx) => {
                     setTimeout(() => {
                         const outLine = document.createElement('div');
-                        if (line.startsWith('&gt; Layer 2') || line.startsWith('&gt; ðŸŸ¢')) {
+                        if (line.startsWith('&gt; Layer 2') || line.startsWith('&gt; 🟢')) {
                             outLine.className = 'text-purple-400 font-bold';
                         } else if (line.startsWith('&gt; Layer 1')) {
                             outLine.className = 'text-emerald-400 font-bold';
