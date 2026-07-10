@@ -48,8 +48,8 @@
 <p class="text-sm text-slate-300 leading-relaxed my-3">Klassische Einbettungsverfahren (wie word2vec) generieren statische Vektoren, bei denen dasselbe Wort unabhängig vom Kontext stets dieselbe mathematische Repräsentation besitzt. Dies scheitert bei polysemen Begriffen. Der Self-Attention-Mechanismus hingegen generiert dynamische, kontextsensitive Einbettungen.</p>
 <p class="text-sm text-slate-300 leading-relaxed my-3">Ein klassisches didaktische Beispiel verdeutiert diesen Vorgang:</p>
 <ul class="list-disc pl-6 text-sm text-slate-300 space-y-2.5 my-4">
-    <li class="leading-relaxed">*Satz A: „Das Tier überquerte die Straße nicht, weil <strong class="text-white">es</strong> zu müde war.“*</li>
-    <li class="leading-relaxed">*Satz B: „Das Tier überquerte die Straße nicht, weil <strong class="text-white">es</strong> zu breit war.“*</li>
+    <li class="leading-relaxed">Satz A: „Das Tier überquerte die Straße nicht, weil <strong class="text-white">es</strong> zu müde war.“</li>
+    <li class="leading-relaxed">Satz B: „Das Tier überquerte die Straße nicht, weil <strong class="text-white">es</strong> zu breit war.“</li>
 </ul>
 <p class="text-sm text-slate-300 leading-relaxed my-3">Für eine präzise Übersetzung oder logische Analyse muss das Pronomen „es“ korrekt zugeordnet werden. Der menschliche Verstand nutzt dafür Kontextbeziehungen. Der Transformer-Mechanismus repliziert dies mathematisch: Im Satz A erzeugt das Token „müde“ eine hohe Affinität zur Query des Pronomens „es“ und lenkt die Aufmerksamkeit über das Skalarprodukt der Vektoren gezielt auf das Substantiv „Tier“. Im Satz B hingegen erzeugt das Token „breit“ eine starke mathematische Ausrichtung zur Key-Repräsentation von „Straße“. Die resultierenden kontextsensitiven Einbettungen verändern die Vektoren im euklidischen Raum so, dass das Modell im ersten Fall eine Verbindung zu belebten Objekten und im zweiten Fall zu geometrischen Strukturen herstellt.</p>
 <h3 class="text-xl md:text-2xl font-extrabold text-white mt-12 mb-4 border-b border-slate-900 pb-2 flex items-center gap-2">
