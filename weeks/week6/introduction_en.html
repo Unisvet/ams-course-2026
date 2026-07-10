@@ -101,13 +101,21 @@
 
     <p class="text-sm text-slate-300 leading-relaxed my-3">JAX enforces functional purity. The random state is passed explicitly as an immutable array – the PRNGKey. The key is never modified in the background. If you need new random values, you must explicitly branch (fork) the key deterministically using jax.random.split():</p>
 
-    <pre class="bg-slate-950 p-4 rounded-xl border border-slate-850 overflow-x-auto text-xs font-mono text-cyan-400 my-4"><code class="language-python">                             [ Master Key ]  
-                                       |  
-                +------------+------------+  
-                |                                 |  
-          [ Subkey A ]                      [ Subkey B ]  
-                |                                    |  
-      (Random Variable 1)             (Random Variable 2)  </code></pre>
+    <pre class="mermaid bg-slate-950/40 p-6 rounded-xl border border-slate-900/60 my-6 flex justify-center">
+    graph TD
+        Master["🔑 Master Key"] --> SubA["🔑 Subkey A"]
+        Master --> SubB["🔑 Subkey B"]
+        SubA --> RV1["🎲 Random Variable 1"]
+        SubB --> RV2["🎲 Random Variable 2"]
+
+        %% Premium theme styling for nodes
+        classDef default fill:#0f172a,stroke:#334155,stroke-width:1px,color:#f8fafc;
+        classDef key fill:#1e1b4b,stroke:#818cf8,stroke-width:2px,color:#e0e7ff;
+        classDef val fill:#061f2d,stroke:#06b6d4,stroke-width:2px,color:#e0f2fe;
+
+        class Master,SubA,SubB key;
+        class RV1,RV2 val;
+    </pre>
 
     <p class="text-sm text-slate-300 leading-relaxed my-3">This functional purity allows JAX to parallelize the entire simulation loop using jax.vmap (Vectorized Map). Instead of processing a million paths one after the other in a Python loop, the XLA compiler transforms the code so that hundreds of paths are executed simultaneously on the GPU's vector registers. Complemented by jax.lax.scan for sequential time steps (as with Markov chains), we achieve simulation speeds that outperform classic CPU structures by a factor of 100 to 1000.</p>
 
@@ -117,38 +125,38 @@
     </div>
 
     <div class="p-6 glass-card rounded-2xl border-t-2 border-t-purple-500/35 bg-purple-950/5 space-y-4 my-8">
-        <h4 class="text-purple-400 font-bold text-lg flex items-center gap-2"><span>📖</span> Theoretical Introduction</h4>
+        <h4 class="text-purple-400 font-bold text-lg flex items-center gap-2"><span>📖</span> Literature & Resources</h4>
         <p class="text-sm text-slate-300 leading-relaxed">For a deeper understanding of stochastic modeling and its scaling, the following works are highly recommended:</p>
 
         <h4 class="text-base font-bold text-purple-400 mt-8 mb-3 flex items-center gap-2">
             <span class="text-xs">◆</span> On Monte Carlo Integration and Stochastic Methods:
         </h4>
         <ul class="list-disc pl-6 text-sm text-slate-300 space-y-2.5 my-4">
-            <li class="leading-relaxed"><strong class="text-white">Robert, C. P., & Casella, G. (2004).</strong> *Monte Carlo Statistical Methods*. Springer Science & Business Media.</li>
-            <li class="leading-relaxed"><strong class="text-white">Kroese, D. P., Taimre, T., & Botev, Z. I. (2013).</strong> *Handbook of Monte Carlo Methods*. John Wiley & Sons.</li>
+            <li class="leading-relaxed"><strong class="text-white">Robert, C. P., & Casella, G. (2004).</strong> <i>Monte Carlo Statistical Methods</i>. Springer Science & Business Media. <a href="https://mcube.lab.nycu.edu.tw/~cfung/docs/books/robert2004monte_carlo_statistical_methods.pdf" class="text-cyan-400 hover:underline" target="_blank">PDF Link</a></li>
+            <li class="leading-relaxed"><strong class="text-white">Kroese, D. P., Taimre, T., & Botev, Z. I. (2013).</strong> <i>Handbook of Monte Carlo Methods</i>. John Wiley & Sons.</li>
         </ul>
 
         <h4 class="text-base font-bold text-purple-400 mt-8 mb-3 flex items-center gap-2">
             <span class="text-xs">◆</span> On Business Simulations and Financial Risk:
         </h4>
         <ul class="list-disc pl-6 text-sm text-slate-300 space-y-2.5 my-4">
-            <li class="leading-relaxed"><strong class="text-white">Glasserman, P. (2003).</strong> *Monte Carlo Methods in Financial Engineering*. Springer Science & Business Media.</li>
+            <li class="leading-relaxed"><strong class="text-white">Glasserman, P. (2003).</strong> <i>Monte Carlo Methods in Financial Engineering</i>. Springer Science & Business Media.</li>
         </ul>
 
         <h4 class="text-base font-bold text-purple-400 mt-8 mb-3 flex items-center gap-2">
             <span class="text-xs">◆</span> On Markov Chains and Dynamic Systems:
         </h4>
         <ul class="list-disc pl-6 text-sm text-slate-300 space-y-2.5 my-4">
-            <li class="leading-relaxed"><strong class="text-white">Norris, J. R. (1998).</strong> *Markov Chains*. Cambridge University Press.</li>
-            <li class="leading-relaxed"><strong class="text-white">Taleb, N. N. (2007).</strong> *The Black Swan: The Impact of the Highly Improbable*. Random House.</li>
+            <li class="leading-relaxed"><strong class="text-white">Norris, J. R. (1998).</strong> <i>Markov Chains</i>. Cambridge University Press. <a href="https://cape.fcfm.buap.mx/jdzf/cursos/procesos/libros/norris.pdf" class="text-cyan-400 hover:underline" target="_blank">PDF Link</a></li>
+            <li class="leading-relaxed"><strong class="text-white">Taleb, N. N. (2007).</strong> <i>The Black Swan: The Impact of the Highly Improbable</i>. Random House. <a href="https://www.stat.berkeley.edu/~aldous/157/Books/Black_Swan-sub.pdf" class="text-cyan-400 hover:underline" target="_blank">PDF Link</a></li>
         </ul>
 
         <h4 class="text-base font-bold text-purple-400 mt-8 mb-3 flex items-center gap-2">
             <span class="text-xs">◆</span> On Scaling and High-Performance JAX:
         </h4>
         <ul class="list-disc pl-6 text-sm text-slate-300 space-y-2.5 my-4">
-            <li class="leading-relaxed"><strong class="text-white">JAX Reference Documentation.</strong> *Common Gotchas in JAX: Random Numbers*.</li>
-            <li class="leading-relaxed"><strong class="text-white">Google Developer Docs.</strong> *Antigravity Ecosystem & Agentic Skills Workspace (v2.0, 2026).*</li>
+            <li class="leading-relaxed"><strong class="text-white">JAX Reference Documentation.</strong> <i>Common Gotchas in JAX: Random Numbers</i>. <a href="https://jax.readthedocs.io/" class="text-cyan-400 hover:underline" target="_blank">JAX Docs</a></li>
+            <li class="leading-relaxed"><strong class="text-white">Google Developer Docs.</strong> <i>Antigravity Ecosystem & Agentic Skills Workspace (v2.0, 2026)</i>. <a href="https://antigravity.google/docs/skills" class="text-cyan-400 hover:underline" target="_blank">Antigravity Docs</a></li>
         </ul>
     </div>
 </div>

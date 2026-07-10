@@ -72,54 +72,62 @@
     <span class="text-xs">◆</span> Die Lösung: Der zustandslose JAX-Ansatz
 </h4>
 <p class="text-sm text-slate-300 leading-relaxed my-3">JAX erzwingt funktionale Reinheit (Pure Functions). Der Zufallszustand wird explizit als unveränderliches Array – der PRNGKey – übergeben. Der Key wird niemals im Hintergrund modifiziert. Wenn Sie neue Zufallswerte benötigen, müssen Sie den Schlüssel explizit mittels jax.random.split() deterministisch verzweigen (forken):</p>
-<pre class="bg-slate-950 p-4 rounded-xl border border-slate-850 overflow-x-auto text-xs font-mono text-cyan-400 my-4"><code class="language-python">                             [ Master Key ]  
-                                      |  
-                +------------+------------+  
-                |                                 |  
-          [ Subkey A ]                      [ Subkey B ]  
-                |                                    |  
-      (Zufallsvariable 1)             (Zufallsvariable 2)  </code></pre>
+    <pre class="mermaid bg-slate-950/40 p-6 rounded-xl border border-slate-900/60 my-6 flex justify-center">
+    graph TD
+        Master["🔑 Master Key"] --> SubA["🔑 Subkey A"]
+        Master --> SubB["🔑 Subkey B"]
+        SubA --> RV1["🎲 Zufallsvariable 1"]
+        SubB --> RV2["🎲 Zufallsvariable 2"]
+
+        %% Premium theme styling for nodes
+        classDef default fill:#0f172a,stroke:#334155,stroke-width:1px,color:#f8fafc;
+        classDef key fill:#1e1b4b,stroke:#818cf8,stroke-width:2px,color:#e0e7ff;
+        classDef val fill:#061f2d,stroke:#06b6d4,stroke-width:2px,color:#e0f2fe;
+
+        class Master,SubA,SubB key;
+        class RV1,RV2 val;
+    </pre>
 <p class="text-sm text-slate-300 leading-relaxed my-3">Diese funktionale Reinheit erlaubt es JAX, die gesamte Simulationsschleife mittels jax.vmap (Vectorized Map) zu parallelisieren. Statt eine Million Pfade nacheinander in einer Python-Schleife abzuarbeiten, transformiert der XLA-Compiler den Code so, dass Hunderte von Pfaden gleichzeitig auf den Vektorregistern der GPU ausgeführt werden. Ergänzt durch jax.lax.scan für sequentielle Zeitschritte (wie bei Markov-Ketten) erreichen wir Simulationsgeschwindigkeiten, die klassische CPU-Strukturen um den Faktor 100 bis 1000 übertreffen.</p>
     <div class="p-5 glass-card rounded-xl border-l-4 border-yellow-500 bg-yellow-500/5 my-6 space-y-2">
         <h4 class="text-yellow-400 font-bold text-sm flex items-center gap-2"><span>💡</span> Lustiger (und gefährlicher) Fakt: Täglich grüßt das Murmeltier</h4>
     </div>
 <p class="text-sm text-slate-300 leading-relaxed my-3">JAX nutzt für seine zustandslosen Keys den *Threefry*-Algorithmus – eine Methode, die eigentlich aus der militärischen Kryptographie stammt (ein abgewandelter Blockchiffre). Das Erzeugen von Zufallszahlen ist in JAX also mathematisch gesehen das "Rückwärts-Entschlüsseln" von Zählern. Das führt zu einer fiesen Falle für JAX-Anfänger: Wenn Sie vergessen, den Key zu splitten, und denselben Key in einer Schleife wiederverwenden, spuckt JAX exakt dieselbe Zufallszahl aus – und zwar jedes einzelne Mal. Ihre "stochastische" Simulation verwandelt sich dann blitzschnell in eine völlig statische, fehlerfreie Zeitschleife\!</p>
     <div class="p-6 glass-card rounded-2xl border-t-2 border-t-purple-500/35 bg-purple-950/5 space-y-4 my-8">
-        <h4 class="text-purple-400 font-bold text-lg flex items-center gap-2"><span>📖</span> Theoretische Einführung</h4>
+        <h4 class="text-purple-400 font-bold text-lg flex items-center gap-2"><span>📖</span> Literatur & Ressourcen</h4>
 <p class="text-sm text-slate-300 leading-relaxed my-3">Für ein tieferes Verständnis der stochastischen Modellierung und ihrer Skalierung werden folgende Werke dringend empfohlen:</p>
 <h4 class="text-base font-bold text-purple-400 mt-8 mb-3 flex items-center gap-2">
     <span class="text-xs">◆</span> Zur Monte-Carlo-Integration und stochastischen Methoden:
 </h4>
 <ul class="list-disc pl-6 text-sm text-slate-300 space-y-2.5 my-4">
-    <li class="leading-relaxed"><strong class="text-white">Robert, C. P., & Casella, G. (2004).</strong> *Monte Carlo Statistical Methods*. Springer Science & Business Media. <a href="https://mcube.lab.nycu.edu.tw/~cfung/docs/books/robert2004monte_carlo_statistical_methods.pdf" class="text-cyan-400 hover:underline" target="_blank">https://mcube.lab.nycu.edu.tw/~cfung/docs/books/robert2004monte_carlo_statistical_methods.pdf</a></li>
-<p class="text-sm text-slate-300 leading-relaxed my-3">*Das Standardwerk schlechthin. Exzellent für die mathematischen Beweise hinter Konvergenzraten und fortgeschantren Sampling-Verfahren (MCMC).*</p>
-    <li class="leading-relaxed"><strong class="text-white">Kroese, D. P., Taimre, T., & Botev, Z. I. (2013).</strong> *Handbook of Monte Carlo Methods*. John Wiley & Sons.</li>
-<p class="text-sm text-slate-300 leading-relaxed my-3">*Sehr praxisnah mit Fokus auf Algorithmen und konkreten Implementierungsstrategien für Ingenieure.*</p>
+    <li class="leading-relaxed"><strong class="text-white">Robert, C. P., & Casella, G. (2004).</strong> <i>Monte Carlo Statistical Methods</i>. Springer Science & Business Media. <a href="https://mcube.lab.nycu.edu.tw/~cfung/docs/books/robert2004monte_carlo_statistical_methods.pdf" class="text-cyan-400 hover:underline" target="_blank">PDF Link</a></li>
+<p class="text-sm text-slate-300 leading-relaxed my-3"><i>Das Standardwerk schlechthin. Exzellent für die mathematischen Beweise hinter Konvergenzraten und fortgeschrittenen Sampling-Verfahren (MCMC).</i></p>
+    <li class="leading-relaxed"><strong class="text-white">Kroese, D. P., Taimre, T., & Botev, Z. I. (2013).</strong> <i>Handbook of Monte Carlo Methods</i>. John Wiley & Sons.</li>
+<p class="text-sm text-slate-300 leading-relaxed my-3"><i>Sehr praxisnah mit Fokus auf Algorithmen und konkreten Implementierungsstrategien für Ingenieure.</i></p>
 </ul>
 <h4 class="text-base font-bold text-purple-400 mt-8 mb-3 flex items-center gap-2">
     <span class="text-xs">◆</span> Zu Business-Simulationen und Finanzrisiko:
 </h4>
 <ul class="list-disc pl-6 text-sm text-slate-300 space-y-2.5 my-4">
-    <li class="leading-relaxed"><strong class="text-white">Glasserman, P. (2003).</strong> *Monte Carlo Methods in Financial Engineering*. Springer Science & Business Media.</li>
-<p class="text-sm text-slate-300 leading-relaxed my-3">*Die absolute Bibel für die Anwendung von Monte-Carlo-Methoden zur Risikobewertung, Pfadsimulation und Value-at-Risk-Berechnung.*</p>
+    <li class="leading-relaxed"><strong class="text-white">Glasserman, P. (2003).</strong> <i>Monte Carlo Methods in Financial Engineering</i>. Springer Science & Business Media.</li>
+<p class="text-sm text-slate-300 leading-relaxed my-3"><i>Die absolute Bibel für die Anwendung von Monte-Carlo-Methoden zur Risikobewertung, Pfadsimulation und Value-at-Risk-Berechnung.</i></p>
 </ul>
 <h4 class="text-base font-bold text-purple-400 mt-8 mb-3 flex items-center gap-2">
     <span class="text-xs">◆</span> Zu Markov-Ketten und dynamischen Systemen:
 </h4>
 <ul class="list-disc pl-6 text-sm text-slate-300 space-y-2.5 my-4">
-    <li class="leading-relaxed"><strong class="text-white">Norris, J. R. (1998).</strong> *Markov Chains*. Cambridge University Press. <a href="https://cape.fcfm.buap.mx/jdzf/cursos/procesos/libros/norris.pdf" class="text-cyan-400 hover:underline" target="_blank">https://cape.fcfm.buap.mx/jdzf/cursos/procesos/libros/norris.pdf</a></li>
-<p class="text-sm text-slate-300 leading-relaxed my-3">*Ein unglaublich zugängliches und dennoch mathematisch präzises Buch über diskrete und kontinuierliche Markov-Prozesse.*</p>
-    <li class="leading-relaxed"><strong class="text-white">Taleb, N. N. (2007).</strong> *The Black Swan: The Impact of the Highly Improbable*. Random House. <a href="https://www.stat.berkeley.edu/~aldous/157/Books/Black_Swan-sub.pdf" class="text-cyan-400 hover:underline" target="_blank">https://www.stat.berkeley.edu/~aldous/157/Books/Black_Swan-sub.pdf</a></li>
-<p class="text-sm text-slate-300 leading-relaxed my-3">*Kein Lehrbuch, sondern eine philosophisch-ökonomische Abhandlung, die das Bewusstsein dafür schärft, warum klassische Normalverteilungen bei extremen Systemschocks versagen.*</p>
+    <li class="leading-relaxed"><strong class="text-white">Norris, J. R. (1998).</strong> <i>Markov Chains</i>. Cambridge University Press. <a href="https://cape.fcfm.buap.mx/jdzf/cursos/procesos/libros/norris.pdf" class="text-cyan-400 hover:underline" target="_blank">PDF Link</a></li>
+<p class="text-sm text-slate-300 leading-relaxed my-3"><i>Ein unglaublich zugängliches und dennoch mathematisch präzises Buch über diskrete und kontinuierliche Markov-Prozesse.</i></p>
+    <li class="leading-relaxed"><strong class="text-white">Taleb, N. N. (2007).</strong> <i>The Black Swan: The Impact of the Highly Improbable</i>. Random House. <a href="https://www.stat.berkeley.edu/~aldous/157/Books/Black_Swan-sub.pdf" class="text-cyan-400 hover:underline" target="_blank">PDF Link</a></li>
+<p class="text-sm text-slate-300 leading-relaxed my-3"><i>Kein Lehrbuch, sondern eine philosophisch-ökonomische Abhandlung, die das Bewusstsein dafür schärft, warum klassische Normalverteilungen bei extremen Systemschocks versagen.</i></p>
 </ul>
 <h4 class="text-base font-bold text-purple-400 mt-8 mb-3 flex items-center gap-2">
     <span class="text-xs">◆</span> Zur Skalierung und High-Performance JAX:
 </h4>
 <ul class="list-disc pl-6 text-sm text-slate-300 space-y-2.5 my-4">
-    <li class="leading-relaxed"><strong class="text-white">JAX Reference Documentation.</strong> *Common Gotchas in JAX: Random Numbers*. (Online verfügbar unter <a href="https://jax.readthedocs.io/" class="text-cyan-400 hover:underline" target="_blank">https://jax.readthedocs.io/</a>).</li>
-<p class="text-sm text-slate-300 leading-relaxed my-3">*Pflichtlektüre, um das concept des pseudorandom number generation (PRNG) Splittings im Detail zu verinnerlichen.*</p>
-    <li class="leading-relaxed"><strong class="text-white">Google Developer Docs.</strong> *Antigravity Ecosystem & Agentic Skills Workspace (v2.0, 2026).* (Verfügbar unter <a href="https://antigravity.google/docs/skills" class="text-cyan-400 hover:underline" target="_blank">https://antigravity.google/docs/skills</a>).</li>
-<p class="text-sm text-slate-300 leading-relaxed my-3">*Leitfaden zur Verbindung von mathematischen Simulations-Pipelines mit autonomen Multi-Agenten-Systemen im modernen Antigravity Workspace.*</p>
+    <li class="leading-relaxed"><strong class="text-white">JAX Reference Documentation.</strong> <i>Common Gotchas in JAX: Random Numbers</i>. <a href="https://jax.readthedocs.io/" class="text-cyan-400 hover:underline" target="_blank">JAX Docs</a></li>
+<p class="text-sm text-slate-300 leading-relaxed my-3"><i>Pflichtlektüre, um das Konzept des pseudorandom number generation (PRNG) Splittings im Detail zu verinnerlichen.</i></p>
+    <li class="leading-relaxed"><strong class="text-white">Google Developer Docs.</strong> <i>Antigravity Ecosystem & Agentic Skills Workspace (v2.0, 2026)</i>. <a href="https://antigravity.google/docs/skills" class="text-cyan-400 hover:underline" target="_blank">Antigravity Docs</a></li>
+<p class="text-sm text-slate-300 leading-relaxed my-3"><i>Leitfaden zur Verbindung von mathematischen Simulations-Pipelines mit autonomen Multi-Agenten-Systemen im modernen Antigravity Workspace.</i></p>
 </ul>
     </div>
 </div>
