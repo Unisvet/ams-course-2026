@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="de" class="min-h-screen">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Impressum - Angewandte Modellierung und Systemsimulation</title>
+    
+    <!-- Tailwind CSS (CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        vibrant: {
+                            bg: '#090d16',
+                            surface: '#0f172a',
+                            surfaceLight: '#1e293b',
+                            cyan: '#06b6d4',
+                            pink: '#ec4899',
+                            yellow: '#eab308',
+                            purple: '#8b5cf6',
+                            text: '#f8fafc',
+                            textMuted: '#94a3b8'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'Outfit', 'system-ui', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace']
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Global Custom Styles -->
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body class="bg-vibrant-bg text-vibrant-text font-sans selection:bg-vibrant-pink/30 selection:text-white min-h-screen flex flex-col justify-between">
+
+    <div class="relative overflow-hidden min-h-screen flex flex-col justify-between">
+        <!-- Background decorative glow effects -->
+        <div class="absolute top-[-10%] left-[-20%] w-[600px] h-[600px] rounded-full bg-vibrant-cyan/10 blur-[120px] pointer-events-none"></div>
+        <div class="absolute bottom-[-10%] right-[-20%] w-[600px] h-[600px] rounded-full bg-vibrant-pink/10 blur-[120px] pointer-events-none"></div>
+
+        <!-- Main content -->
+        <main class="max-w-4xl mx-auto px-6 py-12 md:py-20 relative z-10 w-full flex-1 flex flex-col justify-center">
+            
+            <!-- Link Back to Home -->
+            <div class="mb-8">
+                <a href="index.html" class="inline-flex items-center gap-2 text-sm text-vibrant-cyan hover:text-vibrant-pink font-mono transition duration-300 group">
+                    <span class="transform group-hover:-translate-x-1 transition-transform duration-300">&larr;</span> Zurück zum Hauptportal
+                </a>
+            </div>
+
+            <!-- Glassmorphism Container -->
+            <div class="bg-vibrant-surface/50 backdrop-blur-xl border border-slate-900/80 rounded-2xl p-8 md:p-12 shadow-2xl space-y-8 relative">
+                <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-vibrant-cyan via-vibrant-purple to-vibrant-pink rounded-t-2xl"></div>
+                
+                <header class="border-b border-slate-900/60 pb-6">
+                    <h1 class="text-3xl md:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-100 to-vibrant-cyan">
+                        Impressum
+                    </h1>
+                    <p class="text-vibrant-textMuted text-sm font-mono mt-2">Angaben gemäß § 5 DDG (ehemals TMG)</p>
+                </header>
+
+                <div class="space-y-8">
+                    <!-- Operator -->
+                    <section class="space-y-3">
+                        <h2 class="text-lg font-bold text-white flex items-center gap-2">
+                            <span class="text-vibrant-cyan">👤</span> Diensteanbieterin / Betreiberin
+                        </h2>
+                        <div class="text-vibrant-textMuted leading-relaxed pl-7">
+                            <p class="text-white font-semibold text-lg">Dr. Svetlana Meissner</p>
+                            <p class="text-xs font-mono text-cyan-400">AI-Trainer / Research Associate</p>
+                            <p class="mt-2">Brandenburgische Technische Universität Cottbus-Senftenberg</p>
+                            <p>Fachgebiet Drahtlose Systeme / Chair of Wireless Systems</p>
+                        </div>
+                    </section>
+
+                    <!-- Contact details -->
+                    <section class="space-y-3">
+                        <h2 class="text-lg font-bold text-white flex items-center gap-2">
+                            <span class="text-vibrant-cyan">✉️</span> Kontakt
+                        </h2>
+                        <div class="text-vibrant-textMuted leading-relaxed pl-7 font-mono text-sm space-y-1">
+                            <p>E-Mail: <a href="mailto:Svetlana.Meissner@b-tu.de" class="text-vibrant-cyan hover:text-vibrant-pink underline transition duration-200">Svetlana.Meissner@b-tu.de</a></p>
+                            <p>Mobil: <a href="tel:+4915202430749" class="text-vibrant-cyan hover:text-vibrant-pink underline transition duration-200">+49 15202430749</a></p>
+                            <p class="pt-2">MDZ Spreeland: <a href="https://www.digitalzentrum-spreeland.de/" target="_blank" rel="noopener noreferrer" class="text-vibrant-cyan hover:text-vibrant-pink underline transition duration-200 break-all">digitalzentrum-spreeland.de</a></p>
+                            <p>BTU Team: <a href="https://www.b-tu.de/en/fg-drahtlose-systeme/team/scientific-employees-1/fg-drahtlose-systeme-1" target="_blank" rel="noopener noreferrer" class="text-vibrant-cyan hover:text-vibrant-pink underline transition duration-200 break-all">b-tu.de/.../fg-drahtlose-systeme-1</a></p>
+                        </div>
+                    </section>
+
+                    <!-- Physical Address -->
+                    <section class="space-y-3">
+                        <h2 class="text-lg font-bold text-white flex items-center gap-2">
+                            <span class="text-vibrant-cyan">📍</span> Postanschrift
+                        </h2>
+                        <div class="text-vibrant-textMuted leading-relaxed pl-7">
+                            <p>BTU Cottbus-Senftenberg</p>
+                            <p>Institute of Computer Science</p>
+                            <p>Chair of Wireless Systems</p>
+                            <p>Konrad-Wachsmann-Allee 5</p>
+                            <p>Verfügungsgebäude 1C</p>
+                            <p>03046 Cottbus</p>
+                            <p>Deutschland</p>
+                        </div>
+                    </section>
+
+                    <!-- Legal Disclaimer -->
+                    <section class="space-y-3 pt-6 border-t border-slate-900/60">
+                        <h2 class="text-lg font-bold text-white flex items-center gap-2">
+                            <span class="text-vibrant-pink">⚠️</span> Haftungsausschluss & Rechtlicher Hinweis
+                        </h2>
+                        <div class="text-vibrant-textMuted text-xs leading-relaxed space-y-4 pl-7">
+                            <p>
+                                <strong>Haftung für Inhalte:</strong> Als Diensteanbieterin sind wir gemäß § 7 Abs. 1 DDG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 DDG sind wir jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen oder nach Umständen zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen.
+                            </p>
+                            <p>
+                                <strong>Haftung für Links:</strong> Unser Angebot enthält Links zu externen Websites Dritter, auf deren Inhalte wir keinen Einfluss haben. Deshalb können wir für diese fremden Inhalte auch keine Gewähr übernehmen. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber der Seiten verantwortlich.
+                            </p>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="border-t border-slate-900/40 py-6 bg-slate-950/20 text-center text-xs text-vibrant-textMuted font-mono z-10 relative">
+            <div class="max-w-7xl mx-auto px-4">
+                <p>&copy; 2026 Angewandte Modellierung und Systemsimulation | Svetlana Meissner</p>
+            </div>
+        </footer>
+    </div>
+
+</body>
+</html>

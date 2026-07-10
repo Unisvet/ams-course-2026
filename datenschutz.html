@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="de" class="min-h-screen">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Datenschutzerklärung - Angewandte Modellierung und Systemsimulation</title>
+    
+    <!-- Tailwind CSS (CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        vibrant: {
+                            bg: '#090d16',
+                            surface: '#0f172a',
+                            surfaceLight: '#1e293b',
+                            cyan: '#06b6d4',
+                            pink: '#ec4899',
+                            yellow: '#eab308',
+                            purple: '#8b5cf6',
+                            text: '#f8fafc',
+                            textMuted: '#94a3b8'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'Outfit', 'system-ui', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace']
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Global Custom Styles -->
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body class="bg-vibrant-bg text-vibrant-text font-sans selection:bg-vibrant-pink/30 selection:text-white min-h-screen flex flex-col justify-between">
+
+    <div class="relative overflow-hidden min-h-screen flex flex-col justify-between">
+        <!-- Background decorative glow effects -->
+        <div class="absolute top-[-10%] left-[-20%] w-[600px] h-[600px] rounded-full bg-vibrant-cyan/10 blur-[120px] pointer-events-none"></div>
+        <div class="absolute bottom-[-10%] right-[-20%] w-[600px] h-[600px] rounded-full bg-vibrant-pink/10 blur-[120px] pointer-events-none"></div>
+
+        <!-- Main content -->
+        <main class="max-w-4xl mx-auto px-6 py-12 md:py-20 relative z-10 w-full flex-1 flex flex-col justify-center">
+            
+            <!-- Link Back to Home -->
+            <div class="mb-8">
+                <a href="index.html" class="inline-flex items-center gap-2 text-sm text-vibrant-cyan hover:text-vibrant-pink font-mono transition duration-300 group">
+                    <span class="transform group-hover:-translate-x-1 transition-transform duration-300">&larr;</span> Zurück zum Hauptportal
+                </a>
+            </div>
+
+            <!-- Glassmorphism Container -->
+            <div class="bg-vibrant-surface/50 backdrop-blur-xl border border-slate-900/80 rounded-2xl p-8 md:p-12 shadow-2xl space-y-8 relative">
+                <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-vibrant-cyan via-vibrant-purple to-vibrant-pink rounded-t-2xl"></div>
+                
+                <header class="border-b border-slate-900/60 pb-6">
+                    <h1 class="text-3xl md:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-100 to-vibrant-cyan">
+                        Datenschutzerklärung
+                    </h1>
+                    <p class="text-vibrant-textMuted text-sm font-mono mt-2">Stand: Juli 2026</p>
+                </header>
+
+                <div class="space-y-8">
+                    <!-- General Information -->
+                    <section class="space-y-3">
+                        <h2 class="text-lg font-bold text-white flex items-center gap-2">
+                            <span class="text-vibrant-cyan">🔒</span> 1. Allgemeine Hinweise & Verantwortliche Stelle
+                        </h2>
+                        <div class="text-vibrant-textMuted leading-relaxed pl-7 space-y-2">
+                            <p>
+                                Der Schutz Ihrer persönlichen Daten ist uns ein großes Anliegen. Auf dieser Website werden grundsätzlich **keine personenbezogenen Daten** erhoben, gespeichert oder analysiert.
+                            </p>
+                            <p class="mt-4 text-white font-semibold">Verantwortliche Stelle für die Datenverarbeitung:</p>
+                            <p>
+                                <strong>Dr. Svetlana Meissner</strong><br>
+                                AI-Trainer / Research Associate<br>
+                                BTU Cottbus-Senftenberg<br>
+                                Institute of Computer Science<br>
+                                Chair of Wireless Systems<br>
+                                Konrad-Wachsmann-Allee 5<br>
+                                Verfügungsgebäude 1C<br>
+                                03046 Cottbus<br>
+                                E-Mail: <a href="mailto:Svetlana.Meissner@b-tu.de" class="text-vibrant-cyan hover:text-vibrant-pink underline transition duration-200">Svetlana.Meissner@b-tu.de</a><br>
+                                Mobil: <a href="tel:+4915202430749" class="text-vibrant-cyan hover:text-vibrant-pink underline transition duration-200">+49 15202430749</a>
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- Data Collection Statement -->
+                    <section class="space-y-3">
+                        <h2 class="text-lg font-bold text-white flex items-center gap-2">
+                            <span class="text-vibrant-cyan">🛡️</span> 2. Datenerfassung auf unserer Website
+                        </h2>
+                        <div class="text-vibrant-textMuted leading-relaxed pl-7 space-y-4">
+                            <div class="bg-vibrant-cyan/5 border border-vibrant-cyan/20 rounded-xl p-4 text-sm text-vibrant-text">
+                                <p class="font-bold text-vibrant-cyan mb-1">Keine Datenerfassung (No Data Collection)</p>
+                                Wir erfassen, tracken oder speichern keinerlei persönliche Daten von Besuchern dieser Website. Es gibt keine Anmeldeformulare, keine Tracking-Cookies (z.B. Google Analytics) und keine externen Marketing-Skripte.
+                            </div>
+                            
+                            <p>
+                                <strong>Lokale Speicherung von Leistungsdaten (Browser LocalStorage):</strong><br>
+                                Wenn Sie interaktive Quizzes oder Übungen auf dieser Seite durchführen, werden Ihre Leistungspunkte und Ihr Fortschritt **ausschließlich lokal in Ihrem eigenen Webbrowser (LocalStorage)** gespeichert. Diese Daten werden zu keinem Zeitpunkt an unsere Server oder an Dritte übertragen. Sie können diesen Speicher jederzeit in Ihren Browsereinstellungen löschen.
+                            </p>
+
+                            <p>
+                                <strong>Server-Log-Files (Hosting):</strong><br>
+                                Der Provider der Seiten (oder der Webhosting-Dienst) erhebt und speichert automatisch Informationen in sogenannten Server-Log-Dateien, die Ihr Browser automatisch an uns übermittelt. Dies sind standardmäßig:
+                            </p>
+                            <ul class="list-disc pl-5 space-y-1 text-sm">
+                                <li>Browsertyp und Browserversion</li>
+                                <li>Verwendetes Betriebssystem</li>
+                                <li>Referrer URL (die zuvor besuchte Seite)</li>
+                                <li>Hostname des zugreifenden Rechners</li>
+                                <li>Uhrzeit der Serveranfrage</li>
+                                <li>IP-Adresse (in der Regel anonymisiert)</li>
+                            </ul>
+                            <p class="text-xs">
+                                Diese Daten sind nicht bestimmten Personen zuordenbar. Eine Zusammenführung dieser Daten mit anderen Datenquellen wird nicht vorgenommen. Die Erfassung dieser Daten erfolgt auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an der fehlerfreien Funktion und Sicherheit der Website).
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- User Rights -->
+                    <section class="space-y-3">
+                        <h2 class="text-lg font-bold text-white flex items-center gap-2">
+                            <span class="text-vibrant-cyan">📋</span> 3. Ihre Rechte als betroffene Person
+                        </h2>
+                        <div class="text-vibrant-textMuted leading-relaxed pl-7 space-y-2 text-sm">
+                            <p>
+                                Da wir keine personenbezogenen Daten über Sie speichern, gibt es in der Regel keine Daten, über die wir Ihnen Auskunft geben könnten oder die wir löschen müssten. Dennoch haben Sie nach der DSGVO das Recht auf:
+                            </p>
+                            <ul class="list-disc pl-5 space-y-1">
+                                <li>Auskunft über eventuell verarbeitete Daten (Art. 15 DSGVO)</li>
+                                <li>Berichtigung oder Vervollständigung (Art. 16 DSGVO)</li>
+                                <li>Löschung Ihrer Daten (Art. 17 DSGVO)</li>
+                                <li>Einschränkung der Verarbeitung (Art. 18 DSGVO)</li>
+                                <li>Widerspruch gegen die Verarbeitung (Art. 21 DSGVO)</li>
+                            </ul>
+                            <p class="mt-2">
+                                Wenden Sie sich hierzu oder bei weiteren Fragen zum Thema Datenschutz gerne jederzeit an die oben angegebene Adresse oder E-Mail-Adresse.
+                            </p>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="border-t border-slate-900/40 py-6 bg-slate-950/20 text-center text-xs text-vibrant-textMuted font-mono z-10 relative">
+            <div class="max-w-7xl mx-auto px-4">
+                <p>&copy; 2026 Angewandte Modellierung und Systemsimulation | Svetlana Meissner</p>
+            </div>
+        </footer>
+    </div>
+
+</body>
+</html>
