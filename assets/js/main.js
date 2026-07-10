@@ -111,12 +111,18 @@ function initPortalPage() {
         const semesterEl = document.getElementById('course-semester');
         const deptEl = document.getElementById('course-department');
         const instEl = document.getElementById('course-institution');
+        const instLinkEl = document.getElementById('course-institution-link');
 
         if (titleEl) titleEl.innerText = courseInfo.title;
         if (subtitleEl) subtitleEl.innerText = courseInfo.subtitle;
         if (semesterEl) semesterEl.innerText = courseInfo.semester;
         if (deptEl) deptEl.innerText = courseInfo.department;
         if (instEl) instEl.innerText = courseInfo.institution;
+        if (instLinkEl) {
+            instLinkEl.href = currentLang === 'en' 
+                ? 'https://www.b-tu.de/en/fg-drahtlose-systeme/page' 
+                : 'https://www.b-tu.de/fg-drahtlose-systeme/page';
+        }
     } catch (e) {
         console.error("Error populating course headers:", e);
     }

@@ -7,7 +7,7 @@ export const translations = {
             subtitle: "Advanced Modeling and System Simulation",
             semester: "Sommersemester 2026",
             institution: "BTU Cottbus-Senftenberg",
-            department: "Lehrstuhl für Künstliche Intelligenz und Systemsimulation",
+            department: "Fachgebiet Drahtlose Systeme",
             grading: [
                 { label: "Wöchentliche Quizzes und Präsentationen", value: "18%" },
                 { label: "Problem Sets (Programmieraufgaben)", value: "52%" },
@@ -206,7 +206,7 @@ export const translations = {
             subtitle: "Advanced Modeling and System Simulation",
             semester: "Summer Semester 2026",
             institution: "BTU Cottbus-Senftenberg",
-            department: "Chair of Artificial Intelligence and System Simulation",
+            department: "Chair of Wireless Systems",
             grading: [
                 { label: "Weekly Quizzes and Presentations", value: "18%" },
                 { label: "Problem Sets (Programming Tasks)", value: "52%" },
