@@ -35,7 +35,37 @@
     <h4 class="text-base font-bold text-cyan-400 mt-8 mb-3 flex items-center gap-2">
     <span class="text-xs">◆</span> Illustration 1: Architektur eines PINNs
     </h4>
-    <p class="text-sm text-slate-300 leading-relaxed my-3">*Das Diagramm zeigt den Forward-Pass in JAX. Die Automatische Differenzierung wird die Vorhersagen abzweigen, um sie direkt in die physikalische Gleichung einzusetzen.*</p>
+    <p class="text-sm text-slate-300 leading-relaxed my-3"><i>Das Diagramm zeigt den Forward-Pass in JAX. Die Automatische Differenzierung wird die Vorhersagen abzweigen, um sie direkt in die physikalische Gleichung einzusetzen.</i></p>
+    <pre class="mermaid bg-slate-950/40 p-6 rounded-xl border border-slate-900/60 my-6 flex justify-center min-h-[300px]">
+    graph TD
+        In["🌐 Eingabe-Koordinaten (x, t)"] --> NN["🧠 Neuronales Netzwerk u(x, t; θ)"]
+        NN --> Pred["🎯 Vorhersage u_hat"]
+        
+        %% Branch 1: Daten-Loss
+        Pred -->|"An IC / BC Rändern"| LossData["📉 Loss_IC / Loss_BC"]
+        Target["📋 Soll-Werte u(x, t)"] --> LossData
+        
+        %% Branch 2: Physik-Loss via AutoDiff
+        Pred -->|"An Kollokationspunkten"| AD["⚡ JAX AutoDiff (jax.grad)"]
+        AD -->|"Berechne Ableitungen"| Deriv["u_t, u_x, u_xx"]
+        Deriv -->|"Einsetzen in PDE"| PDE["🔬 PDE Residuum: f = u_t - α u_xx"]
+        PDE -->|"Enforce Physik"| LossPhys["📉 Loss_PDE (f ➔ 0)"]
+        
+        %% Total Loss & Optimierung
+        LossData --> TotalLoss["🔮 Gesamt-Loss = Loss_Data + Loss_PDE"]
+        LossPhys --> TotalLoss
+        TotalLoss -->|"Backpropagation (Gradientenabstieg)"| Opt["🛠️ Gewichte θ aktualisieren"]
+        Opt --> NN
+
+        %% Styling
+        classDef main fill:#0f172a,stroke:#06b6d4,stroke-width:2px,color:#f8fafc;
+        classDef loss fill:#1e1b4b,stroke:#a855f7,stroke-width:2px,color:#f8fafc;
+        classDef physics fill:#061f2d,stroke:#eab308,stroke-width:2px,color:#eab308;
+        
+        class In,NN,Pred main;
+        class LossData,TotalLoss,Opt loss;
+        class AD,Deriv,PDE,LossPhys physics;
+    </pre>
     <h3 class="text-xl md:text-2xl font-extrabold text-white mt-12 mb-4 border-b border-slate-900 pb-2 flex items-center gap-2">
     <span class="text-cyan-400">⚡</span> 3. JAX und das Skalpell der Automatischen Differenzierung
     </h3>
@@ -54,7 +84,32 @@
     <h4 class="text-base font-bold text-cyan-400 mt-8 mb-3 flex items-center gap-2">
     <span class="text-xs">◆</span> Illustration 2: Klassische PINNs vs. Neural Operators
     </h4>
-    <p class="text-sm text-slate-300 leading-relaxed my-3">*Während das PINN einen festen Raum abarbeitet, verarbeitet der FNO ganze Funktionen durch Frequenz-Filterung zu komplett neuen Lösungsräumen.*</p>
+    <p class="text-sm text-slate-300 leading-relaxed my-3"><i>Während das PINN einen festen Raum abarbeitet, verarbeitet der FNO ganze Funktionen durch Frequenz-Filterung zu komplett neuen Lösungsräumen.</i></p>
+    <pre class="mermaid bg-slate-950/40 p-6 rounded-xl border border-slate-900/60 my-6 flex justify-center min-h-[250px]">
+    graph LR
+        subgraph PINN ["📍 Klassische PINNs (Punktweise)"]
+            Coord["🌐 Eingaben: x, t"] --> MLP["🧠 MLP u(x, t)"]
+            MLP --> Out1["🎯 Vorhersage u_hat(x, t)"]
+            style Coord fill:#0f172a,stroke:#3b82f6,color:#fff
+            style MLP fill:#0f172a,stroke:#3b82f6,color:#fff
+            style Out1 fill:#0f172a,stroke:#3b82f6,color:#fff
+        end
+
+        subgraph FNO ["⚡ Fourier Neural Operator (Funktion-zu-Funktion)"]
+            FuncIn["📋 Eingabefunktion a(x)"] --> FFT["🔄 Fast Fourier Transformation (FFT)"]
+            FFT -->|"Frequenzbereich"| Layer["🔮 Fourier-Schicht (Komplexe Gewichte R)"]
+            Layer --> IFFT["🔄 Inverse FFT (IFFT)"]
+            IFFT --> FuncOut["🌊 Ausgabefunktion u(x)"]
+            style FuncIn fill:#0f172a,stroke:#10b981,color:#fff
+            style FFT fill:#0f172a,stroke:#10b981,color:#fff
+            style Layer fill:#0f172a,stroke:#10b981,color:#fff
+            style IFFT fill:#0f172a,stroke:#10b981,color:#fff
+            style FuncOut fill:#0f172a,stroke:#10b981,color:#fff
+        end
+
+        style PINN fill:#090d16,stroke:#3b82f6,stroke-width:2px,color:#3b82f6
+        style FNO fill:#022c22,stroke:#10b981,stroke-width:2px,color:#10b981
+    </pre>
     <div class="p-6 glass-card rounded-2xl border-t-2 border-t-purple-500/35 bg-purple-950/5 space-y-4 my-8">
         <h4 class="text-purple-400 font-bold text-lg flex items-center gap-2"><span>📖</span> Literatur & Ressourcen</h4>
     <p class="text-sm text-slate-300 leading-relaxed my-3">Für Architekten, die die Mathematik hinter dem Code durchdringen wollen, um ihren KI-Agenten Prompts zu liefern, sind folgende Quellen für Problem Set 05 essenziell:</p>

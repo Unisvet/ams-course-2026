@@ -35,6 +35,41 @@
         <li class="leading-relaxed"><strong class="text-white">PDE Residual Loss –</strong> <strong class="text-white">*The Fabric of Reality</strong><strong class="text-white">*:</strong><br>The heart of PINNs. We scatter thousands of random "collocation points" \((x, t)\) across our virtual space-time cylinder. At these points, we have *no* measurement data. Instead, we calculate how much the network deviates from the physical law (e.g., the 1D heat equation \(u_t - \alpha u_{xx} = 0\)). Any deviation from \(0\) is the so-called residual. It is heavily penalized during gradient descent.</li>
     </ol>
 
+    <h4 class="text-base font-bold text-cyan-400 mt-8 mb-3 flex items-center gap-2">
+        <span class="text-xs">◆</span> Illustration 1: PINN Architecture
+    </h4>
+    <p class="text-sm text-slate-300 leading-relaxed my-3"><i>The diagram shows the forward pass in JAX. Automatic Differentiation branches off predictions to insert them directly into the physical equation.</i></p>
+    <pre class="mermaid bg-slate-950/40 p-6 rounded-xl border border-slate-900/60 my-6 flex justify-center min-h-[300px]">
+    graph TD
+        In["🌐 Input Coordinates (x, t)"] --> NN["🧠 Neural Network u(x, t; θ)"]
+        NN --> Pred["🎯 Prediction u_hat"]
+        
+        %% Branch 1: Data Loss
+        Pred -->|"At Boundary / Initial Conditions"| LossData["📉 Loss_IC / Loss_BC"]
+        Target["📋 True Labels u(x, t)"] --> LossData
+        
+        %% Branch 2: Physics Loss via AutoDiff
+        Pred -->|"At Collocation Points"| AD["⚡ JAX AutoDiff (jax.grad)"]
+        AD -->|"Calculate Derivatives"| Deriv["u_t, u_x, u_xx"]
+        Deriv -->|"Plug into PDE"| PDE["🔬 PDE Residual: f = u_t - α u_xx"]
+        PDE -->|"Enforce Physics"| LossPhys["📉 Loss_PDE (f ➔ 0)"]
+        
+        %% Total Loss & Optimization
+        LossData --> TotalLoss["🔮 Total Loss = Loss_Data + Loss_PDE"]
+        LossPhys --> TotalLoss
+        TotalLoss -->|"Backpropagation (Gradient Descent)"| Opt["🛠️ Update Weights θ"]
+        Opt --> NN
+
+        %% Styling
+        classDef main fill:#0f172a,stroke:#06b6d4,stroke-width:2px,color:#f8fafc;
+        classDef loss fill:#1e1b4b,stroke:#a855f7,stroke-width:2px,color:#f8fafc;
+        classDef physics fill:#061f2d,stroke:#eab308,stroke-width:2px,color:#eab308;
+        
+        class In,NN,Pred main;
+        class LossData,TotalLoss,Opt loss;
+        class AD,Deriv,PDE,LossPhys physics;
+    </pre>
+
     <h3 class="text-xl md:text-2xl font-extrabold text-white mt-12 mb-4 border-b border-slate-900 pb-2 flex items-center gap-2">
         <span class="text-cyan-400">⚡</span> 3. JAX and the Scalpel of Automatic Differentiation
     </h3>
@@ -49,6 +84,36 @@
     <p class="text-sm text-slate-300 leading-relaxed my-3">An operator doesn't just map individual coordinates to a value (\((x, t) \rightarrow u\)). It maps entire *infinite-dimensional function spaces* to each other. A <strong class="text-white">Fourier Neural Operator (FNO)</strong> takes a *complete initial condition function* as input and generates the *complete solution function* for the future in a single forward pass.</p>
     <p class="text-sm text-slate-300 leading-relaxed my-3"><strong class="text-white">The Frequency Trick:</strong> The FNO uses the Fast Fourier Transform (FFT) to transform the physical spatial data into the <strong class="text-white">frequency domain</strong>. In the frequency domain, complex laws of nature (like diffusion) act like simple integral kernel filters—they simply dampen high frequencies. The model then transforms the signal back into our spatial domain.</p>
     <p class="text-sm text-slate-300 leading-relaxed my-3"><strong class="text-white">The Incredible Result (Zero-Shot Super-Resolution):</strong> Because frequencies are continuous, the FNO is *resolution-independent*. You can train an FNO on heavily compressed data (e.g., a \(32 \times 32\) grid) and feed in high-resolution \(1024 \times 1024\) input data in production. The FNO will predict the solution in fractions of a millisecond absolutely flawlessly. It hasn't learned the solution to *one* problem, but the <strong class="text-white">rules of physics themselves</strong>.</p>
+
+    <h4 class="text-base font-bold text-cyan-400 mt-8 mb-3 flex items-center gap-2">
+        <span class="text-xs">◆</span> Illustration 2: Classical PINNs vs. Neural Operators
+    </h4>
+    <p class="text-sm text-slate-300 leading-relaxed my-3"><i>While the PINN works on a fixed space, the FNO processes entire functions through frequency filtering into completely new solution spaces.</i></p>
+    <pre class="mermaid bg-slate-950/40 p-6 rounded-xl border border-slate-900/60 my-6 flex justify-center min-h-[250px]">
+    graph LR
+        subgraph PINN ["📍 Classical PINNs (Point-Wise)"]
+            Coord["🌐 Inputs: x, t"] --> MLP["🧠 MLP u(x, t)"]
+            MLP --> Out1["🎯 Prediction u_hat(x, t)"]
+            style Coord fill:#0f172a,stroke:#3b82f6,color:#fff
+            style MLP fill:#0f172a,stroke:#3b82f6,color:#fff
+            style Out1 fill:#0f172a,stroke:#3b82f6,color:#fff
+        end
+
+        subgraph FNO ["⚡ Fourier Neural Operator (Function-to-Function)"]
+            FuncIn["📋 Input Function a(x)"] --> FFT["🔄 Fast Fourier Transform (FFT)"]
+            FFT -->|"Frequency Domain"| Layer["🔮 Fourier Layer (Complex Weights R)"]
+            Layer --> IFFT["🔄 Inverse FFT (IFFT)"]
+            IFFT --> FuncOut["🌊 Output Function u(x)"]
+            style FuncIn fill:#0f172a,stroke:#10b981,color:#fff
+            style FFT fill:#0f172a,stroke:#10b981,color:#fff
+            style Layer fill:#0f172a,stroke:#10b981,color:#fff
+            style IFFT fill:#0f172a,stroke:#10b981,color:#fff
+            style FuncOut fill:#0f172a,stroke:#10b981,color:#fff
+        end
+
+        style PINN fill:#090d16,stroke:#3b82f6,stroke-width:2px,color:#3b82f6
+        style FNO fill:#022c22,stroke:#10b981,stroke-width:2px,color:#10b981
+    </pre>
 
     <div class="p-6 glass-card rounded-2xl border-t-2 border-t-purple-500/35 bg-purple-950/5 space-y-4 my-8">
         <h4 class="text-purple-400 font-bold text-lg flex items-center gap-2"><span>📖</span> Literature & Resources</h4>
