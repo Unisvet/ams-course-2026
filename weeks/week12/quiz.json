@@ -1,6 +1,6 @@
 [
     {
-        "question": "Which protocol is designed to standardize the discovery and communication between independent agents built on different frameworks?",
+        "question": "Which protocol standardizes discovery and communication between independent agents built on different frameworks?",
         "options": [
             "MCP",
             "A2A (Agent2Agent)",
@@ -15,14 +15,14 @@
         "options": [
             "To define how agents render UI components.",
             "To authorize financial transactions between agents.",
-            "To provide a universal connection pattern for agents to access data and tools.",
+            "To provide a universal connection pattern for agents to data and tools.",
             "To stream text incrementally from an LLM."
         ],
         "answerIndex": 2,
         "explanation": "MCP (Model Context Protocol) eliminates the need for custom integration code by providing a standard way for agents to connect to hundreds of different servers and databases."
     },
     {
-        "question": "Welches Protokoll wird verwendet, um den gesamten Shopping-Lebenszyklus (Katalogsuche, Checkout) für Agenten zu vereinheitlichen?",
+        "question": "Welches Protokoll vereint den Shopping-Lebenszyklus (Katalogsuche, Checkout) für autonome Agenten?",
         "options": [
             "AP2",
             "UCP (Universal Commerce Protocol)",
@@ -47,7 +47,7 @@
         "question": "How does A2UI differ from traditional web development for agents?",
         "options": [
             "It requires agents to write HTML/CSS code directly.",
-            "It uses a declarative JSON format with safe component primitives, separating structure from data.",
+            "Uses declarative JSON with safe components, separating structure/data.",
             "It only works with Python-based frontends.",
             "It is used for backend-to-backend communication only."
         ],
@@ -66,7 +66,7 @@
         "explanation": "AG-UI (Agent-User Interaction Protocol) standardizes the SSE (Server-Sent Events) stream between agent frameworks and user interfaces, handling tool calls and incremental text delivery."
     },
     {
-        "question": "Ein Agent möchte in Cottbus eine Party schmeißen und muss 100 Kästen Spreewälder Gürkchen-Limo bestellen. Welches Protokoll verhindert, dass er versehentlich das gesamte Forschungsbudget der BTU Cottbus ausgibt?",
+        "question": "Welches Protokoll verhindert, dass ein Agent beim Limokauf das gesamte Forschungsbudget der BTU Cottbus ausgibt?",
         "options": [
             "A2A (Agenten-Dating-Service)",
             "AP2 (mit Budget-Mandaten)",
@@ -77,7 +77,7 @@
         "explanation": "AP2 (Agent Payments Protocol) nutzt kryptografische Mandate und Ausgabenlimits, um sicherzustellen, dass Agenten nur so viel ausgeben, wie ihnen der Mensch erlaubt hat."
     },
     {
-        "question": "Zwei Agenten treffen sich in einem digitalen Café. Wie tauschen sie ihre 'Visitenkarten' aus, um festzustellen, ob sie zusammenarbeiten können?",
+        "question": "Wie tauschen zwei Agenten im digitalen Café 'Visitenkarten' aus, um ihre Zusammenarbeit zu prüfen?",
         "options": [
             "Sie schicken sich gegenseitig ihren gesamten Sourcecode.",
             "Sie nutzen A2A 'Agent Cards'.",
@@ -88,7 +88,7 @@
         "explanation": "Der A2A-Standard (Agent2Agent) nutzt 'Agent Cards', um Capabilities, Verschlüsselungs-Keys und Protokoll-Versionen automatisiert auszutauschen."
     },
     {
-        "question": "Dein Agent hat ein neues Hobby: Er möchte eine interaktive 3D-Karte der Cottbuser Innenstadt rendern, aber du hast keine Lust, JavaScript zu schreiben. Was ist deine Rettung?",
+        "question": "Welches Protokoll rettet dich, wenn dein Agent ohne JavaScript ein interaktives 3D-Interface für Cottbus baut?",
         "options": [
             "Du kündigst deinen Job.",
             "Du nutzt A2UI für deklarative Interfaces.",
@@ -99,7 +99,7 @@
         "explanation": "A2UI ermöglicht es Agenten, komplexe UIs aus vordefinierten Komponenten zusammenzusetzen, ohne dass der Entwickler manuell CSS oder JS für jede neue Ansicht schreiben muss."
     },
     {
-        "question": "Dein Agent versucht, 500 Pizzen für die gesamte Fakultät zu bestellen, hat aber nur ein Budget von 50€. Welches Protokoll ist der 'Türsteher', der die Transaktion stoppt?",
+        "question": "Welches Protokoll stoppt als 'Türsteher' einen Agenten, der mit 50€ Budget 500 Pizzen bestellen will?",
         "options": [
             "UCP (Universal Pizza Protocol)",
             "AP2 (mit Budget-Mandat)",
@@ -113,11 +113,33 @@
         "question": "Warum ist es eine schlechte Idee, Agenten ohne standardisierte Protokolle (wie A2A) 'wild' miteinander reden zu lassen?",
         "options": [
             "Sie könnten sich ineinander verlieben.",
-            "Es entsteht ein babylonisches Sprachgewirr aus inkompatiblen JSON-Strukturen.",
+            "Es entsteht ein babylonisches Sprachgewirr inkompatibler JSON-Strukturen.",
             "Die Internetverbindung wird dadurch lila.",
             "Agenten weigern sich, ohne Protokoll Überstunden zu machen."
         ],
         "answerIndex": 1,
         "explanation": "Ohne Protokolle wie A2A müssten wir für jede Agenten-Kombination eigenen Code schreiben. Standards sorgen für 'Plug-and-Play' Interoperabilität."
+    },
+    {
+        "question": "Warum wird das Model Context Protocol (MCP) in der Agentik liebevoll als der 'USB-C-Anschluss für KI' bezeichnet?",
+        "options": [
+            "Weil es Agenten über ein einziges Standardkabel physisch aufladen kann.",
+            "Weil es universellen Daten- und Tool-Zugriff ohne Custom-APIs erlaubt.",
+            "Weil es den Inferenz-Akku des Modells schont und Strom spart.",
+            "Weil es ältere USB-A-Modelle aus dem Jahr 2025 inkompatibel macht."
+        ],
+        "answerIndex": 1,
+        "explanation": "MCP fungiert als universelle Schnittstelle: Genauso wie USB-C verschiedene Hardware-Geräte verbindet, koppelt MCP beliebige Datenquellen und Tools nahtlos an LLMs an."
+    },
+    {
+        "question": "Ein Agent bucht Flüge (UCP), zahlt (AP2) und redet mit dem Hotel-Agenten (A2A). Was ist das Geheimnis dahinter?",
+        "options": [
+            "Sie nutzen alle denselben monolithischen Server in der Cloud.",
+            "Sie nutzen den standardisierten 'Agentic Protocol Stack'.",
+            "Sie raten die API-Schnittstellen durch stetiges Ausprobieren.",
+            "Ein menschlicher Entwickler hat für jeden Schritt Code geschrieben."
+        ],
+        "answerIndex": 1,
+        "explanation": "Durch das Zusammenspiel komplementärer Protokolle (UCP für Handel, AP2 für Zahlungen, A2A für Kommunikation) entsteht eine harmonische, interoperable Agenten-Ökonomie."
     }
 ]
