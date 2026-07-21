@@ -63,6 +63,185 @@
         </p>
     </div>
 
+    <!-- 1. Theoretischer Deep-Dive: Hybride Architekturen & Agenten-gestütztes Debugging -->
+    <section class="space-y-6">
+        <h3 class="text-xl md:text-2xl font-bold text-white flex items-center gap-3 border-b border-slate-900 pb-3">
+            <span class="w-8 h-8 rounded-lg bg-cyan-500/20 flex items-center justify-center text-cyan-400 text-base">🧬</span>
+            Theoretischer Deep-Dive: Hybride Architekturen & Agenten-gestütztes Debugging
+        </h3>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div class="space-y-4">
+                <p class="text-sm text-slate-300 leading-relaxed">
+                    Moderne Systemsimulationen erfordern zunehmend eine Verschmelzung verschiedener Rechenparadigmen. Wir nennen dies eine <strong>Hybride Architektur</strong> oder ein <strong>neurosymbolisches System</strong>. Es schließt die Lücke zwischen der rohen, deterministischen mathematischen Geschwindigkeit und qualitativer, unstrukturierter Intelligenz.
+                </p>
+                <div class="p-5 rounded-2xl bg-slate-950/40 border border-slate-900 space-y-3">
+                    <h5 class="text-xs font-mono text-cyan-400 uppercase tracking-widest font-bold">Das Dual-Engine-Muster</h5>
+                    <p class="text-xs text-slate-400 leading-relaxed">
+                        Um eine skalierbare Simulation zu erstellen, teilen wir die Verantwortlichkeiten in zwei separate, miteinander kommunizierende Engines auf:
+                    </p>
+                    <ul class="space-y-2">
+                        <li class="text-xs text-slate-400 flex items-start gap-2">
+                            <span class="text-cyan-500 mt-0.5">•</span>
+                            <span><strong class="text-white">The Math Engine:</strong> Implementiert in JAX, Flax oder klassischen Solvern. Sie ist deterministisch, extrem schnell, läuft auf GPUs/HPCs und löst physikalische Modelle, ODEs oder Monte-Carlo-Integrationen mit höchster numerischer Präzision.</span>
+                        </li>
+                        <li class="text-xs text-slate-400 flex items-start gap-2">
+                            <span class="text-cyan-500 mt-0.5">•</span>
+                            <span><strong class="text-white">Die kognitive Agentenschicht:</strong> Basierend auf LLMs (wie Gemini oder Gemma), die im Agent Development Kit (ADK) laufen. Sie übernimmt die Planung, interpretiert unstrukturierte Telemetrie, behandelt Ausnahmen und wählt Kalibrierungstools aus.</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="space-y-4">
+                <p class="text-sm text-slate-300 leading-relaxed">
+                    Durch die Entkopplung dieser beiden Schichten gewinnen wir sowohl physikalische Korrektheit als auch extreme Anpassungsfähigkeit. Die Math Engine konzentriert sich voll und ganz auf das Lösen von Differentialgleichungen, während die kognitive Schicht als „digitaler Supervisor“ fungiert, der den Systemzustand überwacht.
+                </p>
+                <div class="p-5 rounded-2xl bg-slate-950/40 border border-slate-900 space-y-3">
+                    <h5 class="text-xs font-mono text-purple-400 uppercase tracking-widest font-bold">Agentengesteuerte Closed-Loop-Regelung</h5>
+                    <p class="text-xs text-slate-400 leading-relaxed">
+                        Statt einer einfachen Einweg-Ausführung bilden hybride Systeme eine bidirektionale <strong>Telemetrie- und Korrekturschleife</strong>:
+                    </p>
+                    <ul class="space-y-2">
+                        <li class="text-xs text-slate-400 flex items-start gap-2">
+                            <span class="text-purple-500 mt-0.5">•</span>
+                            <span><strong class="text-white">Zustandstelemetrie:</strong> Die Math Engine streamt kontinuierlich numerische Metriken (z. B. aktuelle Geschwindigkeit, Energiedivergenz oder Solver-Loss) zurück an den Agenten.</span>
+                        </li>
+                        <li class="text-xs text-slate-400 flex items-start gap-2">
+                            <span class="text-purple-500 mt-0.5">•</span>
+                            <span><strong class="text-white">Guardrail & Verifizierung:</strong> Ein unabhängiger Verifizierer parst die Telemetrie. Explodieren Werte (z. B. durch eine zu große Schrittweite \(dt\)), löst er eine Anomaliewarnung aus.</span>
+                        </li>
+                        <li class="text-xs text-slate-400 flex items-start gap-2">
+                            <span class="text-purple-500 mt-0.5">•</span>
+                            <span><strong class="text-white">Korrekturinjektion:</strong> Der Agent diagnostiziert die Ursache (z. B. numerische Instabilität), ruft Kalibrierungstools auf und aktualisiert die Parameter der Math Engine dynamisch.</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Interactive Telemetry & Correction Diagram (German) -->
+        <div class="relative group cursor-zoom-in" onclick="(function() {
+            let modal = document.getElementById('modal-diagram-week13');
+            if (!modal) {
+                modal = document.createElement('div');
+                modal.id = 'modal-diagram-week13';
+                modal.className = 'fixed inset-0 bg-slate-950/90 z-50 flex items-center justify-center p-6 backdrop-blur-md hidden';
+                modal.onclick = function() { modal.style.display = 'none'; document.body.style.overflow = ''; };
+                const card = document.createElement('div');
+                card.className = 'max-w-4xl w-full bg-slate-900 border border-slate-800 rounded-3xl p-8 relative shadow-2xl';
+                card.onclick = function(e) { e.stopPropagation(); };
+                const close = document.createElement('button');
+                close.innerHTML = '✕';
+                close.className = 'absolute top-6 right-6 text-slate-400 hover:text-white text-lg font-mono focus:outline-none';
+                close.onclick = function() { modal.style.display = 'none'; document.body.style.overflow = ''; };
+                const content = document.createElement('div');
+                content.id = 'modal-diagram-content-week13';
+                content.className = 'flex justify-center items-center overflow-x-auto p-4';
+                const footer = document.createElement('div');
+                footer.className = 'mt-6 text-center text-[10px] font-mono text-slate-500';
+                footer.textContent = 'Hybride Telemetrie- & Korrekturschleife — Zum Schließen außerhalb klicken';
+                card.appendChild(close);
+                card.appendChild(content);
+                card.appendChild(footer);
+                modal.appendChild(card);
+                document.body.appendChild(modal);
+            }
+            
+            const content = document.getElementById('modal-diagram-content-week13');
+            content.innerHTML = '';
+            const svg = document.querySelector('#mermaid-week13 svg');
+            if (svg) {
+                const clone = svg.cloneNode(true);
+                clone.removeAttribute('height');
+                clone.style.width = '100%';
+                clone.style.height = 'auto';
+                clone.style.maxHeight = '420px';
+                content.appendChild(clone);
+            } else {
+                content.innerHTML = '<p class=\'text-slate-400 text-xs font-mono\'>Lade Diagramm...</p>';
+            }
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        })()" title="Klicke zum Vergrößern">
+            <pre class="mermaid bg-slate-950/40 p-6 rounded-xl border border-slate-900/60 my-6 flex justify-center hover:border-cyan-500/50 hover:shadow-lg hover:shadow-cyan-500/5 transition-all duration-300 min-h-[300px]" id="mermaid-week13">
+            graph TD
+                %% Nodes & Connections
+                subgraph ME["Determinismus (Math Engine)"]
+                    SIM["Systemsimulation (Zustand t)"]:::engine
+                    ENG["Physikalische Gleichungen lösen"]:::engine
+                    ANA["Erkennung von Divergenz / Instabilität"]:::engine
+                end
+
+                subgraph COG["Kognitive Agentenschicht (ADK)"]
+                    PE["Perzeption (Telemetrielog lesen)"]:::cognitive
+                    RE["Schlussfolgerung (Ursachenanalyse via LLM)"]:::cognitive
+                    TO["Aktion (Kalibrierungstools wählen)"]:::cognitive
+                end
+
+                %% Flow
+                SIM --> ENG
+                ENG -->|Streamen von Telemetriedaten| ANA
+                ANA -->|Anomalie erkannt!| PE
+                PE --> RE
+                RE --> TO
+                TO -->|Korrekturinjektion (dt, Grenzen, Seeds)| SIM
+
+                %% Custom Styles
+                classDef engine fill:#0f172a,stroke:#3b82f6,stroke-width:2px,color:#f8fafc;
+                classDef cognitive fill:#0f172a,stroke:#a855f7,stroke-width:2px,color:#f8fafc;
+                
+                style ME fill:rgba(59, 130, 246, 0.03),stroke:rgba(59, 130, 246, 0.2),stroke-dasharray: 5 5;
+                style COG fill:rgba(168, 85, 247, 0.03),stroke:rgba(168, 85, 247, 0.2),stroke-dasharray: 5 5;
+            </pre>
+            <div class="absolute top-3 right-3 px-2 py-1 rounded bg-slate-950/80 border border-slate-800 text-[10px] font-mono text-slate-500 group-hover:text-cyan-400 transition-colors pointer-events-none">
+                🔍 Klicke zum Vergrößern des Diagramms
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-6">
+            <div class="p-6 glass-card rounded-2xl border-l-4 border-pink-500 bg-pink-500/5 space-y-3">
+                <h4 class="text-white font-extrabold text-base flex items-center gap-2">
+                    <span>🔍</span> Debugging der Simulation (Der Verifizierer)
+                </h4>
+                <p class="text-xs text-slate-300 leading-relaxed font-sans">
+                    Das Debuggen hybrider Systeme unterscheidet sich grundlegend vom Debuggen monolithischer Software. Da wir eine strikte Trennung zwischen symbolischen (Math) und neuronalen (Agent) Komponenten haben, können wir Fehler präzise nachverfolgen:
+                </p>
+                <ul class="space-y-2 text-xs text-slate-400 font-sans">
+                    <li class="flex items-start gap-1.5">
+                        <span class="text-pink-500">•</span>
+                        <span><strong>Kausalitäts-Tracing:</strong> Jede Aktion des Agenten und jede Antwort des Simulators wird als strukturierter Übergang protokolliert. Stürzt die Simulation ab, können wir den genauen Trace Schritt für Schritt wiedergeben.</span>
+                    </li>
+                    <li class="flex items-start gap-1.5">
+                        <span class="text-pink-500">•</span>
+                        <span><strong>Harte Leitplanken (Guardrails):</strong> Regelbasierte „Verifizierer“ fungieren als Sicherheitskern. Sie weisen Aktionen des Agenten, die gegen die Physik verstoßen (z. B. Masseerzeugung oder Verletzung der Energieerhaltung), automatisch ab und verhindern katastrophale Fehler.</span>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="p-6 glass-card rounded-2xl border-l-4 border-yellow-500 bg-yellow-500/5 space-y-3">
+                <h4 class="text-white font-extrabold text-base flex items-center gap-2">
+                    <span>⚠️</span> Debugging des Agenten (Halluzinationskontrolle)
+                </h4>
+                <p class="text-xs text-slate-300 leading-relaxed font-sans">
+                    Während Math Engines unter numerischen Instabilitäten leiden, leiden Agenten unter kognitiven Instabilitäten (Halluzinationen). So debuggen und sichern wir die agentische Schicht:
+                </p>
+                <ul class="space-y-2 text-xs text-slate-400 font-sans">
+                    <li class="flex items-start gap-1.5">
+                        <span class="text-yellow-500">•</span>
+                        <span><strong>Deterministische Erdung (Grounding):</strong> Lassen Sie Agenten niemals mathematische Grenzen „schätzen“. Alle physikalischen Konstanten und strukturellen Gleichungen müssen über MCP-Tools direkt aus verifizierten symbolischen Solvern abgefragt werden.</span>
+                    </li>
+                    <li class="flex items-start gap-1.5">
+                        <span class="text-yellow-500">•</span>
+                        <span><strong>Selbstkorrekturschleifen (Self-Correction):</strong> Schlägt ein Tool-Aufruf des Agenten fehl (z. B. durch einen Python-Fehler oder eine Guardrail-Verletzung), wird die Fehlermeldung direkt in den Prompt des Agenten zurückgespeist. Dies löst einen sofortigen, autonomen Korrekturzyklus aus.</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trennlinie -->
+    <div class="h-px bg-slate-900 my-10"></div>
+
     <!-- Master-Detail Grid Container -->
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         <!-- Left Side: Topics List -->
