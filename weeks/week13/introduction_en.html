@@ -165,33 +165,19 @@
         })()" title="Click to enlarge">
             <pre class="mermaid bg-slate-950/40 p-6 rounded-xl border border-slate-900/60 my-6 flex justify-center hover:border-cyan-500/50 hover:shadow-lg hover:shadow-cyan-500/5 transition-all duration-300 min-h-[300px]" id="mermaid-week13">
             graph TD
-                %% Nodes & Connections
-                subgraph ME["Determinism (Math Engine)"]
-                    SIM["System Simulation (State t)"]:::engine
-                    ENG["Solve Physical Equations"]:::engine
-                    ANA["Divergence / Instability Detection"]:::engine
-                end
+                SIM["💻 Simulation (State t)"] --> ENG["⚙️ Solve Physics Equations"]
+                ENG -->|Telemetry Stream| ANA["🔍 Instability Detection"]
+                ANA -->|Anomaly Alert| PE["👀 Perception (Read Log)"]
+                PE --> RE["🧠 Reasoning (RCA via LLM)"]
+                RE --> TO["🛠️ Tool (Calibration)"]
+                TO -->|Inject Parameters| SIM
 
-                subgraph COG["Cognitive Agent Layer (ADK)"]
-                    PE["Perception (Read Telemetry Log)"]:::cognitive
-                    RE["Reasoning (Root Cause Analysis via LLM)"]:::cognitive
-                    TO["Action (Select Calibration Tools)"]:::cognitive
-                end
-
-                %% Flow
-                SIM --> ENG
-                ENG -->|Stream Telemetry Data| ANA
-                ANA -->|Anomaly Detected!| PE
-                PE --> RE
-                RE --> TO
-                TO -->|Correction Injection (dt, bounds, seeds)| SIM
-
-                %% Custom Styles
-                classDef engine fill:#0f172a,stroke:#3b82f6,stroke-width:2px,color:#f8fafc;
-                classDef cognitive fill:#0f172a,stroke:#a855f7,stroke-width:2px,color:#f8fafc;
-                
-                style ME fill:rgba(59, 130, 246, 0.03),stroke:rgba(59, 130, 246, 0.2),stroke-dasharray: 5 5;
-                style COG fill:rgba(168, 85, 247, 0.03),stroke:rgba(168, 85, 247, 0.2),stroke-dasharray: 5 5;
+                style SIM fill:#0f172a,stroke:#3b82f6,stroke-width:2px,color:#f8fafc
+                style ENG fill:#0f172a,stroke:#3b82f6,color:#f8fafc
+                style ANA fill:#0f172a,stroke:#3b82f6,color:#f8fafc
+                style PE fill:#0f172a,stroke:#a855f7,stroke-width:2px,color:#f8fafc
+                style RE fill:#0f172a,stroke:#a855f7,color:#f8fafc
+                style TO fill:#0f172a,stroke:#a855f7,color:#f8fafc
             </pre>
             <div class="absolute top-3 right-3 px-2 py-1 rounded bg-slate-950/80 border border-slate-800 text-[10px] font-mono text-slate-500 group-hover:text-cyan-400 transition-colors pointer-events-none">
                 🔍 Click to Zoom Diagram
