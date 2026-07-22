@@ -38,7 +38,7 @@
 <h4 class="text-lg font-bold text-white border-b border-slate-850 pb-2 mt-8 mb-4 flex items-center gap-2">
     <span class="text-cyan-400">⚡</span> Exercise 1: Shattering the Grid & Anchoring Reality (ICs and BCs)
 </h4>
-<p class="text-sm text-slate-300 leading-relaxed">*Learning Objective: Understanding continuous domain formulation and the conceptual necessity of Initial and Boundary Conditions. Replacing rigid FDM meshes with random collocation points in JAX.*</p>
+<p class="italic text-sm text-slate-300 leading-relaxed">Learning Objective: Understanding continuous domain formulation and the conceptual necessity of Initial and Boundary Conditions. Replacing rigid FDM meshes with random collocation points in JAX.</p>
 <p class="text-sm text-slate-300 leading-relaxed">A mathematical PDE like the Heat Equation is merely a rule of evolution. It tells us how heat diffuses, but mathematically, it has an infinite number of possible valid solutions. To collapse these infinite possibilities into our specific physical reality, we must anchor the mathematical fabric using two fundamental constraints:</p>
 <ul class="list-disc pl-6 text-sm text-slate-350 space-y-2">
     <li class="leading-relaxed"><strong class="text-white">The Initial Condition (IC) –</strong> <strong class="text-white">*The Genesis State</strong><strong class="text-white">*:</strong> This is the exact snapshot of the system at time  \(t=0\) . It is the seed from which the timeline grows. Without an IC, the network knows the rules of physics, but doesn't know *how* our specific simulation started.</li>
@@ -62,7 +62,7 @@
 <h4 class="text-lg font-bold text-white border-b border-slate-850 pb-2 mt-8 mb-4 flex items-center gap-2">
     <span class="text-cyan-400">⚡</span> Exercise 2: Agentic Weaving (The Neural Surrogate in Flax)
 </h4>
-<p class="text-sm text-slate-300 leading-relaxed">*Learning Objective: Delegating complex JAX/Flax architecture creation to a Multi-Agent system.*</p>
+<p class="italic text-sm text-slate-300 leading-relaxed">Learning Objective: Delegating complex JAX/Flax architecture creation to a Multi-Agent system.</p>
 <p class="text-sm text-slate-300 leading-relaxed">You are the Architect. You design the system; the Agent writes the code. A standard network outputs discrete labels, but we need a continuous field.</p>
 <ul class="list-disc pl-6 text-sm text-slate-350 space-y-2">
     <li class="leading-relaxed"><strong class="text-white">Summon Observer-Prime:</strong> Launch your <strong class="text-white">ADE Antigravity</strong> interface or open the <strong class="text-white">Gemini CLI</strong> in Plan Mode. Load your agent profile, *Observer-Prime*.</li>
@@ -77,7 +77,7 @@
 <h4 class="text-lg font-bold text-white border-b border-slate-850 pb-2 mt-8 mb-4 flex items-center gap-2">
     <span class="text-cyan-400">⚡</span> Exercise 3: The Differentiable Fabric (jax.grad & The Physics Loss)
 </h4>
-<p class="text-sm text-slate-300 leading-relaxed">*Learning Objective: Utilizing Automatic Differentiation to embed the 1D Heat Equation directly into the neural network's loss landscape.*</p>
+<p class="italic text-sm text-slate-300 leading-relaxed">Learning Objective: Utilizing Automatic Differentiation to embed the 1D Heat Equation directly into the neural network's loss landscape.</p>
 <p class="text-sm text-slate-300 leading-relaxed">The 1D Heat Equation is defined as:</p>
 <p class="text-sm text-slate-300 leading-relaxed">\(\frac{\partial u}{\partial t} - \alpha \frac{\partial^2 u}{\partial x^2} = 0\)</p>
 <p class="text-sm text-slate-300 leading-relaxed">Instead of estimating finite differences, we will use JAX's exact analytical derivatives.</p>
@@ -91,7 +91,7 @@
 <h4 class="text-lg font-bold text-white border-b border-slate-850 pb-2 mt-8 mb-4 flex items-center gap-2">
     <span class="text-cyan-400">⚡</span> Exercise 4: Silicon Ignition & The Interactive 3D Projection
 </h4>
-<p class="text-sm text-slate-300 leading-relaxed">*Learning Objective: Compiling the PINN on hardware accelerators and visualizing the continuous spacetime physics tensor as an interactive 3D surface.*</p>
+<p class="italic text-sm text-slate-300 leading-relaxed">Learning Objective: Compiling the PINN on hardware accelerators and visualizing the continuous spacetime physics tensor as an interactive 3D surface.</p>
 <ol class="list-decimal pl-6 text-sm text-slate-300 space-y-3">
     <li class="leading-relaxed"><strong class="text-white">Cloud Ignition:</strong> Open Google Colab (using a GPU/TPU runtime). Pull your repository and use uv pip install to instantly resolve dependencies. Initialize an optax.adam optimizer. Wrap your training step in @jax.jit and train your PINN for 5,000 to 10,000 epochs. Watch the loss drop as the XLA compiler fuses the autodiff graphs and forces the weights to align with the laws of thermodynamics\!</li>
     <li class="leading-relaxed"><strong class="text-white">Visualizing the Fabric in 3D:</strong> Because your network is a continuous mathematical function, you can query it anywhere without a mesh. Generate a high-resolution 2D meshgrid of  \((x, t)\)  points and pass them through the trained model to get the predicted temperature  \(u\) .</li>
@@ -106,7 +106,7 @@
 <h4 class="text-lg font-bold text-white border-b border-slate-850 pb-2 mt-8 mb-4 flex items-center gap-2">
     <span class="text-cyan-400">⚡</span> Exercise 5: The Operator Horizon (Fourier Neural Operators)
 </h4>
-<p class="text-sm text-slate-300 leading-relaxed">*Learning Objective: Conceptualizing the leap from single-instance PINNs to family-solving Neural Operators.*</p>
+<p class="italic text-sm text-slate-300 leading-relaxed">Learning Objective: Conceptualizing the leap from single-instance PINNs to family-solving Neural Operators.</p>
 <ol class="list-decimal pl-6 text-sm text-slate-300 space-y-3">
     <li class="leading-relaxed">
     <strong class="text-white">The FNO Endgame:</strong> Your trained PINN is a masterpiece, but it has a critical flaw: it only knows how to solve the heat equation for the exact initial condition  \(u_{true}(x, 0) = -\sin(\pi x)\) . If the factory changes the starting temperature to a square wave, you must retrain the network from scratch. Return to your ADE and prompt Observer-Prime:

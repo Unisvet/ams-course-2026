@@ -35,7 +35,7 @@
 <h4 class="text-lg font-bold text-white border-b border-slate-850 pb-2 mt-8 mb-4 flex items-center gap-2">
     <span class="text-cyan-400">⚡</span> Exercise 1: The Legacy Chokehold (Sequential Simulation)
 </h4>
-<p class="text-sm text-slate-300 leading-relaxed">*Learning Objective: Establishing a computational baseline and experiencing the limits of standard Python arrays and loops.*</p>
+<p class="italic text-sm text-slate-300 leading-relaxed">Learning Objective: Establishing a computational baseline and experiencing the limits of standard Python arrays and loops.</p>
 <p class="text-sm text-slate-300 leading-relaxed">To appreciate the speed of light, you must first experience the friction of the old world. We will simulate a massive kinetic energy harvester array consisting of <strong class="text-white">100,000 independent damped harmonic oscillators</strong> (pendulums), each with a slightly different natural frequency.</p>
 <ol class="list-decimal pl-6 text-sm text-slate-300 space-y-3">
     <li class="leading-relaxed"><strong class="text-white">The Sequential Swarm:</strong> In your local uv environment, create src/legacy_swarm.py. Using standard numpy, write a pure Python function to simulate the 100,000 pendulums using a basic explicit Euler integration step over 1,000 discrete time steps.</li>
@@ -51,7 +51,7 @@
 <h4 class="text-lg font-bold text-white border-b border-slate-850 pb-2 mt-8 mb-4 flex items-center gap-2">
     <span class="text-cyan-400">⚡</span> Exercise 2: The Tensor Multiverse (vmap & jit)
 </h4>
-<p class="text-sm text-slate-300 leading-relaxed">*Learning Objective: Translating code to JAX, shattering loops with vectorization, and eliminating Python overhead via XLA compilation.*</p>
+<p class="italic text-sm text-slate-300 leading-relaxed">Learning Objective: Translating code to JAX, shattering loops with vectorization, and eliminating Python overhead via XLA compilation.</p>
 <p class="text-sm text-slate-300 leading-relaxed">It is time to unleash the hardware accelerators. Open Google Colab (using a GPU or TPU runtime), pull your repository, and inject uv to instantly install your dependencies.</p>
 <ol class="list-decimal pl-6 text-sm text-slate-300 space-y-3">
     <li class="leading-relaxed"><strong class="text-white">Functional Purity:</strong> Create src/jax_swarm.py. JAX requires "pure functions" (no side-effects, no hidden state). Import jax and jax.numpy as jnp. Write a pure mathematical function oscillator_step(x, v, w) that calculates the new state for a *single* oscillator for exactly 1 time step.</li>
@@ -63,7 +63,7 @@
 <h4 class="text-lg font-bold text-white border-b border-slate-850 pb-2 mt-8 mb-4 flex items-center gap-2">
     <span class="text-cyan-400">⚡</span> Exercise 3: Time Travel via Gradients (grad)
 </h4>
-<p class="text-sm text-slate-300 leading-relaxed">*Learning Objective: Understanding Automatic Differentiation. The simulation is no longer a black box; it is a differentiable mathematical graph.*</p>
+<p class="italic text-sm text-slate-300 leading-relaxed">Learning Objective: Understanding Automatic Differentiation. The simulation is no longer a black box; it is a differentiable mathematical graph.</p>
 <p class="text-sm text-slate-300 leading-relaxed">In classical engineering, optimizing parameters (like finding the perfect initial velocity for a projectile to hit a target) requires running a simulation thousands of times using trial-and-error or numerical solvers. In the *Neo-Simulacrum*, the simulation mathematically guides you to the optimal answer automatically.</p>
 <ol class="list-decimal pl-6 text-sm text-slate-300 space-y-3">
     <li class="leading-relaxed"><strong class="text-white">The Differentiable Target:</strong> Write a simple pure JAX function projectile_loss(v_initial) that simulates the final distance of a thrown object after 5 seconds of flight. The function must return the Mean Squared Error (MSE) between the simulated distance and a strict target distance of exactly <strong class="text-white">150.0 meters</strong>.</li>
@@ -74,7 +74,7 @@
 <h4 class="text-lg font-bold text-white border-b border-slate-850 pb-2 mt-8 mb-4 flex items-center gap-2">
     <span class="text-cyan-400">⚡</span> Exercise 4: Agentic Refactoring for the Horizon (Flax)
 </h4>
-<p class="text-sm text-slate-300 leading-relaxed">*Learning Objective: Using an AI Agent to migrate stateful Object-Oriented architectures (Keras) into pure functional, stateless modules (Flax).*</p>
+<p class="italic text-sm text-slate-300 leading-relaxed">Learning Objective: Using an AI Agent to migrate stateful Object-Oriented architectures (Keras) into pure functional, stateless modules (Flax).</p>
 <p class="text-sm text-slate-300 leading-relaxed">In Week 3 with Keras 3, model weights were stored *inside* the model object itself (model.weights). JAX strictly forbids this hidden state. Therefore, Google developed <strong class="text-white">Flax</strong>, a neural network library designed natively for JAX that mathematically separates the architecture from the weights.</p>
 <ol class="list-decimal pl-6 text-sm text-slate-300 space-y-3">
     <li class="leading-relaxed"><strong class="text-white">Summon Observer-Prime:</strong> Launch your Antigravity ADE or open the Gemini CLI.</li>

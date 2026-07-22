@@ -47,9 +47,7 @@
     <h4 class="text-lg font-bold text-white border-b border-slate-850 pb-2 mt-8 mb-4 flex items-center gap-2">
         <span class="text-cyan-400">⚡</span> Exercise 1: Initializing the Local Sentinel (Gemma 4 Edge)
     </h4>
-    <p class="text-sm text-slate-300 leading-relaxed font-sans font-medium italic">
-        *Learning Objective: Sourcing and locally executing Open-Weights models for edge computing.*
-    </p>
+    <p class="text-sm text-slate-300 leading-relaxed font-sans font-medium italic">Learning Objective: Sourcing and locally executing Open-Weights models for edge computing.</p>
     <p class="text-sm text-slate-300 leading-relaxed font-sans">
         We are using the highly efficient <strong>Gemma 4 E2B-IT</strong> variant. Despite its compact size (2.3 billion effective parameters), this model demonstrates excellent logical reasoning capabilities thanks to the novel Per-Layer Embeddings (PLE) architecture.
     </p>
@@ -83,9 +81,7 @@ KAGGLE_KEY="your_api_key"</code></pre>
     <h4 class="text-lg font-bold text-white border-b border-slate-850 pb-2 mt-8 mb-4 flex items-center gap-2">
         <span class="text-cyan-400">⚡</span> Exercise 2: Activating the Cognitive Core (Native Thought Mode)
     </h4>
-    <p class="text-sm text-slate-300 leading-relaxed font-sans font-medium italic">
-        *Learning Objective: Programmatic evaluation of the model's thought process via token isolation and RegEx.*
-    </p>
+    <p class="text-sm text-slate-300 leading-relaxed font-sans font-medium italic">Learning Objective: Programmatic evaluation of the model's thought process via token isolation and RegEx.</p>
     <p class="text-sm text-slate-300 leading-relaxed font-sans">
         The thought process is natively initiated by placing the <code class="text-cyan-400 font-mono bg-slate-900/60 px-1.5 py-0.5 rounded text-xs">&lt;|think|&gt;</code> token at the very beginning of the system message. The model outputs its logical chain of thought between the <code class="text-cyan-400 font-mono bg-slate-900/60 px-1.5 py-0.5 rounded text-xs">&lt;|channel&gt;thought\n</code> and <code class="text-cyan-400 font-mono bg-slate-900/60 px-1.5 py-0.5 rounded text-xs">&lt;channel|&gt;</code> separators.
     </p>
@@ -113,9 +109,7 @@ KAGGLE_KEY="your_api_key"</code></pre>
     <h4 class="text-lg font-bold text-white border-b border-slate-850 pb-2 mt-8 mb-4 flex items-center gap-2">
         <span class="text-cyan-400">⚡</span> Exercise 3: The Discrete Queue Simulation (Foundry)
     </h4>
-    <p class="text-sm text-slate-300 leading-relaxed font-sans font-medium italic">
-        *Learning Objective: Stochastic simulation of discrete events.*
-    </p>
+    <p class="text-sm text-slate-300 leading-relaxed font-sans font-medium italic">Learning Objective: Stochastic simulation of discrete events.</p>
     <p class="text-sm text-slate-300 leading-relaxed font-sans font-sans">
         Parts arrive, wait in a buffer, and are processed by a machine. We simulate this behavior stochastically. Arrival times follow a Poisson process with rate \(\lambda\) (Arrival Rate), while processing times at the station follow a stochastic distribution with rate \(\mu\) (Service Rate).
     </p>
@@ -146,9 +140,7 @@ KAGGLE_KEY="your_api_key"</code></pre>
     <h4 class="text-lg font-bold text-white border-b border-slate-850 pb-2 mt-8 mb-4 flex items-center gap-2">
         <span class="text-cyan-400">⚡</span> Exercise 4: Closed-Loop Control with a Cognitive Entity
     </h4>
-    <p class="text-sm text-slate-300 leading-relaxed font-sans font-medium italic">
-        *Learning Objective: Building an autonomous feedback loop where AI agents dynamically regulate physical variables.*
-    </p>
+    <p class="text-sm text-slate-300 leading-relaxed font-sans font-medium italic">Learning Objective: Building an autonomous feedback loop where AI agents dynamically regulate physical variables.</p>
     <p class="text-sm text-slate-300 leading-relaxed font-sans">
         The telemetry data is passed to the local Sentinel. It analyzes the situation offline within its thought channel, makes a cognitive decision, and dictates a new value for the service rate, which is immediately fed back into the simulation.
     </p>
@@ -179,9 +171,7 @@ KAGGLE_KEY="your_api_key"</code></pre>
     <h4 class="text-lg font-bold text-white border-b border-slate-850 pb-2 mt-8 mb-4 flex items-center gap-2">
         <span class="text-cyan-400">⚡</span> Exercise 5: Cloud-Assisted Fine-Tuning via Colab CLI
     </h4>
-    <p class="text-sm text-slate-300 leading-relaxed font-sans font-medium italic">
-        *Learning Objective: Using the Google Colab CLI to seamlessly offload compute-intensive fine-tuning jobs from the local edge workflow.*
-    </p>
+    <p class="text-sm text-slate-300 leading-relaxed font-sans font-medium italic">Learning Objective: Using the Google Colab CLI to seamlessly offload compute-intensive fine-tuning jobs from the local edge workflow.</p>
     <p class="text-sm text-slate-300 leading-relaxed font-sans font-sans">
         To offload data- and compute-intensive model training without interrupting the local terminal workflow, we utilize the new <strong>Google Colab CLI</strong> (<code class="text-cyan-400 font-mono bg-slate-900/60 px-1.5 py-0.5 rounded text-xs">google-colab-cli</code>). It allows us to provision remote GPUs in Google data centers, execute scripts, and download the training results (LoRA adapters) directly back into our local workspace using a single command sequence.
     </p>
@@ -210,9 +200,7 @@ KAGGLE_KEY="your_api_key"</code></pre>
     <h4 class="text-lg font-bold text-white border-b border-slate-850 pb-2 mt-8 mb-4 flex items-center gap-2">
         <span class="text-cyan-400">⚡</span> Exercise 6: Context Injection (Local RAG for SOPs)
     </h4>
-    <p class="text-sm text-slate-300 leading-relaxed font-sans font-medium italic">
-        *Learning Objective: Offline Retrieval-Augmented Generation (RAG) to inject local Standard Operating Procedures (SOPs).*
-    </p>
+    <p class="text-sm text-slate-300 leading-relaxed font-sans font-medium italic">Learning Objective: Offline Retrieval-Augmented Generation (RAG) to inject local Standard Operating Procedures (SOPs).</p>
     <p class="text-sm text-slate-300 leading-relaxed font-sans">
         The Sentinel must consult specific machine guidelines (Standard Operating Procedures, SOPs). In this exercise, you will implement an offline-capable RAG system that extracts the appropriate regulatory guideline from a local document index based on the current queue length.
     </p>
