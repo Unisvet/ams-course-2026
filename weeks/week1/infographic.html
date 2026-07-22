@@ -483,7 +483,7 @@
         }
 
         // ==========================================
-        // TAB 1: SOLVER & STABILITÃ„T (JS ENGINE)
+        // TAB 1: SOLVER & STABILITÄT (JS ENGINE)
         // ==========================================
         let rk4Data = [];
         let eulerData = [];
@@ -561,7 +561,7 @@
             // Update stability ratio label
             const stabilityIndicator = document.getElementById('cfl-ratio-indicator');
             const ratio = 0.2 * dt; // R * dt
-            stabilityIndicator.innerText = `StabilitÃ¤tsparameter R * dt = ${ratio.toFixed(2)} (Limit: 2.0)`;
+            stabilityIndicator.innerText = `Stabilitätsparameter R * dt = ${ratio.toFixed(2)} (Limit: 2.0)`;
             if (ratio >= 2.0) {
                 stabilityIndicator.className = "text-rose-400 font-bold font-mono text-[10px]";
             } else {
@@ -712,12 +712,12 @@
             if (mode === 'physical') {
                 physBtn.className = "px-3 py-2 rounded-xl text-xs font-bold font-mono bg-cyan-500/10 border border-cyan-500/35 text-cyan-400 flex items-center justify-center gap-1.5";
                 dimBtn.className = "px-3 py-2 rounded-xl text-xs font-bold font-mono bg-slate-900 border border-slate-800 text-slate-400 flex items-center justify-center gap-1.5";
-                explanation.innerText = "In **physikalischen Koordinaten** verzerrt sich die Bahnkurve ellipsenfÃ¶rmig je nach Frequenz \\(\\omega\\). Wechsle zu **dimensionslosen Koordinaten** (\\(\\tau = \\omega t\\)), um alle Frequenzen auf einen universellen Kreis zu komprimieren.";
+                explanation.innerText = "In **physikalischen Koordinaten** verzerrt sich die Bahnkurve ellipsenförmig je nach Frequenz \\(\\omega\\). Wechsle zu **dimensionslosen Koordinaten** (\\(\\tau = \\omega t\\)), um alle Frequenzen auf einen universellen Kreis zu komprimieren.";
                 coordLabel.innerText = "Ortskoordinate x";
             } else {
                 dimBtn.className = "px-3 py-2 rounded-xl text-xs font-bold font-mono bg-purple-500/10 border border-purple-500/35 text-purple-400 flex items-center justify-center gap-1.5";
                 physBtn.className = "px-3 py-2 rounded-xl text-xs font-bold font-mono bg-slate-900 border border-slate-800 text-slate-400 flex items-center justify-center gap-1.5";
-                explanation.innerText = "In **dimensionslosen Koordinaten** (\\(X_{dim} = \\omega x\\)) wird die Frequenz absorbiert. Der Orbit wird fÃ¼r jede Frequenz und PendellÃ¤nge ein perfekter Kreis! Das erleichtert KI-Modellen das Lernen der StrÃ¶mung.";
+                explanation.innerText = "In **dimensionslosen Koordinaten** (\\(X_{dim} = \\omega x\\)) wird die Frequenz absorbiert. Der Orbit wird für jede Frequenz und Pendellänge ein perfekter Kreis! Das erleichtert KI-Modellen das Lernen der Strömung.";
                 coordLabel.innerText = "Dimensionsloser Ort X_dim";
             }
             initPendulumSimulation();
@@ -853,30 +853,30 @@
         // ==========================================
         const agentSteps = [
             {
-                prompt: "antigravity-cli \"Optimiere die FadenlÃ¤nge L fÃ¼r ein Pendel mit einer Periode T = 2.5 Sekunden.\"",
+                prompt: "antigravity-cli \"Optimiere die Fadenlänge L für ein Pendel mit einer Periode T = 2.5 Sekunden.\"",
                 output: [
-                    "&gt; Layer 2 (Cognitive Layer): Berechne theoretische FadenlÃ¤nge L_approx.",
+                    "&gt; Layer 2 (Cognitive Layer): Berechne theoretische Fadenlänge L_approx.",
                     "  Formel: T = 2*pi*sqrt(L/g)  =&gt;  L = g * (T/(2*pi))^2",
-                    "  SchÃ¤tzung (g=9.81m/sÂ²): L = 9.81 * (2.5 / 6.283)Â² â‰ˆ 1.552m.",
-                    "&gt; Layer 2: Starte deterministische Engine (Layer 1) mit L = 1.552m zur exakten PrÃ¼fung..."
+                    "  Schätzung (g=9.81m/s²): L = 9.81 * (2.5 / 6.283)² ≈ 1.552m.",
+                    "&gt; Layer 2: Starte deterministische Engine (Layer 1) mit L = 1.552m zur exakten Prüfung..."
                 ],
-                badge: "Schritt 1/4: SchÃ¤tzung"
+                badge: "Schritt 1/4: Schätzung"
             },
             {
                 prompt: "uv run src/pendulum_sim.py --length 1.552",
                 output: [
-                    "&gt; Layer 1 (Deterministic Physics Engine): LÃ¶se Pendel-ODE mit Luftreibung...",
+                    "&gt; Layer 1 (Deterministic Physics Engine): Löse Pendel-ODE mit Luftreibung...",
                     "  Simuliere 10 Schwingungszyklen...",
                     "  Gefundene Periode T_sim = 2.493 Sekunden.",
-                    "&gt; Layer 2: Abweichung erkannt! T_sim (2.493s) < Ziel (2.500s) wegen DÃ¤mpfung.",
-                    "  Gegensteuerung: ErhÃ¶he die LÃ¤nge leicht auf L = 1.565m."
+                    "&gt; Layer 2: Abweichung erkannt! T_sim (2.493s) < Ziel (2.500s) wegen Dämpfung.",
+                    "  Gegensteuerung: Erhöhe die Länge leicht auf L = 1.565m."
                 ],
                 badge: "Schritt 2/4: Simulation 1"
             },
             {
                 prompt: "uv run src/pendulum_sim.py --length 1.565",
                 output: [
-                    "&gt; Layer 1 (Deterministic Physics Engine): Simuliere ODE erneut fÃ¼r L = 1.565m...",
+                    "&gt; Layer 1 (Deterministic Physics Engine): Simuliere ODE erneut für L = 1.565m...",
                     "  Gefundene Periode T_sim = 2.504 Sekunden.",
                     "&gt; Layer 2: Interpoliere zwischen Messpunkten:",
                     "  L_neu = 1.552 + (2.5 - 2.493) * (1.565 - 1.552) / (2.504 - 2.493) = 1.560m.",
@@ -887,11 +887,11 @@
             {
                 prompt: "uv run src/pendulum_sim.py --length 1.560",
                 output: [
-                    "&gt; Layer 1 (Deterministic Physics Engine): Simuliere ODE fÃ¼r L = 1.560m...",
+                    "&gt; Layer 1 (Deterministic Physics Engine): Simuliere ODE für L = 1.560m...",
                     "  Gefundene Periode T_sim = 2.500 Sekunden. Ziel erreicht!",
                     "&gt; Layer 2 (Cognitive Layer): Optimierung abgeschlossen. Schreibe Bericht...",
                     "  Datei docs/Agent_Report.md erfolgreich angelegt.",
-                    "&gt; ðŸŸ¢ PROZESS ERFOLGREICH BEENDET."
+                    "&gt; 🟢 PROZESS ERFOLGREICH BEENDET."
                 ],
                 badge: "Schritt 4/4: Fertigstellung"
             }
@@ -904,7 +904,7 @@
             const runBtn = document.getElementById('btn-run-agent');
             
             runBtn.disabled = true;
-            runBtn.innerText = "Loop lÃ¤uft...";
+            runBtn.innerText = "Loop läuft...";
             currentAgentStep = 0;
             term.innerHTML = '<div class="text-slate-500">&gt; Initialisiere Agenten-Session...</div>';
             
@@ -939,7 +939,7 @@
                 step.output.forEach((line, idx) => {
                     setTimeout(() => {
                         const outLine = document.createElement('div');
-                        if (line.startsWith('&gt; Layer 2') || line.startsWith('&gt; ðŸŸ¢')) {
+                        if (line.startsWith('&gt; Layer 2') || line.startsWith('&gt; 🟢')) {
                             outLine.className = 'text-purple-400 font-bold';
                         } else if (line.startsWith('&gt; Layer 1')) {
                             outLine.className = 'text-emerald-400 font-bold';
