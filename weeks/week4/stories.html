@@ -2,11 +2,11 @@
     <div class="overlay"></div>
 
     <!-- Floating Chips/Stars -->
-    <div class="floating-chip" style="top: 25%; left: 20%; animation-delay: 0s;" onclick="openStory('challenger')">
+    <div class="floating-chip" style="top: 25%; left: 20%; animation-delay: 0s;" onclick="openStory('calculus')">
         <div class="chip-icon">
-            <span class="star-symbol">⚡</span>
+            <span class="star-symbol">📐</span>
         </div>
-        <div class="chip-label">CHALLENGER DEBUG</div>
+        <div class="chip-label">CALCULUS ORIGINS</div>
     </div>
 
     <div class="floating-chip" style="top: 45%; right: 25%; animation-delay: -2s;" onclick="openStory('nanotech')">
@@ -25,18 +25,18 @@
 
     <!-- Hero Text (Non-clickable) -->
     <div class="absolute bottom-12 left-12 max-w-lg space-y-2 pointer-events-none z-20">
-        <h2 class="text-3xl font-black text-white leading-tight">Richard Feynman:<br><span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-500">The Silicon Prophet</span></h2>
+        <h2 class="text-3xl font-black text-white leading-tight">Newton, Leibniz & Feynman:<br><span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-500">Pioniere der Differenzierung</span></h2>
         <p class="text-slate-300 text-xs leading-relaxed font-medium backdrop-blur-sm bg-slate-950/40 p-3 rounded-xl border border-white/5">
-            "Was ich nicht erschaffen kann, verstehe ich nicht." Entdecke die physikalische Simulation auf atomarer Ebene.
+            Von der Erfindung der Infinitesimalrechnung bis zur differenzierbaren Simulation auf Quantenebene mit JAX & Flax.
         </p>
     </div>
 
     <!-- Modals -->
-    <div id="modal-challenger" class="story-modal-w4">
+    <div id="modal-calculus" class="story-modal-w4">
         <button class="modal-close" onclick="closeStory()">×</button>
-        <h3 class="story-title">Die Challenger-Katastrophe</h3>
+        <h3 class="story-title">Leibniz & Newton: Die Stunde Null der Differenzierung</h3>
         <div class="story-text">
-            <p>Als die Raumfähre Challenger 1986 explodierte, war Richard Feynman Teil der Untersuchungskommission. Während andere sich in Bergen von Dokumenten verloren, demonstrierte Feynman die Ursache – das Versagen der O-Ringe bei Kälte – einfach mit einem Glas Eiswasser vor laufenden Kameras. Seine Botschaft war klar: Komplexe Simulationen sind wertlos, wenn wir die zugrunde liegende Physik nicht intuitiv verstehen. JAX erlaubt uns heute, diese physikalische Intuition direkt in differenzierbaren Code zu gießen.</p>
+            <p>Im 17. Jahrhundert entfesselten Isaac Newton (Fluxionen) und Gottfried Wilhelm Leibniz (Differenziale dy/dx und die Kettenregel) unabhängig voneinander die Infinitesimalrechnung. Was als bittere mathematische Prioritätsfehde begann, bildet heute das Herzstück der modernen Künstlichen Intelligenz: JAX Autodiff (`jax.grad`) basiert direkt auf Leibniz' Kettenregel. Durch automatisches Differenzieren berechnen wir heute exakte Gradienten durch Millionen von Parametern in Maschinengeschwindigkeit.</p>
         </div>
     </div>
 

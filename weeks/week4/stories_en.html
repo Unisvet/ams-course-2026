@@ -2,11 +2,11 @@
     <div class="overlay"></div>
 
     <!-- Floating Chips/Stars -->
-    <div class="floating-chip" style="top: 25%; left: 20%; animation-delay: 0s;" onclick="openStory('challenger')">
+    <div class="floating-chip" style="top: 25%; left: 20%; animation-delay: 0s;" onclick="openStory('calculus')">
         <div class="chip-icon">
-            <span class="star-symbol">⚡</span>
+            <span class="star-symbol">📐</span>
         </div>
-        <div class="chip-label">CHALLENGER DEBUG</div>
+        <div class="chip-label">CALCULUS ORIGINS</div>
     </div>
 
     <div class="floating-chip" style="top: 45%; right: 25%; animation-delay: -2s;" onclick="openStory('nanotech')">
@@ -25,18 +25,18 @@
 
     <!-- Hero Text (Non-clickable) -->
     <div class="absolute bottom-12 left-12 max-w-lg space-y-2 pointer-events-none z-20">
-        <h2 class="text-3xl font-black text-white leading-tight">Richard Feynman:<br><span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-500">The Silicon Prophet</span></h2>
+        <h2 class="text-3xl font-black text-white leading-tight">Newton, Leibniz & Feynman:<br><span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-500">Pioneers of Differentiation</span></h2>
         <p class="text-slate-300 text-xs leading-relaxed font-medium backdrop-blur-sm bg-slate-950/40 p-3 rounded-xl border border-white/5">
-            "What I cannot create, I do not understand." Explore the stories of physical simulation at the atomic level.
+            From the invention of infinitesimal calculus to differentiable quantum simulation with JAX & Flax.
         </p>
     </div>
 
     <!-- Modals -->
-    <div id="modal-challenger" class="story-modal-w4">
+    <div id="modal-calculus" class="story-modal-w4">
         <button class="modal-close" onclick="closeStory()">×</button>
-        <h3 class="story-title">The Challenger Disaster</h3>
+        <h3 class="story-title">Leibniz & Newton: The Dawn of Differentiation</h3>
         <div class="story-text">
-            <p>When the space shuttle Challenger exploded in 1986, Richard Feynman was part of the investigative commission. While others got lost in mountains of documents, Feynman demonstrated the cause—the failure of the O-rings in cold weather—simply with a glass of ice water in front of rolling cameras. His message was clear: Complex simulations are worthless if we do not intuitively understand the underlying physics. JAX allows us today to pour this physical intuition directly into differentiable code.</p>
+            <p>In the 17th century, Sir Isaac Newton (fluxions) and Gottfried Wilhelm Leibniz (differentials dy/dx and the chain rule) independently invented calculus. What started as a bitter priority dispute is now the engine of modern AI: JAX Autodiff (`jax.grad`) relies directly on Leibniz's chain rule. Through automatic differentiation, we compute exact gradients across millions of parameters at machine speed.</p>
         </div>
     </div>
 
