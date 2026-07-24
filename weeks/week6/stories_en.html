@@ -7,8 +7,18 @@
 
     <!-- Floating Interactive Elements -->
     <div class="absolute inset-0 z-10">
-        <!-- Story 1: Ulam -->
-        <div class="absolute top-[25%] left-[20%] group cursor-pointer" onclick="window.openStory('ulam')">
+        <!-- Story 1: Pascal -->
+        <div class="absolute top-[18%] left-[12%] group cursor-pointer" onclick="window.openStory('pascal')">
+            <div class="w-16 h-16 bg-amber-500/20 backdrop-blur-md border-2 border-amber-400 rounded-full flex items-center justify-center text-3xl shadow-[0_0_20px_rgba(245,158,11,0.5)] group-hover:scale-110 transition-all duration-300 animate-pulse">
+                ⚖️
+            </div>
+            <div class="mt-2 bg-slate-900/80 backdrop-blur-sm px-3 py-1 rounded-lg border border-amber-500/30 opacity-0 group-hover:opacity-100 transition-opacity">
+                <p class="text-amber-400 text-xs font-bold font-mono">Blaise Pascal</p>
+            </div>
+        </div>
+
+        <!-- Story 2: Ulam -->
+        <div class="absolute top-[18%] left-[45%] group cursor-pointer" onclick="window.openStory('ulam')">
             <div class="w-16 h-16 bg-yellow-500/20 backdrop-blur-md border-2 border-yellow-400 rounded-full flex items-center justify-center text-3xl shadow-[0_0_20px_rgba(234,179,8,0.5)] group-hover:scale-110 transition-all duration-300 animate-bounce">
                 🎲
             </div>
@@ -17,8 +27,18 @@
             </div>
         </div>
 
-        <!-- Story 2: Markov -->
-        <div class="absolute bottom-[30%] left-[15%] group cursor-pointer" onclick="window.openStory('markov')">
+        <!-- Story 3: Boltzmann -->
+        <div class="absolute top-[20%] right-[12%] group cursor-pointer" onclick="window.openStory('boltzmann')">
+            <div class="w-16 h-16 bg-red-500/20 backdrop-blur-md border-2 border-red-400 rounded-full flex items-center justify-center text-3xl shadow-[0_0_20px_rgba(239,68,68,0.5)] group-hover:scale-110 transition-all duration-300 animate-pulse">
+                🔥
+            </div>
+            <div class="mt-2 bg-slate-900/80 backdrop-blur-sm px-3 py-1 rounded-lg border border-red-500/30 opacity-0 group-hover:opacity-100 transition-opacity">
+                <p class="text-red-400 text-xs font-bold font-mono">Ludwig Boltzmann</p>
+            </div>
+        </div>
+
+        <!-- Story 4: Markov -->
+        <div class="absolute bottom-[22%] left-[12%] group cursor-pointer" onclick="window.openStory('markov')">
             <div class="w-16 h-16 bg-cyan-500/20 backdrop-blur-md border-2 border-cyan-400 rounded-full flex items-center justify-center text-3xl shadow-[0_0_20px_rgba(6,182,212,0.5)] group-hover:scale-110 transition-all duration-300 animate-pulse">
                 ⛓️
             </div>
@@ -27,8 +47,8 @@
             </div>
         </div>
 
-        <!-- Story 3: Black Swan -->
-        <div class="absolute top-[35%] right-[15%] group cursor-pointer" onclick="window.openStory('swan')">
+        <!-- Story 5: Black Swan -->
+        <div class="absolute bottom-[22%] left-[45%] group cursor-pointer" onclick="window.openStory('swan')">
             <div class="w-16 h-16 bg-purple-500/20 backdrop-blur-md border-2 border-purple-400 rounded-full flex items-center justify-center text-3xl shadow-[0_0_20px_rgba(139,92,246,0.5)] group-hover:scale-110 transition-all duration-300 animate-bounce" style="animation-delay: 0.5s;">
                 🦢
             </div>
@@ -37,8 +57,8 @@
             </div>
         </div>
 
-        <!-- Story 4: JAX Keys -->
-        <div class="absolute bottom-[20%] right-[30%] group cursor-pointer" onclick="window.openStory('jax')">
+        <!-- Story 6: JAX Keys -->
+        <div class="absolute bottom-[22%] right-[12%] group cursor-pointer" onclick="window.openStory('jax')">
             <div class="w-16 h-16 bg-pink-500/20 backdrop-blur-md border-2 border-pink-400 rounded-full flex items-center justify-center text-3xl shadow-[0_0_20px_rgba(236,72,153,0.5)] group-hover:scale-110 transition-all duration-300 animate-spin" style="animation-duration: 8s;">
                 🔑
             </div>
@@ -58,6 +78,22 @@
             </button>
 
             <div class="p-8">
+                <div id="story-pascal" class="hidden space-y-4">
+                    <div class="flex items-center gap-4 border-b border-amber-500/30 pb-4">
+                        <span class="text-4xl">⚖️</span>
+                        <div>
+                            <h2 class="text-2xl font-black text-white font-outfit uppercase">Blaise Pascal</h2>
+                            <p class="text-amber-400 font-mono text-sm tracking-widest">The Gambler's Paradox & Expected Value</p>
+                        </div>
+                    </div>
+                    <p class="text-slate-300 leading-relaxed italic border-l-4 border-amber-500 pl-4 py-2 bg-amber-950/20">
+                        "The heart has its reasons of which reason knows nothing."
+                    </p>
+                    <p class="text-slate-300 leading-relaxed text-sm">
+                        In 1654, Chevalier de Méré presented Blaise Pascal with a famous gambling dilemma: How do you fairly divide the stakes of an unfinished dice game? Pascal corresponded with Pierre de Fermat, birthing modern probability theory and expected value. Pascal's Wager on God's existence became the first formal decision analysis under extreme uncertainty — laying the cornerstone for stochastic modeling!
+                    </p>
+                </div>
+
                 <div id="story-ulam" class="hidden space-y-4">
                     <div class="flex items-center gap-4 border-b border-yellow-500/30 pb-4">
                         <span class="text-4xl">🎲</span>
@@ -71,6 +107,22 @@
                     </p>
                     <p class="text-slate-300 leading-relaxed text-sm">
                         While lying in bed, Ulam invented the Monte Carlo method. He realized that complex mathematical problems can often be solved more easily experimentally through simulation than through pure formulas. Later, he used this technique to help calculate the hydrogen bomb. A casino visit by his uncle gave the whole thing its name.
+                    </p>
+                </div>
+
+                <div id="story-boltzmann" class="hidden space-y-4">
+                    <div class="flex items-center gap-4 border-b border-red-500/30 pb-4">
+                        <span class="text-4xl">🔥</span>
+                        <div>
+                            <h2 class="text-2xl font-black text-white font-outfit uppercase">Ludwig Boltzmann</h2>
+                            <p class="text-red-400 font-mono text-sm tracking-widest">Father of Statistical Mechanics</p>
+                        </div>
+                    </div>
+                    <p class="text-slate-300 leading-relaxed italic border-l-4 border-red-500 pl-4 py-2 bg-red-950/20">
+                        "Entropy is a measure of the craving for chaos." (S = k · log W)
+                    </p>
+                    <p class="text-slate-300 leading-relaxed text-sm">
+                        In the late 19th century, Boltzmann defied classical physics by demonstrating that heat and pressure are not continuous fluids, but the statistical aggregate of trillions of randomly colliding atoms. His Boltzmann distribution (P ∝ e<sup>-E/k<sub>B</sub>T</sup>) and entropy formula S = k log W form the core foundation of modern stochastic simulation — from Markov Chain Monte Carlo (MCMC) to sampling generative AI models!
                     </p>
                 </div>
 
@@ -89,7 +141,7 @@
 
                 <div id="story-swan" class="hidden space-y-4">
                     <div class="flex items-center gap-4 border-b border-purple-500/30 pb-4">
-                        <span class="text-4xl"> Swan</span>
+                        <span class="text-4xl">🦢</span>
                         <div>
                             <h2 class="text-2xl font-black text-white font-outfit uppercase">The Black Swan</h2>
                             <p class="text-purple-400 font-mono text-sm tracking-widest">The Unpredictable</p>
@@ -121,7 +173,7 @@
         window.openStory = function(id) {
             const modal = document.getElementById('story-modal');
             const content = document.getElementById('modal-content');
-            ['ulam', 'markov', 'swan', 'jax'].forEach(s => {
+            ['pascal', 'ulam', 'boltzmann', 'markov', 'swan', 'jax'].forEach(s => {
                 document.getElementById('story-' + s).classList.add('hidden');
             });
             document.getElementById('story-' + id).classList.remove('hidden');
