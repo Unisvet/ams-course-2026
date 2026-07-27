@@ -7,43 +7,43 @@
 
     <!-- Floating Interactive Elements -->
     <div class="absolute inset-0 z-10">
-        <!-- Story 1: Vaswani -->
-        <div class="absolute top-[20%] left-[15%] group cursor-pointer" onclick="window.openStory('vaswani')">
+        <!-- Story 1: Die Attention-Acht -->
+        <div class="absolute top-[20%] left-[15%] group cursor-pointer" onclick="window.openStory('attention8')">
             <div class="w-16 h-16 bg-gold-500/20 backdrop-blur-md border-2 border-yellow-400 rounded-full flex items-center justify-center text-3xl shadow-[0_0_20px_rgba(234,179,8,0.5)] group-hover:scale-110 transition-all duration-300 animate-pulse">
-                🧠
+                👥
             </div>
             <div class="mt-2 bg-slate-900/80 backdrop-blur-sm px-3 py-1 rounded-lg border border-yellow-500/30 opacity-0 group-hover:opacity-100 transition-opacity">
-                <p class="text-yellow-400 text-xs font-bold font-mono">Ashish Vaswani</p>
+                <p class="text-yellow-400 text-xs font-bold font-mono">Die Attention-Acht</p>
             </div>
         </div>
 
-        <!-- Story 2: Flash -->
-        <div class="absolute top-[40%] right-[20%] group cursor-pointer" onclick="window.openStory('flash')">
+        <!-- Story 2: Test-Time Compute -->
+        <div class="absolute top-[40%] right-[20%] group cursor-pointer" onclick="window.openStory('thinking')">
             <div class="w-16 h-16 bg-cyan-500/20 backdrop-blur-md border-2 border-cyan-400 rounded-full flex items-center justify-center text-3xl shadow-[0_0_20px_rgba(6,182,212,0.5)] group-hover:scale-110 transition-all duration-300 animate-bounce">
-                ⚡
+                🧠
             </div>
             <div class="mt-2 bg-slate-900/80 backdrop-blur-sm px-3 py-1 rounded-lg border border-cyan-500/30 opacity-0 group-hover:opacity-100 transition-opacity">
-                <p class="text-cyan-400 text-xs font-bold font-mono">Gemini 3.5 Flash</p>
+                <p class="text-cyan-400 text-xs font-bold font-mono">Test-Time Compute</p>
             </div>
         </div>
 
-        <!-- Story 3: Oracle -->
-        <div class="absolute bottom-[25%] left-[30%] group cursor-pointer" onclick="window.openStory('oracle')">
+        <!-- Story 3: Agenten & MCP -->
+        <div class="absolute bottom-[25%] left-[30%] group cursor-pointer" onclick="window.openStory('agents')">
             <div class="w-20 h-20 bg-purple-500/20 backdrop-blur-md border-2 border-purple-400 rounded-full flex items-center justify-center text-4xl shadow-[0_0_30px_rgba(139,92,246,0.6)] group-hover:scale-110 transition-all duration-300 animate-pulse">
-                🔮
+                🤖
             </div>
             <div class="mt-2 bg-slate-900/80 backdrop-blur-sm px-3 py-1 rounded-lg border border-purple-500/30 opacity-0 group-hover:opacity-100 transition-opacity text-center">
-                <p class="text-purple-400 text-xs font-bold font-mono">Frontier Reasoning</p>
+                <p class="text-purple-400 text-xs font-bold font-mono">Agenten & MCP</p>
             </div>
         </div>
 
-        <!-- Story 4: Constitutional -->
-        <div class="absolute top-[15%] right-[40%] group cursor-pointer" onclick="window.openStory('const')">
+        <!-- Story 4: Das Skalierungsgesetz -->
+        <div class="absolute top-[15%] right-[40%] group cursor-pointer" onclick="window.openStory('scaling')">
             <div class="w-14 h-14 bg-pink-500/20 backdrop-blur-md border-2 border-pink-400 rounded-full flex items-center justify-center text-2xl shadow-[0_0_15px_rgba(236,72,153,0.5)] group-hover:scale-110 transition-all duration-300 animate-spin" style="animation-duration: 10s;">
-                📜
+                🌌
             </div>
             <div class="mt-2 bg-slate-900/80 backdrop-blur-sm px-3 py-1 rounded-lg border border-pink-500/30 opacity-0 group-hover:opacity-100 transition-opacity">
-                <p class="text-pink-400 text-xs font-bold font-mono">KI-Alignment</p>
+                <p class="text-pink-400 text-xs font-bold font-mono">Skalierungsgesetz</p>
             </div>
         </div>
     </div>
@@ -58,55 +58,55 @@
             </button>
 
             <div class="p-8">
-                <div id="story-vaswani" class="hidden space-y-4">
+                <div id="story-attention8" class="hidden space-y-4">
                     <div class="flex items-center gap-4 border-b border-yellow-500/30 pb-4">
+                        <span class="text-4xl">👥</span>
+                        <div>
+                            <h2 class="text-2xl font-black text-white font-outfit uppercase">Die Attention-Acht</h2>
+                            <p class="text-yellow-400 font-mono text-sm tracking-widest">Das Kollektiv hinter dem Transformer</p>
+                        </div>
+                    </div>
+                    <p class="text-slate-300 leading-relaxed text-sm">
+                        Im Sommer 2017 veröffentlichte ein Team aus acht Google Brain Forschern – Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N. Gomez, Łukasz Kaiser und Illia Polosukhin – das legendäre Paper <i>"Attention Is All You Need"</i>. Alle acht Autoren leisteten gleichwertige Pionierarbeit (* equal contribution). Statt Text Wort für Wort abzuarbeiten, erfanden sie die parallele Self-Attention. Sie ebneten damit den Weg für alle modernen Frontier-Modelle. Später gründeten alle acht eigene wegweisende KI-Unternehmen!
+                    </p>
+                </div>
+
+                <div id="story-thinking" class="hidden space-y-4">
+                    <div class="flex items-center gap-4 border-b border-cyan-500/30 pb-4">
                         <span class="text-4xl">🧠</span>
                         <div>
-                            <h2 class="text-2xl font-black text-white font-outfit uppercase">Ashish Vaswani</h2>
-                            <p class="text-yellow-400 font-mono text-sm tracking-widest">Vater des Transformers</p>
+                            <h2 class="text-2xl font-black text-white font-outfit uppercase">Test-Time Compute</h2>
+                            <p class="text-cyan-400 font-mono text-sm tracking-widest">Innehalten & Nachdenken</p>
                         </div>
                     </div>
                     <p class="text-slate-300 leading-relaxed text-sm">
-                        Im Jahr 2017 veröffentlichte Vaswani mit seinem Team das Paper "Attention Is All You Need". Es war das Ende der Ära, in der Computer Informationen Wort für Wort lesen mussten. Sein Transformer-Modell schaut auf den gesamten Satz gleichzeitig – genau wie du. Ohne ihn gäbe es kein ChatGPT, kein Gemini und keine moderne Wissenschafts-KI.
+                        Was passiert, wenn eine KI nicht sofort das erstbeste Wort antwortet, sondern im Verborgenen nachdenkt? Frontier-Modelle nutzen "Test-Time Compute": Sie erzeugen unsichtbare Denkpfade (<i>Chain-of-Thought</i>), prüfen eigene Hypothesen, korrigieren Fehler und lösen komplexe mathematische und physikalische Simulationen. Erst wenn der Gedankengang schlüssig ist, gibt das Modell die finale Antwort aus.
                     </p>
                 </div>
 
-                <div id="story-flash" class="hidden space-y-4">
-                    <div class="flex items-center gap-4 border-b border-cyan-500/30 pb-4">
-                        <span class="text-4xl">⚡</span>
-                        <div>
-                            <h2 class="text-2xl font-black text-white font-outfit uppercase">Gemini 3.5 Flash</h2>
-                            <p class="text-cyan-400 font-mono text-sm tracking-widest">Intelligenz in Echtzeit</p>
-                        </div>
-                    </div>
-                    <p class="text-slate-300 leading-relaxed text-sm">
-                        Flash ist das Nervensystem deiner Simulationen. Es ist nicht nur ein Modell, es ist ein Agent, der in Millisekunden reagiert. Mit nativen 'Thinking'-Fähigkeiten kann es Fehler im JAX-Code riechen, bevor sie passieren. In Woche 7 nutzt du es, um deine numerischen Graphen semantisch zu verstehen.
-                    </p>
-                </div>
-
-                <div id="story-oracle" class="hidden space-y-4">
+                <div id="story-agents" class="hidden space-y-4">
                     <div class="flex items-center gap-4 border-b border-purple-500/30 pb-4">
-                        <span class="text-4xl">🔮</span>
+                        <span class="text-4xl">🤖</span>
                         <div>
-                            <h2 class="text-2xl font-black text-white font-outfit uppercase">Das Orakel</h2>
-                            <p class="text-purple-400 font-mono text-sm tracking-widest">Reasoning am Limit</p>
+                            <h2 class="text-2xl font-black text-white font-outfit uppercase">Agenten & MCP</h2>
+                            <p class="text-purple-400 font-mono text-sm tracking-widest">Vom Chatbot zum Handlanger</p>
                         </div>
                     </div>
                     <p class="text-slate-300 leading-relaxed text-sm">
-                        Was passiert, wenn eine KI nicht nur antwortet, sondern nachdenkt? Frontier Reasoning ermöglicht es Modellen, komplexe physikalische Ketten zu simulieren, bevor sie den ersten Code schreiben. Das 'Orakel' ist die Brücke zwischen deinen Rohdaten und echtem wissenschaftlichen Verständnis.
+                        Frontier-KI ist längst kein reiner Chatbot mehr. Über offene Standards wie das <i>Model Context Protocol (MCP)</i> greifen autonome Agenten direkt auf deine Entwicklerwerkzeuge zu: Sie führen Terminalbefehle aus, lesen Simulationen aus, analysieren JAX-Graphen und arbeiten in Agentenschwärmen zusammen, um komplexe wissenschaftliche Pipelines eigenständig zu steuern.
                     </p>
                 </div>
 
-                <div id="story-const" class="hidden space-y-4">
+                <div id="story-scaling" class="hidden space-y-4">
                     <div class="flex items-center gap-4 border-b border-pink-500/30 pb-4">
-                        <span class="text-4xl">📜</span>
+                        <span class="text-4xl">🌌</span>
                         <div>
-                            <h2 class="text-2xl font-black text-white font-outfit uppercase">Alignment</h2>
-                            <p class="text-pink-400 font-mono text-sm tracking-widest">Die Verfassung der KI</p>
+                            <h2 class="text-2xl font-black text-white font-outfit uppercase">Skalierungsgesetz</h2>
+                            <p class="text-pink-400 font-mono text-sm tracking-widest">Bitter Lesson & Emergenz</p>
                         </div>
                     </div>
                     <p class="text-slate-300 leading-relaxed text-sm">
-                        Wie stellt man sicher, dass eine mächtige KI keine gefährlichen Simulationen baut? Durch 'Constitutional AI' (Anthropic-Stil) lernt das Modell, sich an eine interne Verfassung zu halten. Sicherheit ist kein Filter, sondern ein mathematisches Fundament.
+                        Rich Suttons berühmte <i>"Bitter Lesson"</i> besagt: Rohrechenleistung schlägt jede vom Menschen entworfene Regel. Wenn Frontier-Cluster mit Zehntausenden TPUs und GPUs parallel trainiert werden, entstehen plötzlich <i>emergente Fähigkeiten</i> – das Modell lernt ohne explizites Training, Proteinstrukturen zu falten, physikalische Differentialgleichungen zu erkennen und fehlerfreien JAX-Code zu schreiben.
                     </p>
                 </div>
             </div>
@@ -118,7 +118,7 @@
         window.openStory = function(id) {
             const modal = document.getElementById('story-modal');
             const content = document.getElementById('modal-content');
-            ['vaswani', 'flash', 'oracle', 'const'].forEach(s => {
+            ['attention8', 'thinking', 'agents', 'scaling'].forEach(s => {
                 document.getElementById('story-' + s).classList.add('hidden');
             });
             document.getElementById('story-' + id).classList.remove('hidden');
