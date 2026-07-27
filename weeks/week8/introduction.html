@@ -6,13 +6,44 @@
         <div class="w-20 h-1.5 bg-gradient-to-r from-cyan-500 to-blue-600 mt-4 rounded-full"></div>
     </div>
 
-    <div class="p-6 glass-card mb-12 rounded-2xl border-l-4 border-cyan-500 bg-gradient-to-r from-cyan-950/20 to-transparent">
-        <h3 class="text-xl md:text-2xl font-bold text-white mb-2">Woche 8: Lokale Inferenz-Architekturen in der Systemsimulation</h3>
-        <p class="text-slate-300 text-sm leading-relaxed mt-3 font-sans">
-            Die Evolution der computergestützten Systemsimulation vollzieht sich in einer zunehmenden Verschmelzung von klassischen mathematischen Zustandsraummodellen und kognitiven Entscheidungselementen. Während physikalische Kernprozesse – etwa partielle Differentialgleichungen oder stochastische Monte-Carlo-Simulationen – hocheffizient auf spezialisierten Hardware-Beschleunigern mittels JAX oder TensorFlow gelöst werden, erfordert die intelligente Steuerung und Überwachung dieser Simulationen flexible, kontextsensitive Agentenarchitekturen. Der historische Ansatz, diese kognitive Ebene über globale Cloud-Schnittstellen (wie die Gemini API) zu realisieren, stößt in industriellen Umgebungen an fundamentale Grenzen: unvorhersehbare Netzwerklatenzen, die Abhängigkeit von einer permanenten Internetverbindung und das Risiko des unkontrollierten Abflusses sensibler Betriebsdaten.  
-        </p>
-        <p class="text-slate-300 text-sm leading-relaxed mt-2 font-sans">
-            Diese Woche wollen wir die Konzeption und Implementierung eines lokalen, offline-fähigen Überwachungs- und Optimierungs-Agenten für ereignisdiskrete Systemsimulationen testen. Im Mittelpunkt steht <strong>„Problem Set 8: Project Genesis – Der souveräne Wächter“</strong>. Dieses Problem Set baut auf der neuen, für die On-Device-Ausführung optimierten Open-Weights-Modellfamilie Google Gemma 4 auf und verknüpft lokale Inferenz über Kagglehub mit einer reaktiv gesteuerten physikalischen Warteschlangensimulation sowie den Grundlagen der lokalen Retrieval-Augmented Generation (RAG) und dem remote Fine-Tuning über die neue Google Colab CLI.
+    <div class="p-6 glass-card mb-12 rounded-2xl border-l-4 border-cyan-500 bg-gradient-to-r from-cyan-950/20 to-transparent flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+        <div>
+            <h3 class="text-xl md:text-2xl font-bold text-white mb-2">Woche 8: Lokale Inferenz-Architekturen in der Systemsimulation</h3>
+            <p class="text-slate-300 text-sm leading-relaxed mt-3 font-sans">
+                Die Evolution der computergestützten Systemsimulation vollzieht sich in einer zunehmenden Verschmelzung von klassischen mathematischen Zustandsraummodellen und kognitiven Entscheidungselementen. Während physikalische Kernprozesse – etwa partielle Differentialgleichungen oder stochastische Monte-Carlo-Simulationen – hocheffizient auf spezialisierten Hardware-Beschleunigern mittels JAX oder TensorFlow gelöst werden, erfordert die intelligente Steuerung und Überwachung dieser Simulationen flexible, kontextsensitive Agentenarchitekturen. Der historische Ansatz, diese kognitive Ebene über globale Cloud-Schnittstellen (wie die Gemini API) zu realisieren, stößt in industriellen Umgebungen an fundamentale Grenzen: unvorhersehbare Netzwerklatenzen, die Abhängigkeit von einer permanenten Internetverbindung und das Risiko des unkontrollierten Abflusses sensibler Betriebsdaten.  
+            </p>
+            <p class="text-slate-300 text-sm leading-relaxed mt-2 font-sans">
+                Diese Woche wollen wir die Konzeption und Implementierung eines lokalen, offline-fähigen Überwachungs- und Optimierungs-Agenten für ereignisdiskrete Systemsimulationen testen. Im Mittelpunkt steht <strong>„Problem Set 8: Project Genesis – Der souveräne Wächter“</strong>. Dieses Problem Set baut auf der neuen, für die On-Device-Ausführung optimierten Open-Weights-Modellfamilie Google Gemma 4 auf und verknüpft lokale Inferenz über Kagglehub mit einer reaktiv gesteuerten physikalischen Warteschlangensimulation sowie den Grundlagen der lokalen Retrieval-Augmented Generation (RAG) und dem remote Fine-Tuning über die neue Google Colab CLI.
+            </p>
+        </div>
+        <a href="https://youtu.be/orX0WvRWoCU" target="_blank" rel="noopener noreferrer" class="text-cyan-400 hover:text-cyan-300 underline font-mono text-[11px] flex items-center gap-1 shrink-0">
+            <span>🎬 Vorlesungsvideo auf YouTube</span> ↗
+        </a>
+    </div>
+
+    <!-- Video Overview Embed -->
+    <div class="p-6 glass-card rounded-2xl border-l-4 border-cyan-500 bg-gradient-to-r from-cyan-950/20 to-transparent my-8 space-y-4">
+        <div class="flex items-center justify-between">
+            <h3 class="text-xl font-bold text-white flex items-center gap-2">
+                <span>🎬</span> Video Overview: Open-Weights Modelle & Gemma
+            </h3>
+            <span class="text-xs font-mono px-2.5 py-1 rounded-full bg-cyan-500/20 text-cyan-400 border border-cyan-500/30">YouTube OER</span>
+        </div>
+        
+        <div class="relative w-full rounded-xl overflow-hidden shadow-2xl border border-slate-700/50" style="padding-top: 56.25%;">
+            <iframe 
+                class="absolute top-0 left-0 w-full h-full"
+                src="https://www.youtube-nocookie.com/embed/orX0WvRWoCU?rel=0&modestbranding=1" 
+                title="AMS 2026 Week 8 Video Overview - Open-Weights Models & Gemma" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                allowfullscreen>
+            </iframe>
+        </div>
+        <p class="text-xs text-slate-400 italic flex items-center justify-between px-1">
+            <span>💡 Tipp: Nutzen Sie das Video zur Einführung in die Konzepte der Open-Weights-Modelle, Datensouveränität und Gemma-Inferenz.</span>
+            <a href="https://youtu.be/orX0WvRWoCU" target="_blank" rel="noopener noreferrer" class="text-cyan-400 hover:text-cyan-300 underline font-mono text-[11px] flex items-center gap-1">
+                Auf YouTube ansehen ↗
+            </a>
         </p>
     </div>
     
