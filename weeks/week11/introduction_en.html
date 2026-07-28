@@ -184,14 +184,111 @@
     </p>
     <div class="p-6 glass-card rounded-2xl border-l-4 border-cyan-500 bg-cyan-950/5 space-y-3">
         <h4 class="text-cyan-400 font-bold text-base flex items-center gap-2">
-            <span>📖</span> Literature & Resources</h4>
+            <span>🧬</span> Supported Scientific Catalogues</h4>
         <ul class="list-disc pl-6 text-sm text-slate-300 space-y-2">
-            <li><strong>arXiv:</strong> Access to over 2 million preprints in physics, mathematics, and computer science. Agents can analyze abstracts and retrieve full-text PDFs.</li>
+            <li><strong>arXiv:</strong> Access to over 2.4 million preprints in physics, mathematics, and computer science. Agents can analyze abstracts and retrieve full-text PDFs.</li>
             <li><strong>OpenAlex:</strong> A global catalog of scientific works, authors, and institutions. Ideal for citation analysis and DOI queries.</li>
-            <li><strong>PubMed:</strong> Focus on biomedical data and clinical trials.</li>
+            <li><strong>PubMed & BioRxiv:</strong> Focus on biomedical data, genomics, and clinical trials.</li>
         </ul>
     </div>
-    <p class="text-sm text-slate-300 leading-relaxed font-sans mt-4">
+    <p class="text-sm text-slate-300 leading-relaxed font-sans mt-4 mb-8">
         In <strong>Problem Set 11</strong>, you will build a <strong>Scholar-Prime</strong> agent that uses these skills to autonomously research, parse, and save thermodynamic simulation parameters for reactors from real scientific publications as structured data.
     </p>
+
+    <!-- Section 4: Literature & Resources -->
+    <h3 class="text-xl md:text-2xl font-extrabold text-white mt-12 mb-4 border-b border-slate-900 pb-2 flex items-center gap-2">
+        <span>📖</span> 4. Literature & Resources
+    </h3>
+    <p class="text-sm text-slate-300 leading-relaxed font-sans mb-6">
+        For a deeper technical understanding of Agent Development Environments (ADEs), the Google Antigravity ecosystem, Model Context Protocol (MCP), and Google DeepMind Science Skills, we highly recommend exploring the following official documentations, code repositories, and research publications:
+    </p>
+
+    <div class="space-y-6">
+        <!-- Group 1: Antigravity & Agent Runtimes -->
+        <div class="p-6 glass-card rounded-2xl border-l-4 border-cyan-500 bg-slate-900/40 space-y-3">
+            <h4 class="text-cyan-400 font-bold text-base flex items-center gap-2">
+                <span>⚡</span> Google Antigravity & Agent Runtimes
+            </h4>
+            <ul class="list-disc pl-6 text-sm text-slate-300 space-y-3 font-sans">
+                <li class="leading-relaxed">
+                    <strong class="text-white">Google Antigravity Developer Portal:</strong> Official platform and documentation for Google Antigravity 2.0 – Google's agent-first development ecosystem spanning Desktop App, VS-Code fork IDE, terminal CLI (Go), and programmatic SDK.<br>
+                    <a href="https://antigravity.google" target="_blank" rel="noopener noreferrer" class="text-cyan-400 hover:underline font-mono text-xs inline-flex items-center gap-1 mt-1">
+                        <span>🔗</span> antigravity.google
+                    </a>
+                </li>
+                <li class="leading-relaxed">
+                    <strong class="text-white">Google Agent Development Kit (ADK) Core Repository:</strong> Open-source Python repository for ADK and the Antigravity Agent Harness. Provides core abstractions (`Agent`, `Workflow`), sandboxed execution engines, cognitive tracing hooks, and web-UI runners.<br>
+                    <a href="https://github.com/google/adk" target="_blank" rel="noopener noreferrer" class="text-cyan-400 hover:underline font-mono text-xs inline-flex items-center gap-1 mt-1">
+                        <span>🔗</span> github.com/google/adk
+                    </a>
+                </li>
+                <li class="leading-relaxed">
+                    <strong class="text-white">Google ADK & Antigravity Sample Garden:</strong> Curated repository of multi-agent orchestrations, hierarchical swarm patterns, tool-binding routines, and practical Antigravity integration samples.<br>
+                    <a href="https://github.com/google/adk-samples" target="_blank" rel="noopener noreferrer" class="text-cyan-400 hover:underline font-mono text-xs inline-flex items-center gap-1 mt-1">
+                        <span>🔗</span> github.com/google/adk-samples
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Group 2: Scientific Literature Retrieval & Science Skills -->
+        <div class="p-6 glass-card rounded-2xl border-l-4 border-pink-500 bg-slate-900/40 space-y-3">
+            <h4 class="text-pink-400 font-bold text-base flex items-center gap-2">
+                <span>🔬</span> DeepMind Science Skills & Academic Databases
+            </h4>
+            <ul class="list-disc pl-6 text-sm text-slate-300 space-y-3 font-sans">
+                <li class="leading-relaxed">
+                    <strong class="text-white">Google DeepMind Science Skills Repository:</strong> Official Google DeepMind open-source repository featuring modular agent skills (arXiv, OpenAlex, PubMed, UniProt, ChEMBL) for automated scientific database queries.<br>
+                    <a href="https://github.com/google-deepmind/science-skills" target="_blank" rel="noopener noreferrer" class="text-cyan-400 hover:underline font-mono text-xs inline-flex items-center gap-1 mt-1">
+                        <span>🔗</span> github.com/google-deepmind/science-skills
+                    </a>
+                </li>
+                <li class="leading-relaxed">
+                    <strong class="text-white">OpenAlex Global Research Index:</strong> A free, open global catalog of 250M+ scientific publications, citation graphs, authors, and institutions with a high-performance REST API for autonomous agent retrieval.<br>
+                    <a href="https://openalex.org" target="_blank" rel="noopener noreferrer" class="text-cyan-400 hover:underline font-mono text-xs inline-flex items-center gap-1 mt-1">
+                        <span>🔗</span> openalex.org
+                    </a>
+                </li>
+                <li class="leading-relaxed">
+                    <strong class="text-white">arXiv Open-Access Preprint Server:</strong> Central open-access repository of 2.4M+ preprints in computer science, physics, and mathematics with machine-readable APIs for automated full-text and abstract parsing.<br>
+                    <a href="https://arxiv.org" target="_blank" rel="noopener noreferrer" class="text-cyan-400 hover:underline font-mono text-xs inline-flex items-center gap-1 mt-1">
+                        <span>🔗</span> arxiv.org
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Group 3: Agent Standards & Execution Frameworks -->
+        <div class="p-6 glass-card rounded-2xl border-l-4 border-yellow-500 bg-slate-900/40 space-y-3">
+            <h4 class="text-yellow-400 font-bold text-base flex items-center gap-2">
+                <span>🌐</span> Agent Standards, MCP & Sandboxed Execution
+            </h4>
+            <ul class="list-disc pl-6 text-sm text-slate-300 space-y-3 font-sans">
+                <li class="leading-relaxed">
+                    <strong class="text-white">Model Context Protocol (MCP) Specification (AAIF):</strong> The open industry standard ("USB-C for AI") initiated by Anthropic and hosted by the Agentic AI Foundation (Linux Foundation) to securely connect AI agents to external tools and databases.<br>
+                    <a href="https://modelcontextprotocol.io" target="_blank" rel="noopener noreferrer" class="text-cyan-400 hover:underline font-mono text-xs inline-flex items-center gap-1 mt-1">
+                        <span>🔗</span> modelcontextprotocol.io
+                    </a>
+                </li>
+                <li class="leading-relaxed">
+                    <strong class="text-white">Hugging Face Smolagents (Code-Centric Agents):</strong> Pioneering framework for code-centric agent execution where agents write and run executable Python code inside isolated sandboxes rather than relying on rigid JSON function schemas.<br>
+                    <a href="https://github.com/huggingface/smolagents" target="_blank" rel="noopener noreferrer" class="text-cyan-400 hover:underline font-mono text-xs inline-flex items-center gap-1 mt-1">
+                        <span>🔗</span> github.com/huggingface/smolagents
+                    </a>
+                </li>
+                <li class="leading-relaxed">
+                    <strong class="text-white">LangGraph Multi-Agent Orchestration:</strong> Stateful orchestration framework for building complex, cyclic multi-agent graphs with built-in human-in-the-loop controls.<br>
+                    <a href="https://github.com/langchain-ai/langgraph" target="_blank" rel="noopener noreferrer" class="text-cyan-400 hover:underline font-mono text-xs inline-flex items-center gap-1 mt-1">
+                        <span>🔗</span> github.com/langchain-ai/langgraph
+                    </a>
+                </li>
+                <li class="leading-relaxed">
+                    <strong class="text-white">OpenAI Agents SDK & Guardrails:</strong> Lightweight multi-agent framework emphasizing hand-off routing patterns, cognitive tracing hooks, and runtime safety guardrails.<br>
+                    <a href="https://github.com/openai/openai-agents-python" target="_blank" rel="noopener noreferrer" class="text-cyan-400 hover:underline font-mono text-xs inline-flex items-center gap-1 mt-1">
+                        <span>🔗</span> github.com/openai/openai-agents-python
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
 </div>
